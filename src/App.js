@@ -12,10 +12,8 @@ class App extends Component {
       <Router basename={process.env.PUBLIC_URL}>
         <div className="App">
             <Switch>
-                  <Route exact path= "/" render={() => (
-                    <Redirect to="/loginPage"/>
-                  )}/>
-                   <Route exact path='/loginPage' component={LoginPage} />
+                  <Route exact path= "/" render={() => (<Redirect to="/loginPage"/>)}/>
+                  <Route exact path='/loginPage' component={LoginPage} />
             </Switch>
       </div>
     </Router>
