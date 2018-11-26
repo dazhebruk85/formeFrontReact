@@ -1,0 +1,8 @@
+//запустить сервер
+npm start
+
+//загрузить модули
+npm install
+
+//запустить сборку product
+npm run build
