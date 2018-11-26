@@ -1,4 +1,7 @@
 target
+node_modules
+build
+package-lock.json
 .idea
 .mvn
 *.iml
