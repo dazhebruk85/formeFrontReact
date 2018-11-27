@@ -11,19 +11,15 @@ class LoginPage extends Component {
             login: '',
             password: '',
             error: '',
+            userRole: ''
         };
 
         this.handlePassChange = this.handlePassChange.bind(this);
         this.handleUserChange = this.handleUserChange.bind(this);
         this.doLogin = this.doLogin.bind(this);
-        this.dismissError = this.dismissError.bind(this);
     }
 
     componentDidMount() {
-    }
-
-    dismissError() {
-        this.setState({ error: '' });
     }
 
     doLogin(evt) {
@@ -42,7 +38,7 @@ class LoginPage extends Component {
                 login: this.state.login,
                 password: this.state.password
             }
-        }).then(res => console.log(res.data))
+        }).then(res => this.props.history.push('/clientPage'))
     }
 
     handleUserChange(evt) {
