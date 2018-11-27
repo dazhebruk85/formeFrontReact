@@ -38,8 +38,9 @@ class LoginPage extends Component {
                 login: this.state.login,
                 password: this.state.password
             }
-        }).then(res => this.props.history.push('/clientPage'))
+        }).then(res => console.log(res.data))
     }
+    //this.props.history.push('/clientPage')
 
     handleUserChange(evt) {
         this.setState({
