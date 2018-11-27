@@ -1,0 +1,1 @@
+export const APP_URL = 'http://10.1.1.24:1313/back/FrontServlet';

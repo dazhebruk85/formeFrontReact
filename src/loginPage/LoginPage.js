@@ -1,5 +1,7 @@
 import React, {Component} from 'react';
 import logo from '../media/logo.png';
+import axios from 'axios';
+import * as Const from '../Const'
 
 class LoginPage extends Component {
 
@@ -32,7 +34,12 @@ class LoginPage extends Component {
         if (!this.state.password) {
             return this.setState({ error: 'Password is required' });
         }
-        return this.setState({ error: '' });
+
+        axios.post(Const.APP_URL, {
+            entity:'',
+            context: 'auth',
+            params: {}
+        }).then(res => console.log(res.data))
     }
 
     handleUserChange(evt) {
