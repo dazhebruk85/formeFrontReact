@@ -8,7 +8,7 @@ class LoginPage extends Component {
     constructor() {
         super();
         this.state = {
-            username: '',
+            login: '',
             password: '',
             error: '',
         };
@@ -27,8 +27,8 @@ class LoginPage extends Component {
     }
 
     doLogin(evt) {
-        if (!this.state.username) {
-            return this.setState({ error: 'Username is required' });
+        if (!this.state.login) {
+            return this.setState({ error: 'Login is required' });
         }
 
         if (!this.state.password) {
@@ -38,13 +38,16 @@ class LoginPage extends Component {
         axios.post(Const.APP_URL, {
             entity:'',
             context: 'auth',
-            params: {}
+            params: {
+                login: this.state.login,
+                password: this.state.password
+            }
         }).then(res => console.log(res.data))
     }
 
     handleUserChange(evt) {
         this.setState({
-            username: evt.target.value,
+            login: evt.target.value,
         });
     };
 
@@ -70,7 +73,7 @@ class LoginPage extends Component {
                                 <div className="form-group">
                                     <label className="control-label col-sm-2" htmlFor="loginTextbox">Логин</label>
                                     <div className="col-sm-10">
-                                        <input id="loginTextbox" className="form-control" type="text" value={this.state.username} onChange={this.handleUserChange} placeholder="Введите логин"/>
+                                        <input id="loginTextbox" className="form-control" type="text" value={this.state.login} onChange={this.handleUserChange} placeholder="Введите логин"/>
                                     </div>
                                 </div>
                                 <div className="form-group">
