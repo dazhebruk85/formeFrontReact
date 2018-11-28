@@ -1,8 +1,8 @@
 import React, { Component } from 'react';
 import { HashRouter as Router, Switch, Route, Redirect} from 'react-router-dom';
-import LoginPage from './loginPage/LoginPage'
-import ClientPage from './clientPage/ClientPage'
-import AdminPage from './adminPage/AdminPage'
+import LoginPage from './page/loginPage/LoginPage'
+import ClientPage from './page/clientPage/ClientPage'
+import AdminPage from './page/adminPage/AdminPage'
 
 class App extends Component {
   render() {

@@ -1,7 +1,9 @@
 import React, {Component} from 'react';
-import logo from '../media/logo.png';
+import logo from '../../media/logo.png';
 import axios from 'axios';
-import * as Const from '../Const'
+import * as Const from '../../Const';
+import cookie from 'react-cookies';
+import ErrorModal from '../../components/modal/error/ErrorModal';
 
 class LoginPage extends Component {
 
@@ -10,8 +12,7 @@ class LoginPage extends Component {
         this.state = {
             login: '',
             password: '',
-            error: '',
-            userRole: ''
+            errors: []
         };
 
         this.handlePassChange = this.handlePassChange.bind(this);
@@ -20,27 +21,52 @@ class LoginPage extends Component {
     }
 
     componentDidMount() {
+        let cookieLet = cookie;
+        let cookieMap = Object.entries(cookieLet.loadAll(true)).map(([key, value]) => ({key,value}))
+        cookieMap.forEach(function(element) {
+            cookieLet.remove(element.key, { path: '/' });
+        });
+
     }
 
     doLogin(evt) {
         if (!this.state.login) {
-            return this.setState({ error: 'Login is required' });
+            this.setState({
+                errors: [{code:'AUTH_ERROR',message:'Необходимо ввести логин'}]
+            });
+            return;
         }
 
         if (!this.state.password) {
-            return this.setState({ error: 'Password is required' });
+            this.setState({
+                errors: [{code:'AUTH_ERROR',message:'Необходимо ввести пароль'}]
+            });
         }
 
         axios.post(Const.APP_URL, {
             entity:'',
-            context: 'auth',
+            context: Const.AUTH_CONTEXT,
             params: {
                 login: this.state.login,
                 password: this.state.password
             }
-        }).then(res => console.log(res.data))
+        }).then(res => {
+            if (res.data.errors.length > 0) {
+                this.setState({ errors: res.data.errors});
+            } else {
+                cookie.save('sessionId', res.data.sessionId, { path: '/' });
+                cookie.save('userId', res.data.userId, { path: '/' });
+                cookie.save('userFio', res.data.userFio, { path: '/' });
+                cookie.save('userRole', res.data.userRole, { path: '/' });
+
+                if (res.data.userRole === Const.CLIENT_ROLE) {
+                    this.props.history.push('/clientPage')
+                } else {
+                    this.props.history.push('/adminPage')
+                }
+            }
+        })
     }
-    //this.props.history.push('/clientPage')
 
     handleUserChange(evt) {
         this.setState({
@@ -86,6 +112,9 @@ class LoginPage extends Component {
                         </div>
                     </div>
                 </div>
+
+                <ErrorModal errors={this.state.errors}/>
+
             </div>
         );
     }
