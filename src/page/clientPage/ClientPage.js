@@ -11,7 +11,7 @@ class ClientPage extends Component {
         return (
             <div className="container" style={{width:'100%',height:'100%'}}>
                 <div className="panel-group">
-                    <img src={logo} style={{marginTop:"20px", marginLeft:"30px"}}/>
+                    <img alt='' src={logo} style={{marginTop:"20px", marginLeft:"30px"}}/>
                 </div>
             </div>
         )

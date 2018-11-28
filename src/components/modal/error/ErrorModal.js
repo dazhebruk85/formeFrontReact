@@ -1,20 +1,6 @@
 import React from 'react';
-import ReactDOM from 'react-dom';
 import Modal from 'react-awesome-modal';
 import closePng from '../../../media/data/close.png';
-
-const customStyles = {
-    content : {
-        top:'30%',
-        left:'50%',
-        right:'auto',
-        bottom:'auto',
-        marginRight:'-50%',
-        transform:'translate(-50%, -50%)',
-        border:'0px',
-        padding:'0px'
-    }
-};
 
 class ErrorModal extends Modal {
     constructor(props) {
@@ -76,7 +62,7 @@ class ErrorModal extends Modal {
                                 <label style={{width:'100%',height:'24px',paddingLeft:'0px',paddingRight:'0px',paddingTop:'2px'}} className="control-label col-sm-2" htmlFor="loginTextbox">Сообщение об ошибках</label>
                             </td>
                             <td style={{width:'10%',alignItems:'right'}}>
-                                <img onClick={() => this.closeModal()} align={'right'} src={closePng} style={{marginLeft:'27px',cursor:'pointer',height:"24px",width:"24px",position:'absolute'}}/>
+                                <img alt='' onClick={() => this.closeModal()} align={'right'} src={closePng} style={{marginLeft:'27px',cursor:'pointer',height:"24px",width:"24px",position:'absolute'}}/>
                             </td>
                         </table>
                     </div>

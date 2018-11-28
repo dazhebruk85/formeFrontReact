@@ -85,7 +85,7 @@ class LoginPage extends Component {
         return (
             <div className="container" style={{width:'100%',height:'100%'}}>
                 <div className="panel-group">
-                    <img src={logo} style={{marginTop:"20px", marginLeft:"30px"}}/>
+                    <img alt='' src={logo} style={{marginTop:"20px", marginLeft:"30px"}}/>
                     <div className="panel panel-default" style={{width:'400px', marginTop:"20px", marginLeft:"30px"}}>
                         <div className="panel-heading">Войти в личный кабинет</div>
                         <div className="panel-body">
