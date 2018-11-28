@@ -1,6 +1,8 @@
 import React from 'react';
 import Modal from 'react-awesome-modal';
 import closePng from '../../../media/data/close.png';
+import errorPng from '../../../media/data/error.png';
+import * as CommonUtils from '../../../utils/CommonUtils';
 
 class ErrorModal extends Modal {
     constructor(props) {
@@ -57,8 +59,15 @@ class ErrorModal extends Modal {
         function ErrorList(props) {
             if (props.errors.length > 0) {
                 let listErrorList = props.errors.map((error) =>
-                    <tr>
-                        <td></td><td>{error.message}</td>
+                    <tr key={CommonUtils.genGuid()}>
+                        <td key={CommonUtils.genGuid()} style={{width:'7%'}}>
+                            <div key={CommonUtils.genGuid()}>
+                                <img alt='' src={errorPng} style={{height:"24px",width:"24px"}}/>
+                            </div>
+                        </td>
+                        <td key={CommonUtils.genGuid()} style={{width:'93%'}}>
+                            <div key={CommonUtils.genGuid()}>{error.message}</div>
+                        </td>
                     </tr>
                 );
                 return (
@@ -80,7 +89,7 @@ class ErrorModal extends Modal {
                                         <label style={{width:'100%',height:'24px',paddingLeft:'0px',paddingRight:'0px',paddingTop:'2px'}} className="control-label col-sm-2" htmlFor="loginTextbox">Сообщение об ошибках</label>
                                     </td>
                                     <td style={{width:'10%',alignItems:'right'}}>
-                                        <img alt='' onClick={() => this.closeModal()} align={'right'} src={closePng} style={{marginLeft:'27px',cursor:'pointer',height:"24px",width:"24px",position:'absolute'}}/>
+                                        <img alt='' onClick={() => this.closeModal()} align={'right'} src={closePng} style={{marginLeft:'27px',cursor:'pointer',height:"24px",width:"24px"}}/>
                                     </td>
                                 </tr>
                             </tbody>

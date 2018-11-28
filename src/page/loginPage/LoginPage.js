@@ -41,6 +41,7 @@ class LoginPage extends Component {
             this.setState({
                 errors: [{code:'AUTH_ERROR',message:'Необходимо ввести пароль'}]
             });
+            return;
         }
 
         axios.post(Const.APP_URL, {
