@@ -126,7 +126,7 @@ class ChangePasswordModal extends Modal {
         }
 
         return (
-            <Modal style={{marginTop:"20px"}} visible={this.state.visible} effect="fadeInDown">
+            <Modal visible={this.state.visible} effect="fadeInDown">
                 <div className="panel panel-default" style={{width:'540px',height:'250px',marginBottom:'0px'}}>
                     <div className="panel-heading" style={{height:'45px'}}>
                         <table style={{width:'100%'}}>
@@ -181,7 +181,7 @@ class ChangePasswordModal extends Modal {
                 </div>
                 <ErrorModal errors={this.state.errors}/>
 
-                <Modal style={{marginTop:"20px"}} visible={this.state.succuessChangeModalVisible} effect="fadeInDown">
+                <Modal visible={this.state.succuessChangeModalVisible} effect="fadeInDown">
                     <div className="panel panel-default" style={{width:'500px',height:'200px',marginBottom:'0px'}}>
                         <div className="panel-heading" style={{height:'45px'}}>
                             <table style={{width:'100%'}}>

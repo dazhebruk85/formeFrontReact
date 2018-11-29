@@ -80,7 +80,7 @@ class ErrorModal extends Modal {
         }
 
         return (
-            <Modal style={{marginTop:"20px"}} visible={this.state.visible} effect="fadeInDown">
+            <Modal visible={this.state.visible} effect="fadeInDown">
                 <div className="panel panel-default" style={{width:'500px',height:'250px',marginBottom:'0px'}}>
                     <div className="panel-heading" style={{height:'45px'}}>
                         <table style={{width:'100%'}}>
