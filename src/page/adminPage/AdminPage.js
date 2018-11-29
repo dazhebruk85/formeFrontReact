@@ -1,6 +1,7 @@
 import React, {Component} from 'react';
 import logo from '../../media/logo.png';
 import exitPng from '../../media/data/exit.png';
+import spinnerSvg from '../../media/spinner.svg';
 import changePasswordPng from '../../media/data/changePassword.png';
 import changeUserDataPng from '../../media/data/changeUserData.png';
 import ChangePasswordModal from '../../components/modal/user/ChangePasswordModal';
@@ -13,6 +14,7 @@ class AdminPage extends Component {
     constructor() {
         super();
         this.state = {
+            isLoading:true,
             changePasswordModalVisible: false,
             exitDialogVisible:false,
             redirectToLoginPage:false
@@ -23,6 +25,10 @@ class AdminPage extends Component {
         this.showExitDialog = this.showExitDialog.bind(this);
         this.cancelExitDialog = this.cancelExitDialog.bind(this);
         this.okExitDialog = this.okExitDialog.bind(this);
+    }
+
+    componentDidMount() {
+        setTimeout(() => this.setState({ isLoading: false }), 1000);
     }
 
     showChangePasswordModal(evt){
@@ -57,16 +63,20 @@ class AdminPage extends Component {
     }
 
     render() {
-
         const { redirectToLoginPage } = this.state;
+        const { isLoading } = this.state;
 
         if (redirectToLoginPage) {
             return <Redirect to='/front'/>;
         }
 
+        if (isLoading) {
+            return <img alt='' src={spinnerSvg} style={{position:'fixed',top:'30%',left:'45%'}}/>
+        }
+
         return (
             <div className="container" style={{width:'100%',height:'100%'}}>
-                <div className="panel panel-default" style={{width:'99%',height:'98%',margin:"10px"}}>
+                <div className="panel panel-default" style={{width:'99%',height:'97%',margin:"10px"}}>
                     <div className="panel-heading" style={{height:'50px'}}>
                         <table style={{width:'100%'}}>
                             <tbody>
