@@ -16,11 +16,6 @@ class OkCancelDialog extends Modal {
         };
     }
 
-    componentDidMount(){
-        this.refs
-        let aaa = 0;
-    }
-
     componentDidUpdate(prevProps) {
         if (prevProps.okCancelVisible != this.props.okCancelVisible) {
             this.setState({
