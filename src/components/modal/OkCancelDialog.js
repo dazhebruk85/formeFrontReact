@@ -9,7 +9,7 @@ class OkCancelDialog extends Modal {
         super(props);
 
         this.state = {
-            okCancelVisible:props.okCancelVisible,
+            okCancelVisible:false,
             question:props.question,
             cancelAction:props.cancelAction,
             okAction:props.okAction
@@ -17,7 +17,7 @@ class OkCancelDialog extends Modal {
     }
 
     componentDidUpdate(prevProps) {
-        if (prevProps.okCancelVisible != this.props.okCancelVisible) {
+        if (prevProps.okCancelVisible !== this.props.okCancelVisible) {
             this.setState({
                 okCancelVisible: this.props.okCancelVisible,
             });
@@ -27,7 +27,7 @@ class OkCancelDialog extends Modal {
     render() {
         return (
             <Modal visible={this.state.okCancelVisible} effect="fadeInDown">
-                <div className="panel panel-default" style={{width:'500px',height:'200px',marginBottom:'0px'}}>
+                <div className="panel panel-default" style={{width:'450px',height:'170px',marginBottom:'0px'}}>
                     <div className="panel-heading" style={{height:'45px'}}>
                         <table style={{width:'100%'}}>
                             <tbody>
@@ -42,7 +42,7 @@ class OkCancelDialog extends Modal {
                             </tbody>
                         </table>
                     </div>
-                    <div className="panel-body" style={{height:'100px',overflow:'auto'}}>
+                    <div className="panel-body" style={{height:'80px',overflow:'auto'}}>
                         <table style={{width:'100%'}}>
                             <tbody>
                             <tr>

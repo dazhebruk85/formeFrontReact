@@ -1,7 +1,7 @@
 // System consts
 export const WORK_APP_URL = 'http://10.1.1.24:1313/back/FrontServlet';
 export const HOME_APP_URL = 'http://192.168.0.103:1313/back/FrontServlet';
-export const APP_URL = WORK_APP_URL;
+export const APP_URL = HOME_APP_URL;
 
 //Auth context
 export const AUTH_CONTEXT = "auth";
@@ -17,6 +17,11 @@ export const MANGER_ROLE = "manager"; // Менеджер
 export const ACCOUNTANT_ROLE = "accountant"; // Бухгалтер
 export const FOREMAN_ROLE = "foreman"; // Прораб
 export const CLIENT_ROLE = "client"; // Клиент светелкина
+
+//Popup type
+export const WARNING_POPUP = "warningPopup";
+export const ERROR_POPUP = "errorPopup";
+export const INFO_POPUP = "infoPopup";
 
 
 

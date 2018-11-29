@@ -1,12 +1,11 @@
 import React from 'react';
 import Modal from 'react-awesome-modal';
 import closePng from '../../../media/data/close.png';
-import ErrorModal from '../error/ErrorModal';
 import cookie from 'react-cookies';
 import axios from 'axios';
 import * as Const from '../../../Const';
 import { Redirect } from 'react-router-dom'
-import infoPng from '../../../media/data/info.png';
+import MultiPopup from "../MultiPopup";
 
 class ChangePasswordModal extends Modal {
 
@@ -19,8 +18,8 @@ class ChangePasswordModal extends Modal {
             newPassword:'',
             newPasswordRepeat:'',
             errors: [],
+            successInfoMessages: [],
             redirectToLoginPage:false,
-            succuessChangeModalVisible:false,
             closeAction:props.closeAction
         };
 
@@ -28,8 +27,6 @@ class ChangePasswordModal extends Modal {
         this.closeModal = this.closeModal.bind(this);
         this.changePassword = this.changePassword.bind(this);
         this.setErrors = this.setErrors.bind(this);
-        this.closeSuccessChangeModal = this.closeSuccessChangeModal.bind(this);
-        this.successChangePasswordAction = this.successChangePasswordAction.bind(this);
         this.closeAction = props.closeAction
     }
 
@@ -40,23 +37,11 @@ class ChangePasswordModal extends Modal {
             newPassword:'',
             newPasswordRepeat:'',
             errors: [],
+            successInfoMessages: [],
             redirectToLoginPage:false,
             succuessChangeModalVisible:false
         });
         this.closeAction()
-    }
-
-    closeSuccessChangeModal() {
-        this.setState({
-            succuessChangeModalVisible:false,
-            redirectToLoginPage:true
-        });
-    }
-
-    successChangePasswordAction() {
-        this.setState({
-            succuessChangeModalVisible:true
-        });
     }
 
     handleChange(event) {
@@ -71,6 +56,25 @@ class ChangePasswordModal extends Modal {
     setErrors(errors) {
         this.setState({
             errors: errors
+        });
+    }
+
+    clearErrors() {
+        this.setState({
+            errors: []
+        });
+    }
+
+    setSuccessChangePassword(messages) {
+        this.setState({
+            successInfoMessages: messages
+        });
+    }
+
+    clearSuccessInfoMessages() {
+        this.setState({
+            successInfoMessages: [],
+            redirectToLoginPage:true
         });
     }
 
@@ -109,7 +113,7 @@ class ChangePasswordModal extends Modal {
             if (res.data.errors.length > 0) {
                 this.setErrors(res.data.errors)
             } else {
-                this.successChangePasswordAction();
+                this.setSuccessChangePassword([{code:'INFO',message:'Вы сменили пароль, необходимо заново войти в систему под новым паролем'}])
             }
         });
         changePasswordPostEvent.catch(error => {
@@ -182,42 +186,12 @@ class ChangePasswordModal extends Modal {
                         </form>
                     </div>
                 </div>
-                <ErrorModal errors={this.state.errors}/>
-
-                <Modal visible={this.state.succuessChangeModalVisible} effect="fadeInDown">
-                    <div className="panel panel-default" style={{width:'500px',height:'200px',marginBottom:'0px'}}>
-                        <div className="panel-heading" style={{height:'45px'}}>
-                            <table style={{width:'100%'}}>
-                                <tbody>
-                                <tr>
-                                    <td style={{width:'90%'}}>
-                                        <label style={{width:'100%',height:'24px',paddingLeft:'0px',paddingRight:'0px',paddingTop:'2px'}} className="control-label col-sm-2" htmlFor="loginTextbox">Информация</label>
-                                    </td>
-                                    <td style={{width:'10%',alignItems:'right'}}>
-                                        <img alt='' onClick={() => this.closeSuccessChangeModal()} align={'right'} src={closePng} style={{marginLeft:'27px',cursor:'pointer',height:"24px",width:"24px"}}/>
-                                    </td>
-                                </tr>
-                                </tbody>
-                            </table>
-                        </div>
-                        <div className="panel-body" style={{height:'100px'}}>
-                            <table style={{width:'100%'}}>
-                                <tbody>
-                                    <tr>
-                                        <td style={{width:'7%'}}><img alt='' src={infoPng} style={{height:"24px",width:"24px"}}/></td>
-                                        <td style={{width:'93%'}}>Вы сменили пароль, необходимо заново войти в систему под новым паролем</td>
-                                    </tr>
-                                </tbody>
-                            </table>
-                        </div>
-                        <div className="btn-toolbar align-bottom" role="toolbar" style={{justifyContent:'center',display:'flex'}}>
-                            <div className="btn-group mr-2" role="group">
-                                <input id="okButton" type="button" value="Ок" className="btn btn-primary" onClick={() => this.closeSuccessChangeModal()}/>
-                            </div>
-                        </div>
-                    </div>
-                </Modal>
-
+                <MultiPopup popupData={this.state.errors}
+                            popupType={Const.ERROR_POPUP}
+                            closeAction={this.clearErrors.bind(this)}/>
+                <MultiPopup popupData={this.state.successInfoMessages}
+                            popupType={Const.INFO_POPUP}
+                            closeAction={this.clearSuccessInfoMessages.bind(this)}/>
             </Modal>
             )
     }

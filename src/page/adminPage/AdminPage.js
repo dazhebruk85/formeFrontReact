@@ -5,6 +5,7 @@ import changePasswordPng from '../../media/data/changePassword.png';
 import changeUserDataPng from '../../media/data/changeUserData.png';
 import ChangePasswordModal from '../../components/modal/user/ChangePasswordModal';
 import OkCancelDialog from '../../components/modal/OkCancelDialog';
+import {Redirect} from "react-router-dom";
 
 
 class AdminPage extends Component {
@@ -13,7 +14,8 @@ class AdminPage extends Component {
         super();
         this.state = {
             changePasswordModalVisible: false,
-            exitDialogVisible:false
+            exitDialogVisible:false,
+            redirectToLoginPage:false
         };
 
         this.showChangePasswordModal = this.showChangePasswordModal.bind(this);
@@ -49,11 +51,19 @@ class AdminPage extends Component {
 
     okExitDialog(evt){
         this.setState({
-            exitDialogVisible: false
+            exitDialogVisible: false,
+            redirectToLoginPage:true
         })
     }
 
     render() {
+
+        const { redirectToLoginPage } = this.state;
+
+        if (redirectToLoginPage) {
+            return <Redirect to='/front'/>;
+        }
+
         return (
             <div className="container" style={{width:'100%',height:'100%'}}>
                 <div className="panel panel-default" style={{width:'99%',height:'98%',margin:"10px"}}>

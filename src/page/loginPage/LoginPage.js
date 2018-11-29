@@ -3,7 +3,7 @@ import logo from '../../media/logo.png';
 import axios from 'axios';
 import * as Const from '../../Const';
 import cookie from 'react-cookies';
-import ErrorModal from '../../components/modal/error/ErrorModal';
+import MultiPopup from '../../components/modal/MultiPopup';
 
 class LoginPage extends Component {
 
@@ -32,6 +32,12 @@ class LoginPage extends Component {
     setErrors(errors) {
         this.setState({
             errors: errors
+        });
+    }
+
+    clearErrors() {
+        this.setState({
+            errors: []
         });
     }
 
@@ -120,9 +126,9 @@ class LoginPage extends Component {
                         </div>
                     </div>
                 </div>
-
-                <ErrorModal errors={this.state.errors}/>
-
+                <MultiPopup popupData={this.state.errors}
+                            popupType={Const.ERROR_POPUP}
+                            closeAction={this.clearErrors.bind(this)}/>
             </div>
         );
     }
