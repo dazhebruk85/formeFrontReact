@@ -4,21 +4,52 @@ import exitPng from '../../media/data/exit.png';
 import changePasswordPng from '../../media/data/changePassword.png';
 import changeUserDataPng from '../../media/data/changeUserData.png';
 import ChangePasswordModal from '../../components/modal/user/ChangePasswordModal';
+import OkCancelDialog from '../../components/modal/OkCancelDialog';
+
 
 class AdminPage extends Component {
 
     constructor() {
         super();
         this.state = {
-            changePasswordModalVisible: false
+            changePasswordModalVisible: false,
+            exitDialogVisible:false
         };
 
         this.showChangePasswordModal = this.showChangePasswordModal.bind(this);
+        this.closeChangePasswordModal = this.closeChangePasswordModal.bind(this);
+        this.showExitDialog = this.showExitDialog.bind(this);
+        this.cancelExitDialog = this.cancelExitDialog.bind(this);
+        this.okExitDialog = this.okExitDialog.bind(this);
     }
 
     showChangePasswordModal(evt){
         this.setState({
             changePasswordModalVisible: true
+        })
+    }
+
+    closeChangePasswordModal(evt){
+        this.setState({
+            changePasswordModalVisible: false
+        })
+    }
+
+    showExitDialog(evt){
+        this.setState({
+            exitDialogVisible: true
+        })
+    }
+
+    cancelExitDialog(evt){
+        this.setState({
+            exitDialogVisible: false
+        })
+    }
+
+    okExitDialog(evt){
+        this.setState({
+            exitDialogVisible: false
         })
     }
 
@@ -60,7 +91,11 @@ class AdminPage extends Component {
                                                     </td>
                                                     <td>
                                                         <div style={{width:'100%',height:'100%',padding:'0px',textAlign:'-webkit-center'}}>
-                                                            <img title={'Выход'} alt='Выход' src={exitPng} style={{width:'28px',height:'28px',cursor:'pointer',marginTop:"0px", marginLeft:"0px"}}/>
+                                                            <img onClick={this.showExitDialog}
+                                                                 title={'Выход'}
+                                                                 alt='Выход'
+                                                                 src={exitPng}
+                                                                 style={{width:'28px',height:'28px',cursor:'pointer',marginTop:"0px", marginLeft:"0px"}}/>
                                                         </div>
                                                     </td>
                                                 </tr>
@@ -75,7 +110,11 @@ class AdminPage extends Component {
 
                     </div>
                 </div>
-                <ChangePasswordModal visible={this.state.changePasswordModalVisible}/>
+                <ChangePasswordModal visible={this.state.changePasswordModalVisible} closeAction={this.closeChangePasswordModal.bind(this)}/>
+                <OkCancelDialog okCancelVisible={this.state.exitDialogVisible}
+                                question={'Вы действительно хотите выйти'}
+                                cancelAction={this.cancelExitDialog.bind(this)}
+                                okAction={this.okExitDialog.bind(this)}/>
             </div>
         )
     }

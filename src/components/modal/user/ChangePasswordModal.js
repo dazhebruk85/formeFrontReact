@@ -20,7 +20,8 @@ class ChangePasswordModal extends Modal {
             newPasswordRepeat:'',
             errors: [],
             redirectToLoginPage:false,
-            succuessChangeModalVisible:false
+            succuessChangeModalVisible:false,
+            closeAction:props.closeAction
         };
 
         this.handleChange = this.handleChange.bind(this);
@@ -29,6 +30,7 @@ class ChangePasswordModal extends Modal {
         this.setErrors = this.setErrors.bind(this);
         this.closeSuccessChangeModal = this.closeSuccessChangeModal.bind(this);
         this.successChangePasswordAction = this.successChangePasswordAction.bind(this);
+        this.closeAction = props.closeAction
     }
 
     closeModal() {
@@ -41,6 +43,7 @@ class ChangePasswordModal extends Modal {
             redirectToLoginPage:false,
             succuessChangeModalVisible:false
         });
+        this.closeAction()
     }
 
     closeSuccessChangeModal() {
