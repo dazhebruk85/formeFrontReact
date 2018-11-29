@@ -15,10 +15,9 @@ class LoginPage extends Component {
             errors: []
         };
 
-        this.handlePassChange = this.handlePassChange.bind(this);
-        this.handleUserChange = this.handleUserChange.bind(this);
+        this.handleChange = this.handleChange.bind(this);
         this.doLogin = this.doLogin.bind(this);
-        this.setLoginErrors = this.setLoginErrors.bind(this);
+        this.setErrors = this.setErrors.bind(this);
     }
 
     componentDidMount() {
@@ -30,7 +29,7 @@ class LoginPage extends Component {
 
     }
 
-    setLoginErrors(errors) {
+    setErrors(errors) {
         this.setState({
             errors: errors
         });
@@ -38,18 +37,18 @@ class LoginPage extends Component {
 
     doLogin(evt) {
         if (!this.state.login) {
-            this.setLoginErrors([{code:'AUTH_ERROR',message:'Необходимо ввести логин'}])
+            this.setErrors([{code:'AUTH_ERROR',message:'Необходимо ввести логин'}])
             return;
         }
 
         if (!this.state.password) {
-            this.setLoginErrors([{code:'AUTH_ERROR',message:'Необходимо ввести пароль'}])
+            this.setErrors([{code:'AUTH_ERROR',message:'Необходимо ввести пароль'}])
             return;
         }
 
         let loginPostEvent = axios.post(Const.APP_URL, {
-            entity:'',
             context: Const.AUTH_CONTEXT,
+            action:'',
             params: {
                 login: this.state.login,
                 password: this.state.password
@@ -57,7 +56,7 @@ class LoginPage extends Component {
         });
         loginPostEvent.then(res => {
             if (res.data.errors.length > 0) {
-                this.setLoginErrors(res.data.errors)
+                this.setErrors(res.data.errors)
             } else {
                 cookie.save('sessionId', res.data.sessionId, { path: '/' });
                 cookie.save('userId', res.data.userId, { path: '/' });
@@ -73,22 +72,19 @@ class LoginPage extends Component {
         });
         loginPostEvent.catch(error => {
             if (!error.status) {
-                this.setLoginErrors([{code:'SYS',message:'APP сервер недоступен'}])
+                this.setErrors([{code:'SYS',message:'APP сервер недоступен'}])
             } else {
-                this.setLoginErrors([{code:'SYS',message:'Непредвиденная ошибка на сервере'}])
+                this.setErrors([{code:'SYS',message:'Непредвиденная ошибка на сервере'}])
             }
         });
     }
 
-    handleUserChange(evt) {
-        this.setState({
-            login: evt.target.value,
-        });
-    };
+    handleChange(event) {
+        const value = event.target.value;
+        const id = event.target.id;
 
-    handlePassChange(evt) {
         this.setState({
-            password: evt.target.value,
+            [id]: value
         });
     }
 
@@ -105,13 +101,13 @@ class LoginPage extends Component {
                                 <div className="form-group">
                                     <label className="control-label col-sm-2" htmlFor="loginTextbox">Логин</label>
                                     <div className="col-sm-10">
-                                        <input id="loginTextbox" className="form-control" type="text" value={this.state.login} onChange={this.handleUserChange} placeholder="Введите логин"/>
+                                        <input id="login" className="form-control" type="text" value={this.state.login} onChange={this.handleChange} placeholder="Введите логин"/>
                                     </div>
                                 </div>
                                 <div className="form-group">
                                     <label className="control-label col-sm-2" htmlFor="passwordTextbox">Пароль</label>
                                     <div className="col-sm-10">
-                                        <input id="passwordTextbox" className="form-control" type="password" value={this.state.password} onChange={this.handlePassChange} placeholder="Введите пароль"/>
+                                        <input id="password" className="form-control" type="password" value={this.state.password} onChange={this.handleChange} placeholder="Введите пароль"/>
                                     </div>
                                 </div>
                                 <div className="form-group">

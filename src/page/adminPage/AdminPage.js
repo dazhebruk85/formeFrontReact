@@ -3,14 +3,24 @@ import logo from '../../media/logo.png';
 import exitPng from '../../media/data/exit.png';
 import changePasswordPng from '../../media/data/changePassword.png';
 import changeUserDataPng from '../../media/data/changeUserData.png';
+import ChangePasswordModal from '../../components/modal/user/ChangePasswordModal';
 
 class AdminPage extends Component {
 
     constructor() {
         super();
+        this.state = {
+            changePasswordModalVisible: false
+        };
+
+        this.showChangePasswordModal = this.showChangePasswordModal.bind(this);
     }
 
-
+    showChangePasswordModal(evt){
+        this.setState({
+            changePasswordModalVisible: true
+        })
+    }
 
     render() {
         return (
@@ -41,7 +51,11 @@ class AdminPage extends Component {
                                                     </td>
                                                     <td>
                                                         <div style={{width:'100%',height:'100%',padding:'0px',textAlign:'-webkit-center'}}>
-                                                            <img title={'Сменить пароль'} alt='Сменить пароль' src={changePasswordPng} style={{width:'28px',height:'28px',cursor:'pointer',marginTop:"0px", marginLeft:"0px"}}/>
+                                                            <img onClick={this.showChangePasswordModal}
+                                                                 title={'Сменить пароль'}
+                                                                 alt='Сменить пароль'
+                                                                 src={changePasswordPng}
+                                                                 style={{width:'28px',height:'28px',cursor:'pointer',marginTop:"0px", marginLeft:"0px"}}/>
                                                         </div>
                                                     </td>
                                                     <td>
@@ -61,6 +75,7 @@ class AdminPage extends Component {
 
                     </div>
                 </div>
+                <ChangePasswordModal visible={this.state.changePasswordModalVisible}/>
             </div>
         )
     }
