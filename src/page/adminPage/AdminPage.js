@@ -112,7 +112,7 @@ class AdminPage extends Component {
                 </div>
                 <ChangePasswordModal visible={this.state.changePasswordModalVisible} closeAction={this.closeChangePasswordModal.bind(this)}/>
                 <OkCancelDialog okCancelVisible={this.state.exitDialogVisible}
-                                question={'Вы действительно хотите выйти'}
+                                question={'Вы действительно хотите выйти?'}
                                 cancelAction={this.cancelExitDialog.bind(this)}
                                 okAction={this.okExitDialog.bind(this)}/>
             </div>
