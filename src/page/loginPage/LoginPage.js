@@ -18,6 +18,7 @@ class LoginPage extends Component {
         this.handlePassChange = this.handlePassChange.bind(this);
         this.handleUserChange = this.handleUserChange.bind(this);
         this.doLogin = this.doLogin.bind(this);
+        this.setLoginErrors = this.setLoginErrors.bind(this);
     }
 
     componentDidMount() {
@@ -29,31 +30,34 @@ class LoginPage extends Component {
 
     }
 
+    setLoginErrors(errors) {
+        this.setState({
+            errors: errors
+        });
+    }
+
     doLogin(evt) {
         if (!this.state.login) {
-            this.setState({
-                errors: [{code:'AUTH_ERROR',message:'Необходимо ввести логин'}]
-            });
+            this.setLoginErrors([{code:'AUTH_ERROR',message:'Необходимо ввести логин'}])
             return;
         }
 
         if (!this.state.password) {
-            this.setState({
-                errors: [{code:'AUTH_ERROR',message:'Необходимо ввести пароль'}]
-            });
+            this.setLoginErrors([{code:'AUTH_ERROR',message:'Необходимо ввести пароль'}])
             return;
         }
 
-        axios.post(Const.APP_URL, {
+        let loginPostEvent = axios.post(Const.APP_URL, {
             entity:'',
             context: Const.AUTH_CONTEXT,
             params: {
                 login: this.state.login,
                 password: this.state.password
             }
-        }).then(res => {
+        });
+        loginPostEvent.then(res => {
             if (res.data.errors.length > 0) {
-                this.setState({ errors: res.data.errors});
+                this.setLoginErrors(res.data.errors)
             } else {
                 cookie.save('sessionId', res.data.sessionId, { path: '/' });
                 cookie.save('userId', res.data.userId, { path: '/' });
@@ -66,7 +70,14 @@ class LoginPage extends Component {
                     this.props.history.push('/adminPage')
                 }
             }
-        })
+        });
+        loginPostEvent.catch(error => {
+            if (!error.status) {
+                this.setLoginErrors([{code:'SYS',message:'APP сервер недоступен'}])
+            } else {
+                this.setLoginErrors([{code:'SYS',message:'Непредвиденная ошибка на сервере'}])
+            }
+        });
     }
 
     handleUserChange(evt) {

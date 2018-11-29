@@ -1,10 +1,11 @@
 // System consts
 export const WORK_APP_URL = 'http://10.1.1.24:1313/back/FrontServlet';
 export const HOME_APP_URL = 'http://192.168.0.103:1313/back/FrontServlet';
-export const APP_URL = HOME_APP_URL;
+export const APP_URL = WORK_APP_URL;
 
-//Front context constsHOME_APP_URL
+//Front context consts
 export const AUTH_CONTEXT = "auth";
+export const USER_CONTEXT = "user";
 
 //User role Consts
 export const SUPERUSER_ROLE = "superuser"; // Суперпользователь
