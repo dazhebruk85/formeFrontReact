@@ -11,6 +11,12 @@ export const USER_CONTEXT = "user";
 //User actions
 export const USER_PASSWORD_CHANGE_ACTION = "userPasswordChangeAction";
 
+//Common entity actions
+export const ENTITY_LIST = "entityList";
+export const ENTITY_GET = "entityGet";
+export const ENTITY_SAVE = "entitySave";
+export const ENTITY_DELETE = "entityDelete";
+
 //User role Consts
 export const SUPERUSER_ROLE = "superuser"; // Суперпользователь
 export const MANGER_ROLE = "manager"; // Менеджер
