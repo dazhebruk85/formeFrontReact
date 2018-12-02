@@ -5,7 +5,7 @@ import * as Const from "../../Const";
 import * as CommonUtils from '../../utils/CommonUtils'
 import nextPagePng from "../../media/data/nextPage.png";
 import prevPagePng from "../../media/data/prevPage.png";
-
+import spinnerSvg from '../../media/spinner.svg';
 
 class CommonDbGrid extends Component {
 
@@ -13,6 +13,7 @@ class CommonDbGrid extends Component {
         super(props);
 
         this.state = {
+            isLoading:true,
             errors:[],
             dataEntityContext:props.dataEntityContext,
             pageSize:props.pageSize,
@@ -32,7 +33,12 @@ class CommonDbGrid extends Component {
         this.getGridListData()
     }
 
+    componentDidUpdate() {
+
+    }
+
     getGridListData() {
+        setTimeout(() => this.setState({ isLoading: true }), 0);
         let listPostEvent = axios.post(Const.APP_URL, {
             context: this.state.dataEntityContext,
             action: Const.ENTITY_LIST,
@@ -59,12 +65,14 @@ class CommonDbGrid extends Component {
             listData:props.listData,
             lastPage:props.listData.lastPage
         });
+        setTimeout(() => this.setState({ isLoading: false }), 300);
     }
 
     setErrors(errors) {
         this.setState({
             errors: errors
         });
+        setTimeout(() => this.setState({ isLoading: false }), 300);
     }
 
     nextPage() {
@@ -98,11 +106,21 @@ class CommonDbGrid extends Component {
     };
 
     render() {
+
+        const { isLoading } = this.state;
+        if (isLoading) {
+            return (
+                <div className="container" style={{width:'100%',height:'100%'}}>
+                    <img alt='' src={spinnerSvg} style={{position:'absolute',top:'50%',left:'50%'}}/>
+                </div>
+            )
+        }
+
         if (this.state.listData === undefined || this.state.listData === null) {
             return null
         } else {
             return (
-                <div>
+                <div className="container" style={{width:'100%',height:'100%'}}>
                     <table  style={{height:'370px',marginBottom:'0px'}} className='table table-striped table-hover table-condensed' ref="CommonDbGrid">
                         <thead className='.thead-light'>
                             {this.state.listData.dataHeaderList.map(entity =>

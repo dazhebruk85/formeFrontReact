@@ -15,7 +15,6 @@ class AdminPage extends Component {
     constructor() {
         super();
         this.state = {
-            isLoading:true,
             changePasswordModalVisible: false,
             exitDialogVisible:false,
             redirectToLoginPage:false
@@ -29,7 +28,6 @@ class AdminPage extends Component {
     }
 
     componentDidMount() {
-        setTimeout(() => this.setState({ isLoading: false }), 1000);
     }
 
     showChangePasswordModal(evt){
@@ -65,14 +63,9 @@ class AdminPage extends Component {
 
     render() {
         const { redirectToLoginPage } = this.state;
-        const { isLoading } = this.state;
 
         if (redirectToLoginPage) {
             return <Redirect to='/front'/>;
-        }
-
-        if (isLoading) {
-            return <img alt='' src={spinnerSvg} style={{position:'fixed',top:'30%',left:'45%'}}/>
         }
 
         return (
