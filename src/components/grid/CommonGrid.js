@@ -1,7 +1,9 @@
-import { Component } from 'react';
+import  React, { Component } from 'react';
 import cookie from "react-cookies";
 import axios from "axios";
 import * as Const from "../../Const";
+import SelectableTable from 'react-selectable-table';
+import * as CommonUtils from '../../utils/CommonUtils'
 
 class CommonGrid extends Component {
 
@@ -15,7 +17,8 @@ class CommonGrid extends Component {
             pageNumber:1,
             lastPage:false,
             allEntityCount:null,
-            listData:null
+            listData:null,
+            selectedIndicies:[]
         };
 
         this.getGridListData = this.getGridListData.bind(this);
@@ -60,10 +63,44 @@ class CommonGrid extends Component {
         });
     }
 
-    render() {
-        return (null);
+    onSelectionChange() {
+        this.setState({ selectedIndicies: this.refs.table.getSelectedIndices() })
     }
 
+    render() {
+        if (this.state.listData === undefined || this.state.listData === null) {
+            return null
+        } else {
+            return (
+                <div>
+                    <SelectableTable className='table table-striped table-hover table-condensed' onChange={this.onSelectionChange.bind(this)} ref="table">
+                        <thead className='.thead-light'>
+                            {this.state.listData.dataHeaderList.map(entity =>
+                                <tr key={entity.dataObjectId+'headerTr'}>
+                                    {CommonUtils.objectToPropArr(entity).map(entityData =>
+                                        <th key={entityData.key+'headerTd'}>
+                                            {entityData.value}
+                                        </th>
+                                    )}
+                                </tr>
+                            )}
+                          </thead>
+                        <tbody>
+                            {this.state.listData.dataList.map(entity =>
+                                <tr key={entity.dataObjectId+'valueTr'}>
+                                    {CommonUtils.objectToPropArr(entity).map(entityData =>
+                                        <td key={entityData.key+'valueTd'}>
+                                            {entityData.value}
+                                        </td>
+                                    )}
+                                 </tr>
+                            )}
+                        </tbody>
+                    </SelectableTable>
+                </div>
+            );
+        }
+    }
 }
 
 export default CommonGrid;

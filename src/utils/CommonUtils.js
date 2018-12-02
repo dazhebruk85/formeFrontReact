@@ -7,4 +7,13 @@ export function genGuid() {
     return s4() + s4() + '-' + s4() + '-' + s4() + '-' + s4() + '-' + s4() + s4() + s4();
 }
 
+export function objectToPropArr(object) {
+    let propArr = [];
+    for (var key in object) {
+        if (object.hasOwnProperty(key)) {
+            propArr.push({key:key, value:object[key]});
+        }
+    };
+    return propArr;
+}
 
