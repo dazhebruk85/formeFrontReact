@@ -2,7 +2,6 @@ import  React, { Component } from 'react';
 import cookie from "react-cookies";
 import axios from "axios";
 import * as Const from "../../Const";
-import SelectableTable from 'react-selectable-table';
 import * as CommonUtils from '../../utils/CommonUtils'
 import nextPagePng from "../../media/data/nextPage.png";
 import prevPagePng from "../../media/data/prevPage.png";
@@ -20,7 +19,7 @@ class CommonDbGrid extends Component {
             pageNumber:1,
             lastPage:false,
             listData:null,
-            selectedIndicies:[]
+            selectedItem:{}
         };
 
         this.getGridListData = this.getGridListData.bind(this);
@@ -68,17 +67,13 @@ class CommonDbGrid extends Component {
         });
     }
 
-    onSelectionChange() {
-        this.setState({ selectedIndicies: this.refs.table.getSelectedIndices() })
-    }
-
     nextPage() {
         if (this.state.lastPage) {
             return;
         }
         this.setState({
             pageNumber:this.state.pageNumber+1
-        })
+        });
         setTimeout(() => this.getGridListData(), 0);
     }
 
@@ -88,9 +83,19 @@ class CommonDbGrid extends Component {
         }
         this.setState({
             pageNumber:this.state.pageNumber-1
-        })
+        });
         setTimeout(() => this.getGridListData(), 0);
     }
+
+    handleSelectEntity = (event) => {
+        let selectedItem = {};
+        for (let i = 0; i < event.currentTarget.children.length; i++) {
+            selectedItem[event.currentTarget.children[i].getAttribute('entitydatakey')] = event.currentTarget.children[i].textContent
+        }
+        this.setState({
+            selectedItem: selectedItem
+        });
+    };
 
     render() {
         if (this.state.listData === undefined || this.state.listData === null) {
@@ -98,12 +103,12 @@ class CommonDbGrid extends Component {
         } else {
             return (
                 <div>
-                    <SelectableTable className='table table-striped table-hover table-condensed' onChange={this.onSelectionChange.bind(this)} ref="table">
+                    <table  style={{height:'370px',marginBottom:'0px'}} className='table table-striped table-hover table-condensed' ref="CommonDbGrid">
                         <thead className='.thead-light'>
                             {this.state.listData.dataHeaderList.map(entity =>
                                 <tr key={entity.dataObjectId+'headerTr'}>
                                     {CommonUtils.objectToPropArr(entity).map(entityData =>
-                                        <th key={entityData.key+'headerTd'}>
+                                        <th style={{display: entityData.key === "dataObjectId" ? 'none' : ''}} key={entityData.key+'headerTd'}>
                                             {entityData.value}
                                         </th>
                                     )}
@@ -112,16 +117,16 @@ class CommonDbGrid extends Component {
                           </thead>
                         <tbody>
                             {this.state.listData.dataList.map(entity =>
-                                <tr key={entity.dataObjectId+'valueTr'}>
+                                <tr onClick={this.handleSelectEntity} style={{cursor:'pointer'}} key={entity.dataObjectId+'valueTr'}>
                                     {CommonUtils.objectToPropArr(entity).map(entityData =>
-                                        <td key={entityData.key+'valueTd'}>
+                                        <td entitydatakey={entityData.key} style={{display: entityData.key === "dataObjectId" ? 'none' : ''}} key={entityData.key+'valueTd'}>
                                             {entityData.value}
                                         </td>
                                     )}
                                  </tr>
                             )}
                         </tbody>
-                    </SelectableTable>
+                    </table>
 
                     <table style={{width:'100px'}}>
                         <tbody>
@@ -154,7 +159,6 @@ class CommonDbGrid extends Component {
                             </tr>
                         </tbody>
                     </table>
-
                 </div>
             );
         }
