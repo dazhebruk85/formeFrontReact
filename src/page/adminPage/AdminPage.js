@@ -7,7 +7,7 @@ import changeUserDataPng from '../../media/data/changeUserData.png';
 import ChangePasswordModal from '../../components/modal/user/ChangePasswordModal';
 import OkCancelDialog from '../../components/modal/OkCancelDialog';
 import {Redirect} from "react-router-dom";
-import CommonGrid from '../../components/grid/CommonGrid';
+import CommonDbGrid from '../../components/grid/CommonDbGrid';
 import * as Const from '../../Const';
 
 class AdminPage extends Component {
@@ -128,8 +128,8 @@ class AdminPage extends Component {
                         </table>
                     </div>
                     <div className="panel-body">
-                        <CommonGrid dataEntityContext={Const.USER_CONTEXT}
-                                    pageSize={10}/>
+                        <CommonDbGrid dataEntityContext={Const.USER_CONTEXT}
+                                      pageSize={10}/>
                     </div>
                 </div>
                 <ChangePasswordModal visible={this.state.changePasswordModalVisible} closeAction={this.closeChangePasswordModal.bind(this)}/>

@@ -4,8 +4,11 @@ import axios from "axios";
 import * as Const from "../../Const";
 import SelectableTable from 'react-selectable-table';
 import * as CommonUtils from '../../utils/CommonUtils'
+import nextPagePng from "../../media/data/nextPage.png";
+import prevPagePng from "../../media/data/prevPage.png";
 
-class CommonGrid extends Component {
+
+class CommonDbGrid extends Component {
 
     constructor(props) {
         super(props);
@@ -16,13 +19,14 @@ class CommonGrid extends Component {
             pageSize:props.pageSize,
             pageNumber:1,
             lastPage:false,
-            allEntityCount:null,
             listData:null,
             selectedIndicies:[]
         };
 
         this.getGridListData = this.getGridListData.bind(this);
         this.setErrors = this.setErrors.bind(this);
+        this.nextPage = this.nextPage.bind(this);
+        this.prevPage = this.prevPage.bind(this);
     }
 
     componentDidMount() {
@@ -53,7 +57,8 @@ class CommonGrid extends Component {
 
     setGridData(props) {
         this.setState({
-            listData: props.listData
+            listData:props.listData,
+            lastPage:props.listData.lastPage
         });
     }
 
@@ -65,6 +70,26 @@ class CommonGrid extends Component {
 
     onSelectionChange() {
         this.setState({ selectedIndicies: this.refs.table.getSelectedIndices() })
+    }
+
+    nextPage() {
+        if (this.state.lastPage) {
+            return;
+        }
+        this.setState({
+            pageNumber:this.state.pageNumber+1
+        })
+        setTimeout(() => this.getGridListData(), 0);
+    }
+
+    prevPage() {
+        if (this.state.pageNumber === 1) {
+            return;
+        }
+        this.setState({
+            pageNumber:this.state.pageNumber-1
+        })
+        setTimeout(() => this.getGridListData(), 0);
     }
 
     render() {
@@ -97,10 +122,43 @@ class CommonGrid extends Component {
                             )}
                         </tbody>
                     </SelectableTable>
+
+                    <table style={{width:'100px'}}>
+                        <tbody>
+                            <tr>
+                                <td>
+                                    <div style={{width:'100%',height:'100%',padding:'0px',textAlign:'-webkit-center'}}>
+                                        <img title={'Предыдущая страница'}
+                                             alt='Предыдущая страница'
+                                             src={prevPagePng}
+                                             style={{width:'28px',height:'28px',cursor:'pointer',marginTop:"0px", marginLeft:"0px"}}
+                                             onClick={this.prevPage}
+                                        />
+                                    </div>
+                                </td>
+                                <td>
+                                    <div style={{width:'100%',height:'100%',padding:'0px',textAlign:'-webkit-center'}}>
+                                        {this.state.pageNumber}
+                                    </div>
+                                </td>
+                                <td>
+                                    <div style={{width:'100%',height:'100%',padding:'0px',textAlign:'-webkit-center'}}>
+                                        <img title={'Следующая страница'}
+                                             alt='Следующая страница'
+                                             src={nextPagePng}
+                                             style={{width:'28px',height:'28px',cursor:'pointer',marginTop:"0px", marginLeft:"0px"}}
+                                             onClick={this.nextPage}
+                                        />
+                                    </div>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+
                 </div>
             );
         }
     }
 }
 
-export default CommonGrid;
+export default CommonDbGrid;
