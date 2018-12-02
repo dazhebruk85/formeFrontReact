@@ -111,7 +111,7 @@ class CommonDbGrid extends Component {
         if (isLoading) {
             return (
                 <div className="container" style={{width:'100%',height:'100%'}}>
-                    <img alt='' src={spinnerSvg} style={{position:'absolute',top:'50%',left:'50%'}}/>
+                    <img alt='' src={spinnerSvg} style={{position:'absolute',top:'40%',left:'40%'}}/>
                 </div>
             )
         }
