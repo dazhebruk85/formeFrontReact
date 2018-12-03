@@ -1,11 +1,11 @@
 import React from 'react';
 import Modal from 'react-awesome-modal';
-import closePng from '../../../media/data/close.png';
+import closePng from '../../media/data/close.png';
 import cookie from 'react-cookies';
 import axios from 'axios';
-import * as Const from '../../../Const';
+import * as Const from '../../Const';
 import { Redirect } from 'react-router-dom'
-import MultiPopup from "../MultiPopup";
+import MultiPopup from "../modal/MultiPopup";
 
 class ChangePasswordModal extends Modal {
 
