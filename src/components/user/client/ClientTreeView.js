@@ -35,7 +35,6 @@ class ClientTreeView extends Component {
             />
         )
     }
-
 }
 
 export default ClientTreeView;
