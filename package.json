@@ -10,7 +10,9 @@
     "react-router-dom": "^4.3.1",
     "react-scripts": "^1.1.4",
     "react-cookies": "^0.1.0",
-    "react-awesome-modal": "^2.0.5"
+    "react-awesome-modal": "^2.0.5",
+    "rc-tree": "^1.14.8",
+    "react-animations": "^1.0.0"
   },
   "scripts": {
     "start": "react-scripts start",

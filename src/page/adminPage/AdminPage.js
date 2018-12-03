@@ -1,7 +1,5 @@
 import React, {Component} from 'react';
 import logo from '../../media/logo.png';
-
-
 import CommonDbGrid from '../../components/grid/CommonDbGrid';
 import * as Const from '../../Const';
 import QuickActionPanel from '../../components/user/QuickActionPanel'
@@ -10,8 +8,6 @@ class AdminPage extends Component {
 
     constructor() {
         super();
-        this.state = {
-        };
     }
 
     componentDidMount() {
