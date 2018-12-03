@@ -121,30 +121,32 @@ class CommonDbGrid extends Component {
         } else {
             return (
                 <div className="container" style={{width:'100%',height:'100%'}}>
-                    <table  style={{height:'370px',marginBottom:'0px'}} className='table table-striped table-hover table-condensed' ref="CommonDbGrid">
-                        <thead className='.thead-light'>
-                            {this.state.listData.dataHeaderList.map(entity =>
-                                <tr key={entity.dataObjectId+'headerTr'}>
-                                    {CommonUtils.objectToPropArr(entity).map(entityData =>
-                                        <th style={{display: entityData.key === "dataObjectId" ? 'none' : ''}} key={entityData.key+'headerTd'}>
-                                            {entityData.value}
-                                        </th>
-                                    )}
-                                </tr>
-                            )}
-                          </thead>
-                        <tbody>
-                            {this.state.listData.dataList.map(entity =>
-                                <tr onClick={this.handleSelectEntity} style={{cursor:'pointer'}} key={entity.dataObjectId+'valueTr'}>
-                                    {CommonUtils.objectToPropArr(entity).map(entityData =>
-                                        <td entitydatakey={entityData.key} style={{display: entityData.key === "dataObjectId" ? 'none' : ''}} key={entityData.key+'valueTd'}>
-                                            {entityData.value}
-                                        </td>
-                                    )}
-                                 </tr>
-                            )}
-                        </tbody>
-                    </table>
+                    <div style={{height:'340px'}}>
+                        <table  style={{marginBottom:'0px'}} className='table table-striped table-hover table-condensed' ref="CommonDbGrid">
+                            <thead className='.thead-light'>
+                                {this.state.listData.dataHeaderList.map(entity =>
+                                    <tr key={entity.dataObjectId+'headerTr'}>
+                                        {CommonUtils.objectToPropArr(entity).map(entityData =>
+                                            <th style={{display: entityData.key === "dataObjectId" ? 'none' : ''}} key={entityData.key+'headerTd'}>
+                                                {entityData.value}
+                                            </th>
+                                        )}
+                                    </tr>
+                                )}
+                              </thead>
+                            <tbody>
+                                {this.state.listData.dataList.map(entity =>
+                                    <tr onClick={this.handleSelectEntity} style={{cursor:'pointer',height:'30px'}} key={entity.dataObjectId+'valueTr'}>
+                                        {CommonUtils.objectToPropArr(entity).map(entityData =>
+                                            <td entitydatakey={entityData.key} style={{padding:'5px',height:'30px',display: entityData.key === "dataObjectId" ? 'none' : ''}} key={entityData.key+'valueTd'}>
+                                                {entityData.value}
+                                            </td>
+                                        )}
+                                     </tr>
+                                )}
+                            </tbody>
+                        </table>
+                    </div>
 
                     <table style={{width:'100px'}}>
                         <tbody>

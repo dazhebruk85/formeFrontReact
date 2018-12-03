@@ -1,7 +1,6 @@
 import React, {Component} from 'react';
 import logo from '../../media/logo.png';
 import exitPng from '../../media/data/exit.png';
-import spinnerSvg from '../../media/spinner.svg';
 import changePasswordPng from '../../media/data/changePassword.png';
 import changeUserDataPng from '../../media/data/changeUserData.png';
 import ChangePasswordModal from '../../components/modal/user/ChangePasswordModal';
