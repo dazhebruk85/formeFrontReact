@@ -38,7 +38,20 @@ class ClientPage extends Component {
                             </tbody>
                         </table>
                     </div>
-                    <ClientTreeView/>
+                    <div className="panel-body" style={{height:'100%',width:'100%'}}>
+                        <table style={{height:'95%',width:'100%'}}>
+                            <tbody>
+                            <tr>
+                                <td style={{width:'250px',verticalAlign:'top',borderRight:'1px solid transparent',borderColor:'#ddd'}}>
+                                    <ClientTreeView/>
+                                </td>
+                                <td>
+                                    <div ref='mainDataDiv'></div>
+                                </td>
+                            </tr>
+                            </tbody>
+                        </table>
+                    </div>
                  </div>
             </div>
         )
