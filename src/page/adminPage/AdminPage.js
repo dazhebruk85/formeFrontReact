@@ -1,8 +1,7 @@
 import React, {Component} from 'react';
 import logo from '../../media/logo.png';
-import CommonDbGrid from '../../components/grid/CommonDbGrid';
-import * as Const from '../../Const';
 import QuickActionPanel from '../../components/user/QuickActionPanel'
+import AdminTreeView from "../../components/user/admin/AdminTreeView";
 
 class AdminPage extends Component {
 
@@ -11,6 +10,10 @@ class AdminPage extends Component {
     }
 
     componentDidMount() {
+    }
+
+    changeTreeChoice(evt){
+        let aaa=0;
     }
 
     render() {
@@ -38,9 +41,19 @@ class AdminPage extends Component {
                             </tbody>
                         </table>
                     </div>
-                    <div className="panel-body">
-                        <CommonDbGrid dataEntityContext={Const.USER_CONTEXT}
-                                      pageSize={10}/>
+                    <div className="panel-body" style={{height:'100%',width:'100%'}}>
+                        <table style={{height:'95%',width:'100%'}}>
+                            <tbody>
+                            <tr>
+                                <td style={{width:'250px',verticalAlign:'top',borderRight:'1px solid transparent',borderColor:'#ddd'}}>
+                                    <AdminTreeView changeTreeChoiceAction={this.changeTreeChoice.bind(this)}/>
+                                </td>
+                                <td>
+                                    <div ref='mainDataDiv'></div>
+                                </td>
+                            </tr>
+                            </tbody>
+                        </table>
                     </div>
                 </div>
             </div>

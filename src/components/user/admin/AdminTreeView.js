@@ -4,17 +4,25 @@ import '../../../media/tree/tree.css';
 import mainTreeIcon from '../../../media/tree/mainTreeIcon.png'
 import anketaIcon from '../../../media/tree/anketa.png'
 import obectiIcon from '../../../media/tree/obecti.png'
+import dictsIcon from '../../../media/tree/dicts.png'
+import usersIcon from '../../../media/tree/users.png'
+import userRolesIcon from '../../../media/tree/userRoles.png'
 
 const treeData = [
     { key:'Main',icon:<img alt='' src={mainTreeIcon} style={{marginTop:"0px", marginLeft:"0px"}}/>,title:'Главная',children:
         [
             {key:'obects',icon:<img alt='' src={obectiIcon} style={{marginTop:"0px", marginLeft:"0px"}}/>,title:'Объекты'}
-            ,{key:'ancets',icon:<img alt='' src={anketaIcon} style={{marginTop:"0px", marginLeft:"0px"}}/>,title:'Анкеты'}
+           ,{key:'ancets',icon:<img alt='' src={anketaIcon} style={{marginTop:"0px", marginLeft:"0px"}}/>,title:'Анкеты'}
+           ,{key:'dicts',icon:<img alt='' src={dictsIcon} style={{marginTop:"0px", marginLeft:"0px"}}/>,title:'Справочники',children:
+            [
+                {key:'users',icon:<img alt='' src={usersIcon} style={{marginTop:"0px", marginLeft:"0px"}}/>,title:'Пользователи'}
+               ,{key:'userRoles',icon:<img alt='' src={userRolesIcon} style={{marginTop:"0px", marginLeft:"0px"}}/>,title:'Роли пользователя'}
+            ]}
         ]
     }
 ];
 
-class ClientTreeView extends Component {
+class AdminTreeView extends Component {
 
     constructor(props) {
         super();
@@ -29,7 +37,7 @@ class ClientTreeView extends Component {
     }
 
     onRbSelect = (selectedKeys, info) => {
-        if ('Main' !== info.node.props.eventKey) {
+        if ('Main' !== info.node.props.eventKey && 'dicts' !== info.node.props.eventKey) {
             this.setState({
                 selectedKeys:[info.node.props.eventKey]
             });
@@ -40,7 +48,7 @@ class ClientTreeView extends Component {
     render() {
         return (
             <Tree
-                ref='clientTree'
+                ref='adminTree'
                 showLine={false}
                 checkable={false}
                 selectable={true}
@@ -53,4 +61,4 @@ class ClientTreeView extends Component {
     }
 }
 
-export default ClientTreeView;
+export default AdminTreeView;
