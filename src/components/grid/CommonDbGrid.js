@@ -5,7 +5,7 @@ import * as Const from "../../Const";
 import * as CommonUtils from '../../utils/CommonUtils'
 import nextPagePng from "../../media/data/nextPage.png";
 import prevPagePng from "../../media/data/prevPage.png";
-import spinnerSvg from '../../media/spinner.svg';
+import spinner from '../../media/spinner.gif';
 
 class CommonDbGrid extends Component {
 
@@ -111,7 +111,7 @@ class CommonDbGrid extends Component {
         if (isLoading) {
             return (
                 <div className="container" style={{width:'100%',height:'100%'}}>
-                    <img alt='' src={spinnerSvg} style={{position:'absolute',top:'40%',left:'40%'}}/>
+                    <img alt='' src={spinner} style={{position:'absolute',top:'40%',left:'40%'}}/>
                 </div>
             )
         }

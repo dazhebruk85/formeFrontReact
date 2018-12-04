@@ -38,7 +38,6 @@ class ClientTreeView extends Component {
             });
         }
         setTimeout(() => this.changeTreeChoiceAction(this.state), 0);
-
         //this.refs.clientTree.selectedKeys = selectedKeys
     };
 
