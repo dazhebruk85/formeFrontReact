@@ -13,6 +13,10 @@ class ClientPage extends Component {
     componentDidMount() {
     }
 
+    changeTreeChoice(evt){
+        let aaa=0;
+    }
+
     render() {
         return (
             <div className="container" style={{width:'100%',height:'100%'}}>
@@ -43,7 +47,7 @@ class ClientPage extends Component {
                             <tbody>
                             <tr>
                                 <td style={{width:'250px',verticalAlign:'top',borderRight:'1px solid transparent',borderColor:'#ddd'}}>
-                                    <ClientTreeView/>
+                                    <ClientTreeView changeTreeChoiceAction={this.changeTreeChoice.bind(this)}/>
                                 </td>
                                 <td>
                                     <div ref='mainDataDiv'></div>
