@@ -5,6 +5,10 @@ import cookie from 'react-cookies';
 import axios from 'axios';
 import * as Const from '../../Const';
 
+import DatePicker from 'react-datepicker';
+import moment from 'moment';
+import './../../media/datePicker/react-datepicker.css';
+
 class UpdateUserDataModal extends Modal {
 
     constructor(props) {
@@ -14,8 +18,8 @@ class UpdateUserDataModal extends Modal {
             visible:false,
             errors: [],
             closeAction:props.closeAction,
-            fio:null,
-            birthDate:null
+            fio:"",
+            birthDate: null
         };
 
         this.handleChange = this.handleChange.bind(this);
@@ -24,13 +28,19 @@ class UpdateUserDataModal extends Modal {
         this.closeAction = props.closeAction
     }
 
-    handleChange(event) {
-        const value = event.target.value;
-        const id = event.target.id;
+    handleChange(event, field) {
+        if (field !== null && field !== undefined) {
+            this.setState({
+                [field]: event
+            });
+        } else {
+            const value = event.target.value;
+            const id = event.target.id;
 
-        this.setState({
-            [id]: value
-        });
+            this.setState({
+                [id]: value
+            });
+        }
     }
 
     setErrors(errors) {
@@ -76,7 +86,7 @@ class UpdateUserDataModal extends Modal {
                             <div className="form-group">
                                 <label style={{width:'220px'}} className="control-label col-sm-2" htmlFor="loginTextbox">Дата рождения</label>
                                 <div className="col-sm-10" style={{width:'300px',paddingRight:'0px'}}>
-
+                                    <DatePicker cla todayButton='Today' ref='birthDate' className="form-control" id='birthDate' selected={this.state.birthDate} onChange={(date) => this.handleChange(date, "birthDate")} dateFormat="dd.MM.yyyy" isClearable={true}/>
                                 </div>
                             </div>
                         </form>
