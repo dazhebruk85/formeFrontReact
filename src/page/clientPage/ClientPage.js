@@ -46,7 +46,7 @@ class ClientPage extends Component {
                         <table style={{height:'98%',width:'100%'}}>
                             <tbody>
                             <tr>
-                                <td style={{width:'250px',verticalAlign:'top',borderRight:'1px solid transparent',borderColor:'#ddd'}}>
+                                <td style={{verticalAlign:'top'}}>
                                     <ClientTreeView changeTreeChoiceAction={this.changeTreeChoice.bind(this)}/>
                                 </td>
                                 <td>
