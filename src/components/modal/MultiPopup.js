@@ -42,7 +42,7 @@ class MultiPopup extends Modal {
             if (props.dataList.length > 0) {
 
                 let dataList = props.dataList.map((dataObj) =>
-                    <tr key={CommonUtils.genGuid()}>
+                    <tr key={CommonUtils.genGuid()} style={{height:'30px'}}>
                         <td key={CommonUtils.genGuid()} style={{width:'7%'}}>
                             <div key={CommonUtils.genGuid()}>
                                 <img alt='' src={popupUiDataForRender.png} style={{height:"24px",width:"24px"}}/>
@@ -76,7 +76,7 @@ class MultiPopup extends Modal {
 
         return (
             <Modal visible={this.state.popupVisible} effect="fadeInDown">
-                <div className="panel panel-default" style={{width:'450px',height:'170px',marginBottom:'0px'}}>
+                <div className="panel panel-default" style={{width:'450px',height:'200px',marginBottom:'0px'}}>
                     <div className="panel-heading" style={{height:'45px'}}>
                         <table style={{width:'100%'}}>
                             <tbody>
@@ -91,7 +91,7 @@ class MultiPopup extends Modal {
                             </tbody>
                         </table>
                     </div>
-                    <div className="panel-body" style={{height:'80px',overflow:'auto'}}>
+                    <div className="panel-body" style={{height:'100px',overflow:'auto'}}>
                         <table style={{width:'100%'}}>
                             <tbody>
                                 <PopupDataList dataList={this.state.popupData}/>

@@ -170,17 +170,12 @@ class ChangePasswordModal extends Modal {
                                 </div>
                             </div>
 
-                            <div className="form-group">
-                                <label style={{width:'220px'}} className="control-label col-sm-2"></label>
-                                <div className="col-sm-10" style={{width:'300px',paddingRight:'0px'}}>
-                                    <div style={{paddingRight:'0px'}} className="btn-toolbar pull-right" role="toolbar">
-                                        <div className="btn-group mr-2" role="group">
-                                            <input id="saveButton" type="button" value="Ок" className="btn btn-primary" onClick={this.changePassword}/>
-                                        </div>
-                                        <div className="btn-group mr-2" role="group">
-                                            <input id="closeButton" type="button" value="Отмена" className="btn btn-primary" onClick={() => this.closeModal()}/>
-                                        </div>
-                                    </div>
+                            <div className="btn-toolbar align-bottom" role="toolbar" style={{justifyContent:'center',display:'flex'}}>
+                                <div className="btn-group mr-2" role="group">
+                                    <input id="okButton" type="button" value="Ок" className="btn btn-primary" onClick={this.changePassword}/>
+                                </div>
+                                <div className="btn-group mr-2" role="group">
+                                    <input id="cancelButton" type="button" value="Отмена" className="btn btn-primary" onClick={() => this.closeModal()}/>
                                 </div>
                             </div>
                         </form>
