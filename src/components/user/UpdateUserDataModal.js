@@ -24,9 +24,10 @@ class UpdateUserDataModal extends Modal {
             phone: '',
             email: '',
             passportSeries: '',
-            passportNum: '',
+            passportNumber: '',
             passportIssuedBy: '',
-            regAddress: ''
+            regAddress: '',
+            successInfoMessages: []
         };
 
         this.handleChange = this.handleChange.bind(this);
@@ -110,9 +111,10 @@ class UpdateUserDataModal extends Modal {
             phone: '',
             email: '',
             passportSeries: '',
-            passportNum: '',
+            passportNumber: '',
             passportIssuedBy: '',
-            regAddress: ''
+            regAddress: '',
+            successInfoMessages: []
         });
         this.closeAction()
     }
@@ -140,7 +142,7 @@ class UpdateUserDataModal extends Modal {
         if (!this.state.passportSeries) {
             errors.push({code:'',message:'Необходимо заполнить серию паспорта'})
         }
-        if (!this.state.passportNum) {
+        if (!this.state.passportNumber) {
             errors.push({code:'',message:'Необходимо заполнить номер паспорта'})
         }
         if (!this.state.passportIssuedBy) {
@@ -154,8 +156,43 @@ class UpdateUserDataModal extends Modal {
                 errors: errors
             });
         } else {
-
+            let propsToSave = this.state
+            propsToSave['userId'] = cookie.load('userId')
+            propsToSave['birthDateLong'] = propsToSave.birthDate.getTime()
+            let listPostEvent = axios.post(Const.APP_URL, {
+                context: Const.USER_CONTEXT,
+                action: Const.ENTITY_SAVE,
+                sessionId: cookie.load('sessionId'),
+                params: propsToSave
+            });
+            listPostEvent.then(res => {
+                if (res.data.errors.length > 0) {
+                    this.setErrors(res.data.errors)
+                } else {
+                    this.setSuccessChangePassword([{code:'INFO',message:'Данные пользователя сохранены'}])
+                }
+            });
+            listPostEvent.catch(error => {
+                if (!error.status) {
+                    this.setErrors([{code:'SYS',message:'APP сервер недоступен'}])
+                } else {
+                    this.setErrors([{code:'SYS',message:'Непредвиденная ошибка на сервере'}])
+                }
+            });
         }
+    }
+
+    setSuccessChangePassword(messages) {
+        this.setState({
+            successInfoMessages: messages
+        });
+    }
+
+    clearSuccessInfoMessages() {
+        this.setState({
+            successInfoMessages: []
+        });
+        this.closeModal()
     }
 
     render() {
@@ -208,7 +245,7 @@ class UpdateUserDataModal extends Modal {
                                                 </td>
                                                 <td style={{width:'10px'}}></td>
                                                 <td>
-                                                    <input placeholder="Номер" id="passportNum" maxLength={6} className="form-control" type="text" value={this.state.passportNum} onChange={this.handleChange}/>
+                                                    <input placeholder="Номер" id="passportNumber" maxLength={6} className="form-control" type="text" value={this.state.passportNumber} onChange={this.handleChange}/>
                                                 </td>
                                             </tr>
                                         </tbody>
@@ -253,6 +290,9 @@ class UpdateUserDataModal extends Modal {
                 <MultiPopup popupData={this.state.errors}
                             popupType={Const.ERROR_POPUP}
                             closeAction={this.clearErrors.bind(this)}/>
+                <MultiPopup popupData={this.state.successInfoMessages}
+                            popupType={Const.INFO_POPUP}
+                            closeAction={this.clearSuccessInfoMessages.bind(this)}/>
             </Modal>
         )
     }
