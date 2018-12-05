@@ -13,7 +13,6 @@ class AdminPage extends Component {
     }
 
     changeTreeChoice(evt){
-        let aaa=0;
     }
 
     render() {

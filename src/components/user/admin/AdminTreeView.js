@@ -1,5 +1,5 @@
 import React, {Component} from 'react';
-import Tree, { TreeNode } from 'rc-tree';
+import Tree from 'rc-tree';
 import '../../../media/tree/tree.css';
 import mainTreeIcon from '../../../media/tree/mainTreeIcon.png'
 import anketaIcon from '../../../media/tree/anketa.png'
