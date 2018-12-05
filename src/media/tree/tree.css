@@ -181,8 +181,8 @@
 
 .tree_is_not_open {
   position: absolute;
-  -webkit-transform: translateX(-100%);
-  transform: translateX(-100%);
+  -webkit-transform: translateX(-115%);
+  transform: translateX(-115%);
   transition: -webkit-transform 300ms;
   transition: transform 300ms;
   transition: transform 300ms, -webkit-transform 300ms;

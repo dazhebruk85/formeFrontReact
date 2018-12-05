@@ -68,7 +68,7 @@ class AdminTreeView extends Component {
             <table style={{height:'100%',borderRight:'1px solid transparent',borderColor:'#ddd'}}>
                 <tbody>
                     <tr>
-                        <td ref='adminTreeTd' style={{verticalAlign:'top'}}>
+                        <td ref='adminTreeTd' style={{width:'250px', verticalAlign:'top'}}>
                             <Tree
                                 ref='adminTree'
                                 showLine={false}
@@ -81,7 +81,7 @@ class AdminTreeView extends Component {
                             />
                         </td>
                         <td style={{verticalAlign:'top'}}>
-                            <img onClick={() => this.showHideTree()} alt='' align={'right'} src={this.state.showTree ? hideIcon : showIcon} style={{cursor:'pointer',height:"24px",width:"24px"}}/>
+                            <img onClick={() => this.showHideTree()} alt='' align={'right'} src={this.state.showTree ? hideIcon : showIcon} style={{marginTop:'5px',marginRight:'5px',cursor:'pointer',height:"24px",width:"24px"}}/>
                         </td>
                     </tr>
                 </tbody>
