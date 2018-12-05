@@ -86,7 +86,14 @@ class UpdateUserDataModal extends Modal {
                             <div className="form-group">
                                 <label style={{width:'220px'}} className="control-label col-sm-2" htmlFor="loginTextbox">Дата рождения</label>
                                 <div className="col-sm-10" style={{width:'300px',paddingRight:'0px'}}>
-                                    <DatePicker cla todayButton='Today' ref='birthDate' className="form-control" id='birthDate' selected={this.state.birthDate} onChange={(date) => this.handleChange(date, "birthDate")} dateFormat="dd.MM.yyyy" isClearable={true}/>
+                                    <DatePicker todayButton='Today'
+                                                ref='birthDate'
+                                                className="form-control"
+                                                id='birthDate'
+                                                selected={this.state.birthDate}
+                                                onChange={(date) => this.handleChange(date, "birthDate")}
+                                                dateFormat="dd.MM.yyyy"
+                                                isClearable={true}/>
                                 </div>
                             </div>
                         </form>
