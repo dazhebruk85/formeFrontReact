@@ -19,8 +19,8 @@ class ClientPage extends Component {
 
     render() {
         return (
-            <div className="container" style={{width:'100%',height:'100%'}}>
-                <div className="panel panel-default" style={{width:'99%',height:'97%',margin:"10px"}}>
+            <div style={{width:'100%',height:'100%'}}>
+                <div className="panel panel-default" style={{width:'100%',height:'100%',margin:"10px"}}>
                     <div className="panel-heading" style={{height:'50px'}}>
                         <table style={{width:'100%'}}>
                             <tbody>
@@ -42,8 +42,8 @@ class ClientPage extends Component {
                             </tbody>
                         </table>
                     </div>
-                    <div className="panel-body" style={{height:'100%',width:'100%'}}>
-                        <table style={{height:'95%',width:'100%'}}>
+                    <div className="panel-body" style={{height:'95%',width:'100%'}}>
+                        <table style={{height:'98%',width:'100%'}}>
                             <tbody>
                             <tr>
                                 <td style={{width:'250px',verticalAlign:'top',borderRight:'1px solid transparent',borderColor:'#ddd'}}>

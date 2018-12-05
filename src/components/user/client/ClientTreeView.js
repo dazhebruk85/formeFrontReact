@@ -21,14 +21,15 @@ class ClientTreeView extends Component {
         this.state = {
             selectedKeys:[]
         };
+        this.onTreeSelect = this.onTreeSelect.bind(this);
+
         this.changeTreeChoiceAction = props.changeTreeChoiceAction
-        this.onRbSelect = this.onRbSelect.bind(this);
     }
 
     componentDidMount() {
     }
 
-    onRbSelect = (selectedKeys, info) => {
+    onTreeSelect = (selectedKeys, info) => {
         if ('Main' !== info.node.props.eventKey) {
             this.setState({
                 selectedKeys:[info.node.props.eventKey]
@@ -47,7 +48,7 @@ class ClientTreeView extends Component {
                 selectedKeys={this.state.selectedKeys}
                 defaultExpandAll={true}
                 treeData={treeData}
-                onSelect={this.onRbSelect}
+                onSelect={this.onTreeSelect}
             />
         )
     }

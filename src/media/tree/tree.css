@@ -170,3 +170,20 @@
   margin-right: 2px;
   vertical-align: top;
 }
+
+.tree_is_open {
+  -webkit-transform: none;
+  transform: none;
+  transition: -webkit-transform 300ms;
+  transition: transform 300ms;
+  transition: transform 300ms, -webkit-transform 300ms;
+}
+
+.tree_is_not_open {
+  position: absolute;
+  -webkit-transform: translateX(-100%);
+  transform: translateX(-100%);
+  transition: -webkit-transform 300ms;
+  transition: transform 300ms;
+  transition: transform 300ms, -webkit-transform 300ms;
+}
