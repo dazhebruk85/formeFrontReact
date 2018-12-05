@@ -53,6 +53,8 @@ class UpdateUserDataModal extends Modal {
         this.setState({
             visible : false,
             errors: [],
+            fio:"",
+            birthDate: null
         });
         this.closeAction()
     }
