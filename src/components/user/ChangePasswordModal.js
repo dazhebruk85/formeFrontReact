@@ -157,8 +157,8 @@ class ChangePasswordModal extends Modal {
                             <UniversalField labelWidth='220px' fieldWidth='300px' label='Введите новый пароль' type={Const.PASSWORD} id='newPassword' value={this.state.newPassword} onChange={this.handleChange} maxLength={20}/>
                             <UniversalField labelWidth='220px' fieldWidth='300px' label='Повторите новый пароль' type={Const.PASSWORD} id='newPasswordRepeat' value={this.state.newPasswordRepeat} onChange={this.handleChange} maxLength={20}/>
                             <div className="btn-toolbar align-bottom" role="toolbar" style={{justifyContent:'center',display:'flex'}}>
-                                <Button id="CPMokButton" value="Ок" onClick={this.changePassword}/>
-                                <Button id="CPMokButton" value="Отмена" onClick={() => this.closeModal()}/>
+                                <Button id="CPMOkButton" value="Ок" onClick={this.changePassword}/>
+                                <Button id="CPMCancelButton" value="Отмена" onClick={() => this.closeModal()}/>
                             </div>
                         </form>
                     </div>
