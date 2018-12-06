@@ -4,6 +4,8 @@ import axios from 'axios';
 import * as Const from '../../Const';
 import cookie from 'react-cookies';
 import MultiPopup from '../../components/modal/MultiPopup';
+import UniversalField from './../../components/field/UniversalField'
+import Button from './../../components/field/Button'
 
 class LoginPage extends Component {
 
@@ -104,23 +106,11 @@ class LoginPage extends Component {
                         <div className="panel-heading">Войти в личный кабинет</div>
                         <div className="panel-body">
                             <form className="form-horizontal">
+                                <UniversalField labelWidth='70px' fieldWidth='300px' label='Логин' type={Const.TEXTFIELD} id='login' value={this.state.login} onChange={this.handleChange} maxLength={50}/>
+                                <UniversalField labelWidth='70px' fieldWidth='300px' label='Пароль' type={Const.PASSWORD} id='password' value={this.state.password} onChange={this.handleChange} maxLength={50}/>
                                 <div className="form-group">
-                                    <label className="control-label col-sm-2" htmlFor="loginTextbox">Логин</label>
-                                    <div className="col-sm-10">
-                                        <input id="login" className="form-control" type="text" value={this.state.login} onChange={this.handleChange} placeholder="Введите логин"/>
-                                    </div>
-                                </div>
-                                <div className="form-group">
-                                    <label className="control-label col-sm-2" htmlFor="passwordTextbox">Пароль</label>
-                                    <div className="col-sm-10">
-                                        <input id="password" className="form-control" type="password" value={this.state.password} onChange={this.handleChange} placeholder="Введите пароль"/>
-                                    </div>
-                                </div>
-                                <div className="form-group">
-                                    <label className="control-label col-sm-2" htmlFor="loginButton"></label>
-                                    <div className="col-sm-10">
-                                        <input id="loginButton" type="button" value="Войти" className="btn btn-primary" onClick={this.doLogin}/>
-                                    </div>
+                                    <label style={{width:'70px'}} className="control-label col-sm-2"></label>
+                                    <Button style={{marginLeft:'15px'}} id="LPloginButton" value="Войти" onClick={this.doLogin}/>
                                 </div>
                             </form>
                         </div>

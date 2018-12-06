@@ -29,6 +29,12 @@ export const WARNING_POPUP = "warningPopup";
 export const ERROR_POPUP = "errorPopup";
 export const INFO_POPUP = "infoPopup";
 
+//FieldTypes
+export const TEXTFIELD = "TEXTFIELD";
+export const PASSWORD = "PASSWORD";
+export const TEXTAREA = "TEXTAREA";
+export const DATEPICKER = "DATEPICKER";
+
 
 
 

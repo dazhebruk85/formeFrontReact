@@ -6,6 +6,8 @@ import axios from 'axios';
 import * as Const from '../../Const';
 import { Redirect } from 'react-router-dom'
 import MultiPopup from "../modal/MultiPopup";
+import UniversalField from './../field/UniversalField'
+import Button from './../field/Button'
 
 class ChangePasswordModal extends Modal {
 
@@ -151,32 +153,12 @@ class ChangePasswordModal extends Modal {
                     </div>
                     <div className="panel-body">
                         <form className="form-horizontal">
-                            <div className="form-group">
-                                <label style={{width:'220px'}} className="control-label col-sm-2" htmlFor="loginTextbox">Введите старый пароль</label>
-                                <div className="col-sm-10" style={{width:'300px',paddingRight:'0px'}}>
-                                    <input id="oldPassword" className="form-control" type="text" value={this.state.oldPassword} onChange={this.handleChange}/>
-                                </div>
-                            </div>
-                            <div className="form-group">
-                                <label style={{width:'220px'}} className="control-label col-sm-2" htmlFor="passwordTextbox">Введите новый пароль</label>
-                                <div className="col-sm-10" style={{width:'300px',paddingRight:'0px'}}>
-                                    <input id="newPassword" className="form-control" type="password" value={this.state.newPassword} onChange={this.handleChange}/>
-                                </div>
-                            </div>
-                            <div className="form-group">
-                                <label style={{width:'220px'}} className="control-label col-sm-2" htmlFor="passwordTextbox">Повторите новый пароль</label>
-                                <div className="col-sm-10" style={{width:'300px',paddingRight:'0px'}}>
-                                    <input id="newPasswordRepeat" className="form-control" type="password" value={this.state.newPasswordRepeat} onChange={this.handleChange}/>
-                                </div>
-                            </div>
-
+                            <UniversalField labelWidth='220px' fieldWidth='300px' label='Введите старый пароль' type={Const.PASSWORD} id='oldPassword' value={this.state.oldPassword} onChange={this.handleChange} maxLength={20}/>
+                            <UniversalField labelWidth='220px' fieldWidth='300px' label='Введите новый пароль' type={Const.PASSWORD} id='newPassword' value={this.state.newPassword} onChange={this.handleChange} maxLength={20}/>
+                            <UniversalField labelWidth='220px' fieldWidth='300px' label='Повторите новый пароль' type={Const.PASSWORD} id='newPasswordRepeat' value={this.state.newPasswordRepeat} onChange={this.handleChange} maxLength={20}/>
                             <div className="btn-toolbar align-bottom" role="toolbar" style={{justifyContent:'center',display:'flex'}}>
-                                <div className="btn-group mr-2" role="group">
-                                    <input id="okButton" type="button" value="Ок" className="btn btn-primary" onClick={this.changePassword}/>
-                                </div>
-                                <div className="btn-group mr-2" role="group">
-                                    <input id="cancelButton" type="button" value="Отмена" className="btn btn-primary" onClick={() => this.closeModal()}/>
-                                </div>
+                                <Button id="CPMokButton" value="Ок" onClick={this.changePassword}/>
+                                <Button id="CPMokButton" value="Отмена" onClick={() => this.closeModal()}/>
                             </div>
                         </form>
                     </div>

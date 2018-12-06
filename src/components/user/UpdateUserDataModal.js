@@ -5,10 +5,8 @@ import cookie from 'react-cookies';
 import axios from 'axios';
 import * as Const from '../../Const';
 import MultiPopup from "../modal/MultiPopup";
-
-import DatePicker from 'react-datepicker';
-import moment from 'moment';
-import './../../media/datePicker/react-datepicker.css';
+import UniversalField from './../field/UniversalField'
+import Button from './../field/Button'
 
 class UpdateUserDataModal extends Modal {
 
@@ -213,27 +211,10 @@ class UpdateUserDataModal extends Modal {
                             </tbody>
                         </table>
                     </div>
-                    <div className="panel-body">
+                    <div className="panel-body" style={{overflow:'auto'}}>
                         <form className="form-horizontal">
-                            <div className="form-group">
-                                <label style={{width:'220px'}} className="control-label col-sm-2">ФИО</label>
-                                <div className="col-sm-10" style={{width:'300px',paddingRight:'0px'}}>
-                                    <input id="fio" maxLength={255} className="form-control" type="text" value={this.state.fio} onChange={this.handleChange}/>
-                                </div>
-                            </div>
-                            <div className="form-group">
-                                <label style={{width:'220px'}} className="control-label col-sm-2">Дата рождения</label>
-                                <div className="col-sm-10" style={{width:'300px',paddingRight:'0px'}}>
-                                    <DatePicker todayButton='Today'
-                                                ref='birthDate'
-                                                className="form-control"
-                                                id='birthDate'
-                                                selected={this.state.birthDate}
-                                                onChange={(date) => this.handleChange(date, "birthDate")}
-                                                dateFormat="dd.MM.yyyy"
-                                                isClearable={true}/>
-                                </div>
-                            </div>
+                            <UniversalField labelWidth='220px' fieldWidth='300px' label='ФИО' type={Const.TEXTFIELD} id='fio' value={this.state.fio} onChange={this.handleChange} placeholder='ФИО' maxLength={255}/>
+                            <UniversalField labelWidth='220px' fieldWidth='300px' label='Дата рождения' type={Const.DATEPICKER} id='birthDate' value={this.state.birthDate} onChange={(date) => this.handleChange(date, "birthDate")} placeholder='Дата рождения'/>
                             <div className="form-group">
                                 <label style={{width:'220px'}} className="control-label col-sm-2">Паспорт</label>
                                 <div className="col-sm-10" style={{width:'300px',paddingRight:'0px'}}>
@@ -252,37 +233,13 @@ class UpdateUserDataModal extends Modal {
                                     </table>
                                 </div>
                             </div>
-                            <div className="form-group">
-                                <label style={{width:'220px'}} className="control-label col-sm-2">выдан</label>
-                                <div className="col-sm-10" style={{width:'300px',paddingRight:'0px'}}>
-                                    <textarea style={{resize:'none',height:'75px'}} id="passportIssuedBy" maxLength={255} className="form-control" value={this.state.passportIssuedBy} onChange={this.handleChange} />
-                                </div>
-                            </div>
-                            <div className="form-group">
-                                <label style={{width:'220px'}} className="control-label col-sm-2">Адрес регистрации</label>
-                                <div className="col-sm-10" style={{width:'300px',paddingRight:'0px'}}>
-                                    <textarea style={{resize:'none',height:'75px'}} id="regAddress" maxLength={255} className="form-control" value={this.state.regAddress} onChange={this.handleChange} />
-                                </div>
-                            </div>
-                            <div className="form-group">
-                                <label style={{width:'220px'}} className="control-label col-sm-2">Телефон</label>
-                                <div className="col-sm-10" style={{width:'300px',paddingRight:'0px'}}>
-                                    <input id="phone" maxLength={100} className="form-control" type="text" value={this.state.phone} onChange={this.handleChange}/>
-                                </div>
-                            </div>
-                            <div className="form-group">
-                                <label style={{width:'220px'}} className="control-label col-sm-2">Email</label>
-                                <div className="col-sm-10" style={{width:'300px',paddingRight:'0px'}}>
-                                    <input id="email" maxLength={100} className="form-control" type="text" value={this.state.email} onChange={this.handleChange}/>
-                                </div>
-                            </div>
+                            <UniversalField style={{resize:'none',height:'75px'}} labelWidth='220px' fieldWidth='300px' label='выдан' type={Const.TEXTAREA} id='passportIssuedBy' value={this.state.passportIssuedBy} onChange={this.handleChange} placeholder='Кем выдан паспорт' maxLength={255}/>
+                            <UniversalField style={{resize:'none',height:'75px'}} labelWidth='220px' fieldWidth='300px' label='Адрес регистрации' type={Const.TEXTAREA} id='regAddress' value={this.state.regAddress} onChange={this.handleChange} placeholder='Адрес регистрации' maxLength={255}/>
+                            <UniversalField labelWidth='220px' fieldWidth='300px' label='Телефон' type={Const.TEXTFIELD} id='phone' value={this.state.phone} onChange={this.handleChange} placeholder='Телефон' maxLength={100}/>
+                            <UniversalField labelWidth='220px' fieldWidth='300px' label='Email' type={Const.TEXTFIELD} id='email' value={this.state.email} onChange={this.handleChange} placeholder='Email' maxLength={100}/>
                             <div className="btn-toolbar align-bottom" role="toolbar" style={{justifyContent:'center',display:'flex'}}>
-                                <div className="btn-group mr-2" role="group">
-                                    <input id="UUDMokButton" type="button" value="Ок" className="btn btn-primary" onClick={() => this.saveUserData()}/>
-                                </div>
-                                <div className="btn-group mr-2" role="group">
-                                    <input id="UUDMcancelButton" type="button" value="Отмена" className="btn btn-primary" onClick={() => this.closeModal()}/>
-                                </div>
+                                <Button id="UUDMokButton" value="Ок" onClick={() => this.saveUserData()}/>
+                                <Button id="UUDMcancelButton" value="Отмена" onClick={() => this.closeModal()}/>
                             </div>
                          </form>
                     </div>
