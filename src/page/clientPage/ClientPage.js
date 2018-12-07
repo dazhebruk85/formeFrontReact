@@ -6,14 +6,9 @@ import ClientTreeView from '../../components/user/client/ClientTreeView'
 
 class ClientPage extends Component {
 
-    constructor() {
-        super();
-    }
-
-    componentDidMount() {
-    }
 
     changeTreeChoice(evt){
+
     }
 
     render() {

@@ -5,14 +5,8 @@ import AdminTreeView from "../../components/user/admin/AdminTreeView";
 
 class AdminPage extends Component {
 
-    constructor() {
-        super();
-    }
-
-    componentDidMount() {
-    }
-
     changeTreeChoice(evt){
+
     }
 
     render() {

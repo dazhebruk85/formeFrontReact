@@ -21,7 +21,6 @@ class LoginPage extends Component {
 
         this.handleChange = this.handleChange.bind(this);
         this.doLogin = this.doLogin.bind(this);
-        this.setErrors = this.setErrors.bind(this);
     }
 
     componentDidMount() {
@@ -33,12 +32,6 @@ class LoginPage extends Component {
 
     }
 
-    setErrors(errors) {
-        this.setState({
-            errors: errors
-        });
-    }
-
     async doLogin(evt) {
         let errors = [];
         if (!this.state.login) {
@@ -48,16 +41,14 @@ class LoginPage extends Component {
             errors.push({code:'AUTH_ERROR',message:'Необходимо ввести пароль'})
         }
         if (errors.length > 0) {
-            this.setState({
-                errors: errors
-            });
+            this.setState({errors: errors});
         } else {
             this.setState({isLoading:true});
             let params = {login: this.state.login,password: this.state.password};
-            let responseData = await CommonUtils.makeAsyncPostEvent(Const.APP_URL,Const.AUTH_CONTEXT,'',params);
+            let responseData = await CommonUtils.makeAsyncPostEvent(Const.APP_URL,Const.AUTH_CONTEXT,'',params,'');
             this.setState({isLoading:false});
             if (responseData.errors.length > 0) {
-                this.setErrors(responseData.errors)
+                this.setState({errors: responseData.errors});
             } else {
                 cookie.save('sessionId', responseData.sessionId, { path: '/' });
                 cookie.save('userId', responseData.userId, { path: '/' });
@@ -81,7 +72,6 @@ class LoginPage extends Component {
             [id]: value
         });
     }
-
 
     render() {
         return (

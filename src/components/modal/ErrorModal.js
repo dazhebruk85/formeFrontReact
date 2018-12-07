@@ -7,12 +7,7 @@ import * as CommonUtils from "../../utils/CommonUtils";
 
 class ErrorModal extends Modal {
 
-    constructor(props) {
-        super(props);
-    }
-
     render() {
-
         function ErrorList(props) {
             if (props.dataList.length > 0) {
 

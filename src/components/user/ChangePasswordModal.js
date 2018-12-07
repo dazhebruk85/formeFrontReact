@@ -2,13 +2,13 @@ import React from 'react';
 import Modal from 'react-awesome-modal';
 import closePng from '../../media/data/close.png';
 import cookie from 'react-cookies';
-import axios from 'axios';
 import * as Const from '../../Const';
 import { Redirect } from 'react-router-dom'
 import MultiPopup from "../modal/MultiPopup";
 import UniversalField from './../field/UniversalField'
 import Button from './../field/Button'
 import ErrorModal from '../../components/modal/ErrorModal';
+import * as CommonUtils from "../../utils/CommonUtils";
 
 class ChangePasswordModal extends Modal {
 
@@ -29,7 +29,6 @@ class ChangePasswordModal extends Modal {
         this.handleChange = this.handleChange.bind(this);
         this.closeModal = this.closeModal.bind(this);
         this.changePassword = this.changePassword.bind(this);
-        this.setErrors = this.setErrors.bind(this);
         this.closeAction = props.closeAction
     }
 
@@ -56,76 +55,35 @@ class ChangePasswordModal extends Modal {
         });
     }
 
-    setErrors(errors) {
-        this.setState({
-            errors: errors
-        });
-    }
-
-    clearErrors() {
-        this.setState({
-            errors: []
-        });
-    }
-
-    setSuccessChangePassword(messages) {
-        this.setState({
-            successInfoMessages: messages
-        });
-    }
-
-    clearSuccessInfoMessages() {
-        this.setState({
-            successInfoMessages: [],
-            redirectToLoginPage:true
-        });
-    }
-
-    changePassword(evt) {
+    async changePassword(evt) {
+        let errors = [];
         if (!this.state.oldPassword) {
-            this.setErrors([{code:'CHANGE_PASS_ERROR',message:'Необходимо ввести старый пароль'}]);
-            return;
+            errors.push({code:'CHANGE_PASS_ERROR',message:'Необходимо ввести старый пароль'});
         }
 
         if (!this.state.newPassword) {
-            this.setErrors([{code:'CHANGE_PASS_ERROR',message:'Необходимо ввести новый пароль'}]);
-            return;
+            errors.push({code:'CHANGE_PASS_ERROR',message:'Необходимо ввести новый пароль'});
         }
 
         if (!this.state.newPasswordRepeat) {
-            this.setErrors([{code:'CHANGE_PASS_ERROR',message:'Необходимо повторить новый пароль'}]);
-            return;
+            errors.push({code:'CHANGE_PASS_ERROR',message:'Необходимо повторить новый пароль'});
         }
 
-        if (this.state.newPassword !== this.state.newPasswordRepeat) {
-            this.setErrors([{code:'CHANGE_PASS_ERROR',message:'Введённые новые пароли не совпадают'}]);
-            return;
+        if (this.state.newPassword  && this.state.newPasswordRepeat && this.state.newPassword !== this.state.newPasswordRepeat) {
+            errors.push({code:'CHANGE_PASS_ERROR',message:'Введённые новые пароли не совпадают'});
         }
 
-        let changePasswordPostEvent = axios.post(Const.APP_URL, {
-            context: Const.USER_CONTEXT,
-            action: Const.USER_PASSWORD_CHANGE_ACTION,
-            sessionId: cookie.load('sessionId'),
-            params: {
-                oldPassword: this.state.oldPassword,
-                newPassword: this.state.newPassword,
-                newPasswordRepeat: this.state.newPasswordRepeat
-            }
-        });
-        changePasswordPostEvent.then(res => {
-            if (res.data.errors.length > 0) {
-                this.setErrors(res.data.errors)
+        if (errors.length > 0) {
+            this.setState({errors: errors});
+        } else {
+            let params = {oldPassword:this.state.oldPassword,newPassword:this.state.newPassword,newPasswordRepeat:this.state.newPasswordRepeat};
+            let responseData = await CommonUtils.makeAsyncPostEvent(Const.APP_URL,Const.USER_CONTEXT,Const.USER_PASSWORD_CHANGE_ACTION,params,cookie.load('sessionId'));
+            if (responseData.errors.length > 0) {
+                this.setState({errors: responseData.errors});
             } else {
-                this.setSuccessChangePassword([{code:'INFO',message:'Вы сменили пароль, необходимо заново войти в систему под новым паролем'}])
+                this.setState({successInfoMessages: [{code:'INFO',message:'Вы сменили пароль, необходимо заново войти в систему под новым паролем'}]});
             }
-        });
-        changePasswordPostEvent.catch(error => {
-            if (!error.status) {
-                this.setErrors([{code:'SYS',message:'APP сервер недоступен'}])
-            } else {
-                this.setErrors([{code:'SYS',message:'Непредвиденная ошибка на сервере'}])
-            }
-        });
+        }
     }
 
     render() {
@@ -158,7 +116,7 @@ class ChangePasswordModal extends Modal {
                             <UniversalField labelWidth='220px' fieldWidth='300px' label='Введите новый пароль' type={Const.PASSWORD} id='newPassword' value={this.state.newPassword} onChange={this.handleChange} maxLength={20}/>
                             <UniversalField labelWidth='220px' fieldWidth='300px' label='Повторите новый пароль' type={Const.PASSWORD} id='newPasswordRepeat' value={this.state.newPasswordRepeat} onChange={this.handleChange} maxLength={20}/>
                             <div className="btn-toolbar align-bottom" role="toolbar" style={{justifyContent:'center',display:'flex'}}>
-                                <Button id="CPMOkButton" value="Ок" onClick={this.changePassword}/>
+                                <Button id="CPMOkButton" value="Ок" onClick={() => this.changePassword()}/>
                                 <Button id="CPMCancelButton" value="Отмена" onClick={() => this.closeModal()}/>
                             </div>
                         </form>
@@ -167,7 +125,7 @@ class ChangePasswordModal extends Modal {
                 <ErrorModal errors={this.state.errors} closeAction={() => this.setState({errors:[]})}/>
                 <MultiPopup popupData={this.state.successInfoMessages}
                             popupType={Const.INFO_POPUP}
-                            closeAction={this.clearSuccessInfoMessages.bind(this)}/>
+                            closeAction={() => this.setState({successInfoMessages:[],redirectToLoginPage:true})}/>
             </Modal>
             )
     }

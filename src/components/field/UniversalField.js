@@ -32,7 +32,6 @@ class UniversalField extends Component {
                         </div>
                     </div>
                 );
-                break;
             case Const.PASSWORD:
                 return (
                     <div className="form-group">
@@ -50,7 +49,6 @@ class UniversalField extends Component {
                         </div>
                     </div>
                 );
-                break;
             case Const.TEXTAREA:
                 return (
                     <div className="form-group">
@@ -67,7 +65,6 @@ class UniversalField extends Component {
                         </div>
                     </div>
                 );
-                break;
             case Const.DATEPICKER:
                 return (
                     <div className="form-group">
@@ -85,12 +82,10 @@ class UniversalField extends Component {
                         </div>
                     </div>
                 );
-                break;
             default:
                 return (
                     null
                 );
-                break
         }
     }
 }

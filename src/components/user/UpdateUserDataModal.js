@@ -2,12 +2,12 @@ import React from 'react';
 import Modal from 'react-awesome-modal';
 import closePng from '../../media/data/close.png';
 import cookie from 'react-cookies';
-import axios from 'axios';
 import * as Const from '../../Const';
 import MultiPopup from "../modal/MultiPopup";
 import UniversalField from './../field/UniversalField'
 import Button from './../field/Button'
 import ErrorModal from '../../components/modal/ErrorModal';
+import * as CommonUtils from "../../utils/CommonUtils";
 
 class UpdateUserDataModal extends Modal {
 
@@ -15,8 +15,8 @@ class UpdateUserDataModal extends Modal {
         super(props);
 
         this.state = {
-            visible:props.visible,
             errors: [],
+            visible:props.visible,
             closeAction:props.closeAction,
             fio:'',
             birthDate: undefined,
@@ -31,7 +31,6 @@ class UpdateUserDataModal extends Modal {
 
         this.handleChange = this.handleChange.bind(this);
         this.closeModal = this.closeModal.bind(this);
-        this.setErrors = this.setErrors.bind(this);
         this.saveUserData = this.saveUserData.bind(this);
         this.getUserData = this.getUserData.bind(this);
         this.closeAction = props.closeAction
@@ -43,29 +42,14 @@ class UpdateUserDataModal extends Modal {
         }
     }
 
-    getUserData() {
-        let listPostEvent = axios.post(Const.APP_URL, {
-            context: Const.USER_CONTEXT,
-            action: Const.ENTITY_GET,
-            sessionId: cookie.load('sessionId'),
-            params: {
-                userId: cookie.load('userId')
-            }
-        });
-        listPostEvent.then(res => {
-            if (res.data.errors.length > 0) {
-                this.setErrors(res.data.errors)
-            } else {
-                this.setUserData({data: res.data.params});
-            }
-        });
-        listPostEvent.catch(error => {
-            if (!error.status) {
-                this.setErrors([{code:'SYS',message:'APP сервер недоступен'}])
-            } else {
-                this.setErrors([{code:'SYS',message:'Непредвиденная ошибка на сервере'}])
-            }
-        });
+    async getUserData() {
+        let params = {userId: cookie.load('userId')};
+        let responseData = await CommonUtils.makeAsyncPostEvent(Const.APP_URL,Const.USER_CONTEXT,Const.ENTITY_GET,params,cookie.load('sessionId'));
+        if (responseData.errors.length > 0) {
+            this.setState({errors: responseData.errors});
+        } else {
+            this.setUserData({data: responseData.params});
+        }
     }
 
     setUserData(props) {
@@ -99,12 +83,6 @@ class UpdateUserDataModal extends Modal {
         }
     }
 
-    setErrors(errors) {
-        this.setState({
-            errors: errors
-        });
-    }
-
     closeModal() {
         this.setState({
             visible : false,
@@ -122,13 +100,7 @@ class UpdateUserDataModal extends Modal {
         this.closeAction()
     }
 
-    clearErrors() {
-        this.setState({
-            errors: []
-        });
-    }
-
-    saveUserData() {
+    async saveUserData() {
         let errors = []
         if (!this.state.fio) {
             errors.push({code:'',message:'Необходимо заполнить ФИО'})
@@ -159,43 +131,16 @@ class UpdateUserDataModal extends Modal {
                 errors: errors
             });
         } else {
-            let propsToSave = this.state
-            propsToSave['userId'] = cookie.load('userId')
-            propsToSave['birthDateLong'] = propsToSave.birthDate.getTime()
-            let listPostEvent = axios.post(Const.APP_URL, {
-                context: Const.USER_CONTEXT,
-                action: Const.ENTITY_SAVE,
-                sessionId: cookie.load('sessionId'),
-                params: propsToSave
-            });
-            listPostEvent.then(res => {
-                if (res.data.errors.length > 0) {
-                    this.setErrors(res.data.errors)
-                } else {
-                    this.setSuccessChangePassword([{code:'INFO',message:'Данные пользователя сохранены'}])
-                }
-            });
-            listPostEvent.catch(error => {
-                if (!error.status) {
-                    this.setErrors([{code:'SYS',message:'APP сервер недоступен'}])
-                } else {
-                    this.setErrors([{code:'SYS',message:'Непредвиденная ошибка на сервере'}])
-                }
-            });
+            let params = this.state;
+            params['userId'] = cookie.load('userId');
+            params['birthDateLong'] = params.birthDate.getTime();
+            let responseData = await CommonUtils.makeAsyncPostEvent(Const.APP_URL,Const.USER_CONTEXT,Const.ENTITY_SAVE,params,cookie.load('sessionId'));
+            if (responseData.errors.length > 0) {
+                this.setState({errors: responseData.errors});
+            } else {
+                this.setState({successInfoMessages: [{code:'INFO',message:'Данные пользователя сохранены'}]});
+            }
         }
-    }
-
-    setSuccessChangePassword(messages) {
-        this.setState({
-            successInfoMessages: messages
-        });
-    }
-
-    clearSuccessInfoMessages() {
-        this.setState({
-            successInfoMessages: []
-        });
-        this.closeModal()
     }
 
     render() {
@@ -252,7 +197,7 @@ class UpdateUserDataModal extends Modal {
                 <ErrorModal errors={this.state.errors} closeAction={() => this.setState({errors:[]})}/>
                 <MultiPopup popupData={this.state.successInfoMessages}
                             popupType={Const.INFO_POPUP}
-                            closeAction={this.clearSuccessInfoMessages.bind(this)}/>
+                            closeAction={() => {this.setState({successInfoMessages: []}); this.closeModal()}}/>
             </Modal>
         )
     }

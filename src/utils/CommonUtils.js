@@ -19,12 +19,13 @@ export function objectToPropArr(object) {
     return propArr;
 }
 
-export async function makeAsyncPostEvent(url, context, action, params) {
+export async function makeAsyncPostEvent(url, context, action, params, sessionId) {
     try {
         const asyncPostEvent = await axios.post(url, {
             context: context,
             action: action,
-            params: params
+            params: params,
+            sessionId: sessionId
         });
         return asyncPostEvent.data
     } catch (e) {
