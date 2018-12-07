@@ -3,6 +3,12 @@ import React, {Component}from 'react';
 class Button extends Component {
 
     render() {
+
+        let buttonStyle = this.props.style ? this.props.style : {};
+        if (this.props.visible !== undefined) {
+            buttonStyle['display'] = this.props.visible ? '':'none';
+        }
+
         return (
             <div className="btn-group mr-2" role="group">
                 <input ref={this.props.id}
@@ -11,7 +17,8 @@ class Button extends Component {
                        value={this.props.value}
                        className="btn btn-primary"
                        onClick={this.props.onClick}
-                       style={this.props.style}/>
+                       style={buttonStyle}
+                       />
             </div>
         )
     }

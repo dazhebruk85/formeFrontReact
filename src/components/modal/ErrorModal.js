@@ -8,6 +8,16 @@ import * as CommonUtils from "../../utils/CommonUtils";
 class ErrorModal extends Modal {
 
     render() {
+        let sessionExpire = false;
+        if (this.props && this.props.errors && this.props.errors.length > 0) {
+            for (let error in this.props.errors) {
+                if("SYS_SESSION_EXPIRED" === this.props.errors[error].code) {
+                    sessionExpire = true;
+                    break;
+                }
+            }
+        }
+
         function ErrorList(props) {
             if (props.dataList.length > 0) {
 
@@ -57,6 +67,7 @@ class ErrorModal extends Modal {
                     </div>
                     <div className="btn-toolbar align-bottom" role="toolbar" style={{justifyContent:'center',display:'flex'}}>
                         <Button id="EMOkButton" value="Ок" onClick={this.props.closeAction}/>
+                        <Button id="EMReturnToLoginPageButton" value="На страницу логина" onClick={this.props.closeAction} visible={sessionExpire}/>
                     </div>
                 </div>
             </Modal>
