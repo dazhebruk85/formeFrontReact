@@ -89,6 +89,9 @@ class LoginPage extends Component {
                 <div className="panel-group">
                     <img alt='' src={logo} style={{marginTop:"20px", marginLeft:"30px"}}/>
                     <div className="panel panel-default" style={{width:'400px', marginTop:"20px", marginLeft:"30px"}}>
+                        <div id='loadingDiv' style={{visibility:this.state.isLoading ? 'visible':'hidden',borderRadius:'3px',background:'black',opacity:'0.5',position:'fixed',width:'400px',height:'217px',zIndex:'5'}}>
+                            <img alt='' src={spinner} style={{position:'absolute',top:'25%',left:'40%'}}/>
+                        </div>
                         <div className="panel-heading">Войти в личный кабинет</div>
                         <div className="panel-body">
                             <form className="form-horizontal">
@@ -103,9 +106,6 @@ class LoginPage extends Component {
                     </div>
                 </div>
                 <ErrorModal errors={this.state.errors} closeAction={() => this.setState({errors:[]})}/>
-                <div id='loadingDiv' style={{visibility:this.state.isLoading ? 'visible':'hidden',position:'absolute',left:'0px',top:'0px',width:'100%',height:'100%',background:'black',opacity:'0.5'}}>
-                    <img alt='' src={spinner} style={{position:'absolute',top:'35%',left:'45%'}}/>
-                </div>
             </div>
         );
     }
