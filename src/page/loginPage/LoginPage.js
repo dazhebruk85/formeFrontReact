@@ -1,11 +1,12 @@
 import React, {Component} from 'react';
 import logo from '../../media/logo.png';
-import axios from 'axios';
 import * as Const from '../../Const';
 import cookie from 'react-cookies';
 import ErrorModal from '../../components/modal/ErrorModal';
 import UniversalField from './../../components/field/UniversalField'
 import Button from './../../components/field/Button'
+import * as CommonUtils from "../../utils/CommonUtils";
+import spinner from '../../media/spinner.svg';
 
 class LoginPage extends Component {
 
@@ -14,7 +15,8 @@ class LoginPage extends Component {
         this.state = {
             login: '',
             password: '',
-            errors: []
+            errors: [],
+            isLoading: false
         };
 
         this.handleChange = this.handleChange.bind(this);
@@ -37,7 +39,7 @@ class LoginPage extends Component {
         });
     }
 
-    doLogin(evt) {
+    async doLogin(evt) {
         let errors = [];
         if (!this.state.login) {
             errors.push({code:'AUTH_ERROR',message:'Необходимо ввести логин'})
@@ -50,37 +52,24 @@ class LoginPage extends Component {
                 errors: errors
             });
         } else {
-            let loginPostEvent = axios.post(Const.APP_URL, {
-                context: Const.AUTH_CONTEXT,
-                action:'',
-                params: {
-                    login: this.state.login,
-                    password: this.state.password
-                }
-            });
-            loginPostEvent.then(res => {
-                if (res.data.errors.length > 0) {
-                    this.setErrors(res.data.errors)
-                } else {
-                    cookie.save('sessionId', res.data.sessionId, { path: '/' });
-                    cookie.save('userId', res.data.userId, { path: '/' });
-                    cookie.save('userFio', res.data.userFio, { path: '/' });
-                    cookie.save('userRole', res.data.userRole, { path: '/' });
+            this.setState({isLoading:true});
+            let params = {login: this.state.login,password: this.state.password};
+            let responseData = await CommonUtils.makeAsyncPostEvent(Const.APP_URL,Const.AUTH_CONTEXT,'',params);
+            this.setState({isLoading:false});
+            if (responseData.errors.length > 0) {
+                this.setErrors(responseData.errors)
+            } else {
+                cookie.save('sessionId', responseData.sessionId, { path: '/' });
+                cookie.save('userId', responseData.userId, { path: '/' });
+                cookie.save('userFio', responseData.userFio, { path: '/' });
+                cookie.save('userRole', responseData.userRole, { path: '/' });
 
-                    if (res.data.userRole === Const.CLIENT_ROLE) {
-                        this.props.history.push('/clientPage')
-                    } else {
-                        this.props.history.push('/adminPage')
-                    }
-                }
-            });
-            loginPostEvent.catch(error => {
-                if (!error.status) {
-                    this.setErrors([{code:'SYS',message:'APP сервер недоступен'}])
+                if (responseData.userRole === Const.CLIENT_ROLE) {
+                    this.props.history.push('/clientPage')
                 } else {
-                    this.setErrors([{code:'SYS',message:'Непредвиденная ошибка на сервере'}])
+                    this.props.history.push('/adminPage')
                 }
-            });
+            }
         }
     }
 
@@ -114,6 +103,9 @@ class LoginPage extends Component {
                     </div>
                 </div>
                 <ErrorModal errors={this.state.errors} closeAction={() => this.setState({errors:[]})}/>
+                <div id='loadingDiv' style={{visibility:this.state.isLoading ? 'visible':'hidden',position:'absolute',left:'0px',top:'0px',width:'100%',height:'100%',background:'black',opacity:'0.5'}}>
+                    <img alt='' src={spinner} style={{position:'absolute',top:'35%',left:'45%'}}/>
+                </div>
             </div>
         );
     }

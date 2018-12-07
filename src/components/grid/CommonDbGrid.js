@@ -5,7 +5,7 @@ import * as Const from "../../Const";
 import * as CommonUtils from '../../utils/CommonUtils'
 import nextPagePng from "../../media/data/nextPage.png";
 import prevPagePng from "../../media/data/prevPage.png";
-import spinner from '../../media/spinner.gif';
+import spinner from '../../media/spinner.svg';
 
 class CommonDbGrid extends Component {
 
