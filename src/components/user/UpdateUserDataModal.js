@@ -7,6 +7,7 @@ import * as Const from '../../Const';
 import MultiPopup from "../modal/MultiPopup";
 import UniversalField from './../field/UniversalField'
 import Button from './../field/Button'
+import ErrorModal from '../../components/modal/ErrorModal';
 
 class UpdateUserDataModal extends Modal {
 
@@ -52,7 +53,11 @@ class UpdateUserDataModal extends Modal {
             }
         });
         listPostEvent.then(res => {
-            this.setUserData({data: res.data.params});
+            if (res.data.errors.length > 0) {
+                this.setErrors(res.data.errors)
+            } else {
+                this.setUserData({data: res.data.params});
+            }
         });
         listPostEvent.catch(error => {
             if (!error.status) {
@@ -244,9 +249,7 @@ class UpdateUserDataModal extends Modal {
                          </form>
                     </div>
                 </div>
-                <MultiPopup popupData={this.state.errors}
-                            popupType={Const.ERROR_POPUP}
-                            closeAction={this.clearErrors.bind(this)}/>
+                <ErrorModal errors={this.state.errors} closeAction={() => this.setState({errors:[]})}/>
                 <MultiPopup popupData={this.state.successInfoMessages}
                             popupType={Const.INFO_POPUP}
                             closeAction={this.clearSuccessInfoMessages.bind(this)}/>

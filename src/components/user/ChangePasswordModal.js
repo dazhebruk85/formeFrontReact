@@ -8,6 +8,7 @@ import { Redirect } from 'react-router-dom'
 import MultiPopup from "../modal/MultiPopup";
 import UniversalField from './../field/UniversalField'
 import Button from './../field/Button'
+import ErrorModal from '../../components/modal/ErrorModal';
 
 class ChangePasswordModal extends Modal {
 
@@ -163,9 +164,7 @@ class ChangePasswordModal extends Modal {
                         </form>
                     </div>
                 </div>
-                <MultiPopup popupData={this.state.errors}
-                            popupType={Const.ERROR_POPUP}
-                            closeAction={this.clearErrors.bind(this)}/>
+                <ErrorModal errors={this.state.errors} closeAction={() => this.setState({errors:[]})}/>
                 <MultiPopup popupData={this.state.successInfoMessages}
                             popupType={Const.INFO_POPUP}
                             closeAction={this.clearSuccessInfoMessages.bind(this)}/>
