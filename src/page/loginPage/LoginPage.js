@@ -78,8 +78,8 @@ class LoginPage extends Component {
             <div className="container" style={{width:'100%',height:'100%'}}>
                 <div className="panel-group">
                     <img alt='' src={logo} style={{marginTop:"20px", marginLeft:"30px"}}/>
-                    <div className="panel panel-default" style={{width:'400px', marginTop:"20px", marginLeft:"30px"}}>
-                        <div id='loadingDiv' style={{visibility:this.state.isLoading ? 'visible':'hidden',borderRadius:'3px',background:'black',opacity:'0.4',position:'fixed',width:'399px',height:'217px',zIndex:'5'}}>
+                    <div id='loginFramePanel' ref='loginFramePanel' className="panel panel-default" style={{width:'400px', marginTop:"20px", marginLeft:"30px"}}>
+                        <div id='loadingDiv' style={{visibility:this.state.isLoading ? 'visible':'hidden',borderRadius:'3px',background:'black',opacity:'0.4',position:'fixed',width:'inherit',height:'217px',zIndex:'5'}}>
                             <img alt='' src={spinner} style={{position:'absolute',top:'25%',left:'40%'}}/>
                         </div>
                         <div className="panel-heading">Войти в личный кабинет</div>
