@@ -6,7 +6,7 @@ import ErrorModal from '../../components/modal/ErrorModal';
 import UniversalField from './../../components/field/UniversalField'
 import Button from './../../components/field/Button'
 import * as CommonUtils from "../../utils/CommonUtils";
-import spinner from '../../media/spinner.svg';
+import Spinner from '../../components/spinner/Spinner';
 
 class LoginPage extends Component {
 
@@ -79,9 +79,7 @@ class LoginPage extends Component {
                 <div className="panel-group">
                     <img alt='' src={logo} style={{marginTop:"20px", marginLeft:"30px"}}/>
                     <div id='loginFramePanel' ref='loginFramePanel' className="panel panel-default" style={{width:'400px', height:'220px', marginTop:"20px", marginLeft:"30px"}}>
-                        <div id='loadingDiv' style={{visibility:this.state.isLoading ? 'visible':'hidden',borderRadius:'3px',background:'black',opacity:'0.4',position:'fixed',width:'inherit',height:'inherit',zIndex:'5'}}>
-                            <img alt='' src={spinner} style={{position:'absolute',top:'25%',left:'40%'}}/>
-                        </div>
+                        <Spinner isLoading={this.state.isLoading}/>
                         <div className="panel-heading">Войти в личный кабинет</div>
                         <div className="panel-body">
                             <form className="form-horizontal">
