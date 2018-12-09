@@ -6,6 +6,7 @@ import * as CommonUtils from '../../utils/CommonUtils'
 import nextPagePng from "../../media/data/nextPage.png";
 import prevPagePng from "../../media/data/prevPage.png";
 import spinner from '../../media/spinner.svg';
+import Spinner from "../spinner/Spinner";
 
 class CommonDbGrid extends Component {
 
@@ -13,7 +14,7 @@ class CommonDbGrid extends Component {
         super(props);
 
         this.state = {
-            isLoading:true,
+            isLoading:false,
             errors:[],
             dataEntityContext:props.dataEntityContext,
             pageSize:props.pageSize,
@@ -37,27 +38,16 @@ class CommonDbGrid extends Component {
 
     }
 
-    getGridListData() {
-        setTimeout(() => this.setState({ isLoading: true }), 0);
-        let listPostEvent = axios.post(Const.APP_URL, {
-            context: this.state.dataEntityContext,
-            action: Const.ENTITY_LIST,
-            sessionId: cookie.load('sessionId'),
-            params: {
-                pageNumber: this.state.pageNumber,
-                pageSize: this.state.pageSize
-            }
-        });
-        listPostEvent.then(res => {
-            this.setGridData({listData: res.data.frontListData});
-        });
-        listPostEvent.catch(error => {
-            if (!error.status) {
-                this.setErrors([{code:'SYS',message:'APP сервер недоступен'}])
-            } else {
-                this.setErrors([{code:'SYS',message:'Непредвиденная ошибка на сервере'}])
-            }
-        });
+    async getGridListData() {
+        this.setState({isLoading:true});
+        let params = {pageNumber:this.state.pageNumber,pageSize:this.state.pageSize};
+        let responseData = await CommonUtils.makeAsyncPostEvent(Const.APP_URL,this.state.dataEntityContext,Const.ENTITY_LIST,params,cookie.load('sessionId'));
+        this.setState({isLoading:false});
+        if (responseData.errors.length > 0) {
+            this.setState({errors: responseData.errors});
+        } else {
+            this.setGridData({listData: responseData.frontListData});
+        }
     }
 
     setGridData(props) {
@@ -65,14 +55,12 @@ class CommonDbGrid extends Component {
             listData:props.listData,
             lastPage:props.listData.lastPage
         });
-        setTimeout(() => this.setState({ isLoading: false }), 300);
     }
 
     setErrors(errors) {
         this.setState({
             errors: errors
         });
-        setTimeout(() => this.setState({ isLoading: false }), 300);
     }
 
     nextPage() {
@@ -107,22 +95,14 @@ class CommonDbGrid extends Component {
 
     render() {
 
-        const { isLoading } = this.state;
-        if (isLoading) {
-            return (
-                <div className="container" style={{width:'100%',height:'100%'}}>
-                    <img alt='' src={spinner} style={{position:'absolute',top:'40%',left:'40%'}}/>
-                </div>
-            )
-        }
-
         if (this.state.listData === undefined || this.state.listData === null) {
             return null
         } else {
             return (
                 <div className="container" style={{width:'100%',height:'100%'}}>
-                    <div style={{height:'340px'}}>
-                        <table  style={{marginBottom:'0px'}} className='table table-striped table-hover table-condensed' ref="CommonDbGrid">
+                    <div className="panel panel-default" style={{position:'inherit', width:'inherit',height:'340px',margin:"10px"}}>
+                        <Spinner isLoading={this.state.isLoading}/>
+                        <table style={{marginBottom:'0px'}} className='table table-striped table-hover table-condensed' ref="CommonDbGrid">
                             <thead className='.thead-light'>
                                 {this.state.listData.dataHeaderList.map(entity =>
                                     <tr key={entity.dataObjectId+'headerTr'}>

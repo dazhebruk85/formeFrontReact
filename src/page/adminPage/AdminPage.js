@@ -2,14 +2,39 @@ import React, {Component} from 'react';
 import logo from '../../media/logo.png';
 import QuickActionPanel from '../../components/user/QuickActionPanel'
 import AdminTreeView from "../../components/user/admin/AdminTreeView";
+import UserList from '../../components/user/UserList';
+import * as Const from "../../Const";
 
 class AdminPage extends Component {
 
-    changeTreeChoice(evt){
+    constructor(props) {
+        super(props);
 
+        this.state = {
+            choosenTreeItem:''
+        }
+    }
+
+    changeTreeChoice(evt){
+        let choosenTreeItem = evt.selectedKeys[0];
+        this.setState({choosenTreeItem: evt.selectedKeys[0]});
     }
 
     render() {
+
+        function MainDivComponent(props) {
+            switch(props.choosenTreeItem) {
+                case 'users':
+                    return (
+                        <UserList/>
+                    )
+                default:
+                    return (
+                        null
+                    );
+            }
+        }
+
         return (
             <div style={{width:'100%',height:'100%'}}>
                 <div className="panel panel-default" style={{width:'100%',height:'100%',margin:"10px"}}>
@@ -41,8 +66,10 @@ class AdminPage extends Component {
                                 <td style={{verticalAlign:'top'}}>
                                     <AdminTreeView changeTreeChoiceAction={this.changeTreeChoice.bind(this)}/>
                                 </td>
-                                <td>
-                                    <div ref='mainDataDiv'></div>
+                                <td style={{width:'100%',verticalAlign:'top'}}>
+                                    <div ref='mainDataDiv'>
+                                        <MainDivComponent choosenTreeItem={this.state.choosenTreeItem}/>
+                                    </div>
                                 </td>
                             </tr>
                             </tbody>
