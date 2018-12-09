@@ -5,10 +5,10 @@ import React from "react";
 class Spinner extends Component {
 
     componentDidUpdate(prevProps){
-        if (prevProps.isLoading !== this.props.isLoading) {
+        if (prevProps.isLoading !== this.props.isLoading && this.props.isLoading) {
             let spinnerDiv = this.refs.spinnerDiv;
             if (spinnerDiv) {
-                let { clientHeight, clientWidth } =  spinnerDiv.parentNode
+                let { clientHeight, clientWidth } =  spinnerDiv.parentNode;
                 this.refs.spinnerDiv.style.height = clientHeight+'px';
                 this.refs.spinnerDiv.style.width = clientWidth+'px';
             }
