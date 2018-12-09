@@ -3,7 +3,6 @@ import logo from '../../media/logo.png';
 import QuickActionPanel from '../../components/user/QuickActionPanel'
 import AdminTreeView from "../../components/user/admin/AdminTreeView";
 import UserList from '../../components/user/UserList';
-import * as Const from "../../Const";
 
 class AdminPage extends Component {
 
@@ -17,7 +16,7 @@ class AdminPage extends Component {
 
     changeTreeChoice(evt){
         let choosenTreeItem = evt.selectedKeys[0];
-        this.setState({choosenTreeItem: evt.selectedKeys[0]});
+        this.setState({choosenTreeItem: choosenTreeItem});
     }
 
     render() {

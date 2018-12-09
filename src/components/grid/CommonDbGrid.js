@@ -1,11 +1,9 @@
 import  React, { Component } from 'react';
 import cookie from "react-cookies";
-import axios from "axios";
 import * as Const from "../../Const";
 import * as CommonUtils from '../../utils/CommonUtils'
 import nextPagePng from "../../media/data/nextPage.png";
 import prevPagePng from "../../media/data/prevPage.png";
-import spinner from '../../media/spinner.svg';
 import Spinner from "../spinner/Spinner";
 
 class CommonDbGrid extends Component {
@@ -100,7 +98,7 @@ class CommonDbGrid extends Component {
         } else {
             return (
                 <div className="container" style={{width:'100%',height:'100%'}}>
-                    <div className="panel panel-default" style={{position:'inherit', width:'inherit',height:'340px',margin:"10px"}}>
+                    <div ref='parentForSpinner' className="panel panel-default" style={{position:'inherit', width:'inherit',height:'340px',margin:"10px"}}>
                         <Spinner isLoading={this.state.isLoading}/>
                         <table style={{marginBottom:'0px'}} className='table table-striped table-hover table-condensed' ref="CommonDbGrid">
                             <thead className='.thead-light'>
