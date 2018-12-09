@@ -8,6 +8,7 @@ import UniversalField from './../field/UniversalField'
 import Button from './../field/Button'
 import ErrorModal from '../../components/modal/ErrorModal';
 import * as CommonUtils from "../../utils/CommonUtils";
+import Spinner from "../spinner/Spinner";
 
 class UpdateUserDataModal extends Modal {
 
@@ -18,15 +19,18 @@ class UpdateUserDataModal extends Modal {
             errors: [],
             visible:props.visible,
             closeAction:props.closeAction,
-            fio:'',
-            birthDate: undefined,
-            phone: '',
-            email: '',
-            passportSeries: '',
-            passportNumber: '',
-            passportIssuedBy: '',
-            regAddress: '',
-            successInfoMessages: []
+            successInfoMessages: [],
+            isLoading: false,
+            fields:{
+                fio:'',
+                birthDate: undefined,
+                phone: '',
+                email: '',
+                passportSeries: '',
+                passportNumber: '',
+                passportIssuedBy: '',
+                regAddress: '',
+            }
         };
 
         this.handleChange = this.handleChange.bind(this);
@@ -43,8 +47,10 @@ class UpdateUserDataModal extends Modal {
     }
 
     async getUserData() {
+        this.setState({isLoading:true});
         let params = {userId: cookie.load('userId')};
         let responseData = await CommonUtils.makeAsyncPostEvent(Const.APP_URL,Const.USER_CONTEXT,Const.ENTITY_GET,params,cookie.load('sessionId'));
+        this.setState({isLoading:false});
         if (responseData.errors.length > 0) {
             this.setState({errors: responseData.errors});
         } else {
@@ -65,21 +71,16 @@ class UpdateUserDataModal extends Modal {
                 }
             }
         };
-        this.setState(propsToChange);
+        this.setState({fields: propsToChange});
     }
 
     handleChange(event, field) {
         if (field !== null && field !== undefined) {
-            this.setState({
-                [field]: event
-            });
+            this.setState({fields:{...this.state.fields,[field]: event}});
         } else {
             const value = event.target.value;
             const id = event.target.id;
-
-            this.setState({
-                [id]: value
-            });
+            this.setState({fields:{...this.state.fields,[id]: value}});
         }
     }
 
@@ -87,43 +88,45 @@ class UpdateUserDataModal extends Modal {
         this.setState({
             visible : false,
             errors: [],
-            fio:'',
-            birthDate: undefined,
-            phone: '',
-            email: '',
-            passportSeries: '',
-            passportNumber: '',
-            passportIssuedBy: '',
-            regAddress: '',
-            successInfoMessages: []
+            successInfoMessages: [],
+            fields:{
+                fio:'',
+                birthDate: undefined,
+                phone: '',
+                email: '',
+                passportSeries: '',
+                passportNumber: '',
+                passportIssuedBy: '',
+                regAddress: '',
+            }
         });
         this.closeAction()
     }
 
     async saveUserData() {
         let errors = []
-        if (!this.state.fio) {
+        if (!this.state.fields.fio) {
             errors.push({code:'',message:'Необходимо заполнить ФИО'})
         }
-        if (!this.state.birthDate) {
+        if (!this.state.fields.birthDate) {
             errors.push({code:'',message:'Необходимо заполнить дату рождения'})
         }
-        if (!this.state.phone) {
+        if (!this.state.fields.phone) {
             errors.push({code:'',message:'Необходимо заполнить телефон'})
         }
-        if (!this.state.email) {
+        if (!this.state.fields.email) {
             errors.push({code:'',message:'Необходимо заполнить email'})
         }
-        if (!this.state.passportSeries) {
+        if (!this.state.fields.passportSeries) {
             errors.push({code:'',message:'Необходимо заполнить серию паспорта'})
         }
-        if (!this.state.passportNumber) {
+        if (!this.state.fields.passportNumber) {
             errors.push({code:'',message:'Необходимо заполнить номер паспорта'})
         }
-        if (!this.state.passportIssuedBy) {
+        if (!this.state.fields.passportIssuedBy) {
             errors.push({code:'',message:'Необходимо заполнить орган, выдавший паспорт'})
         }
-        if (!this.state.regAddress) {
+        if (!this.state.fields.regAddress) {
             errors.push({code:'',message:'Необходимо заполнить адрес регистрации'})
         }
         if (errors.length > 0) {
@@ -131,10 +134,12 @@ class UpdateUserDataModal extends Modal {
                 errors: errors
             });
         } else {
-            let params = this.state;
+            this.setState({isLoading:true});
+            let params = this.state.fields;
             params['userId'] = cookie.load('userId');
             params['birthDateLong'] = params.birthDate.getTime();
             let responseData = await CommonUtils.makeAsyncPostEvent(Const.APP_URL,Const.USER_CONTEXT,Const.ENTITY_SAVE,params,cookie.load('sessionId'));
+            this.setState({isLoading:false});
             if (responseData.errors.length > 0) {
                 this.setState({errors: responseData.errors});
             } else {
@@ -147,6 +152,7 @@ class UpdateUserDataModal extends Modal {
         return(
             <Modal visible={this.state.visible} effect="fadeInDown">
                 <div className="panel panel-default" style={{width:'540px',height:'540px',marginBottom:'0px'}}>
+                    <Spinner isLoading={this.state.isLoading}/>
                     <div className="panel-heading" style={{height:'45px'}}>
                         <table style={{width:'100%'}}>
                             <tbody>
@@ -163,8 +169,8 @@ class UpdateUserDataModal extends Modal {
                     </div>
                     <div className="panel-body" style={{overflow:'auto'}}>
                         <form className="form-horizontal">
-                            <UniversalField labelWidth='220px' fieldWidth='300px' label='ФИО' type={Const.TEXTFIELD} id='fio' value={this.state.fio} onChange={this.handleChange} placeholder='ФИО' maxLength={255}/>
-                            <UniversalField labelWidth='220px' fieldWidth='300px' label='Дата рождения' type={Const.DATEPICKER} id='birthDate' value={this.state.birthDate} onChange={(date) => this.handleChange(date, "birthDate")} placeholder='Дата рождения'/>
+                            <UniversalField labelWidth='220px' fieldWidth='300px' label='ФИО' type={Const.TEXTFIELD} id='fio' value={this.state.fields.fio} onChange={this.handleChange} placeholder='ФИО' maxLength={255}/>
+                            <UniversalField labelWidth='220px' fieldWidth='300px' label='Дата рождения' type={Const.DATEPICKER} id='birthDate' value={this.state.fields.birthDate} onChange={(date) => this.handleChange(date, "birthDate")} placeholder='Дата рождения'/>
                             <div className="form-group">
                                 <label style={{width:'220px'}} className="control-label col-sm-2">Паспорт</label>
                                 <div className="col-sm-10" style={{width:'300px',paddingRight:'0px'}}>
@@ -172,21 +178,21 @@ class UpdateUserDataModal extends Modal {
                                         <tbody>
                                             <tr>
                                                 <td>
-                                                    <input style={{width:'100px'}} placeholder="Серия" id="passportSeries" maxLength={4} className="form-control" type="text" value={this.state.passportSeries} onChange={this.handleChange}/>
+                                                    <input style={{width:'100px'}} placeholder="Серия" id="passportSeries" maxLength={4} className="form-control" type="text" value={this.state.fields.passportSeries} onChange={this.handleChange}/>
                                                 </td>
                                                 <td style={{width:'10px'}}></td>
                                                 <td>
-                                                    <input placeholder="Номер" id="passportNumber" maxLength={6} className="form-control" type="text" value={this.state.passportNumber} onChange={this.handleChange}/>
+                                                    <input placeholder="Номер" id="passportNumber" maxLength={6} className="form-control" type="text" value={this.state.fields.passportNumber} onChange={this.handleChange}/>
                                                 </td>
                                             </tr>
                                         </tbody>
                                     </table>
                                 </div>
                             </div>
-                            <UniversalField style={{resize:'none',height:'75px'}} labelWidth='220px' fieldWidth='300px' label='выдан' type={Const.TEXTAREA} id='passportIssuedBy' value={this.state.passportIssuedBy} onChange={this.handleChange} placeholder='Кем выдан паспорт' maxLength={255}/>
-                            <UniversalField style={{resize:'none',height:'75px'}} labelWidth='220px' fieldWidth='300px' label='Адрес регистрации' type={Const.TEXTAREA} id='regAddress' value={this.state.regAddress} onChange={this.handleChange} placeholder='Адрес регистрации' maxLength={255}/>
-                            <UniversalField labelWidth='220px' fieldWidth='300px' label='Телефон' type={Const.TEXTFIELD} id='phone' value={this.state.phone} onChange={this.handleChange} placeholder='Телефон' maxLength={100}/>
-                            <UniversalField labelWidth='220px' fieldWidth='300px' label='Email' type={Const.TEXTFIELD} id='email' value={this.state.email} onChange={this.handleChange} placeholder='Email' maxLength={100}/>
+                            <UniversalField style={{resize:'none',height:'75px'}} labelWidth='220px' fieldWidth='300px' label='выдан' type={Const.TEXTAREA} id='passportIssuedBy' value={this.state.fields.passportIssuedBy} onChange={this.handleChange} placeholder='Кем выдан паспорт' maxLength={255}/>
+                            <UniversalField style={{resize:'none',height:'75px'}} labelWidth='220px' fieldWidth='300px' label='Адрес регистрации' type={Const.TEXTAREA} id='regAddress' value={this.state.fields.regAddress} onChange={this.handleChange} placeholder='Адрес регистрации' maxLength={255}/>
+                            <UniversalField labelWidth='220px' fieldWidth='300px' label='Телефон' type={Const.TEXTFIELD} id='phone' value={this.state.fields.phone} onChange={this.handleChange} placeholder='Телефон' maxLength={100}/>
+                            <UniversalField labelWidth='220px' fieldWidth='300px' label='Email' type={Const.TEXTFIELD} id='email' value={this.state.fields.email} onChange={this.handleChange} placeholder='Email' maxLength={100}/>
                             <div className="btn-toolbar align-bottom" role="toolbar" style={{justifyContent:'center',display:'flex'}}>
                                 <Button id="UUDMokButton" value="Ок" onClick={() => this.saveUserData()}/>
                                 <Button id="UUDMcancelButton" value="Отмена" onClick={() => this.closeModal()}/>
