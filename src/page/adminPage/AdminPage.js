@@ -1,8 +1,10 @@
 import React, {Component} from 'react';
 import logo from '../../media/logo.png';
-import QuickActionPanel from '../../components/user/QuickActionPanel'
-import AdminTreeView from "../../components/user/admin/AdminTreeView";
+import QuickActionPanel from '../../components/mainpage/QuickActionPanel'
+import AdminTreeView from "../../components/mainpage/admin/AdminTreeView";
 import UserList from '../../components/user/UserList';
+import UserRoleList from '../../components/userrole/UserRoleList';
+
 
 class AdminPage extends Component {
 
@@ -26,7 +28,11 @@ class AdminPage extends Component {
                 case 'users':
                     return (
                         <UserList/>
-                    )
+                    );
+                case 'userRoles':
+                    return (
+                        <UserRoleList/>
+                    );
                 default:
                     return (
                         null

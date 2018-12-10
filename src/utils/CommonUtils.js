@@ -19,6 +19,14 @@ export function objectToPropArr(object) {
     return propArr;
 }
 
+export function objectIsEmpty(obj) {
+    for(var key in obj) {
+        if(obj.hasOwnProperty(key))
+            return false;
+    }
+    return true;
+}
+
 export async function makeAsyncPostEvent(url, context, action, params, sessionId) {
     try {
         const asyncPostEvent = await axios.post(url, {

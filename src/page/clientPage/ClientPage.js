@@ -1,8 +1,8 @@
 import React, {Component} from 'react';
 import logo from '../../media/logo.png';
-import QuickActionPanel from '../../components/user/QuickActionPanel'
+import QuickActionPanel from '../../components/mainpage/QuickActionPanel'
 import cookie from 'react-cookies';
-import ClientTreeView from '../../components/user/client/ClientTreeView'
+import ClientTreeView from '../../components/mainpage/client/ClientTreeView'
 
 class ClientPage extends Component {
 
