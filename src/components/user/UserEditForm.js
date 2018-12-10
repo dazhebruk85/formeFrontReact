@@ -23,6 +23,17 @@ class UserEditForm extends Modal {
             successInfoMessages: [],
             fields:{
                 entityId: props.entityId,
+                fio:'',
+                login:'',
+                birthDate:undefined,
+                phone:'',
+                email:'',
+                passportSeries:'',
+                passportNumber:'',
+                passportIssuedBy:'',
+                regAddress:'',
+                userRoleName:'',
+                userRoleId:''
             }
         };
 
@@ -77,7 +88,6 @@ class UserEditForm extends Modal {
             visible: false,
             errors: [],
             fields:{
-                ...this.state.fields,
                 entityId: '',
                 fio:'',
                 login:'',

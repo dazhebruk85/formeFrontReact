@@ -8,6 +8,9 @@ import entityRefresh from '../../media/entity/entityRefresh.png';
 import * as CommonUtils from "../../utils/CommonUtils";
 import ErrorModal from '../../components/modal/ErrorModal';
 import UserEditForm from './UserEditForm';
+import UniversalField from './../field/UniversalField'
+import Button from './../field/Button'
+import DictionaryField from './../field/DictionaryField'
 
 class UserList extends Component {
 
@@ -18,13 +21,20 @@ class UserList extends Component {
             errors: [],
             editFormVisible: false,
             selectedUserId: '',
-            filter: {}
+            filter: {
+                login:'',
+                fio:'',
+                email:'',
+                phone:'',
+                userRole:''
+            }
         };
 
         this.addUserEntity = this.addUserEntity.bind(this);
         this.editUserEntity = this.editUserEntity.bind(this);
         this.deleteUserEntity = this.deleteUserEntity.bind(this);
         this.refreshUserList = this.refreshUserList.bind(this);
+        this.handleChange = this.handleChange.bind(this);
     }
 
     addUserEntity() {
@@ -59,6 +69,16 @@ class UserList extends Component {
         this.setState({
             selectedUserId: selectedUser.entityId
         });
+    }
+
+    handleChange(event, field) {
+        if (field !== null && field !== undefined) {
+            this.setState({filter:{...this.state.filter,[field]: event}});
+        } else {
+            const value = event.target.value;
+            const id = event.target.id;
+            this.setState({filter:{...this.state.filter,[id]: value}});
+        }
     }
 
     render() {
@@ -107,6 +127,12 @@ class UserList extends Component {
                             </tr>
                         </tbody>
                     </table>
+                    <form id='ULFilterDiv' className="form-horizontal" style={{paddingTop:'10px'}}>
+                        <UniversalField labelWidth='100px' fieldWidth='300px' label='Логин' type={Const.TEXTFIELD} id='filterLogin' value={this.state.filter.login} onChange={this.handleChange} maxLength={255}/>
+                        <UniversalField labelWidth='100px' fieldWidth='300px' label='ФИО' type={Const.TEXTFIELD} id='filterFio' value={this.state.filter.fio} onChange={this.handleChange} maxLength={255}/>
+                        <UniversalField labelWidth='100px' fieldWidth='300px' label='Email' type={Const.TEXTFIELD} id='filterEmail' value={this.state.filter.email} onChange={this.handleChange} maxLength={255}/>
+                        <UniversalField labelWidth='100px' fieldWidth='300px' label='Телефон' type={Const.TEXTFIELD} id='filterPhone' value={this.state.filter.phone} onChange={this.handleChange} maxLength={255}/>
+                    </form>
                 </div>
                 <CommonDbGrid selectAction={this.changeGridSelection.bind(this)} ref={'ULUserGrid'} dataEntityContext={Const.USER_CONTEXT} pageSize={10}/>
                 <UserEditForm entityId={this.state.selectedUserId} visible={this.state.editFormVisible} closeAction={() => {this.setState({editFormVisible:false,selectedUserId:''});this.refreshUserList()}}/>
