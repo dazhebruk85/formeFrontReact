@@ -19,13 +19,14 @@ class CommonDbGrid extends Component {
             pageNumber:1,
             lastPage:false,
             listData:null,
-            selectedItem:{}
+            selectedItem:{},
         };
 
         this.getGridListData = this.getGridListData.bind(this);
         this.setErrors = this.setErrors.bind(this);
         this.nextPage = this.nextPage.bind(this);
         this.prevPage = this.prevPage.bind(this);
+        this.parentSelectAction = props.selectAction
     }
 
     componentDidMount() {
@@ -89,6 +90,7 @@ class CommonDbGrid extends Component {
         this.setState({
             selectedItem: selectedItem
         });
+        setTimeout(() => this.parentSelectAction(selectedItem), 0);
     };
 
     render() {
@@ -103,9 +105,9 @@ class CommonDbGrid extends Component {
                         <table style={{marginBottom:'0px'}} className='table table-striped table-hover table-condensed' ref="CommonDbGrid">
                             <thead className='.thead-light'>
                                 {this.state.listData.dataHeaderList.map(entity =>
-                                    <tr key={entity.dataObjectId+'headerTr'}>
+                                    <tr key={entity.entityId+'headerTr'}>
                                         {CommonUtils.objectToPropArr(entity).map(entityData =>
-                                            <th style={{display: entityData.key === "dataObjectId" ? 'none' : ''}} key={entityData.key+'headerTd'}>
+                                            <th style={{display: entityData.key === "entityId" ? 'none' : ''}} key={entityData.key+'headerTd'}>
                                                 {entityData.value}
                                             </th>
                                         )}
@@ -114,9 +116,9 @@ class CommonDbGrid extends Component {
                               </thead>
                             <tbody>
                                 {this.state.listData.dataList.map(entity =>
-                                    <tr onClick={this.handleSelectEntity} style={{cursor:'pointer',height:'30px'}} key={entity.dataObjectId+'valueTr'}>
+                                    <tr onClick={this.handleSelectEntity} style={{cursor:'pointer',height:'30px'}} key={entity.entityId+'valueTr'}>
                                         {CommonUtils.objectToPropArr(entity).map(entityData =>
-                                            <td entitydatakey={entityData.key} style={{padding:'5px',height:'30px',display: entityData.key === "dataObjectId" ? 'none' : ''}} key={entityData.key+'valueTd'}>
+                                            <td entitydatakey={entityData.key} style={{padding:'5px',height:'30px',display: entityData.key === "entityId" ? 'none' : ''}} key={entityData.key+'valueTd'}>
                                                 {entityData.value}
                                             </td>
                                         )}
