@@ -26,6 +26,7 @@ class CommonDbGrid extends Component {
         this.setErrors = this.setErrors.bind(this);
         this.nextPage = this.nextPage.bind(this);
         this.prevPage = this.prevPage.bind(this);
+        this.handleSelectEntity = this.handleSelectEntity.bind(this);
         this.parentSelectAction = props.selectAction
     }
 
@@ -90,7 +91,9 @@ class CommonDbGrid extends Component {
         this.setState({
             selectedItem: selectedItem
         });
-        setTimeout(() => this.parentSelectAction(selectedItem), 0);
+        if (this.parentSelectAction) {
+            setTimeout(() => this.parentSelectAction(selectedItem), 0);
+        }
     };
 
     render() {
@@ -99,7 +102,7 @@ class CommonDbGrid extends Component {
             return null
         } else {
             return (
-                <div className="container" style={{width:'100%',height:'100%'}}>
+                <div className="container" style={{paddingLeft:'0px', width:'100%',height:'100%'}}>
                     <div ref='parentForSpinner' className="panel panel-default" style={{position:'inherit', width:'inherit',height:'340px',margin:"10px"}}>
                         <Spinner isLoading={this.state.isLoading}/>
                         <table style={{marginBottom:'0px'}} className='table table-striped table-hover table-condensed' ref="CommonDbGrid">

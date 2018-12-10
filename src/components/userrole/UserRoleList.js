@@ -15,7 +15,7 @@ class UserRoleList extends Component {
     render() {
         return(
             <div id='ULMainDiv'>
-                <CommonDbGrid ref={'ULUserRoleGrid'} dataEntityContext={Const.USER_ROLE_CONTEXT} pageSize={10}/>
+                <CommonDbGrid selectAction={null} ref={'ULUserRoleGrid'} dataEntityContext={Const.USER_ROLE_CONTEXT} pageSize={10}/>
             </div>
         )
     }

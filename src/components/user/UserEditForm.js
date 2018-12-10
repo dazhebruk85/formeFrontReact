@@ -8,6 +8,7 @@ import cookie from 'react-cookies';
 import closePng from '../../media/data/close.png';
 import UniversalField from './../field/UniversalField'
 import Button from './../field/Button'
+import DictionaryField from './../field/DictionaryField'
 import MultiPopup from "../modal/MultiPopup";
 
 class UserEditForm extends Modal {
@@ -85,7 +86,9 @@ class UserEditForm extends Modal {
                 passportSeries:'',
                 passportNumber:'',
                 passportIssuedBy:'',
-                regAddress:''
+                regAddress:'',
+                userRoleName:'',
+                userRoleId:''
             }
         })
         this.closeAction()
@@ -130,6 +133,9 @@ class UserEditForm extends Modal {
         if (!this.state.fields.regAddress) {
             errors.push({code:'',message:'Необходимо заполнить адрес регистрации'})
         }
+        if (!this.state.fields.userRoleName) {
+            errors.push({code:'',message:'Необходимо заполнить роль пользователя'})
+        }
         if (errors.length > 0) {
             this.setState({
                 errors: errors
@@ -148,10 +154,20 @@ class UserEditForm extends Modal {
         }
     }
 
+    chooseUserRole(selectedRole){
+        this.setState({
+            fields:
+                {...this.state.fields,
+                    userRoleName: selectedRole.name,
+                    userRoleId: selectedRole.entityId
+                }
+        });
+    }
+
     render() {
         return(
             <Modal visible={this.state.visible} effect="fadeInDown">
-                <div className="panel panel-default" style={{width:'540px',height:'540px',marginBottom:'0px'}}>
+                <div className="panel panel-default" style={{width:'540px',height:'630px',marginBottom:'0px'}}>
                     <Spinner isLoading={this.state.isLoading}/>
                     <div className="panel-heading" style={{height:'45px'}}>
                         <table style={{width:'100%'}}>
@@ -194,9 +210,19 @@ class UserEditForm extends Modal {
                             <UniversalField style={{resize:'none',height:'75px'}} labelWidth='220px' fieldWidth='300px' label='Адрес регистрации' type={Const.TEXTAREA} id='regAddress' value={this.state.fields.regAddress} onChange={this.handleChange} placeholder='Адрес регистрации' maxLength={255}/>
                             <UniversalField labelWidth='220px' fieldWidth='300px' label='Телефон' type={Const.TEXTFIELD} id='phone' value={this.state.fields.phone} onChange={this.handleChange} placeholder='Телефон' maxLength={100}/>
                             <UniversalField labelWidth='220px' fieldWidth='300px' label='Email' type={Const.TEXTFIELD} id='email' value={this.state.fields.email} onChange={this.handleChange} placeholder='Email' maxLength={100}/>
+                            <DictionaryField labelWidth='220px'
+                                             fieldWidth='300px'
+                                             label='Роль пользователя'
+                                             type={Const.TEXTFIELD}
+                                             id='userRoleName'
+                                             value={this.state.fields.userRoleName}
+                                             placeholder=''
+                                             maxLength={100}
+                                             context={Const.USER_ROLE_CONTEXT}
+                                             chooseDictAction={this.chooseUserRole.bind(this)}/>
                             <div className="btn-toolbar align-bottom" role="toolbar" style={{justifyContent:'center',display:'flex'}}>
-                                <Button id="UUDMokButton" value="Ок" onClick={() => this.saveUserData()}/>
-                                <Button id="UUDMcancelButton" value="Отмена" onClick={() => this.closeModal()}/>
+                                <Button id="UEFOkButton" value="Ок" onClick={() => this.saveUserData()}/>
+                                <Button id="UEFCancelButton" value="Отмена" onClick={() => this.closeModal()}/>
                             </div>
                         </form>
                     </div>

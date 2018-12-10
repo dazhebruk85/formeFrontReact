@@ -64,7 +64,7 @@ class UserList extends Component {
     render() {
         return(
             <div id='ULMainDiv'>
-                <div id='ULToolbarDiv' style={{marginLeft:'25px'}}>
+                <div id='ULToolbarDiv' style={{marginLeft:'10px'}}>
                     <table>
                         <tbody>
                             <tr>
