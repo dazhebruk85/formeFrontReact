@@ -17,7 +17,7 @@ class UserList extends Component {
         this.state = {
             errors: [],
             editFormVisible: false,
-            selectedUserId: null,
+            selectedUserId: '',
             filter: {}
         };
 
@@ -28,7 +28,7 @@ class UserList extends Component {
     }
 
     addUserEntity() {
-        this.setState({selectedUserId:null});
+        this.setState({selectedUserId:''});
         setTimeout(() => this.setState({editFormVisible:true}), 0);
     }
 
@@ -52,7 +52,7 @@ class UserList extends Component {
 
     refreshUserList() {
         this.refs.ULUserGrid.getGridListData()
-        this.setState({selectedUserId:null})
+        this.setState({selectedUserId:''})
     }
 
     changeGridSelection(selectedUser) {
@@ -109,7 +109,7 @@ class UserList extends Component {
                     </table>
                 </div>
                 <CommonDbGrid selectAction={this.changeGridSelection.bind(this)} ref={'ULUserGrid'} dataEntityContext={Const.USER_CONTEXT} pageSize={10}/>
-                <UserEditForm entityId={this.state.selectedUserId} visible={this.state.editFormVisible} closeAction={() => {this.setState({editFormVisible:false,selectedUserId:null});this.refreshUserList()}}/>
+                <UserEditForm entityId={this.state.selectedUserId} visible={this.state.editFormVisible} closeAction={() => {this.setState({editFormVisible:false,selectedUserId:''});this.refreshUserList()}}/>
                 <ErrorModal errors={this.state.errors} closeAction={() => this.setState({errors:[]})}/>
             </div>
         )

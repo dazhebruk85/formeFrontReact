@@ -5,16 +5,8 @@ import './../../media/datePicker/react-datepicker.css';
 
 class UniversalField extends Component {
 
-    constructor(props) {
-        super(props);
-
-        this.state = {
-            type:props.type,
-        };
-    }
-
     render() {
-        switch(this.state.type) {
+        switch(this.props.type) {
             case Const.TEXTFIELD:
                 return (
                     <div className="form-group">

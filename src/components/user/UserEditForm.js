@@ -77,7 +77,8 @@ class UserEditForm extends Modal {
             visible: false,
             errors: [],
             fields:{
-                entityId: null,
+                ...this.state.fields,
+                entityId: '',
                 fio:'',
                 login:'',
                 birthDate:undefined,
