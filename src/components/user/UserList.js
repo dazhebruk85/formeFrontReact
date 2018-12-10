@@ -109,7 +109,7 @@ class UserList extends Component {
                     </table>
                 </div>
                 <CommonDbGrid selectAction={this.changeGridSelection.bind(this)} ref={'ULUserGrid'} dataEntityContext={Const.USER_CONTEXT} pageSize={10}/>
-                <UserEditForm entityId={this.state.selectedUserId} visible={this.state.editFormVisible} closeAction={() => this.setState({editFormVisible:false,selectedUserId:null})}/>
+                <UserEditForm entityId={this.state.selectedUserId} visible={this.state.editFormVisible} closeAction={() => {this.setState({editFormVisible:false,selectedUserId:null});this.refreshUserList()}}/>
                 <ErrorModal errors={this.state.errors} closeAction={() => this.setState({errors:[]})}/>
             </div>
         )

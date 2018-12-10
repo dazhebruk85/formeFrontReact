@@ -46,14 +46,17 @@ class CommonDbGrid extends Component {
         if (responseData.errors.length > 0) {
             this.setState({errors: responseData.errors});
         } else {
-            this.setGridData({listData: responseData.frontListData});
+            this.setGridData({
+                listData: responseData.frontListData,
+            });
         }
     }
 
     setGridData(props) {
         this.setState({
             listData:props.listData,
-            lastPage:props.listData.lastPage
+            lastPage:props.listData.lastPage,
+            selectedItem:{}
         });
     }
 
@@ -98,6 +101,12 @@ class CommonDbGrid extends Component {
 
     render() {
 
+        function getSelectedBgColor(entityId, state) {
+            if (entityId === state.selectedItem.entityId) {
+                return '#d9d9d9';
+            }
+        }
+
         if (this.state.listData === undefined || this.state.listData === null) {
             return null
         } else {
@@ -105,7 +114,7 @@ class CommonDbGrid extends Component {
                 <div className="container" style={{paddingLeft:'0px', width:'100%',height:'100%'}}>
                     <div ref='parentForSpinner' className="panel panel-default" style={{position:'inherit', width:'inherit',height:'340px',margin:"10px"}}>
                         <Spinner isLoading={this.state.isLoading}/>
-                        <table style={{marginBottom:'0px'}} className='table table-striped table-hover table-condensed' ref="CommonDbGrid">
+                        <table style={{marginBottom:'0px'}} className='table table-hover table-condensed' ref="CommonDbGrid">
                             <thead className='.thead-light'>
                                 {this.state.listData.dataHeaderList.map(entity =>
                                     <tr key={entity.entityId+'headerTr'}>
@@ -119,7 +128,7 @@ class CommonDbGrid extends Component {
                               </thead>
                             <tbody>
                                 {this.state.listData.dataList.map(entity =>
-                                    <tr onClick={this.handleSelectEntity} style={{cursor:'pointer',height:'30px'}} key={entity.entityId+'valueTr'}>
+                                    <tr onClick={this.handleSelectEntity} style={{cursor:'pointer',height:'30px',background: getSelectedBgColor(entity.entityId, this.state)}} key={entity.entityId+'valueTr'}>
                                         {CommonUtils.objectToPropArr(entity).map(entityData =>
                                             <td entitydatakey={entityData.key} style={{padding:'5px',height:'30px',display: entityData.key === "entityId" ? 'none' : ''}} key={entityData.key+'valueTd'}>
                                                 {entityData.value}
