@@ -22,11 +22,11 @@ class UserList extends Component {
             editFormVisible: false,
             selectedUserId: '',
             filter: {
-                login:'',
-                fio:'',
-                email:'',
-                phone:'',
-                userRole:''
+                filterLogin:'',
+                filterFio:'',
+                filterEmail:'',
+                filterPhone:'',
+                filterUserRole:''
             }
         };
 
@@ -128,13 +128,18 @@ class UserList extends Component {
                         </tbody>
                     </table>
                     <form id='ULFilterDiv' className="form-horizontal" style={{paddingTop:'10px'}}>
-                        <UniversalField labelWidth='100px' fieldWidth='300px' label='Логин' type={Const.TEXTFIELD} id='filterLogin' value={this.state.filter.login} onChange={this.handleChange} maxLength={255}/>
-                        <UniversalField labelWidth='100px' fieldWidth='300px' label='ФИО' type={Const.TEXTFIELD} id='filterFio' value={this.state.filter.fio} onChange={this.handleChange} maxLength={255}/>
-                        <UniversalField labelWidth='100px' fieldWidth='300px' label='Email' type={Const.TEXTFIELD} id='filterEmail' value={this.state.filter.email} onChange={this.handleChange} maxLength={255}/>
-                        <UniversalField labelWidth='100px' fieldWidth='300px' label='Телефон' type={Const.TEXTFIELD} id='filterPhone' value={this.state.filter.phone} onChange={this.handleChange} maxLength={255}/>
+                        <UniversalField labelWidth='100px' fieldWidth='300px' label='Логин' type={Const.TEXTFIELD} id='filterLogin' value={this.state.filter.filterLogin} onChange={this.handleChange} maxLength={255}/>
+                        <UniversalField labelWidth='100px' fieldWidth='300px' label='ФИО' type={Const.TEXTFIELD} id='filterFio' value={this.state.filter.filterFio} onChange={this.handleChange} maxLength={255}/>
+                        <UniversalField labelWidth='100px' fieldWidth='300px' label='Email' type={Const.TEXTFIELD} id='filterEmail' value={this.state.filter.filterEmail} onChange={this.handleChange} maxLength={255}/>
+                        <UniversalField labelWidth='100px' fieldWidth='300px' label='Телефон' type={Const.TEXTFIELD} id='filterPhone' value={this.state.filter.filterPhone} onChange={this.handleChange} maxLength={255}/>
+                        <div className="form-group">
+                            <label style={{width:'100px'}} className="control-label col-sm-2"></label>
+                            <Button style={{marginLeft:'15px'}} id="ULFilterApplyButton" value="Применить" onClick={this.refreshUserList}/>
+                            <Button style={{marginLeft:'15px'}} id="ULFilterClearButton" value="Очистить" onClick={null}/>
+                        </div>
                     </form>
                 </div>
-                <CommonDbGrid selectAction={this.changeGridSelection.bind(this)} ref={'ULUserGrid'} dataEntityContext={Const.USER_CONTEXT} pageSize={10}/>
+                <CommonDbGrid filter={this.state.filter} selectAction={this.changeGridSelection.bind(this)} ref={'ULUserGrid'} dataEntityContext={Const.USER_CONTEXT} pageSize={10}/>
                 <UserEditForm entityId={this.state.selectedUserId} visible={this.state.editFormVisible} closeAction={() => {this.setState({editFormVisible:false,selectedUserId:''});this.refreshUserList()}}/>
                 <ErrorModal errors={this.state.errors} closeAction={() => this.setState({errors:[]})}/>
             </div>

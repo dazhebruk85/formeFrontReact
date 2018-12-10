@@ -206,11 +206,11 @@ class UserEditForm extends Modal {
                                         <tbody>
                                         <tr>
                                             <td>
-                                                <input style={{width:'100px'}} placeholder="Серия" id="passportSeries" maxLength={4} className="form-control" type="text" value={this.state.fields.passportSeries} onChange={this.handleChange}/>
+                                                <input style={{width:'100px'}} placeholder="Серия" id="passportSeries" maxLength={4} className="form-control input-sm" type="text" value={this.state.fields.passportSeries} onChange={this.handleChange}/>
                                             </td>
                                             <td style={{width:'10px'}}></td>
                                             <td>
-                                                <input placeholder="Номер" id="passportNumber" maxLength={6} className="form-control" type="text" value={this.state.fields.passportNumber} onChange={this.handleChange}/>
+                                                <input placeholder="Номер" id="passportNumber" maxLength={6} className="form-control input-sm" type="text" value={this.state.fields.passportNumber} onChange={this.handleChange}/>
                                             </td>
                                         </tr>
                                         </tbody>

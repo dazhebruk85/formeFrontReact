@@ -15,7 +15,7 @@ class Button extends Component {
                        id={this.props.id}
                        type="button"
                        value={this.props.value}
-                       className="btn btn-primary"
+                       className="btn btn-primary btn-sm"
                        onClick={this.props.onClick}
                        style={buttonStyle}
                        />

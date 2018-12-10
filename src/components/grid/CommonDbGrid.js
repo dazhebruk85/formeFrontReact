@@ -20,6 +20,7 @@ class CommonDbGrid extends Component {
             lastPage:false,
             listData:null,
             selectedItem:{},
+            filter:props.filter
         };
 
         this.getGridListData = this.getGridListData.bind(this);
@@ -41,7 +42,7 @@ class CommonDbGrid extends Component {
 
     async getGridListData() {
         this.setState({isLoading:true});
-        let params = {pageNumber:this.state.pageNumber,pageSize:this.state.pageSize};
+        let params = {pageNumber:this.state.pageNumber,pageSize:this.state.pageSize,filter:this.props.filter};
         let responseData = await CommonUtils.makeAsyncPostEvent(Const.APP_URL,this.state.dataEntityContext,Const.ENTITY_LIST,params,cookie.load('sessionId'));
         this.setState({isLoading:false});
         if (responseData.errors.length > 0) {
