@@ -3,7 +3,6 @@ import Tree from 'rc-tree';
 import '../../../media/tree/tree.css';
 import mainTreeIcon from '../../../media/tree/mainTreeIcon.png'
 import anketaIcon from '../../../media/tree/anketa.png'
-import obectiIcon from '../../../media/tree/obecti.png'
 import dictsIcon from '../../../media/tree/dicts.png'
 import usersIcon from '../../../media/tree/users.png'
 import userRolesIcon from '../../../media/tree/userRoles.png'
@@ -14,8 +13,7 @@ import showIcon from '../../../media/data/show.png'
 const treeData = [
     { key:'Main',icon:<img alt='' src={mainTreeIcon} style={{marginTop:"0px", marginLeft:"0px"}}/>,title:'Главная',children:
         [
-            {key:'obects',icon:<img alt='' src={obectiIcon} style={{marginTop:"0px", marginLeft:"0px"}}/>,title:'Объекты'}
-           ,{key:'ancets',icon:<img alt='' src={anketaIcon} style={{marginTop:"0px", marginLeft:"0px"}}/>,title:'Анкеты'}
+           {key:'ancets',icon:<img alt='' src={anketaIcon} style={{marginTop:"0px", marginLeft:"0px"}}/>,title:'Анкеты'}
            ,{key:'dicts',icon:<img alt='' src={dictsIcon} style={{marginTop:"0px", marginLeft:"0px"}}/>,title:'Справочники',children:
             [
                 {key:'users',icon:<img alt='' src={usersIcon} style={{marginTop:"0px", marginLeft:"0px"}}/>,title:'Пользователи'}

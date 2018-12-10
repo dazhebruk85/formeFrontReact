@@ -3,7 +3,6 @@ import Tree from 'rc-tree';
 import '../../../media/tree/tree.css';
 import mainTreeIcon from '../../../media/tree/mainTreeIcon.png'
 import anketaIcon from '../../../media/tree/anketa.png'
-import obectiIcon from '../../../media/tree/obecti.png'
 
 import hideIcon from '../../../media/data/hide.png'
 import showIcon from '../../../media/data/show.png'
@@ -11,8 +10,7 @@ import showIcon from '../../../media/data/show.png'
 const treeData = [
     { key:'Main',icon:<img alt='' src={mainTreeIcon} style={{marginTop:"0px", marginLeft:"0px"}}/>,title:'Главная',children:
         [
-            {key:'obects',icon:<img alt='' src={obectiIcon} style={{marginTop:"0px", marginLeft:"0px"}}/>,title:'Объекты'}
-            ,{key:'ancets',icon:<img alt='' src={anketaIcon} style={{marginTop:"0px", marginLeft:"0px"}}/>,title:'Анкеты'}
+            {key:'ancets',icon:<img alt='' src={anketaIcon} style={{marginTop:"0px", marginLeft:"0px"}}/>,title:'Анкеты'}
         ]
     }
 ];
