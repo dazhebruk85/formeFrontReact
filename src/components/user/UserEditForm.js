@@ -90,7 +90,7 @@ class UserEditForm extends Modal {
                 userRoleName:'',
                 userRoleId:''
             }
-        })
+        });
         this.closeAction()
     }
 

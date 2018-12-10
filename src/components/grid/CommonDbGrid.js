@@ -34,8 +34,9 @@ class CommonDbGrid extends Component {
         this.getGridListData()
     }
 
-    componentDidUpdate() {
-
+    componentDidUpdate(prevProps) {
+        this.props;
+        let aaa = 0;
     }
 
     async getGridListData() {
