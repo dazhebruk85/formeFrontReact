@@ -4,6 +4,7 @@ import closePng from '../../media/data/close.png';
 import errorPng from "../../media/data/error.png";
 import Button from './../field/Button'
 import * as CommonUtils from "../../utils/CommonUtils";
+import {Redirect} from "react-router-dom";
 
 class ErrorModal extends Modal {
 
@@ -11,7 +12,8 @@ class ErrorModal extends Modal {
         super(props);
 
         this.state = {
-            errors: []
+            errors: [],
+            redirectToLoginPage:false
         }
     }
 
@@ -21,7 +23,21 @@ class ErrorModal extends Modal {
         }
     }
 
+    redirectToLoginPage(evt){
+        this.setState({
+            redirectToLoginPage:true
+        });
+        this.props.closeAction
+    }
+
     render() {
+
+        const { redirectToLoginPage } = this.state;
+
+        if (redirectToLoginPage) {
+            return <Redirect to='/front'/>;
+        }
+
         let sessionExpire = false;
         if (this.props && this.props.errors && this.props.errors.length > 0) {
             for (let error in this.props.errors) {
@@ -81,7 +97,7 @@ class ErrorModal extends Modal {
                     </div>
                     <div className="btn-toolbar align-bottom" role="toolbar" style={{justifyContent:'center',display:'flex'}}>
                         <Button id="EMOkButton" value="Ок" onClick={this.props.closeAction}/>
-                        <Button id="EMReturnToLoginPageButton" value="На страницу логина" onClick={this.props.closeAction} visible={sessionExpire}/>
+                        <Button id="EMReturnToLoginPageButton" value="На страницу логина" onClick={this.redirectToLoginPage.bind(this)} visible={sessionExpire}/>
                     </div>
                 </div>
             </Modal>
