@@ -5,6 +5,7 @@ import * as CommonUtils from '../../utils/CommonUtils'
 import nextPagePng from "../../media/data/nextPage.png";
 import prevPagePng from "../../media/data/prevPage.png";
 import Spinner from "../spinner/Spinner";
+import ErrorModal from '../../components/modal/ErrorModal';
 
 class CommonDbGrid extends Component {
 
@@ -110,11 +111,13 @@ class CommonDbGrid extends Component {
         }
 
         if (this.state.listData === undefined || this.state.listData === null) {
-            return null
+            return (
+                <ErrorModal errors={this.state.errors} closeAction={() => this.setState({errors:[]})}/>
+            )
         } else {
             return (
-                <div className="container" style={{paddingLeft:'0px', width:'100%',height:'100%'}}>
-                    <div ref='parentForSpinner' className="panel panel-default" style={{position:'inherit', width:'inherit',height:'340px',margin:"10px"}}>
+                <div className="container" style={{paddingLeft:'0px', paddingRight:'0px', width:'100%',height:'100%'}}>
+                    <div ref='parentForSpinner' className="panel panel-default" style={{position:'inherit', height:'340px',marginTop:"10px",marginLeft:"10px",marginBottom:"5px"}}>
                         <Spinner isLoading={this.state.isLoading}/>
                         <table style={{marginBottom:'0px'}} className='table table-hover table-condensed' ref="CommonDbGrid">
                             <thead className='.thead-light'>
@@ -173,6 +176,7 @@ class CommonDbGrid extends Component {
                             </tr>
                         </tbody>
                     </table>
+                    <ErrorModal errors={this.state.errors} closeAction={() => this.setState({errors:[]})}/>
                 </div>
             );
         }

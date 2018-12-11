@@ -7,6 +7,20 @@ import * as CommonUtils from "../../utils/CommonUtils";
 
 class ErrorModal extends Modal {
 
+    constructor(props) {
+        super(props);
+
+        this.state = {
+            errors: []
+        }
+    }
+
+    componentDidUpdate(prevProps) {
+        if (this.props.errors !== prevProps.errors) {
+            this.setState({errors: this.props.errors});
+        }
+    }
+
     render() {
         let sessionExpire = false;
         if (this.props && this.props.errors && this.props.errors.length > 0) {
@@ -42,7 +56,7 @@ class ErrorModal extends Modal {
         }
 
         return(
-            <Modal visible={this.props.errors.length > 0} effect="fadeInDown">
+            <Modal visible={this.state.errors.length > 0} effect="fadeInDown">
                 <div className="panel panel-default" style={{width:'450px',height:'200px',marginBottom:'0px'}}>
                     <div className="panel-heading" style={{height:'45px'}}>
                         <table style={{width:'100%'}}>
@@ -61,7 +75,7 @@ class ErrorModal extends Modal {
                     <div className="panel-body" style={{height:'100px',overflow:'auto'}}>
                         <table style={{width:'100%'}}>
                             <tbody>
-                                <ErrorList dataList={this.props.errors}/>
+                                <ErrorList dataList={this.state.errors}/>
                             </tbody>
                         </table>
                     </div>
