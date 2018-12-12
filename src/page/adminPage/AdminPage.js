@@ -4,7 +4,7 @@ import QuickActionPanel from '../../components/mainpage/QuickActionPanel'
 import AdminTreeView from "../../components/mainpage/admin/AdminTreeView";
 import UserList from '../../components/user/UserList';
 import UserRoleList from '../../components/userrole/UserRoleList';
-
+import BasePackageList from '../../components/basePackage/BasePackageList';
 
 class AdminPage extends Component {
 
@@ -25,13 +25,17 @@ class AdminPage extends Component {
 
         function MainDivComponent(props) {
             switch(props.choosenTreeItem) {
-                case 'users':
+                case 'user':
                     return (
                         <UserList/>
                     );
-                case 'userRoles':
+                case 'userRole':
                     return (
                         <UserRoleList/>
+                    );
+                case 'basePackage':
+                    return (
+                        <BasePackageList/>
                     );
                 default:
                     return (

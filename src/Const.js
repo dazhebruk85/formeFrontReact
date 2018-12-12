@@ -14,6 +14,9 @@ export const USER_PASSWORD_CHANGE_ACTION = "userPasswordChangeAction";
 //User context
 export const USER_ROLE_CONTEXT = "userRole";
 
+//User role context
+export const BASE_PACKAGE_CONTEXT = "basePackage";
+
 //Common entity actions
 export const ENTITY_LIST = "entityList";
 export const ENTITY_GET = "entityGet";

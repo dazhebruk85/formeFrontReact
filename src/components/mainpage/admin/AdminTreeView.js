@@ -13,11 +13,12 @@ import showIcon from '../../../media/data/show.png'
 const treeData = [
     { key:'Main',icon:<img alt='' src={mainTreeIcon} style={{marginTop:"0px", marginLeft:"0px"}}/>,title:'Главная',children:
         [
-           {key:'ancets',icon:<img alt='' src={anketaIcon} style={{marginTop:"0px", marginLeft:"0px"}}/>,title:'Анкеты'}
+           {key:'ancet',icon:<img alt='' src={anketaIcon} style={{marginTop:"0px", marginLeft:"0px"}}/>,title:'Анкеты'}
            ,{key:'dicts',icon:<img alt='' src={dictsIcon} style={{marginTop:"0px", marginLeft:"0px"}}/>,title:'Справочники',children:
             [
-                {key:'users',icon:<img alt='' src={usersIcon} style={{marginTop:"0px", marginLeft:"0px"}}/>,title:'Пользователи'}
-               ,{key:'userRoles',icon:<img alt='' src={userRolesIcon} style={{marginTop:"0px", marginLeft:"0px"}}/>,title:'Роли пользователя'}
+                {key:'user',icon:<img alt='' src={usersIcon} style={{marginTop:"0px", marginLeft:"0px"}}/>,title:'Пользователи'}
+               ,{key:'userRole',icon:<img alt='' src={userRolesIcon} style={{marginTop:"0px", marginLeft:"0px"}}/>,title:'Роли пользователя'}
+               ,{key:'basePackage',icon:<img alt='' src={userRolesIcon} style={{marginTop:"0px", marginLeft:"0px"}}/>,title:'Базовые пакеты'}
             ]}
         ]
     }

@@ -64,7 +64,7 @@ class DictionaryField extends Component {
                                        disabled={true}/>
                             </td>
                             <td>
-                                <img src={dictPng} style={{marginLeft:'10px',width:'28px',height:'28px',cursor:'pointer'}} onClick={this.openDict}/>
+                                <img alt={''} src={dictPng} style={{marginLeft:'10px',width:'28px',height:'28px',cursor:'pointer'}} onClick={this.openDict}/>
                             </td>
                         </tr>
                         </tbody>
