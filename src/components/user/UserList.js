@@ -5,6 +5,7 @@ import entityAdd from '../../media/entity/entityAdd.png';
 import entityEdit from '../../media/entity/entityEdit.png';
 import entityDelete from '../../media/entity/entityDelete.png';
 import entityRefresh from '../../media/entity/entityRefresh.png';
+import setPassword from '../../media/data/changePassword.png';
 import * as CommonUtils from "../../utils/CommonUtils";
 import ErrorModal from '../../components/modal/ErrorModal';
 import UserEditForm from './UserEditForm';
@@ -43,6 +44,7 @@ class UserList extends Component {
         this.deleteUserEntity = this.deleteUserEntity.bind(this);
         this.deleteUserEntityConfirm = this.deleteUserEntityConfirm.bind(this);
         this.refreshUserList = this.refreshUserList.bind(this);
+        this.clearFilter = this.clearFilter.bind(this);
         this.handleChange = this.handleChange.bind(this);
     }
 
@@ -119,9 +121,23 @@ class UserList extends Component {
         this.setState({
             filter:
                 {...this.state.filter,
-                    ULFilter_userRole_eq: selectedRole.name
+                    ULFilter_userRole_eq: selectedRole ? selectedRole.name : ''
                 }
         });
+    }
+
+    clearFilter() {
+        this.setState({
+            filter:
+                {...this.state.filter,
+                    ULFilter_login_like:'',
+                    ULFilter_fio_like:'',
+                    ULFilter_email_like:'',
+                    ULFilter_phone_like:'',
+                    ULFilter_userRole_eq:''
+                }
+        });
+        setTimeout(() => this.refreshUserList(), 0);
     }
 
     render() {
@@ -167,6 +183,16 @@ class UserList extends Component {
                                              style={{width:'28px',height:'28px',cursor:'pointer',marginTop:"0px", marginLeft:"0px"}}/>
                                     </div>
                                 </td>
+                                <td>
+                                    <div style={{width:'100%',height:'100%',padding:'5px',textAlign:'-webkit-center'}}>
+                                        <img onClick={this.refreshUserList}
+                                             title={'Задать пользователю пароль'}
+                                             alt='Задать пароль'
+                                             src={setPassword}
+                                             style={{width:'28px',height:'28px',cursor:'pointer',marginTop:"0px", marginLeft:"0px"}}/>
+                                    </div>
+                                </td>
+
                             </tr>
                         </tbody>
                     </table>
@@ -217,9 +243,9 @@ class UserList extends Component {
                                         </tbody>
                                     </table>
                                     <div className="form-group" style={{marginBottom:'0px'}}>
-                                        <label style={{width:'100px'}} className="control-label col-sm-2"></label>
+                                        <label style={{width:'110px'}} className="control-label col-sm-2"></label>
                                         <Button style={{marginLeft:'5px'}} id="ULFilterApplyButton" value="Применить" onClick={this.refreshUserList}/>
-                                        <Button style={{marginLeft:'5px'}} id="ULFilterClearButton" value="Очистить" onClick={null}/>
+                                        <Button style={{marginLeft:'5px'}} id="ULFilterClearButton" value="Очистить" onClick={this.clearFilter}/>
                                     </div>
                                 </form>
                             </Panel.Body>

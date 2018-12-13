@@ -1,5 +1,6 @@
 import React, {Component}from 'react';
 import dictPng from '../../media/data/dictionary.png'
+import dictClearPng from '../../media/data/dictionaryClear.png'
 import Modal from 'react-awesome-modal';
 import closePng from '../../media/data/close.png';
 import Button from './../field/Button';
@@ -43,6 +44,10 @@ class DictionaryField extends Component {
         this.closeDict()
     }
 
+    clearDict() {
+        setTimeout(() => this.chooseDictAction(null), 0);
+    }
+
     render() {
         return(
             <div className="form-group">
@@ -64,7 +69,10 @@ class DictionaryField extends Component {
                                        disabled={true}/>
                             </td>
                             <td>
-                                <img alt={''} src={dictPng} style={{marginLeft:'5px',width:'24px',height:'24px',cursor:'pointer'}} onClick={this.openDict}/>
+                                <img title={'Открыть справочник'} alt={''} src={dictPng} style={{marginLeft:'5px',width:'20px',height:'20px',cursor:'pointer'}} onClick={this.openDict}/>
+                            </td>
+                            <td>
+                                <img title={'Очистить'} alt={''} src={dictClearPng} style={{marginLeft:'5px',width:'20px',height:'20px',cursor:'pointer'}} onClick={() => this.clearDict()}/>
                             </td>
                         </tr>
                         </tbody>

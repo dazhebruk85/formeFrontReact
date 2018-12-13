@@ -169,8 +169,8 @@ class UserEditForm extends Modal {
         this.setState({
             fields:
                 {...this.state.fields,
-                    userRoleName: selectedRole.name,
-                    userRoleId: selectedRole.entityId
+                    userRoleName: selectedRole ? selectedRole.name  : '',
+                    userRoleId: selectedRole ? selectedRole.entityId  : ''
                 }
         });
     }
