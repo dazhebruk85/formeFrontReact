@@ -87,7 +87,7 @@ class LoginPage extends Component {
                                 <UniversalField labelWidth='70px' fieldWidth='300px' label='Пароль' type={Const.PASSWORD} id='password' value={this.state.password} onChange={this.handleChange} maxLength={50}/>
                                 <div className="form-group">
                                     <label style={{width:'70px'}} className="control-label col-sm-2"></label>
-                                    <Button style={{marginLeft:'15px'}} id="LPloginButton" value="Войти" onClick={this.doLogin}/>
+                                    <Button style={{marginLeft:'5px'}} id="LPloginButton" value="Войти" onClick={this.doLogin}/>
                                 </div>
                             </form>
                         </div>

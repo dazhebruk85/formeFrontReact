@@ -96,8 +96,8 @@ class ErrorModal extends Modal {
                         </table>
                     </div>
                     <div className="btn-toolbar align-bottom" role="toolbar" style={{justifyContent:'center',display:'flex'}}>
-                        <Button id="EMOkButton" value="Ок" onClick={this.props.closeAction}/>
-                        <Button id="EMReturnToLoginPageButton" value="На страницу логина" onClick={this.redirectToLoginPage.bind(this)} visible={sessionExpire}/>
+                        <Button value="Ок" onClick={this.props.closeAction}/>
+                        <Button value="На страницу логина" onClick={this.redirectToLoginPage.bind(this)} visible={sessionExpire}/>
                     </div>
                 </div>
             </Modal>

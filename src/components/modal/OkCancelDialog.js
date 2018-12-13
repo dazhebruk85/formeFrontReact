@@ -2,6 +2,7 @@ import React from 'react';
 import Modal from 'react-awesome-modal';
 import closePng from '../../media/data/close.png';
 import questionPng from '../../media/data/question.png';
+import Button from './../field/Button'
 
 class OkCancelDialog extends Modal {
 
@@ -53,12 +54,8 @@ class OkCancelDialog extends Modal {
                         </table>
                     </div>
                     <div className="btn-toolbar align-bottom" role="toolbar" style={{justifyContent:'center',display:'flex'}}>
-                        <div className="btn-group mr-2" role="group">
-                            <input id="okButton" type="button" value="Ок" className="btn btn-primary" onClick={this.state.okAction}/>
-                        </div>
-                        <div className="btn-group mr-2" role="group">
-                            <input id="cancelButton" type="button" value="Отмена" className="btn btn-primary" onClick={this.state.cancelAction}/>
-                        </div>
+                        <Button id="OCDOkButton" value="Ок" onClick={this.state.okAction}/>
+                        <Button id="OCDCancelButton" value="Отмена" onClick={this.state.cancelAction}/>
                     </div>
                 </div>
             </Modal>

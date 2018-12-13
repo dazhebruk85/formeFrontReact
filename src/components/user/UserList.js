@@ -11,7 +11,7 @@ import UserEditForm from './UserEditForm';
 import UniversalField from './../field/UniversalField'
 import Button from './../field/Button'
 import { Panel } from 'react-bootstrap';
-
+import DictionaryField from './../field/DictionaryField'
 import collapseIcon from '../../media/data/collapse.png'
 import expandIcon from '../../media/data/expand.png'
 
@@ -26,11 +26,11 @@ class UserList extends Component {
             selectedUserId: '',
             filterOpen:true,
             filter: {
-                filterLogin:'',
-                filterFio:'',
-                filterEmail:'',
-                filterPhone:'',
-                filterUserRole:''
+                ULFilter_login_like:'',
+                ULFilter_fio_like:'',
+                ULFilter_email_like:'',
+                ULFilter_phone_like:'',
+                ULFilter_userRole_eq:''
             }
         };
 
@@ -96,6 +96,15 @@ class UserList extends Component {
         });
     }
 
+    chooseUserRoleForFilter(selectedRole){
+        this.setState({
+            filter:
+                {...this.state.filter,
+                    ULFilter_userRole_eq: selectedRole.name
+                }
+        });
+    }
+
     render() {
         return(
             <div id='ULMainDiv'>
@@ -153,14 +162,45 @@ class UserList extends Component {
                         <Panel.Collapse>
                             <Panel.Body>
                                 <form id='ULFilterDiv' className="form-horizontal" style={{paddingTop:'10px'}}>
-                                    <UniversalField labelWidth='100px' fieldWidth='300px' label='Логин' type={Const.TEXTFIELD} id='filterLogin' value={this.state.filter.filterLogin} onChange={this.handleChange} maxLength={255}/>
-                                    <UniversalField labelWidth='100px' fieldWidth='300px' label='ФИО' type={Const.TEXTFIELD} id='filterFio' value={this.state.filter.filterFio} onChange={this.handleChange} maxLength={255}/>
-                                    <UniversalField labelWidth='100px' fieldWidth='300px' label='Email' type={Const.TEXTFIELD} id='filterEmail' value={this.state.filter.filterEmail} onChange={this.handleChange} maxLength={255}/>
-                                    <UniversalField labelWidth='100px' fieldWidth='300px' label='Телефон' type={Const.TEXTFIELD} id='filterPhone' value={this.state.filter.filterPhone} onChange={this.handleChange} maxLength={255}/>
+                                    <table>
+                                        <tbody>
+                                        <tr>
+                                            <td>
+                                                <UniversalField labelWidth='110px' fieldWidth='300px' label='Логин' type={Const.TEXTFIELD} id='ULFilter_login_like' value={this.state.filter.ULFilter_login_like} onChange={this.handleChange} maxLength={255}/>
+                                            </td>
+                                            <td>
+                                                <UniversalField labelWidth='110px' fieldWidth='300px' label='ФИО' type={Const.TEXTFIELD} id='ULFilter_fio_like' value={this.state.filter.ULFilter_fio_like} onChange={this.handleChange} maxLength={255}/>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td>
+                                                <UniversalField labelWidth='110px' fieldWidth='300px' label='Email' type={Const.TEXTFIELD} id='ULFilter_email_like' value={this.state.filter.ULFilter_email_like} onChange={this.handleChange} maxLength={255}/>
+
+                                            </td>
+                                            <td>
+                                                <UniversalField labelWidth='110px' fieldWidth='300px' label='Телефон' type={Const.TEXTFIELD} id='ULFilter_phone_like' value={this.state.filter.ULFilter_phone_like} onChange={this.handleChange} maxLength={255}/>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td>
+                                                <DictionaryField labelWidth='110px'
+                                                                 fieldWidth='300px'
+                                                                 label='Роль'
+                                                                 type={Const.TEXTFIELD}
+                                                                 id='ULFilter_userRole_eq'
+                                                                 value={this.state.filter.ULFilter_userRole_eq}
+                                                                 placeholder=''
+                                                                 maxLength={100}
+                                                                 context={Const.USER_ROLE_CONTEXT}
+                                                                 chooseDictAction={this.chooseUserRoleForFilter.bind(this)}/>
+                                            </td>
+                                        </tr>
+                                        </tbody>
+                                    </table>
                                     <div className="form-group" style={{marginBottom:'0px'}}>
                                         <label style={{width:'100px'}} className="control-label col-sm-2"></label>
-                                        <Button style={{marginLeft:'15px'}} id="ULFilterApplyButton" value="Применить" onClick={this.refreshUserList}/>
-                                        <Button style={{marginLeft:'15px'}} id="ULFilterClearButton" value="Очистить" onClick={null}/>
+                                        <Button style={{marginLeft:'5px'}} id="ULFilterApplyButton" value="Применить" onClick={this.refreshUserList}/>
+                                        <Button style={{marginLeft:'5px'}} id="ULFilterClearButton" value="Очистить" onClick={null}/>
                                     </div>
                                 </form>
                             </Panel.Body>

@@ -64,7 +64,7 @@ class DictionaryField extends Component {
                                        disabled={true}/>
                             </td>
                             <td>
-                                <img alt={''} src={dictPng} style={{marginLeft:'10px',width:'28px',height:'28px',cursor:'pointer'}} onClick={this.openDict}/>
+                                <img alt={''} src={dictPng} style={{marginLeft:'5px',width:'24px',height:'24px',cursor:'pointer'}} onClick={this.openDict}/>
                             </td>
                         </tr>
                         </tbody>
@@ -86,12 +86,12 @@ class DictionaryField extends Component {
                                 </tbody>
                             </table>
                         </div>
-                        <div className="panel-body" style={{height:'420px',overflow:'auto'}}>
+                        <div className="panel-body" style={{height:'420px',overflow:'auto'}} onDoubleClick={() => this.chooseDict()}>
                             <CommonDbGrid selectAction={this.changeGridSelection.bind(this)} ref={'DFDictGrid'} dataEntityContext={this.props.context} pageSize={10}/>
                         </div>
                         <div className="btn-toolbar align-bottom" role="toolbar" style={{justifyContent:'center',display:'flex'}}>
-                            <Button id="DFOkButton" value="Ок" onClick={() => this.chooseDict()}/>
-                            <Button id="DFCancelButton" value="Отмена" onClick={() => this.closeDict()}/>
+                            <Button value="Ок" onClick={() => this.chooseDict()}/>
+                            <Button value="Отмена" onClick={() => this.closeDict()}/>
                         </div>
                     </div>
                 </Modal>

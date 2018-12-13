@@ -77,7 +77,7 @@ class ChangePasswordModal extends Modal {
             this.setState({errors: errors});
         } else {
             let params = {oldPassword:this.state.oldPassword,newPassword:this.state.newPassword,newPasswordRepeat:this.state.newPasswordRepeat};
-            let responseData = await CommonUtils.makeAsyncPostEvent(Const.APP_URL,Const.USER_CONTEXT,Const.USER_PASSWORD_CHANGE_ACTION,params,cookie.load('sessionId'));
+            let responseData = await CommonUtils.makeAsyncPostEvent(Const.APP_URL,Const.CHANGE_PASSWORD_CONTEXT,'',params,cookie.load('sessionId'));
             if (responseData.errors.length > 0) {
                 this.setState({errors: responseData.errors});
             } else {

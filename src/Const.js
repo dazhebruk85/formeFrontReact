@@ -1,15 +1,16 @@
 // System consts
 export const WORK_APP_URL = 'http://10.1.1.24:1313/back/FrontServlet';
 export const HOME_APP_URL = 'http://192.168.0.100:1313/back/FrontServlet';
-export const APP_URL = HOME_APP_URL;
+export const APP_URL = WORK_APP_URL;
 
 //Auth context
 export const AUTH_CONTEXT = "auth";
 
 //User context
 export const USER_CONTEXT = "user";
-//User actions
-export const USER_PASSWORD_CHANGE_ACTION = "userPasswordChangeAction";
+
+//Change password context
+export const CHANGE_PASSWORD_CONTEXT = "changePassword";
 
 //User context
 export const USER_ROLE_CONTEXT = "userRole";
