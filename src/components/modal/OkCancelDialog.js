@@ -54,8 +54,8 @@ class OkCancelDialog extends Modal {
                         </table>
                     </div>
                     <div className="btn-toolbar align-bottom" role="toolbar" style={{justifyContent:'center',display:'flex'}}>
-                        <Button id="OCDOkButton" value="Ок" onClick={this.state.okAction}/>
-                        <Button id="OCDCancelButton" value="Отмена" onClick={this.state.cancelAction}/>
+                        <Button value="Ок" onClick={this.state.okAction}/>
+                        <Button value="Отмена" onClick={this.state.cancelAction}/>
                     </div>
                 </div>
             </Modal>

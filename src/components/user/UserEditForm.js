@@ -239,9 +239,7 @@ class UserEditForm extends Modal {
                     </div>
                 </div>
                 <ErrorModal errors={this.state.errors} closeAction={() => this.setState({errors:[]})}/>
-                <MultiPopup popupData={this.state.successInfoMessages}
-                            popupType={Const.INFO_POPUP}
-                            closeAction={() => {this.setState({successInfoMessages: []}); this.closeModal()}}/>
+                <MultiPopup popupData={this.state.successInfoMessages} popupType={Const.INFO_POPUP} closeAction={() => {this.setState({successInfoMessages: []}); this.closeModal()}}/>
             </Modal>
         )
     }

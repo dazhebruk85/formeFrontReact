@@ -6,6 +6,7 @@ import warningPng from "../../media/data/warning.png";
 import infoPng from "../../media/data/info.png";
 import * as CommonUtils from "../../utils/CommonUtils";
 import * as Const from '../../Const';
+import Button from './../field/Button'
 
 class MultiPopup extends Modal {
 
@@ -99,9 +100,7 @@ class MultiPopup extends Modal {
                         </table>
                     </div>
                     <div className="btn-toolbar align-bottom" role="toolbar" style={{justifyContent:'center',display:'flex'}}>
-                        <div className="btn-group mr-2" role="group">
-                            <input id="okButton" type="button" value="Ок" className="btn btn-primary" onClick={this.state.closeAction}/>
-                        </div>
+                        <Button value="Ок" onClick={this.state.closeAction}/>
                     </div>
                 </div>
             </Modal>

@@ -20,7 +20,6 @@ class QuickActionPanel extends Component {
 
         this.showChangePasswordModal = this.showChangePasswordModal.bind(this);
         this.closeChangePasswordModal = this.closeChangePasswordModal.bind(this);
-        this.showExitDialog = this.showExitDialog.bind(this);
         this.cancelExitDialog = this.cancelExitDialog.bind(this);
         this.okExitDialog = this.okExitDialog.bind(this);
         this.showUpdateUserDataModal = this.showUpdateUserDataModal.bind(this);
@@ -48,12 +47,6 @@ class QuickActionPanel extends Component {
     closeUpdateUserDataModal(evt){
         this.setState({
             updateUserDataModalVisible: false
-        })
-    }
-
-    showExitDialog(evt){
-        this.setState({
-            exitDialogVisible: true
         })
     }
 
@@ -102,7 +95,7 @@ class QuickActionPanel extends Component {
                         </td>
                         <td>
                             <div style={{width:'100%',height:'100%',padding:'0px',textAlign:'-webkit-center'}}>
-                                <img onClick={this.showExitDialog}
+                                <img onClick={() => this.setState({exitDialogVisible: true})}
                                      title={'Выход'}
                                      alt='Выход'
                                      src={exitPng}

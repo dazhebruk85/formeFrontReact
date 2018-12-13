@@ -14,6 +14,9 @@ import { Panel } from 'react-bootstrap';
 import DictionaryField from './../field/DictionaryField'
 import collapseIcon from '../../media/data/collapse.png'
 import expandIcon from '../../media/data/expand.png'
+import OkCancelDialog from '../../components/modal/OkCancelDialog';
+import cookie from 'react-cookies';
+import MultiPopup from "../modal/MultiPopup";
 
 class UserList extends Component {
 
@@ -25,6 +28,7 @@ class UserList extends Component {
             editFormVisible: false,
             selectedUserId: '',
             filterOpen:true,
+            deleteEntityDialogVisible:false,
             filter: {
                 ULFilter_login_like:'',
                 ULFilter_fio_like:'',
@@ -37,6 +41,7 @@ class UserList extends Component {
         this.addUserEntity = this.addUserEntity.bind(this);
         this.editUserEntity = this.editUserEntity.bind(this);
         this.deleteUserEntity = this.deleteUserEntity.bind(this);
+        this.deleteUserEntityConfirm = this.deleteUserEntityConfirm.bind(this);
         this.refreshUserList = this.refreshUserList.bind(this);
         this.handleChange = this.handleChange.bind(this);
     }
@@ -60,12 +65,26 @@ class UserList extends Component {
         if (CommonUtils.objectIsEmpty(this.state.selectedUserId)) {
             this.setState({errors:[{code:'',message:'Необходимо выбрать запись'}]});
         } else {
-            let aaa = 0;
+            this.setState({deleteEntityDialogVisible:true});
+        }
+    }
+
+    async deleteUserEntityConfirm() {
+        let params = {entityId: this.state.selectedUserId};
+        let responseData = await CommonUtils.makeAsyncPostEvent(Const.APP_URL,Const.USER_CONTEXT,Const.ENTITY_DELETE,params,cookie.load('sessionId'));
+        if (responseData.errors.length > 0) {
+            this.setState({errors: responseData.errors});
+        } else {
+            this.setState({
+                successInfoMessages: [{code:'INFO',message:'Пользователь удален'}],
+                deleteEntityDialogVisible:false
+            });
+            this.refreshUserList();
         }
     }
 
     refreshUserList() {
-        this.refs.ULUserGrid.getGridListData()
+        this.refs.ULUserGrid.getGridListData();
         this.setState({selectedUserId:''})
     }
 
@@ -210,6 +229,11 @@ class UserList extends Component {
                 <CommonDbGrid filter={this.state.filter} selectAction={this.changeGridSelection.bind(this)} ref={'ULUserGrid'} dataEntityContext={Const.USER_CONTEXT} pageSize={10}/>
                 <UserEditForm entityId={this.state.selectedUserId} visible={this.state.editFormVisible} closeAction={() => {this.setState({editFormVisible:false,selectedUserId:''});this.refreshUserList()}}/>
                 <ErrorModal errors={this.state.errors} closeAction={() => this.setState({errors:[]})}/>
+                <OkCancelDialog okCancelVisible={this.state.deleteEntityDialogVisible}
+                                question={'Вы действительно хотите удалить выбранную запись?'}
+                                cancelAction={() => this.setState({deleteEntityDialogVisible:false})}
+                                okAction={this.deleteUserEntityConfirm.bind(this)}/>
+                <MultiPopup popupData={this.state.successInfoMessages} popupType={Const.INFO_POPUP} closeAction={() => this.setState({successInfoMessages:[]})}/>
             </div>
         )
     }
