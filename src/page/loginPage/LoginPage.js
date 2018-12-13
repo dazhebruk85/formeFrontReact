@@ -64,12 +64,10 @@ class LoginPage extends Component {
         }
     }
 
-    handleChange(event) {
+    handleChange(event, fieldName) {
         const value = event.target.value;
-        const id = event.target.id;
-
         this.setState({
-            [id]: value
+            [fieldName]: value
         });
     }
 
@@ -83,8 +81,8 @@ class LoginPage extends Component {
                         <div className="panel-heading">Войти в личный кабинет</div>
                         <div className="panel-body">
                             <form className="form-horizontal">
-                                <UniversalField labelWidth='70px' fieldWidth='300px' label='Логин' type={Const.TEXTFIELD} id='login' value={this.state.login} onChange={this.handleChange} maxLength={50}/>
-                                <UniversalField labelWidth='70px' fieldWidth='300px' label='Пароль' type={Const.PASSWORD} id='password' value={this.state.password} onChange={this.handleChange} maxLength={50}/>
+                                <UniversalField labelWidth='70px' fieldWidth='300px' label='Логин' type={Const.TEXTFIELD} value={this.state.login} onChange={(event) => this.handleChange(event, 'login')} maxLength={50}/>
+                                <UniversalField labelWidth='70px' fieldWidth='300px' label='Пароль' type={Const.PASSWORD} value={this.state.password} onChange={(event) => this.handleChange(event, 'password')} maxLength={50}/>
                                 <div className="form-group">
                                     <label style={{width:'70px'}} className="control-label col-sm-2"></label>
                                     <Button style={{marginLeft:'5px'}} id="LPloginButton" value="Войти" onClick={this.doLogin}/>
