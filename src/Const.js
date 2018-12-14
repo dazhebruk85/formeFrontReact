@@ -18,6 +18,9 @@ export const USER_ROLE_CONTEXT = "userRole";
 //User role context
 export const BASE_PACKAGE_CONTEXT = "basePackage";
 
+//Repair app form context
+export const REPAIR_APP_FORM_CONTEXT = "repairAppForm";
+
 //Common entity actions
 export const ENTITY_LIST = "entityList";
 export const ENTITY_GET = "entityGet";
@@ -26,9 +29,6 @@ export const ENTITY_DELETE = "entityDelete";
 
 //User role Consts
 export const SUPERUSER_ROLE = "superuser"; // Суперпользователь
-export const MANGER_ROLE = "manager"; // Менеджер
-export const ACCOUNTANT_ROLE = "accountant"; // Бухгалтер
-export const FOREMAN_ROLE = "foreman"; // Прораб
 export const CLIENT_ROLE = "client"; // Клиент светелкина
 
 //Popup type
