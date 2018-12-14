@@ -9,19 +9,19 @@ class RepairAppList extends Component {
 
         this.state = {
             errors: [],
-            selectedRepairAppFormId: '',
+            selectedRepairAppId: '',
         };
     }
 
-    changeGridSelection(selectedRepairAppFormId) {
+    changeGridSelection(selectedRepairAppId) {
         this.setState({
-            selectedRepairAppFormId: selectedRepairAppFormId.entityId
+            selectedRepairAppId: selectedRepairAppId.entityId
         });
     }
 
     render() {
         return(
-            <CommonDbGrid selectAction={this.changeGridSelection.bind(this)} ref={'ULRepairAppFormGrid'} dataEntityContext={Const.REPAIR_APP_FORM_CONTEXT} pageSize={10}/>
+            <CommonDbGrid selectAction={this.changeGridSelection.bind(this)} ref={'ULRepairAppGrid'} dataEntityContext={Const.REPAIR_APP_FORM_CONTEXT} pageSize={10}/>
         )
     }
 }
