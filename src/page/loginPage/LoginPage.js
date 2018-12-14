@@ -76,7 +76,7 @@ class LoginPage extends Component {
             <div className="container" style={{width:'100%',height:'100%'}}>
                 <div className="panel-group">
                     <img alt='' src={logo} style={{marginTop:"20px", marginLeft:"30px"}}/>
-                    <div id='loginFramePanel' ref='loginFramePanel' className="panel panel-default" style={{width:'400px', height:'220px', marginTop:"20px", marginLeft:"30px"}}>
+                    <div className="panel panel-default" style={{width:'400px', height:'220px', marginTop:"20px", marginLeft:"30px"}}>
                         <Spinner isLoading={this.state.isLoading}/>
                         <div className="panel-heading">Войти в личный кабинет</div>
                         <div className="panel-body">
@@ -85,7 +85,7 @@ class LoginPage extends Component {
                                 <UniversalField labelWidth='70px' fieldWidth='300px' label='Пароль' type={Const.PASSWORD} value={this.state.password} onChange={(event) => this.handleChange(event, 'password')} maxLength={50}/>
                                 <div className="form-group">
                                     <label style={{width:'70px'}} className="control-label col-sm-2"></label>
-                                    <Button style={{marginLeft:'5px'}} id="LPloginButton" value="Войти" onClick={this.doLogin}/>
+                                    <Button style={{marginLeft:'5px'}} value="Войти" onClick={this.doLogin}/>
                                 </div>
                             </form>
                         </div>

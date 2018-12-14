@@ -14,8 +14,8 @@ class BasePackageList extends Component {
 
     render() {
         return(
-            <div id='BPLMainDiv'>
-                <CommonDbGrid selectAction={null} ref={'BPLBasePackageGrid'} dataEntityContext={Const.BASE_PACKAGE_CONTEXT} pageSize={10}/>
+            <div>
+                <CommonDbGrid selectAction={null} dataEntityContext={Const.BASE_PACKAGE_CONTEXT} pageSize={10}/>
             </div>
         )
     }

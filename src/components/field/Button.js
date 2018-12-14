@@ -11,9 +11,7 @@ class Button extends Component {
 
         return (
             <div className="btn-group mr-2" role="group">
-                <input ref={this.props.id}
-                       id={this.props.id}
-                       type="button"
+                <input type="button"
                        value={this.props.value}
                        className="btn btn-primary btn-sm"
                        onClick={this.props.onClick}

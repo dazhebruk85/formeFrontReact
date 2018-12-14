@@ -96,19 +96,7 @@ class UserList extends Component {
         });
     }
 
-    handleChange(event, field) {
-        if (field !== null && field !== undefined) {
-            this.setState({filter:{...this.state.filter,[field]: event}});
-        } else {
-            const value = event.target.value;
-            const id = event.target.id;
-            this.setState({filter:{...this.state.filter,[id]: value}});
-        }
-    }
-
-    onToggleFilter() {
-
-    }
+    onToggleFilter() {}
 
     toggleFilter() {
         let toggleFilter = !this.state.filterOpen
@@ -140,10 +128,29 @@ class UserList extends Component {
         setTimeout(() => this.refreshUserList(), 0);
     }
 
+    handleChange(event, fieldName) {
+        if (event instanceof Date) {
+            this.setState({
+                filter: {
+                    ...this.state.filter,
+                    [fieldName]: event
+                }
+            });
+        } else {
+            const value = event.target.value;
+            this.setState({
+                filter: {
+                    ...this.state.filter,
+                    [fieldName]: value
+                }
+            });
+        }
+    }
+
     render() {
         return(
-            <div id='ULMainDiv'>
-                <div id='ULToolbarDiv' style={{marginLeft:'10px'}}>
+            <div>
+                <div style={{marginLeft:'10px'}}>
                     <table>
                         <tbody>
                             <tr>
@@ -197,7 +204,7 @@ class UserList extends Component {
                         </tbody>
                     </table>
 
-                    <Panel style={{marginBottom:'0px'}} id="collapsible-panel-example-3" expanded={this.state.filterOpen} onToggle={this.onToggleFilter}>
+                    <Panel style={{marginBottom:'0px'}} expanded={this.state.filterOpen} onToggle={this.onToggleFilter}>
                         <Panel.Heading>
                             <div style={{fontWeight:'700'}}>
                                 <img onClick={() => this.toggleFilter()} alt='' align={'left'} src={this.state.filterOpen ? collapseIcon : expandIcon} style={{marginTop:'-2px',marginRight:'10px',cursor:'pointer',height:"24px",width:"24px"}}/>
@@ -206,24 +213,24 @@ class UserList extends Component {
                         </Panel.Heading>
                         <Panel.Collapse>
                             <Panel.Body>
-                                <form id='ULFilterDiv' className="form-horizontal" style={{paddingTop:'10px'}}>
+                                <form className="form-horizontal" style={{paddingTop:'10px'}}>
                                     <table>
                                         <tbody>
                                         <tr>
                                             <td>
-                                                <UniversalField labelWidth='110px' fieldWidth='300px' label='Логин' type={Const.TEXTFIELD} id='ULFilter_login_like' value={this.state.filter.ULFilter_login_like} onChange={this.handleChange} maxLength={255}/>
+                                                <UniversalField labelWidth='110px' fieldWidth='300px' label='Логин' type={Const.TEXTFIELD} value={this.state.filter.ULFilter_login_like} onChange={(event) => this.handleChange(event, 'ULFilter_login_like')} maxLength={255}/>
                                             </td>
                                             <td>
-                                                <UniversalField labelWidth='110px' fieldWidth='300px' label='ФИО' type={Const.TEXTFIELD} id='ULFilter_fio_like' value={this.state.filter.ULFilter_fio_like} onChange={this.handleChange} maxLength={255}/>
+                                                <UniversalField labelWidth='110px' fieldWidth='300px' label='ФИО' type={Const.TEXTFIELD} value={this.state.filter.ULFilter_fio_like} onChange={(event) => this.handleChange(event, 'ULFilter_fio_like')} maxLength={255}/>
                                             </td>
                                         </tr>
                                         <tr>
                                             <td>
-                                                <UniversalField labelWidth='110px' fieldWidth='300px' label='Email' type={Const.TEXTFIELD} id='ULFilter_email_like' value={this.state.filter.ULFilter_email_like} onChange={this.handleChange} maxLength={255}/>
+                                                <UniversalField labelWidth='110px' fieldWidth='300px' label='Email' type={Const.TEXTFIELD} value={this.state.filter.ULFilter_email_like} onChange={(event) => this.handleChange(event, 'ULFilter_email_like')} maxLength={255}/>
 
                                             </td>
                                             <td>
-                                                <UniversalField labelWidth='110px' fieldWidth='300px' label='Телефон' type={Const.TEXTFIELD} id='ULFilter_phone_like' value={this.state.filter.ULFilter_phone_like} onChange={this.handleChange} maxLength={255}/>
+                                                <UniversalField labelWidth='110px' fieldWidth='300px' label='Телефон' type={Const.TEXTFIELD} value={this.state.filter.ULFilter_phone_like} onChange={(event) => this.handleChange(event, 'ULFilter_phone_like')} maxLength={255}/>
                                             </td>
                                         </tr>
                                         <tr>
@@ -232,7 +239,6 @@ class UserList extends Component {
                                                                  fieldWidth='300px'
                                                                  label='Роль'
                                                                  type={Const.TEXTFIELD}
-                                                                 id='ULFilter_userRole_eq'
                                                                  value={this.state.filter.ULFilter_userRole_eq}
                                                                  placeholder=''
                                                                  maxLength={100}
@@ -244,8 +250,8 @@ class UserList extends Component {
                                     </table>
                                     <div className="form-group" style={{marginBottom:'0px'}}>
                                         <label style={{width:'110px'}} className="control-label col-sm-2"></label>
-                                        <Button style={{marginLeft:'5px'}} id="ULFilterApplyButton" value="Применить" onClick={this.refreshUserList}/>
-                                        <Button style={{marginLeft:'5px'}} id="ULFilterClearButton" value="Очистить" onClick={this.clearFilter}/>
+                                        <Button style={{marginLeft:'5px'}} value="Применить" onClick={this.refreshUserList}/>
+                                        <Button style={{marginLeft:'5px'}} value="Очистить" onClick={this.clearFilter}/>
                                     </div>
                                 </form>
                             </Panel.Body>

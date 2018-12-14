@@ -105,16 +105,6 @@ class UserEditForm extends Modal {
         this.closeAction()
     }
 
-    handleChange(event, field) {
-        if (field !== null && field !== undefined) {
-            this.setState({fields:{...this.state.fields,[field]: event}});
-        } else {
-            const value = event.target.value;
-            const id = event.target.id;
-            this.setState({fields:{...this.state.fields,[id]: value}});
-        }
-    }
-
     async saveUserData() {
         let errors = []
         if (!this.state.fields.fio) {
@@ -175,6 +165,25 @@ class UserEditForm extends Modal {
         });
     }
 
+    handleChange(event, fieldName) {
+        if (event instanceof Date) {
+            this.setState({
+                fields: {
+                    ...this.state.fields,
+                    [fieldName]: event
+                }
+            });
+        } else {
+            const value = event.target.value;
+            this.setState({
+                fields: {
+                    ...this.state.fields,
+                    [fieldName]: value
+                }
+            });
+        }
+    }
+
     render() {
         return(
             <Modal visible={this.state.visible} effect="fadeInDown">
@@ -196,9 +205,9 @@ class UserEditForm extends Modal {
                     </div>
                     <div className="panel-body" style={{overflow:'auto'}}>
                         <form className="form-horizontal">
-                            <UniversalField labelWidth='220px' fieldWidth='300px' label='ФИО' type={Const.TEXTFIELD} id='fio' value={this.state.fields.fio} onChange={this.handleChange} placeholder='ФИО' maxLength={255}/>
-                            <UniversalField labelWidth='220px' fieldWidth='300px' label='Логин' type={Const.TEXTFIELD} id='login' value={this.state.fields.login} onChange={this.handleChange} placeholder='Логин' maxLength={255}/>
-                            <UniversalField labelWidth='220px' fieldWidth='300px' label='Дата рождения' type={Const.DATEPICKER} id='birthDate' value={this.state.fields.birthDate} onChange={(date) => this.handleChange(date, "birthDate")} placeholder='Дата рождения'/>
+                            <UniversalField labelWidth='220px' fieldWidth='300px' label='ФИО' type={Const.TEXTFIELD} value={this.state.fields.fio} onChange={(event) => this.handleChange(event, 'fio')} placeholder='ФИО' maxLength={255}/>
+                            <UniversalField labelWidth='220px' fieldWidth='300px' label='Логин' type={Const.TEXTFIELD} value={this.state.fields.login} onChange={(event) => this.handleChange(event, 'login')} placeholder='Логин' maxLength={255}/>
+                            <UniversalField labelWidth='220px' fieldWidth='300px' label='Дата рождения' type={Const.DATEPICKER} value={this.state.fields.birthDate} onChange={(date) => this.handleChange(date, "birthDate")} placeholder='Дата рождения'/>
                             <div className="form-group">
                                 <label style={{width:'220px'}} className="control-label col-sm-2">Паспорт</label>
                                 <div className="col-sm-10" style={{width:'300px',paddingRight:'0px'}}>
@@ -206,34 +215,33 @@ class UserEditForm extends Modal {
                                         <tbody>
                                         <tr>
                                             <td>
-                                                <input style={{width:'100px'}} placeholder="Серия" id="passportSeries" maxLength={4} className="form-control input-sm" type="text" value={this.state.fields.passportSeries} onChange={this.handleChange}/>
+                                                <input style={{width:'100px'}} placeholder="Серия" maxLength={4} className="form-control input-sm" type="text" value={this.state.fields.passportSeries} onChange={(event) => this.handleChange(event, 'passportSeries')}/>
                                             </td>
                                             <td style={{width:'10px'}}></td>
                                             <td>
-                                                <input placeholder="Номер" id="passportNumber" maxLength={6} className="form-control input-sm" type="text" value={this.state.fields.passportNumber} onChange={this.handleChange}/>
+                                                <input placeholder="Номер" maxLength={6} className="form-control input-sm" type="text" value={this.state.fields.passportNumber} onChange={(event) => this.handleChange(event, 'passportNumber')}/>
                                             </td>
                                         </tr>
                                         </tbody>
                                     </table>
                                 </div>
                             </div>
-                            <UniversalField style={{resize:'none',height:'75px'}} labelWidth='220px' fieldWidth='300px' label='выдан' type={Const.TEXTAREA} id='passportIssuedBy' value={this.state.fields.passportIssuedBy} onChange={this.handleChange} placeholder='Кем выдан паспорт' maxLength={255}/>
-                            <UniversalField style={{resize:'none',height:'75px'}} labelWidth='220px' fieldWidth='300px' label='Адрес регистрации' type={Const.TEXTAREA} id='regAddress' value={this.state.fields.regAddress} onChange={this.handleChange} placeholder='Адрес регистрации' maxLength={255}/>
-                            <UniversalField labelWidth='220px' fieldWidth='300px' label='Телефон' type={Const.TEXTFIELD} id='phone' value={this.state.fields.phone} onChange={this.handleChange} placeholder='Телефон' maxLength={100}/>
-                            <UniversalField labelWidth='220px' fieldWidth='300px' label='Email' type={Const.TEXTFIELD} id='email' value={this.state.fields.email} onChange={this.handleChange} placeholder='Email' maxLength={100}/>
+                            <UniversalField style={{resize:'none',height:'75px'}} labelWidth='220px' fieldWidth='300px' label='выдан' type={Const.TEXTAREA} value={this.state.fields.passportIssuedBy} onChange={(event) => this.handleChange(event, 'passportIssuedBy')} placeholder='Кем выдан паспорт' maxLength={255}/>
+                            <UniversalField style={{resize:'none',height:'75px'}} labelWidth='220px' fieldWidth='300px' label='Адрес регистрации' type={Const.TEXTAREA} value={this.state.fields.regAddress} onChange={(event) => this.handleChange(event, 'regAddress')} placeholder='Адрес регистрации' maxLength={255}/>
+                            <UniversalField labelWidth='220px' fieldWidth='300px' label='Телефон' type={Const.TEXTFIELD} value={this.state.fields.phone} onChange={(event) => this.handleChange(event, 'phone')} placeholder='Телефон' maxLength={100}/>
+                            <UniversalField labelWidth='220px' fieldWidth='300px' label='Email' type={Const.TEXTFIELD} value={this.state.fields.email} onChange={(event) => this.handleChange(event, 'email')} placeholder='Email' maxLength={100}/>
                             <DictionaryField labelWidth='220px'
                                              fieldWidth='300px'
                                              label='Роль пользователя'
                                              type={Const.TEXTFIELD}
-                                             id='userRoleName'
                                              value={this.state.fields.userRoleName}
                                              placeholder=''
                                              maxLength={100}
                                              context={Const.USER_ROLE_CONTEXT}
                                              chooseDictAction={this.chooseUserRole.bind(this)}/>
                             <div className="btn-toolbar align-bottom" role="toolbar" style={{justifyContent:'center',display:'flex'}}>
-                                <Button id="UEFOkButton" value="Ок" onClick={() => this.saveUserData()}/>
-                                <Button id="UEFCancelButton" value="Отмена" onClick={() => this.closeModal()}/>
+                                <Button value="Ок" onClick={() => this.saveUserData()}/>
+                                <Button value="Отмена" onClick={() => this.closeModal()}/>
                             </div>
                         </form>
                     </div>

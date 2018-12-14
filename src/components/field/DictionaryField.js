@@ -58,8 +58,6 @@ class DictionaryField extends Component {
                         <tr>
                             <td style={{width:'100%'}}>
                                 <input className="form-control"
-                                       ref={this.props.id}
-                                       id={this.props.id}
                                        value={this.props.value}
                                        onChange={this.props.onChange}
                                        placeholder={this.props.placeholder}
@@ -95,7 +93,7 @@ class DictionaryField extends Component {
                             </table>
                         </div>
                         <div className="panel-body" style={{height:'420px',overflow:'auto'}} onDoubleClick={() => this.chooseDict()}>
-                            <CommonDbGrid selectAction={this.changeGridSelection.bind(this)} ref={'DFDictGrid'} dataEntityContext={this.props.context} pageSize={10}/>
+                            <CommonDbGrid selectAction={this.changeGridSelection.bind(this)} dataEntityContext={this.props.context} pageSize={10}/>
                         </div>
                         <div className="btn-toolbar align-bottom" role="toolbar" style={{justifyContent:'center',display:'flex'}}>
                             <Button value="Ок" onClick={() => this.chooseDict()}/>

@@ -13,8 +13,6 @@ class UniversalField extends Component {
                         {this.props.label ? <label style={{width:this.props.labelWidth}} className="control-label col-sm-2">{this.props.label}</label> : null}
                         <div className="col-sm-10" style={{width:this.props.fieldWidth,paddingRight:'0px'}}>
                             <input className="form-control input-sm"
-                                   ref={this.props.id}
-                                   id={this.props.id}
                                    value={this.props.value}
                                    onChange={this.props.onChange}
                                    placeholder={this.props.placeholder}
@@ -30,8 +28,6 @@ class UniversalField extends Component {
                         {this.props.label ? <label style={{width:this.props.labelWidth}} className="control-label col-sm-2">{this.props.label}</label> : null}
                         <div className="col-sm-10" style={{width:this.props.fieldWidth,paddingRight:'0px'}}>
                             <input className="form-control input-sm"
-                                   ref={this.props.id}
-                                   id={this.props.id}
                                    value={this.props.value}
                                    onChange={this.props.onChange}
                                    placeholder={this.props.placeholder}
@@ -47,8 +43,6 @@ class UniversalField extends Component {
                         {this.props.label ? <label style={{width:this.props.labelWidth}} className="control-label col-sm-2">{this.props.label}</label> : null}
                         <div className="col-sm-10" style={{width:this.props.fieldWidth,paddingRight:'0px'}}>
                             <textarea className="form-control input-sm"
-                                      ref={this.props.id}
-                                      id={this.props.id}
                                       value={this.props.value}
                                       onChange={this.props.onChange}
                                       placeholder={this.props.placeholder}
@@ -63,8 +57,6 @@ class UniversalField extends Component {
                         {this.props.label ? <label style={{width:this.props.labelWidth}} className="control-label col-sm-2">{this.props.label}</label> : null}
                         <div className="col-sm-10" style={{width:this.props.fieldWidth,paddingRight:'0px'}}>
                             <DatePicker className="form-control input-sm" todayButton='Today'
-                                        ref={this.props.id}
-                                        id={this.props.id}
                                         selected={this.props.value}
                                         onChange={this.props.onChange}
                                         placeholder={this.props.placeholder}
