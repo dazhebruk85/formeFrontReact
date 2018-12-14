@@ -3,15 +3,38 @@ import logo from '../../media/logo.png';
 import QuickActionPanel from '../../components/mainpage/QuickActionPanel'
 import cookie from 'react-cookies';
 import ClientTreeView from '../../components/mainpage/client/ClientTreeView'
+import RepairAppList from '../../components/repairapp/RepairAppList';
 
 class ClientPage extends Component {
 
+    constructor(props) {
+        super(props);
+
+        this.state = {
+            choosenTreeItem:''
+        }
+    }
 
     changeTreeChoice(evt){
-
+        let choosenTreeItem = evt.selectedKeys[0];
+        this.setState({choosenTreeItem: choosenTreeItem});
     }
 
     render() {
+
+        function MainDivComponent(props) {
+            switch(props.choosenTreeItem) {
+                case 'repairApp':
+                    return (
+                        <RepairAppList/>
+                    );
+                default:
+                    return (
+                        null
+                    );
+            }
+        }
+
         return (
             <div style={{width:'100%',height:'100%'}}>
                 <div className="panel panel-default" style={{width:'100%',height:'100%',margin:"10px"}}>
@@ -43,8 +66,10 @@ class ClientPage extends Component {
                                 <td style={{verticalAlign:'top'}}>
                                     <ClientTreeView changeTreeChoiceAction={this.changeTreeChoice.bind(this)}/>
                                 </td>
-                                <td>
-                                    <div ref='mainDataDiv'></div>
+                                <td style={{width:'100%',verticalAlign:'top'}}>
+                                    <div ref='mainDataDiv'>
+                                        <MainDivComponent choosenTreeItem={this.state.choosenTreeItem}/>
+                                    </div>
                                 </td>
                             </tr>
                             </tbody>

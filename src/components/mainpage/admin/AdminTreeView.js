@@ -14,7 +14,7 @@ import showIcon from '../../../media/data/show.png'
 const treeData = [
     { key:'Main',icon:<img alt='' src={mainTreeIcon} style={{width:'20px',height:'20px',marginTop:"0px", marginLeft:"0px"}}/>,title:'Главная',children:
         [
-           {key:'ancet',icon:<img alt='' src={anketaIcon} style={{width:'20px',height:'20px',marginTop:"0px", marginLeft:"0px"}}/>,title:'Анкеты'}
+           {key:'repairApp',icon:<img alt='' src={anketaIcon} style={{width:'20px',height:'20px',marginTop:"0px", marginLeft:"0px"}}/>,title:'Анкеты'}
            ,{key:'dicts',icon:<img alt='' src={dictsIcon} style={{width:'20px',height:'20px',marginTop:"0px", marginLeft:"0px"}}/>,title:'Справочники',children:
             [
                 {key:'user',icon:<img alt='' src={usersIcon} style={{width:'20px',height:'20px',marginTop:"0px", marginLeft:"0px"}}/>,title:'Пользователи'}

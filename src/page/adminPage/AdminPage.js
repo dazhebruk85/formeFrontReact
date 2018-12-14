@@ -22,7 +22,6 @@ class AdminPage extends Component {
     }
 
     render() {
-
         function MainDivComponent(props) {
             switch(props.choosenTreeItem) {
                 case 'user':
