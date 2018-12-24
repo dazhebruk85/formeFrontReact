@@ -1,11 +1,6 @@
 import React, {Component} from "react";
 import CommonDbGrid from '../grid/CommonDbGrid';
 import * as Const from '../../Const';
-import entityAdd from '../../media/entity/entityAdd.png';
-import entityEdit from '../../media/entity/entityEdit.png';
-import entityDelete from '../../media/entity/entityDelete.png';
-import entityRefresh from '../../media/entity/entityRefresh.png';
-import setPassword from '../../media/data/changePassword.png';
 import * as CommonUtils from "../../utils/CommonUtils";
 import ErrorModal from '../../components/modal/ErrorModal';
 import UserEditForm from './UserEditForm';
@@ -31,11 +26,11 @@ class UserList extends Component {
             filterOpen:true,
             deleteEntityDialogVisible:false,
             filter: {
-                ULFilter_login_like:'',
-                ULFilter_fio_like:'',
-                ULFilter_email_like:'',
-                ULFilter_phone_like:'',
-                ULFilter_userRole_eq:''
+                ULFilter_main_login_like:'',
+                ULFilter_main_fio_like:'',
+                ULFilter_main_email_like:'',
+                ULFilter_main_phone_like:'',
+                ULFilter_userRole_name_eq:''
             }
         };
 
@@ -109,7 +104,7 @@ class UserList extends Component {
         this.setState({
             filter:
                 {...this.state.filter,
-                    ULFilter_userRole_eq: selectedRole ? selectedRole.name : ''
+                    ULFilter_userRole_name_eq: selectedRole ? selectedRole.name : ''
                 }
         });
     }
@@ -118,11 +113,11 @@ class UserList extends Component {
         this.setState({
             filter:
                 {...this.state.filter,
-                    ULFilter_login_like:'',
-                    ULFilter_fio_like:'',
-                    ULFilter_email_like:'',
-                    ULFilter_phone_like:'',
-                    ULFilter_userRole_eq:''
+                    ULFilter_main_login_like:'',
+                    ULFilter_main_fio_like:'',
+                    ULFilter_main_email_like:'',
+                    ULFilter_main_phone_like:'',
+                    ULFilter_userRole_name_eq:''
                 }
         });
         setTimeout(() => this.refreshUserList(), 0);
@@ -150,60 +145,14 @@ class UserList extends Component {
     render() {
         return(
             <div>
+                <div className="form-group" style={{marginLeft:'5px', marginBottom:'10px'}}>
+                    <Button style={{marginLeft:'5px'}} value="Создать" onClick={this.addUserEntity}/>
+                    <Button style={{marginLeft:'5px'}} value="Редактировать" onClick={this.editUserEntity}/>
+                    <Button style={{marginLeft:'5px'}} value="Удалить" onClick={this.deleteUserEntity}/>
+                    <Button style={{marginLeft:'5px'}} value="Обновить" onClick={this.refreshUserList}/>
+                    <Button style={{marginLeft:'5px'}} value="Задать пароль" onClick={this.refreshUserList}/>
+                </div>
                 <div style={{marginLeft:'10px'}}>
-                    <table>
-                        <tbody>
-                            <tr>
-                                <td>
-                                    <div style={{width:'100%',height:'100%',padding:'5px',textAlign:'-webkit-center'}}>
-                                        <img onClick={this.addUserEntity}
-                                             title={'Создать'}
-                                             alt='Создать'
-                                             src={entityAdd}
-                                             style={{width:'28px',height:'28px',cursor:'pointer',marginTop:"0px", marginLeft:"0px"}}/>
-                                    </div>
-                                </td>
-                                <td>
-                                    <div style={{width:'100%',height:'100%',padding:'5px',textAlign:'-webkit-center'}}>
-                                        <img onClick={this.editUserEntity}
-                                             title={'Редактировать'}
-                                             alt='Редактировать'
-                                             src={entityEdit}
-                                             style={{width:'28px',height:'28px',cursor:'pointer',marginTop:"0px", marginLeft:"0px"}}/>
-                                    </div>
-                                </td>
-                                <td>
-                                    <div style={{width:'100%',height:'100%',padding:'5px',textAlign:'-webkit-center'}}>
-                                        <img onClick={this.deleteUserEntity}
-                                             title={'Удалить'}
-                                             alt='Удалить'
-                                             src={entityDelete}
-                                             style={{width:'28px',height:'28px',cursor:'pointer',marginTop:"0px", marginLeft:"0px"}}/>
-                                    </div>
-                                </td>
-                                <td>
-                                    <div style={{width:'100%',height:'100%',padding:'5px',textAlign:'-webkit-center'}}>
-                                        <img onClick={this.refreshUserList}
-                                             title={'Обновить'}
-                                             alt='Обновить'
-                                             src={entityRefresh}
-                                             style={{width:'28px',height:'28px',cursor:'pointer',marginTop:"0px", marginLeft:"0px"}}/>
-                                    </div>
-                                </td>
-                                <td>
-                                    <div style={{width:'100%',height:'100%',padding:'5px',textAlign:'-webkit-center'}}>
-                                        <img onClick={this.refreshUserList}
-                                             title={'Задать пользователю пароль'}
-                                             alt='Задать пароль'
-                                             src={setPassword}
-                                             style={{width:'28px',height:'28px',cursor:'pointer',marginTop:"0px", marginLeft:"0px"}}/>
-                                    </div>
-                                </td>
-
-                            </tr>
-                        </tbody>
-                    </table>
-
                     <Panel style={{marginBottom:'0px'}} expanded={this.state.filterOpen} onToggle={this.onToggleFilter}>
                         <Panel.Heading>
                             <div style={{fontWeight:'700'}}>
@@ -218,19 +167,19 @@ class UserList extends Component {
                                         <tbody>
                                         <tr>
                                             <td>
-                                                <UniversalField labelWidth='110px' fieldWidth='300px' label='Логин' type={Const.TEXTFIELD} value={this.state.filter.ULFilter_login_like} onChange={(event) => this.handleChange(event, 'ULFilter_login_like')} maxLength={255}/>
+                                                <UniversalField labelWidth='110px' fieldWidth='300px' label='Логин' type={Const.TEXTFIELD} value={this.state.filter.ULFilter_main_login_like} onChange={(event) => this.handleChange(event, 'ULFilter_main_login_like')} maxLength={255}/>
                                             </td>
                                             <td>
-                                                <UniversalField labelWidth='110px' fieldWidth='300px' label='ФИО' type={Const.TEXTFIELD} value={this.state.filter.ULFilter_fio_like} onChange={(event) => this.handleChange(event, 'ULFilter_fio_like')} maxLength={255}/>
+                                                <UniversalField labelWidth='110px' fieldWidth='300px' label='ФИО' type={Const.TEXTFIELD} value={this.state.filter.ULFilter_main_fio_like} onChange={(event) => this.handleChange(event, 'ULFilter_main_fio_like')} maxLength={255}/>
                                             </td>
                                         </tr>
                                         <tr>
                                             <td>
-                                                <UniversalField labelWidth='110px' fieldWidth='300px' label='Email' type={Const.TEXTFIELD} value={this.state.filter.ULFilter_email_like} onChange={(event) => this.handleChange(event, 'ULFilter_email_like')} maxLength={255}/>
+                                                <UniversalField labelWidth='110px' fieldWidth='300px' label='Email' type={Const.TEXTFIELD} value={this.state.filter.ULFilter_main_email_like} onChange={(event) => this.handleChange(event, 'ULFilter_main_email_like')} maxLength={255}/>
 
                                             </td>
                                             <td>
-                                                <UniversalField labelWidth='110px' fieldWidth='300px' label='Телефон' type={Const.TEXTFIELD} value={this.state.filter.ULFilter_phone_like} onChange={(event) => this.handleChange(event, 'ULFilter_phone_like')} maxLength={255}/>
+                                                <UniversalField labelWidth='110px' fieldWidth='300px' label='Телефон' type={Const.TEXTFIELD} value={this.state.filter.ULFilter_main_phone_like} onChange={(event) => this.handleChange(event, 'ULFilter_main_phone_like')} maxLength={255}/>
                                             </td>
                                         </tr>
                                         <tr>
@@ -239,7 +188,7 @@ class UserList extends Component {
                                                                  fieldWidth='300px'
                                                                  label='Роль'
                                                                  type={Const.TEXTFIELD}
-                                                                 value={this.state.filter.ULFilter_userRole_eq}
+                                                                 value={this.state.filter.ULFilter_userRole_name_eq}
                                                                  placeholder=''
                                                                  maxLength={100}
                                                                  context={Const.USER_ROLE_CONTEXT}
