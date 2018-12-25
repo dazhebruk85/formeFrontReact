@@ -1,8 +1,7 @@
-import React, {Component}from 'react';
+import React, {Component} from 'react';
 import dictPng from '../../media/data/dictionary.png'
 import dictClearPng from '../../media/data/dictionaryClear.png'
-import Modal from 'react-awesome-modal';
-import closePng from '../../media/data/close.png';
+import CommonModal from './../modal/CommonModal';
 import Button from './../field/Button';
 import CommonDbGrid from '../grid/CommonDbGrid';
 
@@ -76,31 +75,15 @@ class DictionaryField extends Component {
                         </tbody>
                     </table>
                 </div>
-                <Modal visible={this.state.visible} effect="fadeInDown">
-                    <div className="panel panel-default" style={{width:'650px',height:'520px',marginBottom:'0px'}}>
-                        <div className="panel-heading" style={{height:'45px'}}>
-                            <table style={{width:'100%'}}>
-                                <tbody>
-                                <tr>
-                                    <td style={{width:'90%'}}>
-                                        <label style={{textAlign:'left',width:'100%',height:'24px',paddingLeft:'0px',paddingRight:'0px',paddingTop:'2px'}} className="control-label col-sm-2">Справочник</label>
-                                    </td>
-                                    <td style={{width:'10%',alignItems:'right'}}>
-                                        <img alt='' onClick={this.closeDict} align={'right'} src={closePng} style={{marginLeft:'27px',cursor:'pointer',height:"24px",width:"24px"}}/>
-                                    </td>
-                                </tr>
-                                </tbody>
-                            </table>
-                        </div>
-                        <div className="panel-body" style={{height:'420px',overflow:'auto'}} onDoubleClick={() => this.chooseDict()}>
-                            <CommonDbGrid selectAction={this.changeGridSelection.bind(this)} dataEntityContext={this.props.context} pageSize={10}/>
-                        </div>
-                        <div className="btn-toolbar align-bottom" role="toolbar" style={{justifyContent:'center',display:'flex'}}>
-                            <Button value="Ок" onClick={() => this.chooseDict()}/>
-                            <Button value="Отмена" onClick={() => this.closeDict()}/>
-                        </div>
+                <CommonModal title={'Справочник'} visible={this.state.visible} style={{width:'650px'}} closeAction={this.closeDict}>
+                    <div onDoubleClick={() => this.chooseDict()}>
+                        <CommonDbGrid selectAction={this.changeGridSelection.bind(this)} dataEntityContext={this.props.context} pageSize={10}/>
                     </div>
-                </Modal>
+                    <div className="btn-toolbar align-bottom" role="toolbar" style={{justifyContent:'center',display:'flex'}}>
+                        <Button value="Ок" onClick={() => this.chooseDict()}/>
+                        <Button value="Отмена" onClick={() => this.closeDict()}/>
+                    </div>
+                </CommonModal>
             </div>
         )
     }

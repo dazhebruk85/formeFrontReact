@@ -20,7 +20,7 @@ class CommonModal extends Modal {
                             <tbody>
                             <tr>
                                 <td style={{width:'90%'}}>
-                                    <label style={{width:'100%',height:'24px',paddingLeft:'0px',paddingRight:'0px',paddingTop:'2px'}} className="control-label col-sm-2">{this.props.title}</label>
+                                    <label style={{textAlign:'left',width:'100%',height:'24px',paddingLeft:'0px',paddingRight:'0px',paddingTop:'2px'}} className="control-label col-sm-2">{this.props.title}</label>
                                 </td>
                                 <td style={{width:'10%',alignItems:'right'}}>
                                     <img alt='' onClick={this.props.closeAction} align={'right'} src={closePng} style={{cursor:'pointer',height:"20px",width:"20px"}}/>

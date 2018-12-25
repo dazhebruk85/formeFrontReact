@@ -1,10 +1,9 @@
-import React from 'react';
-import Modal from 'react-awesome-modal';
+import React, {Component} from "react";
 import questionPng from '../../media/data/question.png';
 import Button from './../field/Button'
 import CommonModal from './CommonModal'
 
-class OkCancelDialog extends Modal {
+class OkCancelDialog extends Component {
 
     constructor(props) {
         super(props);

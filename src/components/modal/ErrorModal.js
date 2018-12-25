@@ -1,12 +1,11 @@
-import React from 'react';
-import Modal from 'react-awesome-modal';
+import React, {Component} from "react";
 import errorPng from "../../media/data/error.png";
 import Button from './../field/Button'
 import * as CommonUtils from "../../utils/CommonUtils";
 import {Redirect} from "react-router-dom";
 import CommonModal from './CommonModal'
 
-class ErrorModal extends Modal {
+class ErrorModal extends Component {
 
     constructor(props) {
         super(props);
