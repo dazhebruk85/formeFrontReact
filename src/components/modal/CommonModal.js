@@ -1,6 +1,7 @@
 import React from 'react';
 import Modal from 'react-awesome-modal';
 import closePng from '../../media/data/close.png';
+import Spinner from "../spinner/Spinner";
 
 class CommonModal extends Modal {
 
@@ -15,6 +16,7 @@ class CommonModal extends Modal {
         return(
             <Modal visible={this.props.visible} effect="fadeInDown">
                 <div className="panel panel-default" style={style}>
+                    <Spinner isLoading={this.props.loading}/>
                     <div className="panel-heading" style={{height:'30px',padding:'2px 10px'}}>
                         <table style={{width:'100%'}}>
                             <tbody>

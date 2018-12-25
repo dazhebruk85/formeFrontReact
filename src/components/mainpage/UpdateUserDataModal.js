@@ -1,6 +1,5 @@
-import React from 'react';
-import Modal from 'react-awesome-modal';
-import closePng from '../../media/data/close.png';
+import React, {Component} from 'react';
+import CommonModal from './../modal/CommonModal'
 import cookie from 'react-cookies';
 import * as Const from '../../Const';
 import MultiPopup from "../modal/MultiPopup";
@@ -8,9 +7,8 @@ import UniversalField from './../field/UniversalField'
 import Button from './../field/Button'
 import ErrorModal from '../../components/modal/ErrorModal';
 import * as CommonUtils from "../../utils/CommonUtils";
-import Spinner from "../spinner/Spinner";
 
-class UpdateUserDataModal extends Modal {
+class UpdateUserDataModal extends Component {
 
     constructor(props) {
         super(props);
@@ -159,61 +157,44 @@ class UpdateUserDataModal extends Modal {
 
     render() {
         return(
-            <Modal visible={this.state.visible} effect="fadeInDown">
-                <div className="panel panel-default" style={{width:'540px',height:'540px',marginBottom:'0px'}}>
-                    <Spinner isLoading={this.state.isLoading}/>
-                    <div className="panel-heading" style={{height:'45px'}}>
-                        <table style={{width:'100%'}}>
-                            <tbody>
-                            <tr>
-                                <td style={{width:'90%'}}>
-                                    <label style={{width:'100%',height:'24px',paddingLeft:'0px',paddingRight:'0px',paddingTop:'2px'}} className="control-label col-sm-2" htmlFor="loginTextbox">Изменить данные пользователя</label>
-                                </td>
-                                <td style={{width:'10%',alignItems:'right'}}>
-                                    <img alt='' onClick={() => this.closeModal()} align={'right'} src={closePng} style={{marginLeft:'27px',cursor:'pointer',height:"24px",width:"24px"}}/>
-                                </td>
-                            </tr>
-                            </tbody>
-                        </table>
-                    </div>
-                    <div className="panel-body" style={{overflow:'auto'}}>
+                <CommonModal loading={this.state.isLoading} title={'Изменить данные пользователя'} visible={this.props.visible} style={{width:'460px'}} closeAction={() => this.closeModal()}>
+                    <div>
                         <form className="form-horizontal">
-                            <UniversalField labelWidth='220px' fieldWidth='300px' label='ФИО' type={Const.TEXTFIELD} value={this.state.fields.fio} onChange={(event) => this.handleChange(event, 'fio')} placeholder='ФИО' maxLength={255}/>
-                            <UniversalField labelWidth='220px' fieldWidth='300px' label='Дата рождения' type={Const.DATEPICKER} value={this.state.fields.birthDate} onChange={(date) => this.handleChange(date, "birthDate")} placeholder='Дата рождения'/>
+                            <UniversalField labelWidth='150px' fieldWidth='300px' label='ФИО' type={Const.TEXTFIELD} value={this.state.fields.fio} onChange={(event) => this.handleChange(event, 'fio')} placeholder='ФИО' maxLength={255}/>
+                            <UniversalField labelWidth='150px' fieldWidth='300px' label='Дата рождения' type={Const.DATEPICKER} value={this.state.fields.birthDate} onChange={(date) => this.handleChange(date, "birthDate")} placeholder='Дата рождения'/>
                             <div className="form-group">
-                                <label style={{width:'220px'}} className="control-label col-sm-2">Паспорт</label>
+                                <label style={{width:'150px'}} className="control-label col-sm-2">Паспорт</label>
                                 <div className="col-sm-10" style={{width:'300px',paddingRight:'0px'}}>
                                     <table>
                                         <tbody>
-                                            <tr>
-                                                <td>
-                                                    <input style={{width:'100px'}} placeholder="Серия" maxLength={4} className="form-control input-sm" type="text" value={this.state.fields.passportSeries} onChange={(event) => this.handleChange(event, 'passportSeries')}/>
-                                                </td>
-                                                <td style={{width:'10px'}}></td>
-                                                <td>
-                                                    <input placeholder="Номер" maxLength={6} className="form-control input-sm" type="text" value={this.state.fields.passportNumber} onChange={(event) => this.handleChange(event, 'passportNumber')}/>
-                                                </td>
-                                            </tr>
+                                        <tr>
+                                            <td>
+                                                <input style={{width:'100px'}} placeholder="Серия" maxLength={4} className="form-control input-sm" type="text" value={this.state.fields.passportSeries} onChange={(event) => this.handleChange(event, 'passportSeries')}/>
+                                            </td>
+                                            <td style={{width:'10px'}}></td>
+                                            <td>
+                                                <input placeholder="Номер" maxLength={6} className="form-control input-sm" type="text" value={this.state.fields.passportNumber} onChange={(event) => this.handleChange(event, 'passportNumber')}/>
+                                            </td>
+                                        </tr>
                                         </tbody>
                                     </table>
                                 </div>
                             </div>
-                            <UniversalField style={{resize:'none',height:'75px'}} labelWidth='220px' fieldWidth='300px' label='выдан' type={Const.TEXTAREA} value={this.state.fields.passportIssuedBy} onChange={(event) => this.handleChange(event, 'passportIssuedBy')} placeholder='Кем выдан паспорт' maxLength={255}/>
-                            <UniversalField style={{resize:'none',height:'75px'}} labelWidth='220px' fieldWidth='300px' label='Адрес регистрации' type={Const.TEXTAREA} value={this.state.fields.regAddress} onChange={(event) => this.handleChange(event, 'regAddress')} placeholder='Адрес регистрации' maxLength={255}/>
-                            <UniversalField labelWidth='220px' fieldWidth='300px' label='Телефон' type={Const.TEXTFIELD} value={this.state.fields.phone} onChange={(event) => this.handleChange(event, 'phone')} placeholder='Телефон' maxLength={100}/>
-                            <UniversalField labelWidth='220px' fieldWidth='300px' label='Email' type={Const.TEXTFIELD} value={this.state.fields.email} onChange={(event) => this.handleChange(event, 'email')} placeholder='Email' maxLength={100}/>
+                            <UniversalField style={{resize:'none',height:'75px'}} labelWidth='150px' fieldWidth='300px' label='выдан' type={Const.TEXTAREA} value={this.state.fields.passportIssuedBy} onChange={(event) => this.handleChange(event, 'passportIssuedBy')} placeholder='Кем выдан паспорт' maxLength={255}/>
+                            <UniversalField style={{resize:'none',height:'75px'}} labelWidth='150px' fieldWidth='300px' label='Адрес регистрации' type={Const.TEXTAREA} value={this.state.fields.regAddress} onChange={(event) => this.handleChange(event, 'regAddress')} placeholder='Адрес регистрации' maxLength={255}/>
+                            <UniversalField labelWidth='150px' fieldWidth='300px' label='Телефон' type={Const.TEXTFIELD} value={this.state.fields.phone} onChange={(event) => this.handleChange(event, 'phone')} placeholder='Телефон' maxLength={100}/>
+                            <UniversalField labelWidth='150px' fieldWidth='300px' label='Email' type={Const.TEXTFIELD} value={this.state.fields.email} onChange={(event) => this.handleChange(event, 'email')} placeholder='Email' maxLength={100}/>
                             <div className="btn-toolbar align-bottom" role="toolbar" style={{justifyContent:'center',display:'flex'}}>
                                 <Button value="Ок" onClick={() => this.saveUserData()}/>
                                 <Button value="Отмена" onClick={() => this.closeModal()}/>
                             </div>
-                         </form>
+                        </form>
                     </div>
-                </div>
-                <ErrorModal errors={this.state.errors} closeAction={() => this.setState({errors:[]})}/>
-                <MultiPopup popupData={this.state.successInfoMessages}
-                            popupType={Const.INFO_POPUP}
-                            closeAction={() => {this.setState({successInfoMessages: []}); this.closeModal()}}/>
-            </Modal>
+                    <ErrorModal errors={this.state.errors} closeAction={() => this.setState({errors:[]})}/>
+                    <MultiPopup popupData={this.state.successInfoMessages}
+                                popupType={Const.INFO_POPUP}
+                                closeAction={() => {this.setState({successInfoMessages: []}); this.closeModal()}}/>
+                </CommonModal>
         )
     }
 }
