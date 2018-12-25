@@ -1,10 +1,10 @@
 import React, {Component} from 'react';
 import logo from '../../media/logo.png';
-import QuickActionPanel from '../../components/mainpage/QuickActionPanel'
-import AdminTreeView from "../../components/mainpage/admin/AdminTreeView";
-import UserList from '../../components/user/UserList';
-import UserRoleList from '../../components/userrole/UserRoleList';
-import BasePackageList from '../../components/basePackage/BasePackageList';
+import QuickActionPanel from '../../component/appComponent/mainpage/QuickActionPanel'
+import AdminTreeView from "../../component/appComponent/mainpage/admin/AdminTreeView";
+import UserList from '../../component/appComponent/user/UserList';
+import UserRoleList from '../../component/appComponent/userrole/UserRoleList';
+import BasePackageList from '../../component/appComponent/basePackage/BasePackageList';
 
 class AdminPage extends Component {
 

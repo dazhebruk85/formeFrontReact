@@ -1,9 +1,9 @@
 import React, {Component} from 'react';
 import logo from '../../media/logo.png';
-import QuickActionPanel from '../../components/mainpage/QuickActionPanel'
+import QuickActionPanel from '../../component/appComponent/mainpage/QuickActionPanel'
 import cookie from 'react-cookies';
-import ClientTreeView from '../../components/mainpage/client/ClientTreeView'
-import RepairAppList from '../../components/repairapp/RepairAppList';
+import ClientTreeView from '../../component/appComponent/mainpage/client/ClientTreeView'
+import RepairAppList from '../../component/appComponent/repairapp/RepairAppList';
 
 class ClientPage extends Component {
 

@@ -2,11 +2,11 @@ import React, {Component} from 'react';
 import logo from '../../media/logo.png';
 import * as Const from '../../Const';
 import cookie from 'react-cookies';
-import ErrorModal from '../../components/modal/ErrorModal';
-import UniversalField from './../../components/field/UniversalField'
-import Button from './../../components/field/Button'
+import ErrorModal from '../../component/baseComponent/modal/ErrorModal';
+import UniversalField from '../../component/baseComponent/field/UniversalField'
+import Button from '../../component/baseComponent/field/Button'
 import * as CommonUtils from "../../utils/CommonUtils";
-import Spinner from '../../components/spinner/Spinner';
+import Spinner from '../../component/baseComponent/spinner/Spinner';
 
 class LoginPage extends Component {
 
