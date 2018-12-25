@@ -57,7 +57,7 @@ class DictionaryField extends Component {
                         <tbody>
                         <tr>
                             <td style={{width:'100%'}}>
-                                <input className="form-control"
+                                <input className="form-control input-sm"
                                        value={this.props.value}
                                        onChange={this.props.onChange}
                                        placeholder={this.props.placeholder}
@@ -67,10 +67,10 @@ class DictionaryField extends Component {
                                        disabled={true}/>
                             </td>
                             <td>
-                                <img title={'Открыть справочник'} alt={''} src={dictPng} style={{marginLeft:'5px',width:'20px',height:'20px',cursor:'pointer'}} onClick={this.openDict}/>
+                                <img title={'Открыть справочник'} alt={''} src={dictPng} style={{marginLeft:'5px',width:'16px',height:'16px',cursor:'pointer'}} onClick={this.openDict}/>
                             </td>
                             <td>
-                                <img title={'Очистить'} alt={''} src={dictClearPng} style={{marginLeft:'5px',width:'20px',height:'20px',cursor:'pointer'}} onClick={() => this.clearDict()}/>
+                                <img title={'Очистить'} alt={''} src={dictClearPng} style={{marginLeft:'5px',width:'16px',height:'16px',cursor:'pointer'}} onClick={() => this.clearDict()}/>
                             </td>
                         </tr>
                         </tbody>

@@ -13,7 +13,7 @@ import expandIcon from '../../media/data/expand.png'
 import OkCancelDialog from '../../components/modal/OkCancelDialog';
 import cookie from 'react-cookies';
 import MultiPopup from "../modal/MultiPopup";
-import CollapsePanel from './../field/CollapsePanel'
+import CollapsePanel from './../panel/CollapsePanel'
 
 class UserList extends Component {
 

@@ -8,7 +8,7 @@ import closePng from '../../media/data/close.png';
 import { Tabs, Tab} from 'react-bootstrap';
 import Button from './../field/Button'
 import UniversalField from './../field/UniversalField'
-import CollapsePanel from './../field/CollapsePanel'
+import CollapsePanel from './../panel/CollapsePanel'
 
 class RepairAppEditForm extends Modal {
 
