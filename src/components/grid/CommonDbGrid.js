@@ -128,7 +128,7 @@ class CommonDbGrid extends Component {
                               </thead>
                             <tbody>
                                 {this.state.listData.dataList.map(entity =>
-                                    <tr onClick={this.handleSelectEntity} style={{cursor:'pointer',height:'30px',background: getSelectedBgColor(entity.entityId, this.state)}} key={entity.entityId+'valueTr'}>
+                                    <tr onClick={this.handleSelectEntity} style={{cursor:'pointer',height:'30px',background:getSelectedBgColor(entity.entityId, this.state)}} key={entity.entityId+'valueTr'}>
                                         {CommonUtils.objectToPropArr(entity).map(entityData =>
                                             <td entitydatakey={entityData.key} style={{padding:'5px',height:'30px',display: entityData.key === "entityId" ? 'none' : ''}} key={entityData.key+'valueTd'}>
                                                 {entityData.value}
