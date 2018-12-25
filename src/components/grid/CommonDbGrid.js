@@ -36,11 +36,6 @@ class CommonDbGrid extends Component {
         this.getGridListData()
     }
 
-    componentDidUpdate(prevProps) {
-        this.props;
-        let aaa = 0;
-    }
-
     async getGridListData() {
         this.setState({isLoading:true});
         let params = {pageNumber:this.state.pageNumber,pageSize:this.state.pageSize,filter:this.props.filter};

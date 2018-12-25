@@ -26,7 +26,6 @@ class ErrorModal extends Component {
         this.setState({
             redirectToLoginPage:true
         });
-        this.props.closeAction
     }
 
     render() {
