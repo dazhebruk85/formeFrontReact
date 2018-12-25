@@ -1,10 +1,10 @@
 import React from 'react';
 import Modal from 'react-awesome-modal';
-import closePng from '../../media/data/close.png';
 import errorPng from "../../media/data/error.png";
 import Button from './../field/Button'
 import * as CommonUtils from "../../utils/CommonUtils";
 import {Redirect} from "react-router-dom";
+import CommonModal from './CommonModal'
 
 class ErrorModal extends Modal {
 
@@ -72,38 +72,21 @@ class ErrorModal extends Modal {
         }
 
         return(
-            <Modal visible={this.state.errors.length > 0} effect="fadeInDown">
-                <div className="panel panel-default" style={{width:'450px',height:'200px',marginBottom:'0px'}}>
-                    <div className="panel-heading" style={{height:'45px'}}>
-                        <table style={{width:'100%'}}>
-                            <tbody>
-                            <tr>
-                                <td style={{width:'90%'}}>
-                                    <label style={{width:'100%',height:'24px',paddingLeft:'0px',paddingRight:'0px',paddingTop:'2px'}} className="control-label col-sm-2">Ошибка</label>
-                                </td>
-                                <td style={{width:'10%',alignItems:'right'}}>
-                                    <img alt='' onClick={this.props.closeAction} align={'right'} src={closePng} style={{marginLeft:'27px',cursor:'pointer',height:"24px",width:"24px"}}/>
-                                </td>
-                            </tr>
-                            </tbody>
-                        </table>
-                    </div>
-                    <div className="panel-body" style={{height:'100px',overflow:'auto'}}>
-                        <table style={{width:'100%'}}>
-                            <tbody>
-                                <ErrorList dataList={this.state.errors}/>
-                            </tbody>
-                        </table>
-                    </div>
-                    <div className="btn-toolbar align-bottom" role="toolbar" style={{justifyContent:'center',display:'flex'}}>
-                        <Button value="Ок" onClick={this.props.closeAction}/>
-                        <Button value="На страницу логина" onClick={this.redirectToLoginPage.bind(this)} visible={sessionExpire}/>
-                    </div>
+            <CommonModal title={'Ошибка'} visible={this.state.errors.length > 0} style={{width:'450px',height:'195px'}} closeAction={this.props.closeAction}>
+                <div style={{height:'100px',overflow:'auto'}}>
+                    <table style={{width:'100%'}}>
+                        <tbody>
+                            <ErrorList dataList={this.state.errors}/>
+                        </tbody>
+                    </table>
                 </div>
-            </Modal>
+                <div className="btn-toolbar align-bottom" role="toolbar" style={{paddingTop:'5px',justifyContent:'center',display:'flex'}}>
+                    <Button value="Ок" onClick={this.props.closeAction}/>
+                    <Button value="На страницу логина" onClick={this.redirectToLoginPage.bind(this)} visible={sessionExpire}/>
+                </div>
+            </CommonModal>
         )
     }
-
 }
 
 export default ErrorModal;
