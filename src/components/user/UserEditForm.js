@@ -1,11 +1,9 @@
 import React, {Component} from 'react';
 import CommonModal from './../modal/CommonModal'
 import ErrorModal from '../../components/modal/ErrorModal';
-import Spinner from "../spinner/Spinner";
 import * as Const from '../../Const';
 import * as CommonUtils from "../../utils/CommonUtils";
 import cookie from 'react-cookies';
-import closePng from '../../media/data/close.png';
 import UniversalField from './../field/UniversalField'
 import Button from './../field/Button'
 import DictionaryField from './../field/DictionaryField'
