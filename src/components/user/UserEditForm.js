@@ -14,7 +14,6 @@ class UserEditForm extends Component {
         super(props);
 
         this.state = {
-            visible: props.visible,
             errors: [],
             isLoading: false,
             closeAction:props.closeAction,
@@ -83,7 +82,6 @@ class UserEditForm extends Component {
 
     closeModal() {
         this.setState({
-            visible: false,
             errors: [],
             fields:{
                 entityId: '',
