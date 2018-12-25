@@ -52,7 +52,7 @@ class DictionaryField extends Component {
             <div className="form-group">
                 {this.props.label ? <label style={{width:this.props.labelWidth}} className="control-label col-sm-2">{this.props.label}</label> : null}
                 <div className="col-sm-10" style={{width:this.props.fieldWidth,paddingRight:'0px'}}>
-                    <table>
+                    <table style={{width:'100%'}}>
                         <tbody>
                         <tr>
                             <td style={{width:'100%'}}>
@@ -66,10 +66,10 @@ class DictionaryField extends Component {
                                        disabled={true}/>
                             </td>
                             <td>
-                                <img title={'Открыть справочник'} alt={''} src={dictPng} style={{marginLeft:'5px',width:'16px',height:'16px',cursor:'pointer'}} onClick={this.openDict}/>
+                                <img title={'Открыть справочник'} alt={''} src={dictPng} style={{marginBottom:'1px',marginLeft:'-42px',width:'16px',height:'16px',cursor:'pointer'}} onClick={this.openDict}/>
                             </td>
                             <td>
-                                <img title={'Очистить'} alt={''} src={dictClearPng} style={{marginLeft:'5px',width:'16px',height:'16px',cursor:'pointer'}} onClick={() => this.clearDict()}/>
+                                <img title={'Очистить'} alt={''} src={dictClearPng} style={{marginBottom:'1px',marginLeft:'-22px',width:'16px',height:'16px',cursor:'pointer'}} onClick={() => this.clearDict()}/>
                             </td>
                         </tr>
                         </tbody>

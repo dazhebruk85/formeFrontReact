@@ -125,7 +125,7 @@ class RepairAppEditForm extends Component {
 
     render() {
         return(
-            <CommonModal loading={this.state.isLoading} title={'Изменить данные пользователя'} visible={this.props.visible} style={{width:'800px'}} closeAction={() => this.closeModal()}>
+            <CommonModal loading={this.state.isLoading} title={'Анкета'} visible={this.props.visible} style={{width:'800px'}} closeAction={() => this.closeModal()}>
                 <div>
                     <form className="form-horizontal">
                         <table>
