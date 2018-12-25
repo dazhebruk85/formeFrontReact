@@ -5,6 +5,7 @@ import AdminTreeView from "../../component/appComponent/mainpage/admin/AdminTree
 import UserList from '../../component/appComponent/user/UserList';
 import UserRoleList from '../../component/appComponent/userrole/UserRoleList';
 import BasePackageList from '../../component/appComponent/basePackage/BasePackageList';
+import RoomTypeList from '../../component/appComponent/roomtype/RoomTypeList';
 
 class AdminPage extends Component {
 
@@ -35,6 +36,10 @@ class AdminPage extends Component {
                 case 'basePackage':
                     return (
                         <BasePackageList/>
+                    );
+                case 'roomType':
+                    return (
+                        <RoomTypeList/>
                     );
                 default:
                     return (

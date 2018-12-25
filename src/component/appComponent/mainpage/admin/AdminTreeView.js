@@ -7,6 +7,7 @@ import dictsIcon from '../../../../media/tree/dicts.png'
 import usersIcon from '../../../../media/tree/users.png'
 import userRolesIcon from '../../../../media/tree/userRoles.png'
 import basePackageIcon from '../../../../media/tree/basePackage.png'
+import roomTypeIcon from '../../../../media/tree/roomType.png'
 
 import hideIcon from '../../../../media/data/hide.png'
 import showIcon from '../../../../media/data/show.png'
@@ -20,6 +21,7 @@ const treeData = [
                 {key:'user',icon:<img alt='' src={usersIcon} style={{width:'20px',height:'20px',marginTop:"0px", marginLeft:"0px"}}/>,title:'Пользователи'}
                ,{key:'userRole',icon:<img alt='' src={userRolesIcon} style={{width:'20px',height:'20px',marginTop:"0px", marginLeft:"0px"}}/>,title:'Роли пользователя'}
                ,{key:'basePackage',icon:<img alt='' src={basePackageIcon} style={{width:'20px',height:'20px',marginTop:"0px", marginLeft:"0px"}}/>,title:'Базовые пакеты'}
+               ,{key:'roomType',icon:<img alt='' src={roomTypeIcon} style={{width:'20px',height:'20px',marginTop:"0px", marginLeft:"0px"}}/>,title:'Типы помещений'}
             ]}
         ]
     }
