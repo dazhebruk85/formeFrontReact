@@ -38,7 +38,7 @@ class ClientPage extends Component {
         return (
             <div style={{width:'100%',height:'100%'}}>
                 <div className="panel panel-default" style={{width:'100%',height:'100%',margin:"10px"}}>
-                    <div className="panel-heading" style={{height:'50px'}}>
+                    <div className="panel-heading" style={{height:'40px'}}>
                         <table style={{width:'100%'}}>
                             <tbody>
                             <tr>

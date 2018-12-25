@@ -4278,7 +4278,7 @@ select[multiple].input-group-sm > .form-control, select[multiple].input-group-sm
 .nav > li > a {
     position: relative;
     display: block;
-    padding: 10px 15px
+    padding: 7px 10px
 }
 
 .nav > li > a:focus, .nav > li > a:hover {
@@ -5858,7 +5858,7 @@ a.list-group-item-danger.active, a.list-group-item-danger.active:focus, a.list-g
 }
 
 .panel-heading {
-    padding: 10px 15px;
+    padding: 5px 10px;
     border-bottom: 1px solid transparent;
     border-top-left-radius: 3px;
     border-top-right-radius: 3px

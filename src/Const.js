@@ -41,6 +41,7 @@ export const TEXTFIELD = "TEXTFIELD";
 export const PASSWORD = "PASSWORD";
 export const TEXTAREA = "TEXTAREA";
 export const DATEPICKER = "DATEPICKER";
+export const CHECKBOX = "CHECKBOX";
 
 
 

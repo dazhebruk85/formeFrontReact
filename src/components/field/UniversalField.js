@@ -66,6 +66,32 @@ class UniversalField extends Component {
                         </div>
                     </div>
                 );
+            case Const.CHECKBOX:
+                let checkBoxStyle = this.props.style ? this.props.style : {};
+                checkBoxStyle.cursor = 'pointer';
+                checkBoxStyle.marginTop = '10px';
+                return (
+                    <div className="form-group" style={{marginBottom:'0px'}}>
+                        <table>
+                            <tbody>
+                            <tr>
+                                <td>
+                                    <div className="col-sm-10" style={{paddingRight:'0px'}}>
+                                        <input type="checkbox"
+                                               checked={this.props.checked}
+                                               onChange={this.props.onChange}
+                                               style={checkBoxStyle}/>
+                                    </div>
+                                </td>
+                                <td style={{width:this.props.labelWidth}}>
+                                    {this.props.label ? <label style={{textAlign:'left',width:this.props.labelWidth}} className="control-label col-sm-2">{this.props.label}</label> : null}
+                                </td>
+                            </tr>
+                            </tbody>
+                        </table>
+                    </div>
+
+                )
             default:
                 return (
                     null

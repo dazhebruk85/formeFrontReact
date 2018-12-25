@@ -29,7 +29,7 @@ class OkCancelDialog extends Modal {
         return (
             <Modal visible={this.state.okCancelVisible} effect="fadeInDown">
                 <div className="panel panel-default" style={{width:'450px',height:'170px',marginBottom:'0px'}}>
-                    <div className="panel-heading" style={{height:'45px'}}>
+                    <div className="panel-heading" style={{height:'30px',padding:'2px 10px'}}>
                         <table style={{width:'100%'}}>
                             <tbody>
                             <tr>
@@ -37,7 +37,7 @@ class OkCancelDialog extends Modal {
                                     <label style={{width:'100%',height:'24px',paddingLeft:'0px',paddingRight:'0px',paddingTop:'2px'}} className="control-label col-sm-2">Вопрос</label>
                                 </td>
                                 <td style={{width:'10%',alignItems:'right'}}>
-                                    <img alt='' onClick={this.state.cancelAction} align={'right'} src={closePng} style={{marginLeft:'27px',cursor:'pointer',height:"24px",width:"24px"}}/>
+                                    <img alt='' onClick={this.state.cancelAction} align={'right'} src={closePng} style={{cursor:'pointer',height:"20px",width:"20px"}}/>
                                 </td>
                             </tr>
                             </tbody>
