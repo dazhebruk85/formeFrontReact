@@ -3,7 +3,7 @@ import CommonModal from './../modal/CommonModal'
 import cookie from 'react-cookies';
 import * as Const from '../../Const';
 import { Redirect } from 'react-router-dom'
-import MultiPopup from "../modal/MultiPopup";
+import InfoModal from "../modal/InfoModal";
 import UniversalField from './../field/UniversalField'
 import Button from './../field/Button'
 import ErrorModal from '../../components/modal/ErrorModal';
@@ -104,9 +104,8 @@ class ChangePasswordModal extends Component {
                     </form>
                 </div>
                 <ErrorModal errors={this.state.errors} closeAction={() => this.setState({errors:[]})}/>
-                <MultiPopup popupData={this.state.successInfoMessages}
-                            popupType={Const.INFO_POPUP}
-                            closeAction={() => this.setState({successInfoMessages:[],redirectToLoginPage:true})}/>
+                <InfoModal popupData={this.state.successInfoMessages}
+                           closeAction={() => this.setState({successInfoMessages:[],redirectToLoginPage:true})}/>
             </CommonModal>
         )
     }

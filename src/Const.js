@@ -31,11 +31,6 @@ export const ENTITY_DELETE = "entityDelete";
 export const SUPERUSER_ROLE = "superuser"; // Суперпользователь
 export const CLIENT_ROLE = "client"; // Клиент светелкина
 
-//Popup type
-export const WARNING_POPUP = "warningPopup";
-export const ERROR_POPUP = "errorPopup";
-export const INFO_POPUP = "infoPopup";
-
 //FieldTypes
 export const TEXTFIELD = "TEXTFIELD";
 export const PASSWORD = "PASSWORD";

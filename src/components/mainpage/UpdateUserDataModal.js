@@ -2,7 +2,7 @@ import React, {Component} from 'react';
 import CommonModal from './../modal/CommonModal'
 import cookie from 'react-cookies';
 import * as Const from '../../Const';
-import MultiPopup from "../modal/MultiPopup";
+import InfoModal from "../modal/InfoModal";
 import UniversalField from './../field/UniversalField'
 import Button from './../field/Button'
 import ErrorModal from '../../components/modal/ErrorModal';
@@ -191,9 +191,8 @@ class UpdateUserDataModal extends Component {
                         </form>
                     </div>
                     <ErrorModal errors={this.state.errors} closeAction={() => this.setState({errors:[]})}/>
-                    <MultiPopup popupData={this.state.successInfoMessages}
-                                popupType={Const.INFO_POPUP}
-                                closeAction={() => {this.setState({successInfoMessages: []}); this.closeModal()}}/>
+                    <InfoModal popupData={this.state.successInfoMessages}
+                               closeAction={() => {this.setState({successInfoMessages: []}); this.closeModal()}}/>
                 </CommonModal>
         )
     }

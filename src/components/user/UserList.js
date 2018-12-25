@@ -6,13 +6,10 @@ import ErrorModal from '../../components/modal/ErrorModal';
 import UserEditForm from './UserEditForm';
 import UniversalField from './../field/UniversalField'
 import Button from './../field/Button'
-import { Panel } from 'react-bootstrap';
 import DictionaryField from './../field/DictionaryField'
-import collapseIcon from '../../media/data/collapse.png'
-import expandIcon from '../../media/data/expand.png'
 import OkCancelDialog from '../../components/modal/OkCancelDialog';
 import cookie from 'react-cookies';
-import MultiPopup from "../modal/MultiPopup";
+import InfoModal from "../modal/InfoModal";
 import CollapsePanel from './../panel/CollapsePanel'
 
 class UserList extends Component {
@@ -195,7 +192,7 @@ class UserList extends Component {
                                 question={'Вы действительно хотите удалить выбранную запись?'}
                                 cancelAction={() => this.setState({deleteEntityDialogVisible:false})}
                                 okAction={this.deleteUserEntityConfirm.bind(this)}/>
-                <MultiPopup popupData={this.state.successInfoMessages} popupType={Const.INFO_POPUP} closeAction={() => this.setState({successInfoMessages:[]})}/>
+                <InfoModal popupData={this.state.successInfoMessages} closeAction={() => this.setState({successInfoMessages:[]})}/>
             </div>
         )
     }

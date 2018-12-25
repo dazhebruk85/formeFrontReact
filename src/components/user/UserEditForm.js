@@ -7,7 +7,7 @@ import cookie from 'react-cookies';
 import UniversalField from './../field/UniversalField'
 import Button from './../field/Button'
 import DictionaryField from './../field/DictionaryField'
-import MultiPopup from "../modal/MultiPopup";
+import InfoModal from "../modal/InfoModal";
 
 class UserEditForm extends Component {
     constructor(props) {
@@ -226,7 +226,7 @@ class UserEditForm extends Component {
                     </form>
                 </div>
                 <ErrorModal errors={this.state.errors} closeAction={() => this.setState({errors:[]})}/>
-                <MultiPopup popupData={this.state.successInfoMessages} popupType={Const.INFO_POPUP} closeAction={() => {this.setState({successInfoMessages: []}); this.closeModal()}}/>
+                <InfoModal popupData={this.state.successInfoMessages} closeAction={() => {this.setState({successInfoMessages: []}); this.closeModal()}}/>
             </CommonModal>
         )
     }
