@@ -4,9 +4,9 @@ import * as Const from '../../../Const';
 import * as CommonUtils from "../../../utils/CommonUtils";
 import ErrorModal from '../../../component/baseComponent/modal/ErrorModal';
 import UserEditForm from './UserEditForm';
-import UniversalField from './../../baseComponent/field/UniversalField'
+import Field from '../../baseComponent/field/Field'
 import Button from './../../baseComponent/field/Button'
-import DictionaryField from './../../baseComponent/field/DictionaryField'
+import DictField from '../../baseComponent/field/DictField'
 import OkCancelDialog from '../../../component/baseComponent/modal/OkCancelDialog';
 import cookie from 'react-cookies';
 import InfoModal from "../../baseComponent/modal/InfoModal";
@@ -147,32 +147,32 @@ class UserList extends Component {
                                 <tbody>
                                 <tr>
                                     <td>
-                                        <UniversalField labelWidth='110px' fieldWidth='300px' label='Логин' type={Const.TEXTFIELD} value={this.state.filter.ULFilter_main_login_like} onChange={(event) => this.handleChange(event, 'ULFilter_main_login_like')} maxLength={255}/>
+                                        <Field labelWidth='110px' fieldWidth='300px' label='Логин' type={Const.TEXTFIELD} value={this.state.filter.ULFilter_main_login_like} onChange={(event) => this.handleChange(event, 'ULFilter_main_login_like')} maxLength={255}/>
                                     </td>
                                     <td>
-                                        <UniversalField labelWidth='110px' fieldWidth='300px' label='ФИО' type={Const.TEXTFIELD} value={this.state.filter.ULFilter_main_fio_like} onChange={(event) => this.handleChange(event, 'ULFilter_main_fio_like')} maxLength={255}/>
+                                        <Field labelWidth='110px' fieldWidth='300px' label='ФИО' type={Const.TEXTFIELD} value={this.state.filter.ULFilter_main_fio_like} onChange={(event) => this.handleChange(event, 'ULFilter_main_fio_like')} maxLength={255}/>
                                     </td>
                                 </tr>
                                 <tr>
                                     <td>
-                                        <UniversalField labelWidth='110px' fieldWidth='300px' label='Email' type={Const.TEXTFIELD} value={this.state.filter.ULFilter_main_email_like} onChange={(event) => this.handleChange(event, 'ULFilter_main_email_like')} maxLength={255}/>
+                                        <Field labelWidth='110px' fieldWidth='300px' label='Email' type={Const.TEXTFIELD} value={this.state.filter.ULFilter_main_email_like} onChange={(event) => this.handleChange(event, 'ULFilter_main_email_like')} maxLength={255}/>
 
                                     </td>
                                     <td>
-                                        <UniversalField labelWidth='110px' fieldWidth='300px' label='Телефон' type={Const.TEXTFIELD} value={this.state.filter.ULFilter_main_phone_like} onChange={(event) => this.handleChange(event, 'ULFilter_main_phone_like')} maxLength={255}/>
+                                        <Field labelWidth='110px' fieldWidth='300px' label='Телефон' type={Const.TEXTFIELD} value={this.state.filter.ULFilter_main_phone_like} onChange={(event) => this.handleChange(event, 'ULFilter_main_phone_like')} maxLength={255}/>
                                     </td>
                                 </tr>
                                 <tr>
                                     <td>
-                                        <DictionaryField labelWidth='110px'
-                                                         fieldWidth='300px'
-                                                         label='Роль'
-                                                         type={Const.TEXTFIELD}
-                                                         value={this.state.filter.ULFilter_userRole_name_eq}
-                                                         placeholder=''
-                                                         maxLength={100}
-                                                         context={Const.USER_ROLE_CONTEXT}
-                                                         chooseDictAction={this.chooseUserRoleForFilter.bind(this)}/>
+                                        <DictField labelWidth='110px'
+                                                   fieldWidth='300px'
+                                                   label='Роль'
+                                                   type={Const.TEXTFIELD}
+                                                   value={this.state.filter.ULFilter_userRole_name_eq}
+                                                   placeholder=''
+                                                   maxLength={100}
+                                                   context={Const.USER_ROLE_CONTEXT}
+                                                   chooseDictAction={this.chooseUserRoleForFilter.bind(this)}/>
                                     </td>
                                 </tr>
                                 </tbody>

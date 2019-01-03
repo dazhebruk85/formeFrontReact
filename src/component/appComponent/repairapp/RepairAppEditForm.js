@@ -5,7 +5,7 @@ import * as CommonUtils from "../../../utils/CommonUtils";
 import cookie from 'react-cookies';
 import { Tabs, Tab} from 'react-bootstrap';
 import Button from './../../baseComponent/field/Button'
-import UniversalField from './../../baseComponent/field/UniversalField'
+import Field from '../../baseComponent/field/Field'
 import CollapsePanel from './../../baseComponent/panel/CollapsePanel'
 
 class RepairAppEditForm extends Component {
@@ -132,10 +132,10 @@ class RepairAppEditForm extends Component {
                             <tbody>
                             <tr>
                                 <td>
-                                    <UniversalField labelWidth='80px' fieldWidth='150px' label='Номер' type={Const.TEXTFIELD} value={this.state.fields.common.appNum} onChange={(event) => this.handleChange(event.target.value,'appNum','common')} maxLength={255}/>
+                                    <Field labelWidth='80px' fieldWidth='150px' label='Номер' type={Const.TEXTFIELD} value={this.state.fields.common.appNum} onChange={(event) => this.handleChange(event.target.value,'appNum','common')} maxLength={255}/>
                                 </td>
                                 <td>
-                                    <UniversalField labelWidth='80px' fieldWidth='150px' label='Дата' type={Const.DATEPICKER} value={this.state.fields.common.appDate} onChange={(event) => this.handleChange(event,'appDate','common')}/>
+                                    <Field labelWidth='80px' fieldWidth='150px' label='Дата' type={Const.DATEPICKER} value={this.state.fields.common.appDate} onChange={(event) => this.handleChange(event,'appDate','common')}/>
                                 </td>
                             </tr>
                             </tbody>
@@ -143,27 +143,27 @@ class RepairAppEditForm extends Component {
                         <Tabs defaultActiveKey={1} id="uncontrolled-tab-example" style={{height:'490px',marginRight:'20px'}}>
                             <Tab eventKey={1} title="Объект" style={{width:'100%'}}>
                                 <div style={{paddingTop:'10px'}}>
-                                    <UniversalField style={{resize:'none',height:'50px'}} labelWidth='80px' label='Адрес' maxLength={255} type={Const.TEXTAREA} value={this.state.fields.realEstate.address} onChange={(event) => this.handleChange(event.target.value,'address','realEstate')}/>
+                                    <Field style={{resize:'none',height:'50px'}} labelWidth='80px' label='Адрес' maxLength={255} type={Const.TEXTAREA} value={this.state.fields.realEstate.address} onChange={(event) => this.handleChange(event.target.value,'address','realEstate')}/>
                                     <table>
                                         <tbody>
                                         <tr>
                                             <td>
-                                                <UniversalField labelWidth='80px' fieldWidth='150px' label='Подъезд' maxLength={10} type={Const.TEXTFIELD} value={this.state.fields.realEstate.entranceNum} onChange={(event) => this.handleChange(event.target.value,'entranceNum','realEstate')}/>
+                                                <Field labelWidth='80px' fieldWidth='150px' label='Подъезд' maxLength={10} type={Const.TEXTFIELD} value={this.state.fields.realEstate.entranceNum} onChange={(event) => this.handleChange(event.target.value,'entranceNum','realEstate')}/>
                                             </td>
                                             <td>
-                                                <UniversalField labelWidth='80px' fieldWidth='150px' label='Этаж' maxLength={10} type={Const.TEXTFIELD} value={this.state.fields.realEstate.floor} onChange={(event) => this.handleChange(event.target.value, 'floor','realEstate')}/>
+                                                <Field labelWidth='80px' fieldWidth='150px' label='Этаж' maxLength={10} type={Const.TEXTFIELD} value={this.state.fields.realEstate.floor} onChange={(event) => this.handleChange(event.target.value, 'floor','realEstate')}/>
                                             </td>
                                         </tr>
                                         </tbody>
                                     </table>
                                     <CollapsePanel title={'Ограничения'}>
-                                        <UniversalField labelWidth='400px' label='Отсутствие контейнера для строительного мусора' type={Const.CHECKBOX} value={this.state.fields.realEstate.trashCanExist} onChange={(event) => this.handleChange(event.target.checked,'trashCanExist','realEstate')}/>
-                                        <UniversalField labelWidth='400px' label='Отсутствие пассажирского лифта' type={Const.CHECKBOX} value={this.state.fields.realEstate.passLiftExist} onChange={(event) => this.handleChange(event.target.checked,'passLiftExist','realEstate')}/>
-                                        <UniversalField labelWidth='400px' label='Отсутствие грузового лифта' type={Const.CHECKBOX} value={this.state.fields.realEstate.serviceLiftExist} onChange={(event) => this.handleChange(event.target.checked,'serviceLiftExist','realEstate')}/>
-                                        <UniversalField labelWidth='400px' label='Ограничения по высоте борта' type={Const.CHECKBOX} value={this.state.fields.realEstate.heightRestrictExist} onChange={(event) => this.handleChange(event.target.checked,'trashCanExist','realEstate')}/>
-                                        <UniversalField labelWidth='400px' label='Требуется пронос материала от паркинга до подъезда' type={Const.CHECKBOX} value={this.state.fields.realEstate.trashCanExist} onChange={(event) => this.handleChange(event.target.checked,'trashCanExist','realEstate')}/>
-                                        <UniversalField labelWidth='400px' label='Требуется пронос материала на этаж' type={Const.CHECKBOX} value={this.state.fields.realEstate.trashCanExist} onChange={(event) => this.handleChange(event.target.checked,'trashCanExist','realEstate')}/>
-                                        <UniversalField labelWidth='400px' label='Требуется разрешение УК на допуск рабочих' type={Const.CHECKBOX} value={this.state.fields.realEstate.trashCanExist} onChange={(event) => this.handleChange(event.target.checked,'trashCanExist','realEstate')}/>
+                                        <Field labelWidth='400px' label='Отсутствие контейнера для строительного мусора' type={Const.CHECKBOX} value={this.state.fields.realEstate.trashCanExist} onChange={(event) => this.handleChange(event.target.checked,'trashCanExist','realEstate')}/>
+                                        <Field labelWidth='400px' label='Отсутствие пассажирского лифта' type={Const.CHECKBOX} value={this.state.fields.realEstate.passLiftExist} onChange={(event) => this.handleChange(event.target.checked,'passLiftExist','realEstate')}/>
+                                        <Field labelWidth='400px' label='Отсутствие грузового лифта' type={Const.CHECKBOX} value={this.state.fields.realEstate.serviceLiftExist} onChange={(event) => this.handleChange(event.target.checked,'serviceLiftExist','realEstate')}/>
+                                        <Field labelWidth='400px' label='Ограничения по высоте борта' type={Const.CHECKBOX} value={this.state.fields.realEstate.heightRestrictExist} onChange={(event) => this.handleChange(event.target.checked,'trashCanExist','realEstate')}/>
+                                        <Field labelWidth='400px' label='Требуется пронос материала от паркинга до подъезда' type={Const.CHECKBOX} value={this.state.fields.realEstate.trashCanExist} onChange={(event) => this.handleChange(event.target.checked,'trashCanExist','realEstate')}/>
+                                        <Field labelWidth='400px' label='Требуется пронос материала на этаж' type={Const.CHECKBOX} value={this.state.fields.realEstate.trashCanExist} onChange={(event) => this.handleChange(event.target.checked,'trashCanExist','realEstate')}/>
+                                        <Field labelWidth='400px' label='Требуется разрешение УК на допуск рабочих' type={Const.CHECKBOX} value={this.state.fields.realEstate.trashCanExist} onChange={(event) => this.handleChange(event.target.checked,'trashCanExist','realEstate')}/>
                                     </CollapsePanel>
 
                                 </div>

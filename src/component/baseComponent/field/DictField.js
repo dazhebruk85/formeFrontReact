@@ -5,7 +5,7 @@ import CommonModal from './../modal/CommonModal';
 import Button from './../field/Button';
 import CommonDbGrid from '../grid/CommonDbGrid';
 
-class DictionaryField extends Component {
+class DictField extends Component {
 
     constructor(props) {
         super(props);
@@ -89,4 +89,4 @@ class DictionaryField extends Component {
     }
 }
 
-export default DictionaryField;
+export default DictField;

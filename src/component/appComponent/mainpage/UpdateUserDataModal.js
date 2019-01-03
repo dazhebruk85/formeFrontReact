@@ -3,7 +3,7 @@ import CommonModal from './../../baseComponent/modal/CommonModal'
 import cookie from 'react-cookies';
 import * as Const from '../../../Const';
 import InfoModal from "../../baseComponent/modal/InfoModal";
-import UniversalField from './../../baseComponent/field/UniversalField'
+import Field from '../../baseComponent/field/Field'
 import Button from './../../baseComponent/field/Button'
 import ErrorModal from '../../../component/baseComponent/modal/ErrorModal';
 import * as CommonUtils from "../../../utils/CommonUtils";
@@ -160,8 +160,8 @@ class UpdateUserDataModal extends Component {
                 <CommonModal loading={this.state.isLoading} title={'Изменить данные пользователя'} visible={this.props.visible} style={{width:'460px'}} closeAction={() => this.closeModal()}>
                     <div>
                         <form className="form-horizontal">
-                            <UniversalField labelWidth='150px' fieldWidth='300px' label='ФИО' type={Const.TEXTFIELD} value={this.state.fields.fio} onChange={(event) => this.handleChange(event, 'fio')} placeholder='ФИО' maxLength={255}/>
-                            <UniversalField labelWidth='150px' fieldWidth='300px' label='Дата рождения' type={Const.DATEPICKER} value={this.state.fields.birthDate} onChange={(date) => this.handleChange(date, "birthDate")} placeholder='Дата рождения'/>
+                            <Field labelWidth='150px' fieldWidth='300px' label='ФИО' type={Const.TEXTFIELD} value={this.state.fields.fio} onChange={(event) => this.handleChange(event, 'fio')} placeholder='ФИО' maxLength={255}/>
+                            <Field labelWidth='150px' fieldWidth='300px' label='Дата рождения' type={Const.DATEPICKER} value={this.state.fields.birthDate} onChange={(date) => this.handleChange(date, "birthDate")} placeholder='Дата рождения'/>
                             <div className="form-group">
                                 <label style={{width:'150px'}} className="control-label col-sm-2">Паспорт</label>
                                 <div className="col-sm-10" style={{width:'300px',paddingRight:'0px'}}>
@@ -180,10 +180,10 @@ class UpdateUserDataModal extends Component {
                                     </table>
                                 </div>
                             </div>
-                            <UniversalField style={{resize:'none',height:'75px'}} labelWidth='150px' fieldWidth='300px' label='выдан' type={Const.TEXTAREA} value={this.state.fields.passportIssuedBy} onChange={(event) => this.handleChange(event, 'passportIssuedBy')} placeholder='Кем выдан паспорт' maxLength={255}/>
-                            <UniversalField style={{resize:'none',height:'75px'}} labelWidth='150px' fieldWidth='300px' label='Адрес регистрации' type={Const.TEXTAREA} value={this.state.fields.regAddress} onChange={(event) => this.handleChange(event, 'regAddress')} placeholder='Адрес регистрации' maxLength={255}/>
-                            <UniversalField labelWidth='150px' fieldWidth='300px' label='Телефон' type={Const.TEXTFIELD} value={this.state.fields.phone} onChange={(event) => this.handleChange(event, 'phone')} placeholder='Телефон' maxLength={100}/>
-                            <UniversalField labelWidth='150px' fieldWidth='300px' label='Email' type={Const.TEXTFIELD} value={this.state.fields.email} onChange={(event) => this.handleChange(event, 'email')} placeholder='Email' maxLength={100}/>
+                            <Field style={{resize:'none',height:'75px'}} labelWidth='150px' fieldWidth='300px' label='выдан' type={Const.TEXTAREA} value={this.state.fields.passportIssuedBy} onChange={(event) => this.handleChange(event, 'passportIssuedBy')} placeholder='Кем выдан паспорт' maxLength={255}/>
+                            <Field style={{resize:'none',height:'75px'}} labelWidth='150px' fieldWidth='300px' label='Адрес регистрации' type={Const.TEXTAREA} value={this.state.fields.regAddress} onChange={(event) => this.handleChange(event, 'regAddress')} placeholder='Адрес регистрации' maxLength={255}/>
+                            <Field labelWidth='150px' fieldWidth='300px' label='Телефон' type={Const.TEXTFIELD} value={this.state.fields.phone} onChange={(event) => this.handleChange(event, 'phone')} placeholder='Телефон' maxLength={100}/>
+                            <Field labelWidth='150px' fieldWidth='300px' label='Email' type={Const.TEXTFIELD} value={this.state.fields.email} onChange={(event) => this.handleChange(event, 'email')} placeholder='Email' maxLength={100}/>
                             <div className="btn-toolbar align-bottom" role="toolbar" style={{justifyContent:'center',display:'flex'}}>
                                 <Button value="Ок" onClick={() => this.saveUserData()}/>
                                 <Button value="Отмена" onClick={() => this.closeModal()}/>

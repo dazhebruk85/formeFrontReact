@@ -3,7 +3,7 @@ import * as Const from '../../../Const';
 import DatePicker from 'react-datepicker';
 import './../../../media/datePicker/react-datepicker.css';
 
-class UniversalField extends Component {
+class Field extends Component {
 
     render() {
         switch(this.props.type) {
@@ -100,4 +100,4 @@ class UniversalField extends Component {
     }
 }
 
-export default UniversalField;
+export default Field;

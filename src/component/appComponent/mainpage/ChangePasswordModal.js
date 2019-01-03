@@ -4,7 +4,7 @@ import cookie from 'react-cookies';
 import * as Const from '../../../Const';
 import { Redirect } from 'react-router-dom'
 import InfoModal from "../../baseComponent/modal/InfoModal";
-import UniversalField from './../../baseComponent/field/UniversalField'
+import Field from '../../baseComponent/field/Field'
 import Button from './../../baseComponent/field/Button'
 import ErrorModal from '../../../component/baseComponent/modal/ErrorModal';
 import * as CommonUtils from "../../../utils/CommonUtils";
@@ -94,9 +94,9 @@ class ChangePasswordModal extends Component {
             <CommonModal title={'Смена пароля'} visible={this.props.visible} style={{width:'540px'}} closeAction={() => this.closeModal()}>
                 <div>
                     <form className="form-horizontal">
-                        <UniversalField labelWidth='220px' fieldWidth='300px' label='Введите старый пароль' type={Const.PASSWORD} value={this.state.oldPassword} onChange={(event) => this.handleChange(event, 'oldPassword')} maxLength={20}/>
-                        <UniversalField labelWidth='220px' fieldWidth='300px' label='Введите новый пароль' type={Const.PASSWORD} value={this.state.newPassword} onChange={(event) => this.handleChange(event, 'newPassword')} maxLength={20}/>
-                        <UniversalField labelWidth='220px' fieldWidth='300px' label='Повторите новый пароль' type={Const.PASSWORD} value={this.state.newPasswordRepeat} onChange={(event) => this.handleChange(event, 'newPasswordRepeat')} maxLength={20}/>
+                        <Field labelWidth='220px' fieldWidth='300px' label='Введите старый пароль' type={Const.PASSWORD} value={this.state.oldPassword} onChange={(event) => this.handleChange(event, 'oldPassword')} maxLength={20}/>
+                        <Field labelWidth='220px' fieldWidth='300px' label='Введите новый пароль' type={Const.PASSWORD} value={this.state.newPassword} onChange={(event) => this.handleChange(event, 'newPassword')} maxLength={20}/>
+                        <Field labelWidth='220px' fieldWidth='300px' label='Повторите новый пароль' type={Const.PASSWORD} value={this.state.newPasswordRepeat} onChange={(event) => this.handleChange(event, 'newPasswordRepeat')} maxLength={20}/>
                         <div className="btn-toolbar align-bottom" role="toolbar" style={{justifyContent:'center',display:'flex'}}>
                             <Button value="Ок" onClick={() => this.changePassword()}/>
                             <Button value="Отмена" onClick={() => this.closeModal()}/>
