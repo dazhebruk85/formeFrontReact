@@ -80,7 +80,7 @@ class AdminPage extends Component {
                                     <AdminTreeView changeTreeChoiceAction={this.changeTreeChoice.bind(this)}/>
                                 </td>
                                 <td style={{width:'100%',verticalAlign:'top'}}>
-                                    <div ref='mainDataDiv'>
+                                    <div ref='mainDataDiv' style={{height:'100%',overflow:'auto'}}>
                                         <MainDivComponent choosenTreeItem={this.state.choosenTreeItem}/>
                                     </div>
                                 </td>
