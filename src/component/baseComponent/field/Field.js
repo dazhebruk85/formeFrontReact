@@ -5,6 +5,19 @@ import './../../../media/datePicker/react-datepicker.css';
 
 class Field extends Component {
 
+    constructor(props) {
+        super(props);
+
+        this.checkBoxClick = this.checkBoxClick.bind(this);
+        this.changeAction = props.onChange
+    }
+
+    checkBoxClick(event) {
+        let trNode = event.target.parentNode.parentNode;
+        let checkBoxNode = trNode.children[0].children[0].children[0];
+        checkBoxNode.click()
+    }
+
     render() {
         switch(this.props.type) {
             case Const.TEXTFIELD:
@@ -84,14 +97,13 @@ class Field extends Component {
                                     </div>
                                 </td>
                                 <td style={{width:this.props.labelWidth}}>
-                                    {this.props.label ? <label style={{textAlign:'left',width:this.props.labelWidth}} className="control-label col-sm-2">{this.props.label}</label> : null}
+                                    {this.props.label ? <label onClick={(event) => this.checkBoxClick(event)} style={{cursor:'pointer',textAlign:'left',width:this.props.labelWidth}} className="control-label col-sm-2">{this.props.label}</label> : null}
                                 </td>
                             </tr>
                             </tbody>
                         </table>
                     </div>
-
-                )
+                );
             default:
                 return (
                     null
