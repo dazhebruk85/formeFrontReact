@@ -29,7 +29,13 @@ class RepairAppEditForm extends Component {
                     address:'',
                     entranceNum:'',
                     floor:'',
-                    trashCanExist:false
+                    trashCanNotExist:false,
+                    passLiftNotExist:false,
+                    serviceLiftNotExist:false,
+                    heightRestrictExist:false,
+                    needCarryFromParkToEnt:false,
+                    needCarryToFloor:false,
+                    needUkAccept:false
                 }
             }
         };
@@ -92,7 +98,13 @@ class RepairAppEditForm extends Component {
                     address:'',
                     entranceNum:'',
                     floor:'',
-                    trashCanExist:false
+                    trashCanNotExist:false,
+                    passLiftExist:false,
+                    serviceLiftNotExist:false,
+                    heightRestrictExist:false,
+                    needCarryFromParkToEnt:false,
+                    needCarryToFloor:false,
+                    needUkAccept:false
                 }
             }
         });
@@ -157,13 +169,13 @@ class RepairAppEditForm extends Component {
                                         </tbody>
                                     </table>
                                     <CollapsePanel title={'Ограничения'}>
-                                        <Field labelWidth='400px' label='Отсутствие контейнера для строительного мусора' type={Const.CHECKBOX} value={this.state.fields.realEstate.trashCanExist} onChange={(event) => this.handleChange(event.target.checked,'trashCanExist','realEstate')}/>
-                                        <Field labelWidth='400px' label='Отсутствие пассажирского лифта' type={Const.CHECKBOX} value={this.state.fields.realEstate.passLiftExist} onChange={(event) => this.handleChange(event.target.checked,'passLiftExist','realEstate')}/>
-                                        <Field labelWidth='400px' label='Отсутствие грузового лифта' type={Const.CHECKBOX} value={this.state.fields.realEstate.serviceLiftExist} onChange={(event) => this.handleChange(event.target.checked,'serviceLiftExist','realEstate')}/>
-                                        <Field labelWidth='400px' label='Ограничения по высоте борта' type={Const.CHECKBOX} value={this.state.fields.realEstate.heightRestrictExist} onChange={(event) => this.handleChange(event.target.checked,'trashCanExist','realEstate')}/>
-                                        <Field labelWidth='400px' label='Требуется пронос материала от паркинга до подъезда' type={Const.CHECKBOX} value={this.state.fields.realEstate.trashCanExist} onChange={(event) => this.handleChange(event.target.checked,'trashCanExist','realEstate')}/>
-                                        <Field labelWidth='400px' label='Требуется пронос материала на этаж' type={Const.CHECKBOX} value={this.state.fields.realEstate.trashCanExist} onChange={(event) => this.handleChange(event.target.checked,'trashCanExist','realEstate')}/>
-                                        <Field labelWidth='400px' label='Требуется разрешение УК на допуск рабочих' type={Const.CHECKBOX} value={this.state.fields.realEstate.trashCanExist} onChange={(event) => this.handleChange(event.target.checked,'trashCanExist','realEstate')}/>
+                                        <Field labelWidth='400px' label='Отсутствие контейнера для строительного мусора' type={Const.CHECKBOX} value={this.state.fields.realEstate.trashCanNotExist} onChange={(event) => this.handleChange(event.target.checked,'trashCanNotExist','realEstate')}/>
+                                        <Field labelWidth='400px' label='Отсутствие пассажирского лифта' type={Const.CHECKBOX} value={this.state.fields.realEstate.passLiftNotExist} onChange={(event) => this.handleChange(event.target.checked,'passLiftNotExist','realEstate')}/>
+                                        <Field labelWidth='400px' label='Отсутствие грузового лифта' type={Const.CHECKBOX} value={this.state.fields.realEstate.serviceLiftNotExist} onChange={(event) => this.handleChange(event.target.checked,'serviceLiftNotExist','realEstate')}/>
+                                        <Field labelWidth='400px' label='Ограничения по высоте борта' type={Const.CHECKBOX} value={this.state.fields.realEstate.heightRestrictExist} onChange={(event) => this.handleChange(event.target.checked,'heightRestrictExist','realEstate')}/>
+                                        <Field labelWidth='400px' label='Требуется пронос материала от паркинга до подъезда' type={Const.CHECKBOX} value={this.state.fields.realEstate.needCarryFromParkToEnt} onChange={(event) => this.handleChange(event.target.checked,'needCarryFromParkToEnt','realEstate')}/>
+                                        <Field labelWidth='400px' label='Требуется пронос материала на этаж' type={Const.CHECKBOX} value={this.state.fields.realEstate.needCarryToFloor} onChange={(event) => this.handleChange(event.target.checked,'needCarryToFloor','realEstate')}/>
+                                        <Field labelWidth='400px' label='Требуется разрешение УК на допуск рабочих' type={Const.CHECKBOX} value={this.state.fields.realEstate.needUkAccept} onChange={(event) => this.handleChange(event.target.checked,'needUkAccept','realEstate')}/>
                                     </CollapsePanel>
 
                                 </div>
