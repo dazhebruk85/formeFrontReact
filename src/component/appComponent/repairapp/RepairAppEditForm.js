@@ -27,9 +27,9 @@ class RepairAppEditForm extends Component {
                     entityId: '',
                     appNum:'',
                     appDate:undefined,
-                    finalPriceForMeter:0.00,
-                    totalCost:0.00,
-                    addOptionCost:0.00
+                    finalPriceForMeter:'0.00',
+                    totalCost:'0.00',
+                    addOptionCost:'0.00'
                 },
                 basePackage : {
                     entityId: '',
@@ -40,8 +40,8 @@ class RepairAppEditForm extends Component {
                     address:'',
                     entranceNum:'',
                     floor:'',
-                    trashCanNotExist:true,
-                    passLiftNotExist:true,
+                    trashCanNotExist:false,
+                    passLiftNotExist:false,
                     serviceLiftNotExist:false,
                     heightRestrictExist:false,
                     needCarryFromParkToEnt:false,
@@ -110,7 +110,9 @@ class RepairAppEditForm extends Component {
             errors: [],
             successInfoMessages: [],
             fields:{
+                ...this.state.fields,
                 common : {
+                    ...this.state.fields.common,
                     entityId: '',
                     appNum:'',
                     appDate:undefined,
@@ -119,11 +121,13 @@ class RepairAppEditForm extends Component {
                     addOptionCost:'0.00'
                 },
                 basePackage : {
+                    ...this.state.fields.basePackage,
                     entityId: '',
                     name: '',
                     priceForMeter: ''
                 },
                 realEstate : {
+                    ...this.state.fields.realEstate,
                     address:'',
                     entranceNum:'',
                     floor:'',
