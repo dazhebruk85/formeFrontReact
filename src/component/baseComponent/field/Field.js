@@ -31,7 +31,26 @@ class Field extends Component {
                                    placeholder={this.props.placeholder}
                                    maxLength={this.props.maxLength}
                                    style={this.props.style}
-                                   type="text"/>
+                                   type="text"
+                                   disabled={this.props.disabled}/>
+                        </div>
+                    </div>
+                );
+            case Const.DECIMALFIELD:
+                let decimalStyle = this.props.style ? this.props.style : {};
+                decimalStyle.textAlign = 'right';
+                return (
+                    <div className="form-group">
+                        {this.props.label ? <label style={{width:this.props.labelWidth}} className="control-label col-sm-2">{this.props.label}</label> : null}
+                        <div className="col-sm-10" style={{width:this.props.fieldWidth,paddingRight:'0px'}}>
+                            <input className="form-control input-sm"
+                                   value={this.props.value}
+                                   onChange={this.props.onChange}
+                                   placeholder={this.props.placeholder}
+                                   maxLength={this.props.maxLength}
+                                   style={decimalStyle}
+                                   type="text"
+                                   disabled={this.props.disabled}/>
                         </div>
                     </div>
                 );
@@ -92,6 +111,7 @@ class Field extends Component {
                                     <div className="col-sm-10" style={{paddingRight:'0px'}}>
                                         <input type="checkbox"
                                                checked={this.props.checked}
+                                               value={this.props.checked}
                                                onChange={this.props.onChange}
                                                style={checkBoxStyle}/>
                                     </div>

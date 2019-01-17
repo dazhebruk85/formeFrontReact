@@ -102,7 +102,7 @@ class UserEditForm extends Component {
     }
 
     async saveUserData() {
-        let errors = []
+        let errors = [];
         if (!this.state.fields.fio) {
             errors.push({code:'',message:'Необходимо заполнить ФИО'})
         }
