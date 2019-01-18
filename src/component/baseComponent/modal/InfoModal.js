@@ -57,7 +57,7 @@ class InfoModal extends Component {
 
         return (
 
-            <CommonModal title={'Ошибка'} visible={this.state.popupVisible} style={{width:'450px'}} closeAction={this.props.closeAction}>
+            <CommonModal title={'Информация'} visible={this.state.popupVisible} style={{width:'450px'}} closeAction={this.props.closeAction}>
                 <div style={{height:'60px',overflow:'auto'}}>
                     <table style={{width:'100%'}}>
                         <tbody>

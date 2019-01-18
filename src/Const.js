@@ -12,6 +12,9 @@ export const USER_CONTEXT = "user";
 //Change password context
 export const CHANGE_PASSWORD_CONTEXT = "changePassword";
 
+//Set new password context
+export const SET_NEW_PASSWORD_CONTEXT = "setNewPassword";
+
 //User context
 export const USER_ROLE_CONTEXT = "userRole";
 

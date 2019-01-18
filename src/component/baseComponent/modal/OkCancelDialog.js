@@ -10,7 +10,6 @@ class OkCancelDialog extends Component {
 
         this.state = {
             okCancelVisible:false,
-            question:props.question,
             cancelAction:props.cancelAction,
             okAction:props.okAction
         };
@@ -32,7 +31,7 @@ class OkCancelDialog extends Component {
                         <tbody>
                         <tr>
                             <td style={{width:'7%'}}><img alt='' src={questionPng} style={{height:"24px",width:"24px"}}/></td>
-                            <td style={{width:'93%'}}>{this.state.question}</td>
+                            <td style={{width:'93%'}}>{this.props.children}</td>
                         </tr>
                         </tbody>
                     </table>

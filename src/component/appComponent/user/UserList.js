@@ -11,6 +11,7 @@ import OkCancelDialog from '../../../component/baseComponent/modal/OkCancelDialo
 import cookie from 'react-cookies';
 import InfoModal from "../../baseComponent/modal/InfoModal";
 import CollapsePanel from './../../baseComponent/panel/CollapsePanel'
+import UserSetPasswordModal from "./UserSetPasswordModal";
 
 class UserList extends Component {
 
@@ -21,7 +22,9 @@ class UserList extends Component {
             errors: [],
             editFormVisible: false,
             selectedUserId: '',
+            selectedUserLogin: '',
             deleteEntityDialogVisible:false,
+            setNewPasswordModalVisible: false,
             filter: {
                 ULFilter_main_login_like:'',
                 ULFilter_main_fio_like:'',
@@ -38,6 +41,22 @@ class UserList extends Component {
         this.refreshUserList = this.refreshUserList.bind(this);
         this.clearFilter = this.clearFilter.bind(this);
         this.handleChange = this.handleChange.bind(this);
+        this.showSetNewPasswordModal = this.showSetNewPasswordModal.bind(this);
+        this.closeSetNewPasswordModal = this.closeSetNewPasswordModal.bind(this);
+    }
+
+    showSetNewPasswordModal(evt) {
+        if (CommonUtils.objectIsEmpty(this.state.selectedUserId)) {
+            this.setState({errors:[{code:'',message:'Необходимо выбрать запись'}]});
+        } else {
+            this.setState({setNewPasswordModalVisible: true})
+        }
+    }
+
+    closeSetNewPasswordModal(evt) {
+        this.setState({
+            setNewPasswordModalVisible: false
+        })
     }
 
     addUserEntity() {
@@ -79,12 +98,13 @@ class UserList extends Component {
 
     refreshUserList() {
         this.refs.ULUserGrid.getGridListData();
-        this.setState({selectedUserId:''})
+        this.setState({selectedUserId:'',selectedUserLogin:''})
     }
 
     changeGridSelection(selectedUser) {
         this.setState({
-            selectedUserId: selectedUser.entityId
+            selectedUserId: selectedUser.entityId,
+            selectedUserLogin: selectedUser.login,
         });
     }
 
@@ -138,7 +158,7 @@ class UserList extends Component {
                     <Button style={{marginLeft:'5px'}} value="Редактировать" onClick={this.editUserEntity}/>
                     <Button style={{marginLeft:'5px'}} value="Удалить" onClick={this.deleteUserEntity}/>
                     <Button style={{marginLeft:'5px'}} value="Обновить" onClick={this.refreshUserList}/>
-                    <Button style={{marginLeft:'5px'}} value="Задать пароль" onClick={this.refreshUserList}/>
+                    <Button style={{marginLeft:'5px'}} value="Задать пароль" onClick={this.showSetNewPasswordModal}/>
                 </div>
                 <div style={{marginLeft:'10px'}}>
                     <CollapsePanel title={'Фильтр'}>
@@ -189,9 +209,11 @@ class UserList extends Component {
                 <UserEditForm entityId={this.state.selectedUserId} visible={this.state.editFormVisible} closeAction={() => {this.setState({editFormVisible:false,selectedUserId:''});this.refreshUserList()}}/>
                 <ErrorModal errors={this.state.errors} closeAction={() => this.setState({errors:[]})}/>
                 <OkCancelDialog okCancelVisible={this.state.deleteEntityDialogVisible}
-                                question={'Вы действительно хотите удалить выбранную запись?'}
                                 cancelAction={() => this.setState({deleteEntityDialogVisible:false})}
-                                okAction={this.deleteUserEntityConfirm.bind(this)}/>
+                                okAction={this.deleteUserEntityConfirm.bind(this)}>
+                    <div>Вы действительно хотите удалить выбранную запись?</div>
+                </OkCancelDialog>
+                <UserSetPasswordModal userId={this.state.selectedUserId} userLogin={this.state.selectedUserLogin} visible={this.state.setNewPasswordModalVisible} closeAction={() => {this.closeSetNewPasswordModal(); this.refreshUserList()}}/>
                 <InfoModal popupData={this.state.successInfoMessages} closeAction={() => this.setState({successInfoMessages:[]})}/>
             </div>
         )

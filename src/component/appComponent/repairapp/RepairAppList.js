@@ -88,9 +88,10 @@ class RepairAppList extends Component {
                 <RepairAppEditForm entityId={this.state.selectedRepairAppId} visible={this.state.editFormVisible} closeAction={() => {this.setState({editFormVisible:false,selectedRepairAppId:''});this.refreshRepairAppList()}}/>
                 <ErrorModal errors={this.state.errors} closeAction={() => this.setState({errors:[]})}/>
                 <OkCancelDialog okCancelVisible={this.state.deleteEntityDialogVisible}
-                                question={'Вы действительно хотите удалить выбранную запись?'}
                                 cancelAction={() => this.setState({deleteEntityDialogVisible:false})}
-                                okAction={this.deleteRepairEntityConfirm.bind(this)}/>
+                                okAction={this.deleteRepairEntityConfirm.bind(this)}>
+                    <div>Вы действительно хотите удалить выбранную запись?</div>
+                </OkCancelDialog>
                 <InfoModal popupData={this.state.successInfoMessages} closeAction={() => this.setState({successInfoMessages:[]})}/>
             </div>
         )
