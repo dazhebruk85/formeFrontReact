@@ -77,6 +77,16 @@ class RepairAppEditForm extends Component {
             } else {
                 this.setRepairApp({data: responseData.params});
             }
+        } else {
+            this.setState({
+                fields:{
+                    ...this.state.fields,
+                    common : {
+                        ...this.state.fields.common,
+                        appNum:'',
+                        appDate: new Date()
+                    }
+                }});
         }
     }
 
@@ -170,12 +180,6 @@ class RepairAppEditForm extends Component {
 
     async saveRepairAppData() {
         let errors = [];
-        if (!this.state.fields.common.appNum) {
-            errors.push({code:'',message:'Необходимо заполнить номер анкеты'})
-        }
-        if (!this.state.fields.common.appDate) {
-            errors.push({code:'',message:'Необходимо заполнить дату анкеты'})
-        }
         if (!this.state.fields.basePackage.entityId) {
             errors.push({code:'',message:'Необходимо заполнить базовый пакет'})
         }
@@ -240,10 +244,10 @@ class RepairAppEditForm extends Component {
                             <tbody>
                             <tr>
                                 <td>
-                                    <Field labelWidth='80px' fieldWidth='150px' label='Номер' type={Const.TEXTFIELD} value={this.state.fields.common.appNum} onChange={(event) => this.handleChange(event.target.value,'appNum','common')} maxLength={255}/>
+                                    <Field disabled={true} labelWidth='80px' fieldWidth='150px' label='Номер' type={Const.TEXTFIELD} value={this.state.fields.common.appNum} onChange={(event) => this.handleChange(event.target.value,'appNum','common')} maxLength={255}/>
                                 </td>
                                 <td>
-                                    <Field labelWidth='80px' fieldWidth='150px' label='Дата' type={Const.DATEPICKER} value={this.state.fields.common.appDate} onChange={(event) => this.handleChange(event,'appDate','common')}/>
+                                    <Field disabled={true} labelWidth='80px' fieldWidth='150px' label='Дата' type={Const.DATEPICKER} value={this.state.fields.common.appDate} onChange={(event) => this.handleChange(event,'appDate','common')}/>
                                 </td>
                                 <td>
                                     <DictField labelWidth='150px'

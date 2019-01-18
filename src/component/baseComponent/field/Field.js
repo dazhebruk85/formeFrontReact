@@ -94,7 +94,8 @@ class Field extends Component {
                                         placeholder={this.props.placeholder}
                                         style={this.props.style}
                                         dateFormat="dd.MM.yyyy"
-                                        isClearable={true}/>
+                                        isClearable={true}
+                                        disabled={this.props.disabled}/>
                         </div>
                     </div>
                 );
