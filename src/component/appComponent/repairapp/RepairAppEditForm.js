@@ -192,7 +192,6 @@ class RepairAppEditForm extends Component {
             this.setState({isLoading:true});
             let params = this.state.fields;
             params['entityId'] = params.common.entityId;
-            params['common'].appDateLong = params.common.appDate.getTime();
             let responseData = await CommonUtils.makeAsyncPostEvent(Const.APP_URL,Const.REPAIR_APP_FORM_CONTEXT,Const.ENTITY_SAVE,params,cookie.load('sessionId'));
             this.setState({isLoading:false});
             if (responseData.errors.length > 0) {
