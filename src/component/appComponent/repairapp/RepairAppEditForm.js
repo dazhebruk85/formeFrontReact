@@ -75,7 +75,7 @@ class RepairAppEditForm extends Component {
             if (responseData.errors.length > 0) {
                 this.setState({errors: responseData.errors});
             } else {
-                this.setRepairApp({data: responseData.params});
+                this.setState({fields: responseData.params});
             }
         } else {
             this.setState({
@@ -88,31 +88,6 @@ class RepairAppEditForm extends Component {
                     }
                 }});
         }
-    }
-
-    setRepairApp(props) {
-        let propsToChange = {};
-        for (let key in props.data) {
-            if (props.data.hasOwnProperty(key)) {
-                if (Object.keys(props.data[key]).length > 0) {
-                    let propsToChange2 = {};
-                    let ddd = props.data[key];
-                    for (let key2 in ddd) {
-                        if ("appDate" === key2) {
-                            if (ddd[key2]) {
-                                propsToChange2[key2] = new Date(ddd[key2]);
-                            }
-                        } else {
-                            propsToChange2[key2] = ddd[key2] === undefined || ddd[key2] === null ? '' : ddd[key2];
-                        }
-                    }
-                    propsToChange[key] = propsToChange2;
-                } else {
-                    propsToChange[key] = props.data[key] ? props.data[key] : '';
-                }
-            }
-        }
-        this.setState({fields: propsToChange});
     }
 
     closeModal() {

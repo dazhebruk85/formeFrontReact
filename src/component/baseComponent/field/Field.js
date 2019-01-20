@@ -84,12 +84,13 @@ class Field extends Component {
                     </div>
                 );
             case Const.DATEPICKER:
+                let dateValue = (this.props.value && this.props.value !== undefined) ? new Date(this.props.value) : undefined;
                 return (
                     <div className="form-group">
                         {this.props.label ? <label style={{width:this.props.labelWidth}} className="control-label col-sm-2">{this.props.label}</label> : null}
                         <div className="col-sm-10" style={{width:this.props.fieldWidth,paddingRight:'0px'}}>
                             <DatePicker className="form-control input-sm" todayButton='Today'
-                                        selected={this.props.value}
+                                        selected={dateValue}
                                         onChange={this.props.onChange}
                                         placeholder={this.props.placeholder}
                                         style={this.props.style}
