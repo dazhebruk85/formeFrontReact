@@ -125,7 +125,6 @@ class UpdateUserDataModal extends Component {
             this.setState({isLoading:true});
             let params = this.state.fields;
             params['entityId'] = cookie.load('userId');
-            params['birthDateLong'] = params.birthDate.getTime();
             let responseData = await CommonUtils.makeAsyncPostEvent(Const.APP_URL,Const.USER_CONTEXT,Const.ENTITY_SAVE,params,cookie.load('sessionId'));
             this.setState({isLoading:false});
             if (responseData.errors.length > 0) {
