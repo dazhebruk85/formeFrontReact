@@ -30,6 +30,7 @@ export const ROOM_TYPE_CONTEXT = "roomType";
 //Common entity actions
 export const ENTITY_LIST = "entityList";
 export const ENTITY_GET = "entityGet";
+export const ENTITY_NEW = "entityNew";
 export const ENTITY_SAVE = "entitySave";
 export const ENTITY_DELETE = "entityDelete";
 

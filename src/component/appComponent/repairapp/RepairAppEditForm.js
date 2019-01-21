@@ -47,7 +47,8 @@ class RepairAppEditForm extends Component {
                     needCarryFromParkToEnt:false,
                     needCarryToFloor:false,
                     needUkAccept:false
-                }
+                },
+                rooms:{}
             }
         };
 
@@ -76,6 +77,7 @@ class RepairAppEditForm extends Component {
 
     async getRepairAppData() {
         if (this.state.fields.common.entityId) {
+            //Редактирование анкеты
             this.setState({isLoading:true});
             let params = {entityId: this.state.fields.common.entityId};
             let responseData = await CommonUtils.makeAsyncPostEvent(Const.APP_URL,Const.REPAIR_APP_FORM_CONTEXT,Const.ENTITY_GET,params,cookie.load('sessionId'));
@@ -86,15 +88,27 @@ class RepairAppEditForm extends Component {
                 this.setState({fields: responseData.params});
             }
         } else {
+            //Новая анкета
+            this.setState({isLoading:true});
+            let responseData = await CommonUtils.makeAsyncPostEvent(Const.APP_URL,Const.REPAIR_APP_FORM_CONTEXT,Const.ENTITY_NEW,{},cookie.load('sessionId'));
+            if (responseData.errors.length > 0) {
+                this.setState({errors: responseData.errors});
+            } else {
+                this.setState({fields: responseData.params});
+            }
             this.setState({
                 fields:{
                     ...this.state.fields,
                     common : {
                         ...this.state.fields.common,
                         appNum:'',
-                        appDate: new Date()
+                        appDate: new Date(),
+                        finalPriceForMeter:'0.00',
+                        totalCost:'0.00',
+                        addOptionCost:'0.00'
                     }
                 }});
+            this.setState({isLoading:false});
         }
     }
 
@@ -131,7 +145,8 @@ class RepairAppEditForm extends Component {
                     needCarryFromParkToEnt:false,
                     needCarryToFloor:false,
                     needUkAccept:false
-                }
+                },
+                rooms:{}
             }
         });
         this.closeAction()
