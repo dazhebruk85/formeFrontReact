@@ -10,6 +10,7 @@ import CollapsePanel from './../../baseComponent/panel/CollapsePanel'
 import ErrorModal from "../../baseComponent/modal/ErrorModal";
 import InfoModal from "../../baseComponent/modal/InfoModal";
 import DictField from "../../baseComponent/field/DictField";
+import CommonGrid from "../../baseComponent/grid/CommonGrid";
 
 class RepairAppEditForm extends Component {
 
@@ -241,9 +242,9 @@ class RepairAppEditForm extends Component {
                             </tbody>
                         </table>
                         <Tabs defaultActiveKey={1} id="uncontrolled-tab-example" style={{height:'490px',marginRight:'20px'}}>
-                            <Tab eventKey={1} title="Объект" style={{width:'100%'}}>
+                            <Tab eventKey={1} title="Объект" style={{width:'100%',height:'435px',overflow:'auto'}}>
                                 <div style={{paddingTop:'10px'}}>
-                                    <Field style={{resize:'none',height:'50px'}} labelWidth='80px' label='Адрес' maxLength={255} type={Const.TEXTAREA} value={this.state.fields.realEstate.address} onChange={(event) => this.handleChange(event.target.value,'address','realEstate')}/>
+                                    <Field style={{resize:'none',height:'50px',width:'655px'}} labelWidth='80px' label='Адрес' maxLength={255} type={Const.TEXTAREA} value={this.state.fields.realEstate.address} onChange={(event) => this.handleChange(event.target.value,'address','realEstate')}/>
                                     <table>
                                         <tbody>
                                         <tr>
@@ -256,7 +257,7 @@ class RepairAppEditForm extends Component {
                                         </tr>
                                         </tbody>
                                     </table>
-                                    <CollapsePanel title={'Ограничения'}>
+                                    <CollapsePanel style={{width:'99%'}} title={'Ограничения'}>
                                         <Field labelWidth='400px' label='Отсутствие контейнера для строительного мусора' type={Const.CHECKBOX} checked={this.state.fields.realEstate.trashCanNotExist} onChange={(event) => this.handleChange(event.target.checked,'trashCanNotExist','realEstate')}/>
                                         <Field labelWidth='400px' label='Отсутствие пассажирского лифта' type={Const.CHECKBOX} checked={this.state.fields.realEstate.passLiftNotExist} onChange={(event) => this.handleChange(event.target.checked,'passLiftNotExist','realEstate')}/>
                                         <Field labelWidth='400px' label='Отсутствие грузового лифта' type={Const.CHECKBOX} checked={this.state.fields.realEstate.serviceLiftNotExist} onChange={(event) => this.handleChange(event.target.checked,'serviceLiftNotExist','realEstate')}/>
@@ -265,7 +266,9 @@ class RepairAppEditForm extends Component {
                                         <Field labelWidth='400px' label='Требуется пронос материала на этаж' type={Const.CHECKBOX} checked={this.state.fields.realEstate.needCarryToFloor} onChange={(event) => this.handleChange(event.target.checked,'needCarryToFloor','realEstate')}/>
                                         <Field labelWidth='400px' label='Требуется разрешение УК на допуск рабочих' type={Const.CHECKBOX} checked={this.state.fields.realEstate.needUkAccept} onChange={(event) => this.handleChange(event.target.checked,'needUkAccept','realEstate')}/>
                                     </CollapsePanel>
-
+                                    <CollapsePanel style={{width:'99%',marginTop:'10px'}} title={'Помещения для ремонта'}>
+                                        <CommonGrid gridData={this.state.fields.rooms}/>
+                                    </CollapsePanel>
                                 </div>
                             </Tab>
                             <Tab eventKey={2} title="Полы" style={{width:'100%'}}>

@@ -71,7 +71,7 @@ class Field extends Component {
                 );
             case Const.TEXTAREA:
                 return (
-                    <div className="form-group">
+                    <div className="form-group" style={{width:'99%'}}>
                         {this.props.label ? <label style={{width:this.props.labelWidth}} className="control-label col-sm-2">{this.props.label}</label> : null}
                         <div className="col-sm-10" style={{width:this.props.fieldWidth,paddingRight:'0px'}}>
                             <textarea className="form-control input-sm"
