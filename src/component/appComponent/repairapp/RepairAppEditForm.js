@@ -17,13 +17,13 @@ class RepairAppEditForm extends Component {
         super(props);
 
         this.state = {
-            errors: [],
-            isLoading: false,
+            errors:[],
+            isLoading:false,
             closeAction:props.closeAction,
-            successInfoMessages: [],
+            successInfoMessages:[],
             restrictionsOpen:true,
             fields:{
-                common : {
+                common:{
                     entityId: '',
                     appNum:'',
                     appDate:undefined,
@@ -31,12 +31,12 @@ class RepairAppEditForm extends Component {
                     totalCost:'0.00',
                     addOptionCost:'0.00'
                 },
-                basePackage : {
-                    entityId: '',
-                    name: '',
-                    priceForMeter: ''
+                basePackage:{
+                    entityId:'',
+                    name:'',
+                    priceForMeter:''
                 },
-                realEstate : {
+                realEstate:{
                     address:'',
                     entranceNum:'',
                     floor:'',
@@ -59,7 +59,15 @@ class RepairAppEditForm extends Component {
 
     componentDidUpdate(prevProps) {
         if (this.props.entityId !== prevProps.entityId ) {
-            this.setState({fields:{...this.state.fields, entityId:this.props.entityId}});
+            this.setState({
+                fields:{
+                    ...this.state.fields,
+                    common:{
+                        ...this.state.fields.common,
+                        entityId:this.props.entityId
+                    }
+                }
+            });
         }
         if (this.props.visible && this.props.visible !== prevProps.visible ) {
             setTimeout(() => this.getRepairAppData(), 0);
@@ -67,9 +75,9 @@ class RepairAppEditForm extends Component {
     }
 
     async getRepairAppData() {
-        if (this.state.fields.entityId) {
+        if (this.state.fields.common.entityId) {
             this.setState({isLoading:true});
-            let params = {entityId: this.state.fields.entityId};
+            let params = {entityId: this.state.fields.common.entityId};
             let responseData = await CommonUtils.makeAsyncPostEvent(Const.APP_URL,Const.REPAIR_APP_FORM_CONTEXT,Const.ENTITY_GET,params,cookie.load('sessionId'));
             this.setState({isLoading:false});
             if (responseData.errors.length > 0) {
@@ -130,27 +138,15 @@ class RepairAppEditForm extends Component {
     }
 
     handleChange (value, fieldName, context) {
-        if (value instanceof Date) {
-            this.setState({
-                fields: {
-                    ...this.state.fields,
-                    [context]: {
-                        ...this.state.fields[context],
-                        [fieldName]: value
-                    }
+        this.setState({
+            fields: {
+                ...this.state.fields,
+                [context]: {
+                    ...this.state.fields[context],
+                    [fieldName]: value
                 }
-            });
-        } else {
-            this.setState({
-                fields: {
-                    ...this.state.fields,
-                    [context]: {
-                        ...this.state.fields[context],
-                        [fieldName]: value
-                    }
-                }
-            });
-        }
+            }
+        });
     }
 
     async saveRepairAppData() {
@@ -166,7 +162,7 @@ class RepairAppEditForm extends Component {
         } else {
             this.setState({isLoading:true});
             let params = this.state.fields;
-            params['entityId'] = params.common.entityId;
+            params['entityId'] = this.state.fields.common.entityId;
             let responseData = await CommonUtils.makeAsyncPostEvent(Const.APP_URL,Const.REPAIR_APP_FORM_CONTEXT,Const.ENTITY_SAVE,params,cookie.load('sessionId'));
             this.setState({isLoading:false});
             if (responseData.errors.length > 0) {
@@ -221,7 +217,7 @@ class RepairAppEditForm extends Component {
                                     <Field disabled={true} labelWidth='80px' fieldWidth='150px' label='Номер' type={Const.TEXTFIELD} value={this.state.fields.common.appNum} onChange={(event) => this.handleChange(event.target.value,'appNum','common')} maxLength={255}/>
                                 </td>
                                 <td>
-                                    <Field disabled={true} labelWidth='80px' fieldWidth='150px' label='Дата' type={Const.DATEPICKER} value={this.state.fields.common.appDate} onChange={(event) => this.handleChange(event,'appDate','common')}/>
+                                    <Field disabled={true} labelWidth='80px' fieldWidth='150px' label='Дата' type={Const.DATEPICKER} value={this.state.fields.common.appDate} onChange={(date) => this.handleChange(date,'appDate','common')}/>
                                 </td>
                                 <td>
                                     <DictField labelWidth='150px'

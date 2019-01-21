@@ -14,20 +14,21 @@ class UpdateUserDataModal extends Component {
         super(props);
 
         this.state = {
-            errors: [],
-            visible:props.visible,
+            errors:[],
             closeAction:props.closeAction,
-            successInfoMessages: [],
-            isLoading: false,
+            successInfoMessages:[],
+            isLoading:false,
             fields:{
-                fio:'',
-                birthDate: undefined,
-                phone: '',
-                email: '',
-                passportSeries: '',
-                passportNumber: '',
-                passportIssuedBy: '',
-                regAddress: '',
+                common:{
+                    fio:'',
+                    birthDate:undefined,
+                    phone:'',
+                    email:'',
+                    passportSeries:'',
+                    passportNumber:'',
+                    passportIssuedBy:'',
+                    regAddress:'',
+                }
             }
         };
 
@@ -52,40 +53,27 @@ class UpdateUserDataModal extends Component {
         if (responseData.errors.length > 0) {
             this.setState({errors: responseData.errors});
         } else {
-            this.setUserData({data: responseData.params});
+            this.setState({fields: responseData.params});
         }
-    }
-
-    setUserData(props) {
-        let propsToChange = {}
-        for (var key in props.data) {
-            if (props.data.hasOwnProperty(key)) {
-                if ("birthDate" === key) {
-                    if (props.data[key]) {
-                        propsToChange[key] = new Date(props.data[key]);
-                    }
-                } else {
-                    propsToChange[key] = props.data[key] ? props.data[key] : '';
-                }
-            }
-        };
-        this.setState({fields: propsToChange});
     }
 
     closeModal() {
         this.setState({
-            visible : false,
-            errors: [],
-            successInfoMessages: [],
+            errors:[],
+            successInfoMessages:[],
             fields:{
-                fio:'',
-                birthDate: undefined,
-                phone: '',
-                email: '',
-                passportSeries: '',
-                passportNumber: '',
-                passportIssuedBy: '',
-                regAddress: '',
+                ...this.state.fields,
+                common:{
+                    ...this.state.fields.common,
+                    fio:'',
+                    birthDate:undefined,
+                    phone:'',
+                    email:'',
+                    passportSeries:'',
+                    passportNumber:'',
+                    passportIssuedBy:'',
+                    regAddress:'',
+                }
             }
         });
         this.closeAction()
@@ -93,28 +81,28 @@ class UpdateUserDataModal extends Component {
 
     async saveUserData() {
         let errors = []
-        if (!this.state.fields.fio) {
+        if (!this.state.fields.common.fio) {
             errors.push({code:'',message:'Необходимо заполнить ФИО'})
         }
-        if (!this.state.fields.birthDate) {
+        if (!this.state.fields.common.birthDate) {
             errors.push({code:'',message:'Необходимо заполнить дату рождения'})
         }
-        if (!this.state.fields.phone) {
+        if (!this.state.fields.common.phone) {
             errors.push({code:'',message:'Необходимо заполнить телефон'})
         }
-        if (!this.state.fields.email) {
+        if (!this.state.fields.common.email) {
             errors.push({code:'',message:'Необходимо заполнить email'})
         }
-        if (!this.state.fields.passportSeries) {
+        if (!this.state.fields.common.passportSeries) {
             errors.push({code:'',message:'Необходимо заполнить серию паспорта'})
         }
-        if (!this.state.fields.passportNumber) {
+        if (!this.state.fields.common.passportNumber) {
             errors.push({code:'',message:'Необходимо заполнить номер паспорта'})
         }
-        if (!this.state.fields.passportIssuedBy) {
+        if (!this.state.fields.common.passportIssuedBy) {
             errors.push({code:'',message:'Необходимо заполнить орган, выдавший паспорт'})
         }
-        if (!this.state.fields.regAddress) {
+        if (!this.state.fields.common.regAddress) {
             errors.push({code:'',message:'Необходимо заполнить адрес регистрации'})
         }
         if (errors.length > 0) {
@@ -135,23 +123,16 @@ class UpdateUserDataModal extends Component {
         }
     }
 
-    handleChange(event, fieldName) {
-        if (event instanceof Date) {
-            this.setState({
-                fields: {
-                        ...this.state.fields,
-                        [fieldName]: event
-                    }
-            });
-        } else {
-            const value = event.target.value;
-            this.setState({
-                fields: {
-                    ...this.state.fields,
+    handleChange (value, fieldName, context) {
+        this.setState({
+            fields: {
+                ...this.state.fields,
+                [context]: {
+                    ...this.state.fields[context],
                     [fieldName]: value
                 }
-            });
-        }
+            }
+        });
     }
 
     render() {
@@ -159,8 +140,8 @@ class UpdateUserDataModal extends Component {
                 <CommonModal loading={this.state.isLoading} title={'Изменить данные пользователя'} visible={this.props.visible} style={{width:'460px'}} closeAction={() => this.closeModal()}>
                     <div>
                         <form className="form-horizontal">
-                            <Field labelWidth='150px' fieldWidth='300px' label='ФИО' type={Const.TEXTFIELD} value={this.state.fields.fio} onChange={(event) => this.handleChange(event, 'fio')} placeholder='ФИО' maxLength={255}/>
-                            <Field labelWidth='150px' fieldWidth='300px' label='Дата рождения' type={Const.DATEPICKER} value={this.state.fields.birthDate} onChange={(date) => this.handleChange(date, "birthDate")} placeholder='Дата рождения'/>
+                            <Field labelWidth='150px' fieldWidth='300px' label='ФИО' type={Const.TEXTFIELD} value={this.state.fields.common.fio} onChange={(event) => this.handleChange(event.target.value,'fio','common')} placeholder='ФИО' maxLength={255}/>
+                            <Field labelWidth='150px' fieldWidth='300px' label='Дата рождения' type={Const.DATEPICKER} value={this.state.fields.common.birthDate} onChange={(date) => this.handleChange(date,"birthDate",'common')} placeholder='Дата рождения'/>
                             <div className="form-group">
                                 <label style={{width:'150px'}} className="control-label col-sm-2">Паспорт</label>
                                 <div className="col-sm-10" style={{width:'300px',paddingRight:'0px'}}>
@@ -168,21 +149,21 @@ class UpdateUserDataModal extends Component {
                                         <tbody>
                                         <tr>
                                             <td>
-                                                <input style={{width:'100px'}} placeholder="Серия" maxLength={4} className="form-control input-sm" type="text" value={this.state.fields.passportSeries} onChange={(event) => this.handleChange(event, 'passportSeries')}/>
+                                                <input style={{width:'100px'}} placeholder="Серия" maxLength={4} className="form-control input-sm" type="text" value={this.state.fields.common.passportSeries} onChange={(event) => this.handleChange(event.target.value,'passportSeries','common')}/>
                                             </td>
                                             <td style={{width:'10px'}}></td>
                                             <td>
-                                                <input placeholder="Номер" maxLength={6} className="form-control input-sm" type="text" value={this.state.fields.passportNumber} onChange={(event) => this.handleChange(event, 'passportNumber')}/>
+                                                <input placeholder="Номер" maxLength={6} className="form-control input-sm" type="text" value={this.state.fields.common.passportNumber} onChange={(event) => this.handleChange(event.target.value,'passportNumber','common')}/>
                                             </td>
                                         </tr>
                                         </tbody>
                                     </table>
                                 </div>
                             </div>
-                            <Field style={{resize:'none',height:'75px'}} labelWidth='150px' fieldWidth='300px' label='выдан' type={Const.TEXTAREA} value={this.state.fields.passportIssuedBy} onChange={(event) => this.handleChange(event, 'passportIssuedBy')} placeholder='Кем выдан паспорт' maxLength={255}/>
-                            <Field style={{resize:'none',height:'75px'}} labelWidth='150px' fieldWidth='300px' label='Адрес регистрации' type={Const.TEXTAREA} value={this.state.fields.regAddress} onChange={(event) => this.handleChange(event, 'regAddress')} placeholder='Адрес регистрации' maxLength={255}/>
-                            <Field labelWidth='150px' fieldWidth='300px' label='Телефон' type={Const.TEXTFIELD} value={this.state.fields.phone} onChange={(event) => this.handleChange(event, 'phone')} placeholder='Телефон' maxLength={100}/>
-                            <Field labelWidth='150px' fieldWidth='300px' label='Email' type={Const.TEXTFIELD} value={this.state.fields.email} onChange={(event) => this.handleChange(event, 'email')} placeholder='Email' maxLength={100}/>
+                            <Field style={{resize:'none',height:'75px'}} labelWidth='150px' fieldWidth='300px' label='выдан' type={Const.TEXTAREA} value={this.state.fields.common.passportIssuedBy} onChange={(event) => this.handleChange(event.target.value,'passportIssuedBy','common')} placeholder='Кем выдан паспорт' maxLength={255}/>
+                            <Field style={{resize:'none',height:'75px'}} labelWidth='150px' fieldWidth='300px' label='Адрес регистрации' type={Const.TEXTAREA} value={this.state.fields.common.regAddress} onChange={(event) => this.handleChange(event.target.value,'regAddress','common')} placeholder='Адрес регистрации' maxLength={255}/>
+                            <Field labelWidth='150px' fieldWidth='300px' label='Телефон' type={Const.TEXTFIELD} value={this.state.fields.common.phone} onChange={(event) => this.handleChange(event.target.value,'phone','common')} placeholder='Телефон' maxLength={100}/>
+                            <Field labelWidth='150px' fieldWidth='300px' label='Email' type={Const.TEXTFIELD} value={this.state.fields.common.email} onChange={(event) => this.handleChange(event.target.value,'email','common')} placeholder='Email' maxLength={100}/>
                             <div className="btn-toolbar align-bottom" role="toolbar" style={{justifyContent:'center',display:'flex'}}>
                                 <Button value="Ок" onClick={() => this.saveUserData()}/>
                                 <Button value="Отмена" onClick={() => this.closeModal()}/>
@@ -191,7 +172,7 @@ class UpdateUserDataModal extends Component {
                     </div>
                     <ErrorModal errors={this.state.errors} closeAction={() => this.setState({errors:[]})}/>
                     <InfoModal popupData={this.state.successInfoMessages}
-                               closeAction={() => {this.setState({successInfoMessages: []}); this.closeModal()}}/>
+                               closeAction={() => {this.setState({successInfoMessages:[]});this.closeModal()}}/>
                 </CommonModal>
         )
     }
