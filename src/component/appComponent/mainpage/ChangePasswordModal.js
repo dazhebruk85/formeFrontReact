@@ -15,14 +15,17 @@ class ChangePasswordModal extends Component {
         super(props);
 
         this.state = {
-            visible:false,
-            oldPassword:'',
-            newPassword:'',
-            newPasswordRepeat:'',
-            errors: [],
-            successInfoMessages: [],
+            errors:[],
+            successInfoMessages:[],
             redirectToLoginPage:false,
-            closeAction:props.closeAction
+            closeAction:props.closeAction,
+            fields:{
+                common:{
+                    oldPassword:'',
+                    newPassword:'',
+                    newPasswordRepeat:'',
+                }
+            }
         };
 
         this.handleChange = this.handleChange.bind(this);
@@ -33,40 +36,43 @@ class ChangePasswordModal extends Component {
 
     closeModal() {
         this.setState({
-            visible : false,
-            oldPassword:'',
-            newPassword:'',
-            newPasswordRepeat:'',
             errors: [],
             successInfoMessages: [],
             redirectToLoginPage:false,
-            succuessChangeModalVisible:false
+            fields:{
+                ...this.state.fields,
+                common:{
+                    oldPassword:'',
+                    newPassword:'',
+                    newPasswordRepeat:'',
+                }
+            }
         });
         this.closeAction()
     }
 
     async changePassword(evt) {
         let errors = [];
-        if (!this.state.oldPassword) {
+        if (!this.state.fields.common.oldPassword) {
             errors.push({code:'CHANGE_PASS_ERROR',message:'Необходимо ввести старый пароль'});
         }
 
-        if (!this.state.newPassword) {
+        if (!this.state.fields.common.newPassword) {
             errors.push({code:'CHANGE_PASS_ERROR',message:'Необходимо ввести новый пароль'});
         }
 
-        if (!this.state.newPasswordRepeat) {
+        if (!this.state.fields.common.newPasswordRepeat) {
             errors.push({code:'CHANGE_PASS_ERROR',message:'Необходимо повторить новый пароль'});
         }
 
-        if (this.state.newPassword  && this.state.newPasswordRepeat && this.state.newPassword !== this.state.newPasswordRepeat) {
+        if (this.state.fields.common.newPassword  && this.state.fields.common.newPasswordRepeat && this.state.fields.common.newPassword !== this.state.fields.common.newPasswordRepeat) {
             errors.push({code:'CHANGE_PASS_ERROR',message:'Введённые новые пароли не совпадают'});
         }
 
         if (errors.length > 0) {
             this.setState({errors: errors});
         } else {
-            let params = {oldPassword:this.state.oldPassword,newPassword:this.state.newPassword,newPasswordRepeat:this.state.newPasswordRepeat};
+            let params = this.state.fields;
             let responseData = await CommonUtils.makeAsyncPostEvent(Const.APP_URL,Const.CHANGE_PASSWORD_CONTEXT,'',params,cookie.load('sessionId'));
             if (responseData.errors.length > 0) {
                 this.setState({errors: responseData.errors});
@@ -76,10 +82,15 @@ class ChangePasswordModal extends Component {
         }
     }
 
-    handleChange(event, fieldName) {
-        const value = event.target.value;
+    handleChange(value, fieldName, context) {
         this.setState({
-            [fieldName]: value
+            fields: {
+                ...this.state.fields,
+                [context]: {
+                    ...this.state.fields[context],
+                    [fieldName]: value
+                }
+            }
         });
     }
 
@@ -94,9 +105,9 @@ class ChangePasswordModal extends Component {
             <CommonModal title={'Смена пароля'} visible={this.props.visible} style={{width:'540px'}} closeAction={() => this.closeModal()}>
                 <div>
                     <form className="form-horizontal">
-                        <Field labelWidth='220px' fieldWidth='300px' label='Введите старый пароль' type={Const.PASSWORD} value={this.state.oldPassword} onChange={(event) => this.handleChange(event, 'oldPassword')} maxLength={20}/>
-                        <Field labelWidth='220px' fieldWidth='300px' label='Введите новый пароль' type={Const.PASSWORD} value={this.state.newPassword} onChange={(event) => this.handleChange(event, 'newPassword')} maxLength={20}/>
-                        <Field labelWidth='220px' fieldWidth='300px' label='Повторите новый пароль' type={Const.PASSWORD} value={this.state.newPasswordRepeat} onChange={(event) => this.handleChange(event, 'newPasswordRepeat')} maxLength={20}/>
+                        <Field labelWidth='220px' fieldWidth='300px' label='Введите старый пароль' type={Const.PASSWORD} value={this.state.fields.common.oldPassword} onChange={(event) => this.handleChange(event.target.value,'oldPassword','common')} maxLength={20}/>
+                        <Field labelWidth='220px' fieldWidth='300px' label='Введите новый пароль' type={Const.PASSWORD} value={this.state.fields.common.newPassword} onChange={(event) => this.handleChange(event.target.value,'newPassword','common')} maxLength={20}/>
+                        <Field labelWidth='220px' fieldWidth='300px' label='Повторите новый пароль' type={Const.PASSWORD} value={this.state.fields.common.newPasswordRepeat} onChange={(event) => this.handleChange(event.target.value,'newPasswordRepeat','common')} maxLength={20}/>
                         <div className="btn-toolbar align-bottom" role="toolbar" style={{justifyContent:'center',display:'flex'}}>
                             <Button value="Ок" onClick={() => this.changePassword()}/>
                             <Button value="Отмена" onClick={() => this.closeModal()}/>

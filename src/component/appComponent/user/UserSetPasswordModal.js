@@ -15,12 +15,16 @@ class UserSetPasswordModal extends Component {
         super(props);
 
         this.state = {
-            userId:'',
-            userLogin:'',
-            newPassword:'',
             errors: [],
             successInfoMessages: [],
-            closeAction:props.closeAction
+            closeAction:props.closeAction,
+            fields:{
+                common:{
+                    userId:'',
+                    userLogin:'',
+                    newPassword:''
+                }
+            }
         };
 
         this.handleChange = this.handleChange.bind(this);
@@ -31,49 +35,60 @@ class UserSetPasswordModal extends Component {
 
     componentDidUpdate(prevProps) {
         if (this.props.visible && this.props.visible !== prevProps.visible ) {
-            this.setState({userId: this.props.userId, userLogin: this.props.userLogin});
+            this.setState({
+                fields:{
+                    ...this.state.fields,
+                    common:{
+                        userId:this.props.userId,
+                        userLogin:this.props.userLogin
+                    }
+                }
+            });
         }
     }
 
     closeModal() {
         this.setState({
-            userId:'',
-            userLogin:'',
-            newPassword:'',
             errors: [],
             successInfoMessages: [],
+            fields:{
+                ...this.state.fields,
+                common:{
+                    userId:'',
+                    userLogin:'',
+                    newPassword:'',
+                }
+            }
         });
         this.closeAction()
     }
 
-    handleChange(event, fieldName) {
-        const value = event.target.value;
+    handleChange(value, fieldName, context) {
         this.setState({
-            [fieldName]: value
+            fields: {
+                ...this.state.fields,
+                [context]: {
+                    ...this.state.fields[context],
+                    [fieldName]: value
+                }
+            }
         });
     }
 
     async setNewPassword(evt) {
-        let newPassword = this.state.newPassword;
-        let userLogin = this.state.userLogin;
-
         let errors = [];
-        if (!this.state.newPassword) {
+        if (!this.state.fields.common.newPassword) {
             errors.push({code:'SET_NEW_PASS_ERROR',message:'Необходимо ввести новый пароль'});
         }
-
         if (errors.length > 0) {
             this.setState({errors: errors});
         } else {
-            let params = {
-                newPassword: newPassword,
-                userId:this.state.userId
-            };
+            let params = this.state.fields;
             let responseData = await CommonUtils.makeAsyncPostEvent(Const.APP_URL,Const.SET_NEW_PASSWORD_CONTEXT,'',params,cookie.load('sessionId'));
             if (responseData.errors.length > 0) {
                 this.setState({errors: responseData.errors});
             } else {
-                this.setState({successInfoMessages: [{code:'INFO',message:'Для пользователя '+ userLogin + ' задан новый пароль: ' + newPassword}]});
+                this.setState({successInfoMessages: [{code:'INFO',message:'Для пользователя '+ params.common.userLogin + ' задан новый пароль: ' + params.common.newPassword}]});
             }
         }
     }
@@ -83,7 +98,7 @@ class UserSetPasswordModal extends Component {
             <CommonModal title={'Задать пользователю новый пароль'} visible={this.props.visible} style={{width:'540px'}} closeAction={() => this.closeModal()}>
                 <div>
                     <form className="form-horizontal">
-                        <Field labelWidth='220px' fieldWidth='300px' label='Введите новый пароль' type={Const.TEXTFIELD} value={this.state.newPassword} onChange={(event) => this.handleChange(event, 'newPassword')} maxLength={20}/>
+                        <Field labelWidth='220px' fieldWidth='300px' label='Введите новый пароль' type={Const.TEXTFIELD} value={this.state.fields.common.newPassword} onChange={(event) => this.handleChange(event.target.value,'newPassword','common')} maxLength={20}/>
                         <div className="btn-toolbar align-bottom" role="toolbar" style={{justifyContent:'center',display:'flex'}}>
                             <Button value="Ок" onClick={() => this.setNewPassword()}/>
                             <Button value="Отмена" onClick={() => this.closeModal()}/>

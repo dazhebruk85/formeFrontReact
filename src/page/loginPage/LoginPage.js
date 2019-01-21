@@ -13,10 +13,14 @@ class LoginPage extends Component {
     constructor() {
         super();
         this.state = {
-            login: '',
-            password: '',
             errors: [],
-            isLoading: false
+            isLoading: false,
+            fields:{
+                common:{
+                    login:'',
+                    password:''
+                }
+            }
         };
 
         this.handleChange = this.handleChange.bind(this);
@@ -34,26 +38,26 @@ class LoginPage extends Component {
 
     async doLogin(evt) {
         let errors = [];
-        if (!this.state.login) {
+        if (!this.state.fields.common.login) {
             errors.push({code:'AUTH_ERROR',message:'Необходимо ввести логин'})
         }
-        if (!this.state.password) {
+        if (!this.state.fields.common.password) {
             errors.push({code:'AUTH_ERROR',message:'Необходимо ввести пароль'})
         }
         if (errors.length > 0) {
             this.setState({errors: errors});
         } else {
             this.setState({isLoading:true});
-            let params = {login: this.state.login,password: this.state.password};
+            let params = this.state.fields;
             let responseData = await CommonUtils.makeAsyncPostEvent(Const.APP_URL,Const.AUTH_CONTEXT,'',params,'');
             this.setState({isLoading:false});
             if (responseData.errors.length > 0) {
-                this.setState({errors: responseData.errors});
+                this.setState({errors:responseData.errors});
             } else {
-                cookie.save('sessionId', responseData.sessionId, { path: '/' });
-                cookie.save('userId', responseData.userId, { path: '/' });
-                cookie.save('userFio', responseData.userFio, { path: '/' });
-                cookie.save('userRole', responseData.userRole, { path: '/' });
+                cookie.save('sessionId',responseData.sessionId,{path:'/'});
+                cookie.save('userId',responseData.userId,{path:'/'});
+                cookie.save('userFio',responseData.userFio,{path:'/'});
+                cookie.save('userRole',responseData.userRole,{path:'/'});
 
                 if (responseData.userRole === Const.CLIENT_ROLE) {
                     this.props.history.push('/clientPage')
@@ -64,10 +68,15 @@ class LoginPage extends Component {
         }
     }
 
-    handleChange(event, fieldName) {
-        const value = event.target.value;
+    handleChange(value, fieldName, context) {
         this.setState({
-            [fieldName]: value
+            fields: {
+                ...this.state.fields,
+                [context]: {
+                    ...this.state.fields[context],
+                    [fieldName]: value
+                }
+            }
         });
     }
 
@@ -81,8 +90,8 @@ class LoginPage extends Component {
                         <div className="panel-heading">Войти в личный кабинет</div>
                         <div className="panel-body">
                             <form className="form-horizontal">
-                                <Field labelWidth='70px' fieldWidth='300px' label='Логин' type={Const.TEXTFIELD} value={this.state.login} onChange={(event) => this.handleChange(event, 'login')} maxLength={50}/>
-                                <Field labelWidth='70px' fieldWidth='300px' label='Пароль' type={Const.PASSWORD} value={this.state.password} onChange={(event) => this.handleChange(event, 'password')} maxLength={50}/>
+                                <Field labelWidth='70px' fieldWidth='300px' label='Логин' type={Const.TEXTFIELD} value={this.state.fields.common.login} onChange={(event) => this.handleChange(event.target.value,'login','common')} maxLength={50}/>
+                                <Field labelWidth='70px' fieldWidth='300px' label='Пароль' type={Const.PASSWORD} value={this.state.fields.common.password} onChange={(event) => this.handleChange(event.target.value,'password','common')} maxLength={50}/>
                                 <div className="form-group" style={{marginBottom:'0px'}}>
                                     <label style={{width:'70px'}} className="control-label col-sm-2"></label>
                                     <Button style={{marginLeft:'5px'}} value="Войти" onClick={this.doLogin}/>
