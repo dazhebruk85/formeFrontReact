@@ -270,7 +270,7 @@ class RepairAppEditForm extends Component {
                                         <Field labelWidth='400px' label='Требуется разрешение УК на допуск рабочих' type={Const.CHECKBOX} checked={this.state.fields.realEstate.needUkAccept} onChange={(event) => this.handleChange(event.target.checked,'needUkAccept','realEstate')}/>
                                     </CollapsePanel>
                                     <CollapsePanel style={{width:'99%',marginTop:'10px'}} title={'Помещения для ремонта'}>
-                                        <CommonGrid gridData={this.state.fields.rooms}/>
+                                        <CommonGrid gridData={this.state.fields.rooms} addAction={() => {alert(1)}} deleteAction={() => {alert(1)}}/>
                                     </CollapsePanel>
                                 </div>
                             </Tab>
@@ -278,6 +278,9 @@ class RepairAppEditForm extends Component {
                                 Tab 2 content
                             </Tab>
                             <Tab eventKey={3} title="Стены" style={{width:'100%'}}>
+                                Tab 3 content
+                            </Tab>
+                            <Tab eventKey={4} title="Вложения" style={{width:'100%'}}>
                                 Tab 3 content
                             </Tab>
                         </Tabs>
