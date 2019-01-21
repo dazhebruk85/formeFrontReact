@@ -30,6 +30,7 @@ class RepairAppEditForm extends Component {
                     appDate:undefined,
                     finalPriceForMeter:'0.00',
                     totalCost:'0.00',
+                    totalArea:'0.00',
                     addOptionCost:'0.00'
                 },
                 basePackage:{
@@ -106,6 +107,7 @@ class RepairAppEditForm extends Component {
                         appDate: new Date(),
                         finalPriceForMeter:'0.00',
                         totalCost:'0.00',
+                        totalArea:'0.00',
                         addOptionCost:'0.00'
                     }
                 }});
@@ -126,6 +128,7 @@ class RepairAppEditForm extends Component {
                     appDate:undefined,
                     finalPriceForMeter:'0.00',
                     totalCost:'0.00',
+                    totalArea:'0.00',
                     addOptionCost:'0.00'
                 },
                 basePackage : {
@@ -215,7 +218,7 @@ class RepairAppEditForm extends Component {
 
     render() {
         return(
-            <CommonModal loading={this.state.isLoading} title={'Анкета'} visible={this.props.visible} style={{width:'800px'}} closeAction={() => this.closeModal()}>
+            <CommonModal loading={this.state.isLoading} title={'Анкета'} visible={this.props.visible} style={{width:'1000px'}} closeAction={() => this.closeModal()}>
                 <div>
                     <form className="form-horizontal">
                         <table>
@@ -244,7 +247,7 @@ class RepairAppEditForm extends Component {
                         <Tabs defaultActiveKey={1} id="uncontrolled-tab-example" style={{height:'490px',marginRight:'20px'}}>
                             <Tab eventKey={1} title="Объект" style={{width:'100%',height:'435px',overflow:'auto'}}>
                                 <div style={{paddingTop:'10px'}}>
-                                    <Field style={{resize:'none',height:'50px',width:'655px'}} labelWidth='80px' label='Адрес' maxLength={255} type={Const.TEXTAREA} value={this.state.fields.realEstate.address} onChange={(event) => this.handleChange(event.target.value,'address','realEstate')}/>
+                                    <Field style={{resize:'none',height:'50px',width:'855px'}} labelWidth='80px' label='Адрес' maxLength={255} type={Const.TEXTAREA} value={this.state.fields.realEstate.address} onChange={(event) => this.handleChange(event.target.value,'address','realEstate')}/>
                                     <table>
                                         <tbody>
                                         <tr>
@@ -282,13 +285,16 @@ class RepairAppEditForm extends Component {
                             <tbody>
                             <tr>
                                 <td>
-                                    <Field labelWidth='120px' disabled={true} fieldWidth='150px' label='Цена за м²' type={Const.DECIMALFIELD} value={this.state.fields.common.finalPriceForMeter} onChange={(event) => this.handleChange(event.target.value,'finalPriceForMeter','common')}/>
+                                    <Field labelWidth='100px' disabled={true} fieldWidth='130px' label='Цена за м²' type={Const.DECIMALFIELD} value={this.state.fields.common.finalPriceForMeter} onChange={(event) => this.handleChange(event.target.value,'finalPriceForMeter','common')}/>
                                 </td>
                                 <td>
-                                    <Field labelWidth='120px' disabled={true} fieldWidth='150px' label='Cтоимость' type={Const.DECIMALFIELD} value={this.state.fields.common.totalCost} onChange={(event) => this.handleChange(event,'totalCost','common')}/>
+                                    <Field labelWidth='160px' disabled={true} fieldWidth='130px' label='Общая площадь' type={Const.DECIMALFIELD} value={this.state.fields.common.totalArea} onChange={(event) => this.handleChange(event.target.value,'totalArea','common')}/>
                                 </td>
                                 <td>
-                                    <Field labelWidth='120px' disabled={true} fieldWidth='150px' label='Доп. опции' type={Const.DECIMALFIELD} value={this.state.fields.common.addOptionCost} onChange={(event) => this.handleChange(event,'addOptionCost','common')}/>
+                                    <Field labelWidth='130px' disabled={true} fieldWidth='130px' label='Cтоимость' type={Const.DECIMALFIELD} value={this.state.fields.common.totalCost} onChange={(event) => this.handleChange(event,'totalCost','common')}/>
+                                </td>
+                                <td>
+                                    <Field labelWidth='130px' disabled={true} fieldWidth='130px' label='Доп. опции' type={Const.DECIMALFIELD} value={this.state.fields.common.addOptionCost} onChange={(event) => this.handleChange(event,'addOptionCost','common')}/>
                                 </td>
                             </tr>
                             </tbody>
