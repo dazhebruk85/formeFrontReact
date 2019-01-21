@@ -51,7 +51,9 @@ class CommonGrid extends Component {
         function addAddAction(state) {
             if (state.addAction) {
                 return(
-                    <img alt='' onClick={state.addAction} src={addActionPng} style={{cursor:'pointer',height:"20px",width:"20px"}}/>
+                    <td style={{width:'28px'}}>
+                        <img alt='' title={'Добавить запись'} onClick={state.addAction} src={addActionPng} style={{cursor:'pointer',height:"22px",width:"22px"}}/>
+                    </td>
                 )
             }
         }
@@ -59,18 +61,29 @@ class CommonGrid extends Component {
         function addDeleteAction(state) {
             if (state.deleteAction) {
                 return(
-                    <img alt='' onClick={state.deleteAction} src={deleteActionPng} style={{cursor:'pointer',height:"20px",width:"20px"}}/>
+                    <td style={{width:'28px'}}>
+                        <img alt='' title={'Удалить запись'} onClick={state.deleteAction} src={deleteActionPng} style={{cursor:'pointer',height:"22px",width:"22px"}}/>
+                    </td>
                 )
             }
         }
 
         function addGridActions(state) {
-            return(
-                <div>
-                    {addAddAction(state)}
-                    {addDeleteAction(state)}
-                </div>
-            )
+            if (state.addAction || state.deleteAction) {
+                return(
+                    <div style={{width:'100%'}}>
+                        <table>
+                            <tbody>
+                            <tr>
+                                {addAddAction(state)}
+                                {addDeleteAction(state)}
+                            </tr>
+                            </tbody>
+                        </table>
+                        <div style={{width:'100%',height:'2px',marginTop:'3px',backgroundColor:'#ddd'}}/>
+                    </div>
+                )
+            }
         }
 
         if (!CommonUtils.objectIsEmpty(this.state.gridData) && !CommonUtils.objectIsEmpty(this.state.gridData.headers)) {
