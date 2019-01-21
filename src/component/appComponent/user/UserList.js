@@ -25,12 +25,14 @@ class UserList extends Component {
             selectedUserLogin: '',
             deleteEntityDialogVisible:false,
             setNewPasswordModalVisible: false,
-            filter: {
-                ULFilter_main_login_like:'',
-                ULFilter_main_fio_like:'',
-                ULFilter_main_email_like:'',
-                ULFilter_main_phone_like:'',
-                ULFilter_userRole_name_eq:''
+            fields:{
+                filter: {
+                    ULFilter_main_login_like:'',
+                    ULFilter_main_fio_like:'',
+                    ULFilter_main_email_like:'',
+                    ULFilter_main_phone_like:'',
+                    ULFilter_userRole_name_eq:''
+                }
             }
         };
 
@@ -98,56 +100,50 @@ class UserList extends Component {
 
     refreshUserList() {
         this.refs.ULUserGrid.getGridListData();
-        this.setState({selectedUserId:'',selectedUserLogin:''})
+        this.setState({
+            selectedUserId:'',
+            selectedUserLogin:''
+        })
     }
 
     changeGridSelection(selectedUser) {
         this.setState({
-            selectedUserId: selectedUser.entityId,
-            selectedUserLogin: selectedUser.login,
+            selectedUserId:selectedUser.entityId,
+            selectedUserLogin:selectedUser.login,
         });
     }
 
     chooseUserRoleForFilter(selectedRole){
         this.setState({
-            filter:
-                {...this.state.filter,
+            fields:{
+                ...this.state.fields,
+                filter:{
+                    ...this.state.filter,
                     ULFilter_userRole_name_eq: selectedRole ? selectedRole.name : ''
                 }
+            }
         });
     }
 
     clearFilter() {
         this.setState({
-            filter:
-                {...this.state.filter,
+            fields:{
+                ...this.state.fields,
+                filter:{
+                    ...this.state.filter,
                     ULFilter_main_login_like:'',
                     ULFilter_main_fio_like:'',
                     ULFilter_main_email_like:'',
                     ULFilter_main_phone_like:'',
                     ULFilter_userRole_name_eq:''
                 }
+            }
         });
         setTimeout(() => this.refreshUserList(), 0);
     }
 
-    handleChange(event, fieldName) {
-        if (event instanceof Date) {
-            this.setState({
-                filter: {
-                    ...this.state.filter,
-                    [fieldName]: event
-                }
-            });
-        } else {
-            const value = event.target.value;
-            this.setState({
-                filter: {
-                    ...this.state.filter,
-                    [fieldName]: value
-                }
-            });
-        }
+    handleChange(value,fieldName,context) {
+        CommonUtils.commonHandleChange(this,context,fieldName,value)
     }
 
     render() {
@@ -167,19 +163,19 @@ class UserList extends Component {
                                 <tbody>
                                 <tr>
                                     <td>
-                                        <Field labelWidth='110px' fieldWidth='300px' label='Логин' type={Const.TEXTFIELD} value={this.state.filter.ULFilter_main_login_like} onChange={(event) => this.handleChange(event, 'ULFilter_main_login_like')} maxLength={255}/>
+                                        <Field labelWidth='110px' fieldWidth='300px' label='Логин' type={Const.TEXTFIELD} value={this.state.fields.filter.ULFilter_main_login_like} onChange={(event) => this.handleChange(event.target.value,'ULFilter_main_login_like','filter')} maxLength={255}/>
                                     </td>
                                     <td>
-                                        <Field labelWidth='110px' fieldWidth='300px' label='ФИО' type={Const.TEXTFIELD} value={this.state.filter.ULFilter_main_fio_like} onChange={(event) => this.handleChange(event, 'ULFilter_main_fio_like')} maxLength={255}/>
+                                        <Field labelWidth='110px' fieldWidth='300px' label='ФИО' type={Const.TEXTFIELD} value={this.state.fields.filter.ULFilter_main_fio_like} onChange={(event) => this.handleChange(event.target.value,'ULFilter_main_fio_like','filter')} maxLength={255}/>
                                     </td>
                                 </tr>
                                 <tr>
                                     <td>
-                                        <Field labelWidth='110px' fieldWidth='300px' label='Email' type={Const.TEXTFIELD} value={this.state.filter.ULFilter_main_email_like} onChange={(event) => this.handleChange(event, 'ULFilter_main_email_like')} maxLength={255}/>
+                                        <Field labelWidth='110px' fieldWidth='300px' label='Email' type={Const.TEXTFIELD} value={this.state.fields.filter.ULFilter_main_email_like} onChange={(event) => this.handleChange(event.target.value,'ULFilter_main_email_like','filter')} maxLength={255}/>
 
                                     </td>
                                     <td>
-                                        <Field labelWidth='110px' fieldWidth='300px' label='Телефон' type={Const.TEXTFIELD} value={this.state.filter.ULFilter_main_phone_like} onChange={(event) => this.handleChange(event, 'ULFilter_main_phone_like')} maxLength={255}/>
+                                        <Field labelWidth='110px' fieldWidth='300px' label='Телефон' type={Const.TEXTFIELD} value={this.state.fields.filter.ULFilter_main_phone_like} onChange={(event) => this.handleChange(event.target.value,'ULFilter_main_phone_like','filter')} maxLength={255}/>
                                     </td>
                                 </tr>
                                 <tr>
@@ -188,7 +184,7 @@ class UserList extends Component {
                                                    fieldWidth='300px'
                                                    label='Роль'
                                                    type={Const.TEXTFIELD}
-                                                   value={this.state.filter.ULFilter_userRole_name_eq}
+                                                   value={this.state.fields.filter.ULFilter_userRole_name_eq}
                                                    placeholder=''
                                                    maxLength={100}
                                                    context={Const.USER_ROLE_CONTEXT}
@@ -205,7 +201,7 @@ class UserList extends Component {
                         </form>
                     </CollapsePanel>
                 </div>
-                <CommonDbGrid filter={this.state.filter} selectAction={this.changeGridSelection.bind(this)} ref={'ULUserGrid'} dataEntityContext={Const.USER_CONTEXT} pageSize={10}/>
+                <CommonDbGrid filter={this.state.fields.filter} selectAction={this.changeGridSelection.bind(this)} ref={'ULUserGrid'} dataEntityContext={Const.USER_CONTEXT} pageSize={10}/>
                 <UserEditForm entityId={this.state.selectedUserId} visible={this.state.editFormVisible} closeAction={() => {this.setState({editFormVisible:false,selectedUserId:''});this.refreshUserList()}}/>
                 <ErrorModal errors={this.state.errors} closeAction={() => this.setState({errors:[]})}/>
                 <OkCancelDialog okCancelVisible={this.state.deleteEntityDialogVisible}

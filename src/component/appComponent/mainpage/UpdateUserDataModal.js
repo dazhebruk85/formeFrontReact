@@ -124,15 +124,7 @@ class UpdateUserDataModal extends Component {
     }
 
     handleChange(value, fieldName, context) {
-        this.setState({
-            fields: {
-                ...this.state.fields,
-                [context]: {
-                    ...this.state.fields[context],
-                    [fieldName]: value
-                }
-            }
-        });
+        CommonUtils.commonHandleChange(this,context,fieldName,value)
     }
 
     render() {

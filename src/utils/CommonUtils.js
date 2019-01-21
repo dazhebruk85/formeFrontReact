@@ -27,6 +27,18 @@ export function objectIsEmpty(obj) {
     return true;
 }
 
+export function commonHandleChange(component,context,fieldName,value) {
+    component.setState({
+        fields: {
+            ...component.state.fields,
+            [context]: {
+                ...component.state.fields[context],
+                [fieldName]: value
+            }
+        }
+    });
+}
+
 export async function makeAsyncPostEvent(url, context, action, params, sessionId) {
     try {
         const asyncPostEvent = await axios.post(url, {

@@ -137,16 +137,8 @@ class RepairAppEditForm extends Component {
         this.closeAction()
     }
 
-    handleChange(value, fieldName, context) {
-        this.setState({
-            fields: {
-                ...this.state.fields,
-                [context]: {
-                    ...this.state.fields[context],
-                    [fieldName]: value
-                }
-            }
-        });
+    handleChange(value,fieldName,context) {
+        CommonUtils.commonHandleChange(this,context,fieldName,value)
     }
 
     async saveRepairAppData() {
