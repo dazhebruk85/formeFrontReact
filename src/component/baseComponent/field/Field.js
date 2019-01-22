@@ -105,7 +105,7 @@ class Field extends Component {
                 checkBoxStyle.cursor = 'pointer';
                 checkBoxStyle.marginTop = '10px';
                 return (
-                    <div className="form-group" style={{marginBottom:'0px'}}>
+                    <div className="form-group" style={{marginBottom:'0px',width:'97%',marginLeft:'0px'}}>
                         <table>
                             <tbody>
                             <tr>

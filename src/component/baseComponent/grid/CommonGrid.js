@@ -2,6 +2,7 @@ import  React, { Component } from 'react';
 import * as CommonUtils from "../../../utils/CommonUtils";
 import addActionPng from '../../../media/data/gridAdd.png';
 import deleteActionPng from '../../../media/data/gridDelete.png';
+import editActionPng from '../../../media/data/gridEdit.png';
 
 class CommonGrid extends Component {
 
@@ -13,6 +14,7 @@ class CommonGrid extends Component {
             selectedItem:{},
             addAction:this.props.addAction,
             deleteAction:this.props.deleteAction,
+            editAction:this.props.editAction
         };
 
         this.handleSelectEntity = this.handleSelectEntity.bind(this);
@@ -51,8 +53,18 @@ class CommonGrid extends Component {
         function addAddAction(state) {
             if (state.addAction) {
                 return(
-                    <td style={{width:'28px'}}>
-                        <img alt='' title={'Добавить запись'} onClick={state.addAction} src={addActionPng} style={{cursor:'pointer',height:"22px",width:"22px"}}/>
+                    <td style={{width:'30px'}}>
+                        <img alt='' title={'Добавить запись'} onClick={state.addAction} src={addActionPng} style={{cursor:'pointer',height:"24px",width:"24px"}}/>
+                    </td>
+                )
+            }
+        }
+
+        function addEditAction(state) {
+            if (state.editAction) {
+                return(
+                    <td style={{width:'30px'}}>
+                        <img alt='' title={'Редактировать запись'} onClick={state.editAction} src={editActionPng} style={{cursor:'pointer',height:"24px",width:"24px"}}/>
                     </td>
                 )
             }
@@ -61,21 +73,22 @@ class CommonGrid extends Component {
         function addDeleteAction(state) {
             if (state.deleteAction) {
                 return(
-                    <td style={{width:'28px'}}>
-                        <img alt='' title={'Удалить запись'} onClick={state.deleteAction} src={deleteActionPng} style={{cursor:'pointer',height:"22px",width:"22px"}}/>
+                    <td style={{width:'30px'}}>
+                        <img alt='' title={'Удалить запись'} onClick={state.deleteAction} src={deleteActionPng} style={{cursor:'pointer',height:"24px",width:"24px"}}/>
                     </td>
                 )
             }
         }
 
         function addGridActions(state) {
-            if (state.addAction || state.deleteAction) {
+            if (state.addAction || state.deleteAction || state.editAction) {
                 return(
                     <div style={{width:'100%'}}>
                         <table>
                             <tbody>
                             <tr>
                                 {addAddAction(state)}
+                                {addEditAction(state)}
                                 {addDeleteAction(state)}
                             </tr>
                             </tbody>
