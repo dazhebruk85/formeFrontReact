@@ -16,6 +16,9 @@ export function objectToPropArr(object) {
             propArr.push({key:key, value:object[key]});
         }
     };
+    propArr = propArr.sort(function(a, b) {
+        return a.key < b.key ? -1 : a.key > b.key ? 1 : 0;
+    });
     return propArr;
 }
 
