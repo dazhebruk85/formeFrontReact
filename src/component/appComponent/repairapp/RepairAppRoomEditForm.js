@@ -32,8 +32,13 @@ class RepairAppRoomEditForm extends Component {
 
     componentDidUpdate(prevProps) {
         if (this.props.visible && this.props.visible !== prevProps.visible ) {
-            if (this.props.entity) {
-                //TODO заполнение entity при редактировании
+            if (!CommonUtils.objectIsEmpty(this.props.entityForEdit)) {
+                this.setState({
+                    fields:{
+                        ...this.state.fields,
+                        common:this.props.entityForEdit
+                    }
+                });
             } else {
                 setTimeout(() => this.getNewUuid(), 0);
             }

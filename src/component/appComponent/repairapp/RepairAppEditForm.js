@@ -25,6 +25,7 @@ class RepairAppEditForm extends Component {
             successInfoMessages:[],
             restrictionsOpen:true,
             roomEditFormVisible:false,
+            selectedRoom:{},
             fields:{
                 common:{
                     entityId: '',
@@ -123,6 +124,7 @@ class RepairAppEditForm extends Component {
             errors:[],
             successInfoMessages:[],
             roomEditFormVisible:false,
+            selectedRoom:{},
             fields:{
                 ...this.state.fields,
                 common : {
@@ -216,18 +218,53 @@ class RepairAppEditForm extends Component {
         }
     }
 
+    addRoomAction() {
+        this.setState({selectedRoom:{}});
+        setTimeout(() => this.setState({roomEditFormVisible:true}), 0)
+    }
+
+    editRoomAction() {
+        if (CommonUtils.objectIsEmpty(this.state.selectedRoom)) {
+            this.setState({errors:[{code:'',message:'Необходимо выбрать запись'}]});
+        } else {
+            setTimeout(() => this.setState({roomEditFormVisible:true}), 0);
+        }
+    }
+
+    deleteRoomAction() {
+        if (CommonUtils.objectIsEmpty(this.state.selectedRoom)) {
+            this.setState({errors:[{code:'',message:'Необходимо выбрать запись'}]});
+        } else {
+            let rooms = this.state.fields.rooms;
+            delete rooms[this.state.selectedRoom.entityId];
+            this.setState({
+                selectedRoom:{},
+                fields:{
+                    ...this.state.fields,
+                    rooms:rooms
+                }
+            });
+        }
+        setTimeout(() => this.refs.roomsGrid.forceUpdate(), 0);
+    }
+
+    selectRoom(selectedRoom) {
+        this.setState({
+            selectedRoom: selectedRoom
+        });
+    }
+
     changeRooms(room) {
         let rooms = this.state.fields.rooms;
         rooms[room.entityId] = room;
         this.setState({
-            errors:[],
-            successInfoMessages:[],
-            roomEditFormVisible:false,
+            selectedRoom:{},
             fields:{
                 ...this.state.fields,
                 rooms:rooms
             }
         });
+        setTimeout(() => this.refs.roomsGrid.forceUpdate(), 0);
     }
 
     render() {
@@ -277,9 +314,10 @@ class RepairAppEditForm extends Component {
                                     <CollapsePanel style={{width:'99%',marginBottom:'10px'}} title={'Помещения для ремонта'}>
                                         <div style={{height:'150px',overflowY:'auto'}}>
                                             <CommonGrid ref={'roomsGrid'} gridData={this.state.fields.rooms}
-                                                        addAction={() => {this.setState({roomEditFormVisible:true})}}
-                                                        editAction={() => {null}}
-                                                        deleteAction={() => {null}}/>
+                                                        addAction={() => this.addRoomAction()}
+                                                        editAction={() => this.editRoomAction()}
+                                                        deleteAction={() => this.deleteRoomAction()}
+                                                        selectAction={this.selectRoom.bind(this)}/>
                                         </div>
                                     </CollapsePanel>
                                     <CollapsePanel style={{width:'99%',marginBottom:'10px'}} title={'Ограничения'}>
@@ -345,7 +383,7 @@ class RepairAppEditForm extends Component {
                 </div>
                 <ErrorModal errors={this.state.errors} closeAction={() => this.setState({errors:[]})}/>
                 <InfoModal popupData={this.state.successInfoMessages} closeAction={() => {this.setState({successInfoMessages: []}); this.closeModal()}}/>
-                <RepairAppRoomEditForm visible={this.state.roomEditFormVisible} okAction={(event) => this.changeRooms(event)} closeAction={() => {this.setState({roomEditFormVisible:false})}}/>
+                <RepairAppRoomEditForm entityForEdit={this.state.selectedRoom} visible={this.state.roomEditFormVisible} okAction={(event) => this.changeRooms(event)} closeAction={() => {this.setState({roomEditFormVisible:false})}}/>
             </CommonModal>
         )
     }
