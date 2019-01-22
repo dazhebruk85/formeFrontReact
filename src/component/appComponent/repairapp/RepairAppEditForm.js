@@ -11,6 +11,7 @@ import ErrorModal from "../../baseComponent/modal/ErrorModal";
 import InfoModal from "../../baseComponent/modal/InfoModal";
 import DictField from "../../baseComponent/field/DictField";
 import CommonGrid from "../../baseComponent/grid/CommonGrid";
+import RepairAppRoomEditForm from "./RepairAppRoomEditForm";
 
 class RepairAppEditForm extends Component {
 
@@ -23,6 +24,7 @@ class RepairAppEditForm extends Component {
             closeAction:props.closeAction,
             successInfoMessages:[],
             restrictionsOpen:true,
+            roomEditFormVisible:false,
             fields:{
                 common:{
                     entityId: '',
@@ -57,6 +59,7 @@ class RepairAppEditForm extends Component {
         this.handleChange = this.handleChange.bind(this);
         this.closeModal = this.closeModal.bind(this);
         this.getRepairAppData = this.getRepairAppData.bind(this);
+        this.changeRooms = this.changeRooms.bind(this);
         this.closeAction = props.closeAction
     }
 
@@ -117,8 +120,9 @@ class RepairAppEditForm extends Component {
 
     closeModal() {
         this.setState({
-            errors: [],
-            successInfoMessages: [],
+            errors:[],
+            successInfoMessages:[],
+            roomEditFormVisible:false,
             fields:{
                 ...this.state.fields,
                 common : {
@@ -162,10 +166,7 @@ class RepairAppEditForm extends Component {
 
     async saveRepairAppData() {
         let errors = [];
-        if (!this.state.fields.basePackage.entityId) {
-            errors.push({code:'',message:'Необходимо заполнить базовый пакет'})
-        }
-
+        if (!this.state.fields.basePackage.entityId) {errors.push({code:'',message:'Необходимо заполнить базовый пакет'})}
         if (errors.length > 0) {
             this.setState({
                 errors: errors
@@ -213,7 +214,20 @@ class RepairAppEditForm extends Component {
                 }
             });
         }
+    }
 
+    changeRooms(room) {
+        let rooms = this.state.fields.rooms;
+        rooms[room.entityId] = room;
+        this.setState({
+            errors:[],
+            successInfoMessages:[],
+            roomEditFormVisible:false,
+            fields:{
+                ...this.state.fields,
+                rooms:rooms
+            }
+        });
     }
 
     render() {
@@ -262,8 +276,8 @@ class RepairAppEditForm extends Component {
                                     </table>
                                     <CollapsePanel style={{width:'99%',marginBottom:'10px'}} title={'Помещения для ремонта'}>
                                         <div style={{height:'150px',overflowY:'auto'}}>
-                                            <CommonGrid gridData={this.state.fields.rooms}
-                                                        addAction={() => {null}}
+                                            <CommonGrid ref={'roomsGrid'} gridData={this.state.fields.rooms}
+                                                        addAction={() => {this.setState({roomEditFormVisible:true})}}
                                                         editAction={() => {null}}
                                                         deleteAction={() => {null}}/>
                                         </div>
@@ -331,6 +345,7 @@ class RepairAppEditForm extends Component {
                 </div>
                 <ErrorModal errors={this.state.errors} closeAction={() => this.setState({errors:[]})}/>
                 <InfoModal popupData={this.state.successInfoMessages} closeAction={() => {this.setState({successInfoMessages: []}); this.closeModal()}}/>
+                <RepairAppRoomEditForm visible={this.state.roomEditFormVisible} okAction={(event) => this.changeRooms(event)} closeAction={() => {this.setState({roomEditFormVisible:false})}}/>
             </CommonModal>
         )
     }

@@ -69,9 +69,7 @@ class UserSetPasswordModal extends Component {
 
     async setNewPassword(evt) {
         let errors = [];
-        if (!this.state.fields.common.newPassword) {
-            errors.push({code:'SET_NEW_PASS_ERROR',message:'Необходимо ввести новый пароль'});
-        }
+        if (!this.state.fields.common.newPassword) {errors.push({code:'SET_NEW_PASS_ERROR',message:'Необходимо ввести новый пароль'})}
         if (errors.length > 0) {
             this.setState({errors: errors});
         } else {

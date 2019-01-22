@@ -38,12 +38,8 @@ class LoginPage extends Component {
 
     async doLogin(evt) {
         let errors = [];
-        if (!this.state.fields.common.login) {
-            errors.push({code:'AUTH_ERROR',message:'Необходимо ввести логин'})
-        }
-        if (!this.state.fields.common.password) {
-            errors.push({code:'AUTH_ERROR',message:'Необходимо ввести пароль'})
-        }
+        if (!this.state.fields.common.login){errors.push({code:'AUTH_ERROR',message:'Необходимо ввести логин'})}
+        if (!this.state.fields.common.password){errors.push({code:'AUTH_ERROR',message:'Необходимо ввести пароль'})}
         if (errors.length > 0) {
             this.setState({errors: errors});
         } else {

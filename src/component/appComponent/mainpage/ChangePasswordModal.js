@@ -53,22 +53,12 @@ class ChangePasswordModal extends Component {
 
     async changePassword(evt) {
         let errors = [];
-        if (!this.state.fields.common.oldPassword) {
-            errors.push({code:'CHANGE_PASS_ERROR',message:'Необходимо ввести старый пароль'});
-        }
-
-        if (!this.state.fields.common.newPassword) {
-            errors.push({code:'CHANGE_PASS_ERROR',message:'Необходимо ввести новый пароль'});
-        }
-
-        if (!this.state.fields.common.newPasswordRepeat) {
-            errors.push({code:'CHANGE_PASS_ERROR',message:'Необходимо повторить новый пароль'});
-        }
-
+        if (!this.state.fields.common.oldPassword) {errors.push({code:'CHANGE_PASS_ERROR',message:'Необходимо ввести старый пароль'})}
+        if (!this.state.fields.common.newPassword) {errors.push({code:'CHANGE_PASS_ERROR',message:'Необходимо ввести новый пароль'})}
+        if (!this.state.fields.common.newPasswordRepeat) {errors.push({code:'CHANGE_PASS_ERROR',message:'Необходимо повторить новый пароль'})}
         if (this.state.fields.common.newPassword  && this.state.fields.common.newPasswordRepeat && this.state.fields.common.newPassword !== this.state.fields.common.newPasswordRepeat) {
             errors.push({code:'CHANGE_PASS_ERROR',message:'Введённые новые пароли не совпадают'});
         }
-
         if (errors.length > 0) {
             this.setState({errors: errors});
         } else {

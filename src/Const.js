@@ -6,6 +6,9 @@ export const APP_URL = WORK_APP_URL;
 //Auth context
 export const AUTH_CONTEXT = "auth";
 
+//GenUuid context
+export const GEN_UUID_CONTEXT = "genUuid";
+
 //User context
 export const USER_CONTEXT = "user";
 

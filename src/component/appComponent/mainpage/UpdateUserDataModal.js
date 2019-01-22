@@ -81,30 +81,14 @@ class UpdateUserDataModal extends Component {
 
     async saveUserData() {
         let errors = []
-        if (!this.state.fields.common.fio) {
-            errors.push({code:'',message:'Необходимо заполнить ФИО'})
-        }
-        if (!this.state.fields.common.birthDate) {
-            errors.push({code:'',message:'Необходимо заполнить дату рождения'})
-        }
-        if (!this.state.fields.common.phone) {
-            errors.push({code:'',message:'Необходимо заполнить телефон'})
-        }
-        if (!this.state.fields.common.email) {
-            errors.push({code:'',message:'Необходимо заполнить email'})
-        }
-        if (!this.state.fields.common.passportSeries) {
-            errors.push({code:'',message:'Необходимо заполнить серию паспорта'})
-        }
-        if (!this.state.fields.common.passportNumber) {
-            errors.push({code:'',message:'Необходимо заполнить номер паспорта'})
-        }
-        if (!this.state.fields.common.passportIssuedBy) {
-            errors.push({code:'',message:'Необходимо заполнить орган, выдавший паспорт'})
-        }
-        if (!this.state.fields.common.regAddress) {
-            errors.push({code:'',message:'Необходимо заполнить адрес регистрации'})
-        }
+        if (!this.state.fields.common.fio) {errors.push({code:'',message:'Необходимо заполнить ФИО'})}
+        if (!this.state.fields.common.birthDate) {errors.push({code:'',message:'Необходимо заполнить дату рождения'})}
+        if (!this.state.fields.common.phone) {errors.push({code:'',message:'Необходимо заполнить телефон'})}
+        if (!this.state.fields.common.email) {errors.push({code:'',message:'Необходимо заполнить email'})}
+        if (!this.state.fields.common.passportSeries) {errors.push({code:'',message:'Необходимо заполнить серию паспорта'})}
+        if (!this.state.fields.common.passportNumber) {errors.push({code:'',message:'Необходимо заполнить номер паспорта'})}
+        if (!this.state.fields.common.passportIssuedBy) {errors.push({code:'',message:'Необходимо заполнить орган, выдавший паспорт'})}
+        if (!this.state.fields.common.regAddress) {errors.push({code:'',message:'Необходимо заполнить адрес регистрации'})}
         if (errors.length > 0) {
             this.setState({
                 errors: errors
