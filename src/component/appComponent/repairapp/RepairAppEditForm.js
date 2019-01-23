@@ -374,7 +374,7 @@ class RepairAppEditForm extends Component {
                                                         height={'150px'}/>
                                     </CollapsePanel>
                                     <CollapsePanel style={{width:'99%',marginBottom:'10px'}} title={'Ограничения'}>
-                                        <div style={{height:'150px',overflowY:'auto'}}>
+                                        <div style={{height:'200px',overflowY:'auto'}}>
                                             <Field labelWidth='400px' label='Отсутствие контейнера для строительного мусора' type={Const.CHECKBOX} checked={this.state.fields.realEstate.trashCanNotExist} onChange={(event) => this.handleChange(event.target.checked,'trashCanNotExist','realEstate')}/>
                                             <Field labelWidth='400px' label='Отсутствие пассажирского лифта' type={Const.CHECKBOX} checked={this.state.fields.realEstate.passLiftNotExist} onChange={(event) => this.handleChange(event.target.checked,'passLiftNotExist','realEstate')}/>
                                             <Field labelWidth='400px' label='Отсутствие грузового лифта' type={Const.CHECKBOX} checked={this.state.fields.realEstate.serviceLiftNotExist} onChange={(event) => this.handleChange(event.target.checked,'serviceLiftNotExist','realEstate')}/>
