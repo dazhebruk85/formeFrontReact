@@ -25,7 +25,6 @@ class RepairAppEditForm extends Component {
             successInfoMessages:[],
             restrictionsOpen:true,
             roomEditFormVisible:false,
-            selectedRoom:{},
             fields:{
                 common:{
                     entityId: '',
@@ -61,6 +60,8 @@ class RepairAppEditForm extends Component {
         this.closeModal = this.closeModal.bind(this);
         this.getRepairAppData = this.getRepairAppData.bind(this);
         this.changeRooms = this.changeRooms.bind(this);
+        this.cnangeTotalArea = this.cnangeTotalArea.bind(this);
+        this.changeTotalCost = this.changeTotalCost.bind(this);
         this.closeAction = props.closeAction
     }
 
@@ -124,7 +125,6 @@ class RepairAppEditForm extends Component {
             errors:[],
             successInfoMessages:[],
             roomEditFormVisible:false,
-            selectedRoom:{},
             fields:{
                 ...this.state.fields,
                 common : {
@@ -216,55 +216,109 @@ class RepairAppEditForm extends Component {
                 }
             });
         }
+        setTimeout(() => this.changeTotalCost(), 0);
     }
 
     addRoomAction() {
-        this.setState({selectedRoom:{}});
+        this.refs.roomEditForm.setState({
+            fields:{
+                ...this.state.fields,
+                common:{
+                    entityId:'',
+                    name:'',
+                    area:''
+                }
+            }
+        });
         setTimeout(() => this.setState({roomEditFormVisible:true}), 0)
     }
 
     editRoomAction() {
-        if (CommonUtils.objectIsEmpty(this.state.selectedRoom)) {
+        let roomObject = this.refs.roomsGrid.state.selectedItem;
+        if (CommonUtils.objectIsEmpty(roomObject)) {
             this.setState({errors:[{code:'',message:'Необходимо выбрать запись'}]});
         } else {
+            this.refs.roomEditForm.setState({
+                fields:{
+                    ...this.state.fields,
+                    common:roomObject
+                }
+            });
             setTimeout(() => this.setState({roomEditFormVisible:true}), 0);
         }
     }
 
     deleteRoomAction() {
-        if (CommonUtils.objectIsEmpty(this.state.selectedRoom)) {
+        let roomObject = this.refs.roomsGrid.state.selectedItem;
+        if (CommonUtils.objectIsEmpty(roomObject)) {
             this.setState({errors:[{code:'',message:'Необходимо выбрать запись'}]});
         } else {
             let rooms = this.state.fields.rooms;
-            delete rooms[this.state.selectedRoom.entityId];
+            delete rooms[roomObject.entityId];
             this.setState({
-                selectedRoom:{},
                 fields:{
                     ...this.state.fields,
                     rooms:rooms
                 }
             });
         }
-        setTimeout(() => this.refs.roomsGrid.forceUpdate(), 0);
-    }
-
-    selectRoom(selectedRoom) {
-        this.setState({
-            selectedRoom: selectedRoom
-        });
+        setTimeout(() => this.cnangeTotalArea(), 0);
+        setTimeout(() => this.changeTotalCost(), 0);
     }
 
     changeRooms(room) {
         let rooms = this.state.fields.rooms;
         rooms[room.entityId] = room;
         this.setState({
-            selectedRoom:{},
             fields:{
                 ...this.state.fields,
                 rooms:rooms
             }
         });
-        setTimeout(() => this.refs.roomsGrid.forceUpdate(), 0);
+        this.refs.roomsGrid.setState({
+            selectedItem:{}
+        });
+        setTimeout(() => this.cnangeTotalArea(), 0);
+        setTimeout(() => this.changeTotalCost(), 0);
+    }
+
+    cnangeTotalArea() {
+        let totalArea = 0.00;
+        let rooms = this.state.fields.rooms;
+        if (rooms && Object.keys(rooms).length > 1) {
+            for (let key in rooms) {
+                if (key === 'headers') continue;
+                let room = rooms[key];
+                totalArea = totalArea + parseFloat(room.area)
+            }
+        }
+        this.setState({
+            fields:{
+                ...this.state.fields,
+                common:{
+                    ...this.state.fields.common,
+                    totalArea:totalArea.toFixed(2)
+                }
+            }
+        });
+    }
+
+    changeTotalCost() {
+        let totalCost = 0.00;
+        let totalArea = this.state.fields.common.totalArea
+        let finalPriceForMeter = this.state.fields.common.finalPriceForMeter
+        if (totalArea && finalPriceForMeter) {
+            totalCost = totalArea*finalPriceForMeter;
+        }
+        this.setState({
+            fields:{
+                ...this.state.fields,
+                common:{
+                    ...this.state.fields.common,
+                    totalCost:totalCost.toFixed(2)
+                }
+            }
+        });
     }
 
     render() {
@@ -312,13 +366,12 @@ class RepairAppEditForm extends Component {
                                         </tbody>
                                     </table>
                                     <CollapsePanel style={{width:'99%',marginBottom:'10px'}} title={'Помещения для ремонта'}>
-                                        <div style={{height:'150px',overflowY:'auto'}}>
-                                            <CommonGrid ref={'roomsGrid'} gridData={this.state.fields.rooms}
+                                            <CommonGrid ref={'roomsGrid'}
+                                                        gridData={this.state.fields.rooms}
                                                         addAction={() => this.addRoomAction()}
                                                         editAction={() => this.editRoomAction()}
                                                         deleteAction={() => this.deleteRoomAction()}
-                                                        selectAction={this.selectRoom.bind(this)}/>
-                                        </div>
+                                                        height={'150px'}/>
                                     </CollapsePanel>
                                     <CollapsePanel style={{width:'99%',marginBottom:'10px'}} title={'Ограничения'}>
                                         <div style={{height:'150px',overflowY:'auto'}}>
@@ -383,7 +436,7 @@ class RepairAppEditForm extends Component {
                 </div>
                 <ErrorModal errors={this.state.errors} closeAction={() => this.setState({errors:[]})}/>
                 <InfoModal popupData={this.state.successInfoMessages} closeAction={() => {this.setState({successInfoMessages: []}); this.closeModal()}}/>
-                <RepairAppRoomEditForm entityForEdit={this.state.selectedRoom} visible={this.state.roomEditFormVisible} okAction={(event) => this.changeRooms(event)} closeAction={() => {this.setState({roomEditFormVisible:false})}}/>
+                <RepairAppRoomEditForm ref={'roomEditForm'} visible={this.state.roomEditFormVisible} okAction={(event) => this.changeRooms(event)} closeAction={() => {this.setState({roomEditFormVisible:false}); this.refs.roomsGrid.setState({selectedItem:{}});}}/>
             </CommonModal>
         )
     }

@@ -32,14 +32,7 @@ class RepairAppRoomEditForm extends Component {
 
     componentDidUpdate(prevProps) {
         if (this.props.visible && this.props.visible !== prevProps.visible ) {
-            if (!CommonUtils.objectIsEmpty(this.props.entityForEdit)) {
-                this.setState({
-                    fields:{
-                        ...this.state.fields,
-                        common:this.props.entityForEdit
-                    }
-                });
-            } else {
+            if (CommonUtils.objectIsEmpty(this.state.fields.common.entityId)) {
                 setTimeout(() => this.getNewUuid(), 0);
             }
         }
@@ -53,6 +46,8 @@ class RepairAppRoomEditForm extends Component {
                 common : {
                     ...this.state.fields.common,
                     entityId:responseData.params.newUuid,
+                    name:'',
+                    area:''
                 }
             }
         });

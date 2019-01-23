@@ -14,7 +14,8 @@ class CommonGrid extends Component {
             selectedItem:{},
             addAction:this.props.addAction,
             deleteAction:this.props.deleteAction,
-            editAction:this.props.editAction
+            editAction:this.props.editAction,
+            height:this.props.height
         };
 
         this.handleSelectEntity = this.handleSelectEntity.bind(this);
@@ -31,8 +32,10 @@ class CommonGrid extends Component {
 
     handleSelectEntity = (event) => {
         let selectedItem = {};
-        for (let i = 0; i < event.currentTarget.children.length; i++) {
-            selectedItem[event.currentTarget.children[i].getAttribute('entitydatakey')] = event.currentTarget.children[i].textContent
+        if (event !== null && event !== undefined) {
+            for (let i = 0; i < event.currentTarget.children.length; i++) {
+                selectedItem[event.currentTarget.children[i].getAttribute('entitydatakey')] = event.currentTarget.children[i].textContent
+            }
         }
         this.setState({
             selectedItem: selectedItem
@@ -54,7 +57,7 @@ class CommonGrid extends Component {
             if (state.addAction) {
                 return(
                     <td style={{width:'30px'}}>
-                        <img alt='' title={'Добавить запись'} onClick={state.addAction} src={addActionPng} style={{cursor:'pointer',height:"24px",width:"24px"}}/>
+                        <img alt='' title={'Добавить запись'} onClick={() => {state.addAction()}} src={addActionPng} style={{cursor:'pointer',height:"24px",width:"24px"}}/>
                     </td>
                 )
             }
@@ -64,7 +67,7 @@ class CommonGrid extends Component {
             if (state.editAction) {
                 return(
                     <td style={{width:'30px'}}>
-                        <img alt='' title={'Редактировать запись'} onClick={state.editAction} src={editActionPng} style={{cursor:'pointer',height:"24px",width:"24px"}}/>
+                        <img alt='' title={'Редактировать запись'} onClick={() => {state.editAction()}} src={editActionPng} style={{cursor:'pointer',height:"24px",width:"24px"}}/>
                     </td>
                 )
             }
@@ -74,7 +77,7 @@ class CommonGrid extends Component {
             if (state.deleteAction) {
                 return(
                     <td style={{width:'30px'}}>
-                        <img alt='' title={'Удалить запись'} onClick={state.deleteAction} src={deleteActionPng} style={{cursor:'pointer',height:"24px",width:"24px"}}/>
+                        <img alt='' title={'Удалить запись'} onClick={() => {state.deleteAction()}} src={deleteActionPng} style={{cursor:'pointer',height:"24px",width:"24px"}}/>
                     </td>
                 )
             }
@@ -103,8 +106,9 @@ class CommonGrid extends Component {
             return (
                 <div className="container" style={{paddingLeft:'0px', paddingRight:'0px', width:'100%',height:'100%'}}>
                     {addGridActions(this.state)}
-                    <table style={{marginBottom:'0px'}} className='table table-hover table-condensed' ref="CommonDbGrid">
-                        <thead className='.thead-light'>
+                    <div style={{height:this.state.height,overflowY:'auto'}}>
+                        <table style={{marginBottom:'0px'}} className='table table-hover table-condensed' ref="CommonDbGrid">
+                            <thead className='.thead-light'>
                             <tr>
                                 {CommonUtils.objectToPropArr(this.state.gridData.headers).map(entity =>
                                     <th style={{display: entity.key === "entityId" ? 'none' : ''}} key={entity.key+'headerTd'}>
@@ -112,8 +116,8 @@ class CommonGrid extends Component {
                                     </th>
                                 )}
                             </tr>
-                        </thead>
-                        <tbody>
+                            </thead>
+                            <tbody>
                             {CommonUtils.objectToPropArr(this.state.gridData).map(entity =>
                                 {if("headers" !== entity.key) {
                                     return(
@@ -124,11 +128,12 @@ class CommonGrid extends Component {
                                                 </td>
                                             )}
                                         </tr>
-                                        )
+                                    )
                                 }}
                             )}
-                        </tbody>
-                    </table>
+                            </tbody>
+                        </table>
+                    </div>
                 </div>
             )
         } else {

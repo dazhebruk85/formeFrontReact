@@ -11,7 +11,7 @@ export function genGuid() {
 
 export function objectToPropArr(object) {
     let propArr = [];
-    for (var key in object) {
+    for (let key in object) {
         if (object.hasOwnProperty(key)) {
             propArr.push({key:key, value:object[key]});
         }
