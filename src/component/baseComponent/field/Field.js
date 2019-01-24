@@ -55,6 +55,7 @@ class Field extends Component {
                     </div>
                 );
             case Const.PASSWORD:
+
                 return (
                     <div className="form-group">
                         {this.props.label ? <label style={{width:this.props.labelWidth}} className="control-label col-sm-2">{this.props.label}</label> : null}
@@ -70,8 +71,9 @@ class Field extends Component {
                     </div>
                 );
             case Const.TEXTAREA:
+                let formStyle = this.props.formStyle ? this.props.formStyle : {};
                 return (
-                    <div className="form-group" style={{width:'99%'}}>
+                    <div className="form-group" style={formStyle}>
                         {this.props.label ? <label style={{width:this.props.labelWidth}} className="control-label col-sm-2">{this.props.label}</label> : null}
                         <div className="col-sm-10" style={{width:this.props.fieldWidth,paddingRight:'0px'}}>
                             <textarea className="form-control input-sm"
@@ -79,7 +81,8 @@ class Field extends Component {
                                       onChange={this.props.onChange}
                                       placeholder={this.props.placeholder}
                                       maxLength={this.props.maxLength}
-                                      style={this.props.style}/>
+                                      style={this.props.style}
+                                      disabled={this.props.disabled}/>
                         </div>
                     </div>
                 );
