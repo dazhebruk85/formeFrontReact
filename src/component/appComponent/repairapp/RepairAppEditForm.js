@@ -366,12 +366,12 @@ class RepairAppEditForm extends Component {
                                         </tbody>
                                     </table>
                                     <CollapsePanel style={{width:'99%',marginBottom:'10px'}} title={'Помещения для ремонта'}>
-                                            <CommonGrid ref={'roomsGrid'}
-                                                        gridData={this.state.fields.rooms}
-                                                        addAction={() => this.addRoomAction()}
-                                                        editAction={() => this.editRoomAction()}
-                                                        deleteAction={() => this.deleteRoomAction()}
-                                                        height={'150px'}/>
+                                        <CommonGrid ref={'roomsGrid'}
+                                                    gridData={this.state.fields.rooms}
+                                                    addAction={() => this.addRoomAction()}
+                                                    editAction={() => this.editRoomAction()}
+                                                    deleteAction={() => this.deleteRoomAction()}
+                                                    height={'150px'}/>
                                     </CollapsePanel>
                                     <CollapsePanel style={{width:'99%',marginBottom:'10px'}} title={'Ограничения'}>
                                         <div style={{height:'200px',overflowY:'auto'}}>
