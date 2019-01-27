@@ -1,5 +1,5 @@
 // System consts
-export const WORK_APP_URL = 'http://10.1.53.185:1313/back/FrontServlet';
+export const WORK_APP_URL = 'http://10.1.53.185:9191/back/FrontServlet';
 export const HOME_APP_URL = 'http://192.168.0.104:1313/back/FrontServlet';
 export const APP_URL = WORK_APP_URL;
 
