@@ -28,6 +28,10 @@ class ClientPage extends Component {
                     return (
                         <RepairAppList/>
                     );
+                case 'chat':
+                    return (
+                        null
+                    );
                 default:
                     return (
                         null

@@ -8,6 +8,13 @@ import usersIcon from '../../../../media/tree/users.png'
 import userRolesIcon from '../../../../media/tree/userRoles.png'
 import basePackageIcon from '../../../../media/tree/basePackage.png'
 import roomTypeIcon from '../../../../media/tree/roomType.png'
+import systemIcon from '../../../../media/tree/system.png'
+import systemSettingsIcon from '../../../../media/tree/systemSettings.png'
+import chatIcon from '../../../../media/tree/chat.png'
+
+import notificationsIcon from '../../../../media/tree/notifocations.png'
+import notifyTemplatesIcon from '../../../../media/tree/notifyTemplates.png'
+import notifyMessagesIcon from '../../../../media/tree/notifyMessages.png'
 
 import hideIcon from '../../../../media/data/hide.png'
 import showIcon from '../../../../media/data/show.png'
@@ -16,6 +23,7 @@ const treeData = [
     { key:'Main',icon:<img alt='' src={mainTreeIcon} style={{width:'20px',height:'20px',marginTop:"0px", marginLeft:"0px"}}/>,title:'Главная',children:
         [
            {key:'repairApp',icon:<img alt='' src={anketaIcon} style={{width:'20px',height:'20px',marginTop:"0px", marginLeft:"0px"}}/>,title:'Анкеты'}
+           ,{key:'chat',icon:<img alt='' src={chatIcon} style={{width:'20px',height:'20px',marginTop:"0px", marginLeft:"0px"}}/>,title:'Чат'}
            ,{key:'dicts',icon:<img alt='' src={dictsIcon} style={{width:'20px',height:'20px',marginTop:"0px", marginLeft:"0px"}}/>,title:'Справочники',children:
             [
                 {key:'user',icon:<img alt='' src={usersIcon} style={{width:'20px',height:'20px',marginTop:"0px", marginLeft:"0px"}}/>,title:'Пользователи'}
@@ -23,6 +31,15 @@ const treeData = [
                ,{key:'basePackage',icon:<img alt='' src={basePackageIcon} style={{width:'20px',height:'20px',marginTop:"0px", marginLeft:"0px"}}/>,title:'Базовые пакеты'}
                ,{key:'roomType',icon:<img alt='' src={roomTypeIcon} style={{width:'20px',height:'20px',marginTop:"0px", marginLeft:"0px"}}/>,title:'Типы помещений'}
             ]}
+            ,{key:'notifications',icon:<img alt='' src={notificationsIcon} style={{width:'20px',height:'20px',marginTop:"0px", marginLeft:"0px"}}/>,title:'Оповещения',children:
+                [
+                    {key:'notifyTemplates',icon:<img alt='' src={notifyTemplatesIcon} style={{width:'20px',height:'20px',marginTop:"0px", marginLeft:"0px"}}/>,title:'Шаблоны'}
+                    ,{key:'notifyMessages',icon:<img alt='' src={notifyMessagesIcon} style={{width:'20px',height:'20px',marginTop:"0px", marginLeft:"0px"}}/>,title:'Сообщения'}
+                ]}
+            ,{key:'system',icon:<img alt='' src={systemIcon} style={{width:'20px',height:'20px',marginTop:"0px", marginLeft:"0px"}}/>,title:'Система',children:
+                [
+                    {key:'systemSettings',icon:<img alt='' src={systemSettingsIcon} style={{width:'20px',height:'20px',marginTop:"0px", marginLeft:"0px"}}/>,title:'Настойки системы'}
+                ]}
         ]
     }
 ];
@@ -45,7 +62,10 @@ class AdminTreeView extends Component {
     }
 
     onTreeSelect = (selectedKeys, info) => {
-        if ('Main' !== info.node.props.eventKey && 'dicts' !== info.node.props.eventKey) {
+        if ('Main' !== info.node.props.eventKey &&
+            'dicts' !== info.node.props.eventKey &&
+            'system' !== info.node.props.eventKey &&
+            'notifications' !== info.node.props.eventKey) {
             this.setState({
                 selectedKeys:[info.node.props.eventKey]
             });

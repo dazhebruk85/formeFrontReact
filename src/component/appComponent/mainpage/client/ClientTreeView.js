@@ -5,11 +5,13 @@ import mainTreeIcon from '../../../../media/tree/mainTreeIcon.png'
 import anketaIcon from '../../../../media/tree/anketa.png'
 import hideIcon from '../../../../media/data/hide.png'
 import showIcon from '../../../../media/data/show.png'
+import chatIcon from "../../../../media/tree/chat.png";
 
 const treeData = [
     { key:'Main',icon:<img alt='' src={mainTreeIcon} style={{width:'20px',height:'20px',marginTop:"0px", marginLeft:"0px"}}/>,title:'Главная',children:
         [
             {key:'repairApp',icon:<img alt='' src={anketaIcon} style={{width:'20px',height:'20px',marginTop:"0px", marginLeft:"0px"}}/>,title:'Анкеты'}
+            ,{key:'chat',icon:<img alt='' src={chatIcon} style={{width:'20px',height:'20px',marginTop:"0px", marginLeft:"0px"}}/>,title:'Чат'}
         ]
     }
 ];

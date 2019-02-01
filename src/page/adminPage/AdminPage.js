@@ -46,6 +46,22 @@ class AdminPage extends Component {
                     return (
                         <RepairAppList/>
                     );
+                case 'systemSettings':
+                    return (
+                        null
+                    );
+                case 'chat':
+                    return (
+                        null
+                    );
+                case 'notifyTemplates':
+                    return (
+                        null
+                    );
+                case 'notifyMessages':
+                    return (
+                        null
+                    );
                 default:
                     return (
                         null
