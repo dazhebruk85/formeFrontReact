@@ -1,8 +1,5 @@
 import  React, { Component } from 'react';
 import * as CommonUtils from "../../../utils/CommonUtils";
-import addActionPng from '../../../media/data/gridAdd.png';
-import deleteActionPng from '../../../media/data/gridDelete.png';
-import editActionPng from '../../../media/data/gridEdit.png';
 
 class CommonGrid extends Component {
 
@@ -12,9 +9,6 @@ class CommonGrid extends Component {
         this.state = {
             gridData:this.props.gridData,
             selectedItem:{},
-            addAction:this.props.addAction,
-            deleteAction:this.props.deleteAction,
-            editAction:this.props.editAction,
             height:this.props.height
         };
 
@@ -53,59 +47,9 @@ class CommonGrid extends Component {
             }
         }
 
-        function addAddAction(state) {
-            if (state.addAction) {
-                return(
-                    <td style={{width:'30px'}}>
-                        <img alt='' title={'Добавить запись'} onClick={() => {state.addAction()}} src={addActionPng} style={{cursor:'pointer',height:"24px",width:"24px"}}/>
-                    </td>
-                )
-            }
-        }
-
-        function addEditAction(state) {
-            if (state.editAction) {
-                return(
-                    <td style={{width:'30px'}}>
-                        <img alt='' title={'Редактировать запись'} onClick={() => {state.editAction()}} src={editActionPng} style={{cursor:'pointer',height:"24px",width:"24px"}}/>
-                    </td>
-                )
-            }
-        }
-
-        function addDeleteAction(state) {
-            if (state.deleteAction) {
-                return(
-                    <td style={{width:'30px'}}>
-                        <img alt='' title={'Удалить запись'} onClick={() => {state.deleteAction()}} src={deleteActionPng} style={{cursor:'pointer',height:"24px",width:"24px"}}/>
-                    </td>
-                )
-            }
-        }
-
-        function addGridActions(state) {
-            if (state.addAction || state.deleteAction || state.editAction) {
-                return(
-                    <div style={{width:'100%'}}>
-                        <table>
-                            <tbody>
-                            <tr>
-                                {addAddAction(state)}
-                                {addEditAction(state)}
-                                {addDeleteAction(state)}
-                            </tr>
-                            </tbody>
-                        </table>
-                        <div style={{width:'100%',height:'2px',marginTop:'3px',backgroundColor:'#ddd'}}/>
-                    </div>
-                )
-            }
-        }
-
         if (!CommonUtils.objectIsEmpty(this.state.gridData) && !CommonUtils.objectIsEmpty(this.state.gridData.headers)) {
             return (
                 <div className="container" style={{paddingLeft:'0px', paddingRight:'0px', width:'100%',height:'100%'}}>
-                    {addGridActions(this.state)}
                     <div style={{height:this.state.height,overflowY:'auto'}}>
                         <table style={{marginBottom:'0px'}} className='table table-hover table-condensed' ref="CommonDbGrid">
                             <thead className='.thead-light'>
@@ -129,7 +73,9 @@ class CommonGrid extends Component {
                                             )}
                                         </tr>
                                     )
-                                }}
+                                }
+                                return null
+                                }
                             )}
                             </tbody>
                         </table>

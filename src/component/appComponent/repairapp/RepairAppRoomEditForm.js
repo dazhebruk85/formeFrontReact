@@ -125,7 +125,7 @@ class RepairAppRoomEditForm extends Component {
         return (
             <CommonModal title={'Добавить/Редактировать запись'} visible={this.props.visible} style={{width:'540px'}} closeAction={() => this.closeModal()}>
                 <div>
-                    <form className="form-horizontal">
+                    <div className="form-horizontal">
                         <DictField labelWidth='150px'
                                    fieldWidth='300px'
                                    label='Тип помещения'
@@ -140,7 +140,7 @@ class RepairAppRoomEditForm extends Component {
                             <Button value="Ок" onClick={() => this.okAction()}/>
                             <Button value="Отмена" onClick={() => this.closeModal()}/>
                         </div>
-                    </form>
+                    </div>
                 </div>
                 <ErrorModal errors={this.state.errors} closeAction={() => this.setState({errors:[]})}/>
             </CommonModal>

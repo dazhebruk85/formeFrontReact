@@ -10,8 +10,7 @@ import CollapsePanel from './../../baseComponent/panel/CollapsePanel'
 import ErrorModal from "../../baseComponent/modal/ErrorModal";
 import InfoModal from "../../baseComponent/modal/InfoModal";
 import DictField from "../../baseComponent/field/DictField";
-import CommonGrid from "../../baseComponent/grid/CommonGrid";
-import RepairAppRoomEditForm from "./RepairAppRoomEditForm";
+import RepairAppRoomGrid from "./RepairAppRoomGrid";
 
 class RepairAppEditForm extends Component {
 
@@ -24,7 +23,6 @@ class RepairAppEditForm extends Component {
             closeAction:props.closeAction,
             successInfoMessages:[],
             restrictionsOpen:true,
-            roomEditFormVisible:false,
             fields:{
                 common:{
                     entityId: '',
@@ -59,7 +57,6 @@ class RepairAppEditForm extends Component {
         this.handleChange = this.handleChange.bind(this);
         this.closeModal = this.closeModal.bind(this);
         this.getRepairAppData = this.getRepairAppData.bind(this);
-        this.changeRooms = this.changeRooms.bind(this);
         this.cnangeTotalArea = this.cnangeTotalArea.bind(this);
         this.changeTotalCost = this.changeTotalCost.bind(this);
         this.closeAction = props.closeAction
@@ -124,7 +121,6 @@ class RepairAppEditForm extends Component {
         this.setState({
             errors:[],
             successInfoMessages:[],
-            roomEditFormVisible:false,
             fields:{
                 ...this.state.fields,
                 common : {
@@ -219,69 +215,6 @@ class RepairAppEditForm extends Component {
         setTimeout(() => this.changeTotalCost(), 0);
     }
 
-    addRoomAction() {
-        this.refs.roomEditForm.setState({
-            fields:{
-                ...this.state.fields,
-                common:{
-                    entityId:'',
-                    name:'',
-                    area:''
-                }
-            }
-        });
-        setTimeout(() => this.setState({roomEditFormVisible:true}), 0)
-    }
-
-    editRoomAction() {
-        let roomObject = this.refs.roomsGrid.state.selectedItem;
-        if (CommonUtils.objectIsEmpty(roomObject)) {
-            this.setState({errors:[{code:'',message:'Необходимо выбрать запись'}]});
-        } else {
-            this.refs.roomEditForm.setState({
-                fields:{
-                    ...this.state.fields,
-                    common:roomObject
-                }
-            });
-            setTimeout(() => this.setState({roomEditFormVisible:true}), 0);
-        }
-    }
-
-    deleteRoomAction() {
-        let roomObject = this.refs.roomsGrid.state.selectedItem;
-        if (CommonUtils.objectIsEmpty(roomObject)) {
-            this.setState({errors:[{code:'',message:'Необходимо выбрать запись'}]});
-        } else {
-            let rooms = this.state.fields.rooms;
-            delete rooms[roomObject.entityId];
-            this.setState({
-                fields:{
-                    ...this.state.fields,
-                    rooms:rooms
-                }
-            });
-        }
-        setTimeout(() => this.cnangeTotalArea(), 0);
-        setTimeout(() => this.changeTotalCost(), 0);
-    }
-
-    changeRooms(room) {
-        let rooms = this.state.fields.rooms;
-        rooms[room.entityId] = room;
-        this.setState({
-            fields:{
-                ...this.state.fields,
-                rooms:rooms
-            }
-        });
-        this.refs.roomsGrid.setState({
-            selectedItem:{}
-        });
-        setTimeout(() => this.cnangeTotalArea(), 0);
-        setTimeout(() => this.changeTotalCost(), 0);
-    }
-
     cnangeTotalArea() {
         let totalArea = 0.00;
         let rooms = this.state.fields.rooms;
@@ -366,12 +299,7 @@ class RepairAppEditForm extends Component {
                                         </tbody>
                                     </table>
                                     <CollapsePanel style={{width:'99%',marginBottom:'10px'}} title={'Помещения для ремонта'}>
-                                        <CommonGrid ref={'roomsGrid'}
-                                                    gridData={this.state.fields.rooms}
-                                                    addAction={() => this.addRoomAction()}
-                                                    editAction={() => this.editRoomAction()}
-                                                    deleteAction={() => this.deleteRoomAction()}
-                                                    height={'150px'}/>
+                                        <RepairAppRoomGrid parent={this} onChangeAction={() => {setTimeout(() => this.cnangeTotalArea(), 0); setTimeout(() => this.changeTotalCost(), 0);}}/>
                                     </CollapsePanel>
                                     <CollapsePanel style={{width:'99%',marginBottom:'10px'}} title={'Ограничения'}>
                                         <div style={{height:'200px',overflowY:'auto'}}>
@@ -436,7 +364,6 @@ class RepairAppEditForm extends Component {
                 </div>
                 <ErrorModal errors={this.state.errors} closeAction={() => this.setState({errors:[]})}/>
                 <InfoModal popupData={this.state.successInfoMessages} closeAction={() => {this.setState({successInfoMessages: []}); this.closeModal()}}/>
-                <RepairAppRoomEditForm ref={'roomEditForm'} visible={this.state.roomEditFormVisible} okAction={(event) => this.changeRooms(event)} closeAction={() => {this.setState({roomEditFormVisible:false}); this.refs.roomsGrid.setState({selectedItem:{}});}}/>
             </CommonModal>
         )
     }
