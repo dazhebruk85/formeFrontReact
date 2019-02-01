@@ -77,7 +77,7 @@ class DictField extends Component {
                 </div>
                 <CommonModal title={'Справочник'} visible={this.state.visible} style={{width:'650px'}} closeAction={this.closeDict}>
                     <div onDoubleClick={() => this.chooseDict()}>
-                        <CommonDbGrid selectAction={this.changeGridSelection.bind(this)} dataEntityContext={this.props.context} pageSize={10}/>
+                        <CommonDbGrid filter={this.props.dictFilter} selectAction={this.changeGridSelection.bind(this)} dataEntityContext={this.props.context} pageSize={10}/>
                     </div>
                     <div className="btn-toolbar align-bottom" role="toolbar" style={{justifyContent:'center',display:'flex'}}>
                         <Button value="Ок" onClick={() => this.chooseDict()}/>

@@ -6,6 +6,7 @@ import UserList from '../../component/appComponent/user/UserList';
 import UserRoleList from '../../component/appComponent/userrole/UserRoleList';
 import BasePackageList from '../../component/appComponent/basePackage/BasePackageList';
 import RoomTypeList from '../../component/appComponent/roomtype/RoomTypeList';
+import RepairAppList from "../../component/appComponent/repairapp/RepairAppList";
 
 class AdminPage extends Component {
 
@@ -40,6 +41,10 @@ class AdminPage extends Component {
                 case 'roomType':
                     return (
                         <RoomTypeList/>
+                    );
+                case 'repairApp':
+                    return (
+                        <RepairAppList/>
                     );
                 default:
                     return (

@@ -3,7 +3,6 @@ import Tree from 'rc-tree';
 import '../../../../media/tree/tree.css';
 import mainTreeIcon from '../../../../media/tree/mainTreeIcon.png'
 import anketaIcon from '../../../../media/tree/anketa.png'
-
 import hideIcon from '../../../../media/data/hide.png'
 import showIcon from '../../../../media/data/show.png'
 

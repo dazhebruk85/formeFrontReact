@@ -31,7 +31,9 @@ class RepairAppEditForm extends Component {
                     finalPriceForMeter:'0.00',
                     totalCost:'0.00',
                     totalArea:'0.00',
-                    addOptionCost:'0.00'
+                    addOptionCost:'0.00',
+                    clientUserId: '',
+                    clientUserLogin: ''
                 },
                 basePackage:{
                     entityId:'',
@@ -131,7 +133,9 @@ class RepairAppEditForm extends Component {
                     finalPriceForMeter:'0.00',
                     totalCost:'0.00',
                     totalArea:'0.00',
-                    addOptionCost:'0.00'
+                    addOptionCost:'0.00',
+                    clientUserId: '',
+                    clientUserLogin: ''
                 },
                 basePackage : {
                     ...this.state.fields.basePackage,
@@ -183,7 +187,7 @@ class RepairAppEditForm extends Component {
         }
     }
 
-    chooseBasePackage(selectedPackage){
+    chooseBasePackage(selectedPackage) {
         if (selectedPackage) {
             this.setState({
                 fields: {
@@ -213,6 +217,32 @@ class RepairAppEditForm extends Component {
             });
         }
         setTimeout(() => this.changeTotalCost(), 0);
+    }
+
+    chooseClientUser(selectedUser) {
+        if (selectedUser) {
+            this.setState({
+                fields: {
+                    ...this.state.fields,
+                    common : {
+                        ...this.state.fields.common,
+                        clientUserId : selectedUser.entityId,
+                        clientUserLogin : selectedUser.login
+                    }
+                }
+            });
+        } else {
+            this.setState({
+                fields: {
+                    ...this.state.fields,
+                    common : {
+                        ...this.state.fields.common,
+                        clientUserId : '',
+                        clientUserLogin : ''
+                    }
+                }
+            });
+        }
     }
 
     cnangeTotalArea() {
@@ -278,6 +308,20 @@ class RepairAppEditForm extends Component {
                                                maxLength={100}
                                                context={Const.BASE_PACKAGE_CONTEXT}
                                                chooseDictAction={this.chooseBasePackage.bind(this)}/>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td colSpan="2">
+                                    <DictField labelWidth='80px'
+                                               fieldWidth='350px'
+                                               label='Клиент'
+                                               type={Const.TEXTFIELD}
+                                               value={this.state.fields.common.clientUserLogin}
+                                               placeholder=''
+                                               maxLength={100}
+                                               context={Const.USER_CONTEXT}
+                                               chooseDictAction={this.chooseClientUser.bind(this)}
+                                               dictFilter={{'RAEDictFilter_userRole_systemName_eq':'client'}}/>
                                 </td>
                             </tr>
                             </tbody>
