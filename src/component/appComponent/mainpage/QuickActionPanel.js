@@ -5,6 +5,7 @@ import changeUserDataPng from '../../../media/data/changeUserData.png';
 import taskCalendarPng from '../../../media/data/taskCalendar.png';
 import ChangePasswordModal from './ChangePasswordModal';
 import UpdateUserDataModal from './UpdateUserDataModal';
+import WorkCalendarModal from './WorkCalendarModal';
 import OkCancelDialog from '../../../component/baseComponent/modal/OkCancelDialog';
 import {Redirect} from "react-router-dom";
 
@@ -16,6 +17,7 @@ class QuickActionPanel extends Component {
             changePasswordModalVisible: false,
             updateUserDataModalVisible: false,
             exitDialogVisible:false,
+            workCalendarVisible:false,
             redirectToLoginPage:false
         };
 
@@ -78,7 +80,7 @@ class QuickActionPanel extends Component {
                     <tr>
                         <td>
                             <div style={{width:'100%',height:'100%',padding:'0px',textAlign:'-webkit-center'}}>
-                                <img onClick={null}
+                                <img onClick={() => this.setState({workCalendarVisible: true})}
                                      title={'Календарь задач'}
                                      alt='Календарь задач'
                                      src={taskCalendarPng}
@@ -122,6 +124,7 @@ class QuickActionPanel extends Component {
                                 okAction={this.okExitDialog.bind(this)}>
                     <div>Вы действительно хотите выйти?</div>
                 </OkCancelDialog>
+                <WorkCalendarModal visible={this.state.workCalendarVisible} closeAction={() => this.setState({workCalendarVisible: false})}/>
             </div>
         )
     }
