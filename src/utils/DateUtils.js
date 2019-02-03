@@ -1,3 +1,5 @@
+export const months = ['Январь','Февраль','Март','Апрель','Май','Июнь','Июль','Август','Сентябрь','Октябрь','Ноябрь','Декабрь'];
+
 export const weekDays = [
     {systemName:'monday',engShortName:'Mo',engName:'Monday',rusShortName:'Пн',rusName:'Понедельник'},
     {systemName:'tuesday',engShortName:'Tu',engName:'Tuesday',rusShortName:'Вт',rusName:'Вторник'},

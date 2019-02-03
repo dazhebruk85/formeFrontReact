@@ -127,6 +127,11 @@ class WorkCalendarModal extends Component {
                     <table>
                         <tbody>
                             <tr>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                            </tr>
+                            <tr>
                                 <td style={{textAlign:'center',width:'30px',cursor:'pointer'}}>
                                     <div className={'monthBack'}>
                                         <img onClick={() => this.addMonth(-1)} alt='' src={hideIcon} style={{height:"24px",width:"24px"}}/>
