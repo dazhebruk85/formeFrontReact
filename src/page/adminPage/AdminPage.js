@@ -48,19 +48,27 @@ class AdminPage extends Component {
                     );
                 case 'systemSettings':
                     return (
-                        null
+                        <div>
+                            <label className="control-label col-sm-2">Функционал в разарботке</label>
+                        </div>
                     );
                 case 'chat':
                     return (
-                        null
+                        <div>
+                            <label className="control-label col-sm-2">Функционал в разарботке</label>
+                        </div>
                     );
                 case 'notifyTemplates':
                     return (
-                        null
+                        <div>
+                            <label className="control-label col-sm-2">Функционал в разарботке</label>
+                        </div>
                     );
                 case 'notifyMessages':
                     return (
-                        null
+                        <div>
+                            <label className="control-label col-sm-2">Функционал в разарботке</label>
+                        </div>
                     );
                 default:
                     return (

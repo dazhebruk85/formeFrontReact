@@ -2,6 +2,7 @@ import React, {Component} from 'react';
 import exitPng from '../../../media/data/exit.png';
 import changePasswordPng from '../../../media/data/changePassword.png';
 import changeUserDataPng from '../../../media/data/changeUserData.png';
+import taskCalendarPng from '../../../media/data/taskCalendar.png';
 import ChangePasswordModal from './ChangePasswordModal';
 import UpdateUserDataModal from './UpdateUserDataModal';
 import OkCancelDialog from '../../../component/baseComponent/modal/OkCancelDialog';
@@ -75,6 +76,15 @@ class QuickActionPanel extends Component {
                 <table style={{width:'100%'}}>
                     <tbody>
                     <tr>
+                        <td>
+                            <div style={{width:'100%',height:'100%',padding:'0px',textAlign:'-webkit-center'}}>
+                                <img onClick={null}
+                                     title={'Календарь задач'}
+                                     alt='Календарь задач'
+                                     src={taskCalendarPng}
+                                     style={{width:'28px',height:'28px',cursor:'pointer',marginTop:"0px", marginLeft:"0px"}}/>
+                            </div>
+                        </td>
                         <td>
                             <div style={{width:'100%',height:'100%',padding:'0px',textAlign:'-webkit-center'}}>
                                 <img onClick={this.showUpdateUserDataModal}

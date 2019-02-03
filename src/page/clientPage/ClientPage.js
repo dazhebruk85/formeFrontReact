@@ -30,7 +30,9 @@ class ClientPage extends Component {
                     );
                 case 'chat':
                     return (
-                        null
+                        <div>
+                            <label className="control-label col-sm-2">Функционал в разарботке</label>
+                        </div>
                     );
                 default:
                     return (
