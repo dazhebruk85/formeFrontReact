@@ -50,3 +50,15 @@
     cursor: default;
     color: rgb(202, 202, 202);
 }
+
+.monthBack,
+.monthForward {
+    border: 1px solid rgb(221, 221, 221);
+    background-color: white;
+    border-radius: 5px;
+}
+
+.monthBack:hover,
+.monthForward:hover {
+    background-color: rgb(230, 230, 230);
+}

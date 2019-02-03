@@ -2,6 +2,8 @@ import React, {Component} from 'react';
 import CommonModal from './../../baseComponent/modal/CommonModal'
 import * as DateItils from '../../../utils/DateUtils';
 import './../../../media/workCalendar/workCalendar.css';
+import hideIcon from '../../../media/data/hide.png'
+import showIcon from '../../../media/data/show.png'
 
 class WorkCalendarModal extends Component {
 
@@ -24,6 +26,7 @@ class WorkCalendarModal extends Component {
 
         this.calcDatePeriodsForCalendar = this.calcDatePeriodsForCalendar.bind(this);
         this.fillDatesArrays = this.fillDatesArrays.bind(this);
+        this.addMonth = this.addMonth.bind(this);
         this.closeAction = props.closeAction
     }
 
@@ -50,7 +53,7 @@ class WorkCalendarModal extends Component {
                 endDateForCalendar:endDateForCalendar,
                 calendarCurrentMonth:startDate.getMonth()
             }
-        })
+        });
         setTimeout(() => this.fillDatesArrays(), 0);
     }
 
@@ -97,6 +100,14 @@ class WorkCalendarModal extends Component {
         this.closeAction();
     }
 
+    addMonth(addValue) {
+        if (this.state.fields.startDate) {
+            let startDate = this.state.fields.startDate;
+            let newDate = new Date(startDate.getFullYear(),startDate.getMonth()+addValue, startDate.getDate());
+            this.calcDatePeriodsForCalendar(newDate)
+        }
+    }
+
     render() {
         let todayDate = new Date(new Date().getFullYear(),new Date().getMonth(),new Date().getDate());
         function getDayValueClassName(dayItem, fields) {
@@ -114,25 +125,43 @@ class WorkCalendarModal extends Component {
             <CommonModal loading={this.state.isLoading} title={'Рабочий календарь'} visible={this.props.visible} closeAction={() => this.closeModal()}>
                 <div>
                     <table>
-                        <thead>
-                            <tr>
-                                {DateItils.weekDays.map((item, index) => (
-                                    <td className={'tdWeekDay'} key={'weekHeaderTd'+index}>
-                                        <div className={'divWeekHeaderDay'}>{item.rusShortName}</div>
-                                    </td>
-                                ))}
-                            </tr>
-                        </thead>
                         <tbody>
-                            {this.state.fields.weekArr.map((weekItem, weekIndex) => (
-                                <tr key={'weekValueTr'+weekIndex}>
-                                    {weekItem.map((dayItem, dayIndex) => (
-                                        <td className={'tdWeekDay'} key={'weekValueTd'+weekIndex+dayIndex}>
-                                            <div className={getDayValueClassName(dayItem, this.state.fields)}>{dayItem.dayOfMonth}</div>
-                                        </td>
-                                    ))}
-                                </tr>
-                            ))}
+                            <tr>
+                                <td style={{textAlign:'center',width:'30px',cursor:'pointer'}}>
+                                    <div className={'monthBack'}>
+                                        <img onClick={() => this.addMonth(-1)} alt='' src={hideIcon} style={{height:"24px",width:"24px"}}/>
+                                    </div>
+                                </td>
+                                <td>
+                                    <table>
+                                        <thead>
+                                        <tr>
+                                            {DateItils.weekDays.map((item, index) => (
+                                                <td className={'tdWeekDay'} key={'weekHeaderTd'+index}>
+                                                    <div className={'divWeekHeaderDay'}>{item.rusShortName}</div>
+                                                </td>
+                                            ))}
+                                        </tr>
+                                        </thead>
+                                        <tbody>
+                                        {this.state.fields.weekArr.map((weekItem, weekIndex) => (
+                                            <tr key={'weekValueTr'+weekIndex}>
+                                                {weekItem.map((dayItem, dayIndex) => (
+                                                    <td className={'tdWeekDay'} key={'weekValueTd'+weekIndex+dayIndex}>
+                                                        <div className={getDayValueClassName(dayItem, this.state.fields)}>{dayItem.dayOfMonth}</div>
+                                                    </td>
+                                                ))}
+                                            </tr>
+                                        ))}
+                                        </tbody>
+                                    </table>
+                                </td>
+                                <td style={{textAlign:'center',width:'30px',cursor:'pointer'}}>
+                                    <div className={'monthForward'}>
+                                        <img onClick={() => this.addMonth(1)} alt='' src={showIcon} style={{height:"24px",width:"24px"}}/>
+                                    </div>
+                                </td>
+                            </tr>
                         </tbody>
                     </table>
                 </div>
