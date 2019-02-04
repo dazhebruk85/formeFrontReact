@@ -8,6 +8,8 @@ import UpdateUserDataModal from './UpdateUserDataModal';
 import WorkCalendarModal from './WorkCalendarModal';
 import OkCancelDialog from '../../../component/baseComponent/modal/OkCancelDialog';
 import {Redirect} from "react-router-dom";
+import cookie from 'react-cookies';
+import * as Const from "../../../Const";
 
 class QuickActionPanel extends Component {
 
@@ -73,19 +75,30 @@ class QuickActionPanel extends Component {
             return <Redirect to='/front'/>;
         }
 
+        function addWorkCalendar(comp) {
+            const userRole = cookie.load('userRole');
+            if (userRole !== Const.CLIENT_ROLE) {
+                return (
+                    <div style={{width: '100%', height: '100%', padding: '0px', textAlign: '-webkit-center'}}>
+                        <img onClick={() => comp.setState({workCalendarVisible: true})}
+                             title={'Календарь задач'}
+                             alt='Календарь задач'
+                             src={taskCalendarPng}
+                             style={{width:'28px',height:'28px',cursor:'pointer',marginTop:"0px",marginLeft:"0px"}}/>
+                    </div>
+                );
+            } else {
+                return(<div></div>)
+            }
+        }
+
         return (
             <div style={{width:'100%',height:'100%'}}>
                 <table style={{width:'100%'}}>
                     <tbody>
                     <tr>
                         <td>
-                            <div style={{width:'100%',height:'100%',padding:'0px',textAlign:'-webkit-center'}}>
-                                <img onClick={() => this.setState({workCalendarVisible: true})}
-                                     title={'Календарь задач'}
-                                     alt='Календарь задач'
-                                     src={taskCalendarPng}
-                                     style={{width:'28px',height:'28px',cursor:'pointer',marginTop:"0px", marginLeft:"0px"}}/>
-                            </div>
+                            {addWorkCalendar(this)}
                         </td>
                         <td>
                             <div style={{width:'100%',height:'100%',padding:'0px',textAlign:'-webkit-center'}}>

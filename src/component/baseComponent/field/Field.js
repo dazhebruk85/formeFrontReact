@@ -117,11 +117,12 @@ class Field extends Component {
                                                checked={this.props.checked}
                                                value={this.props.checked}
                                                onChange={this.props.onChange}
-                                               style={checkBoxStyle}/>
+                                               style={checkBoxStyle}
+                                               disabled={this.props.disabled}/>
                                     </div>
                                 </td>
                                 <td style={{width:this.props.labelWidth}}>
-                                    {this.props.label ? <label onClick={(event) => this.checkBoxClick(event)} style={{cursor:'pointer',textAlign:'left',width:this.props.labelWidth}} className="control-label col-sm-2">{this.props.label}</label> : null}
+                                    {this.props.label ? <label onClick={this.props.disabled ? null : (event) => this.checkBoxClick(event)} style={{cursor:'pointer',textAlign:'left',width:this.props.labelWidth}} className="control-label col-sm-2">{this.props.label}</label> : null}
                                 </td>
                             </tr>
                             </tbody>

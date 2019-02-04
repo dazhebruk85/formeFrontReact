@@ -21,6 +21,7 @@ class RepairAppEditForm extends Component {
             errors:[],
             isLoading:false,
             successInfoMessages:[],
+            editFormDisabled:false,
             fields:{
                 common:{
                     entityId: '',
@@ -76,6 +77,9 @@ class RepairAppEditForm extends Component {
             });
         }
         if (this.props.visible && this.props.visible !== prevProps.visible ) {
+            this.setState({
+                editFormDisabled:this.props.disabled
+            });
             setTimeout(() => this.getEntityData(), 0);
         }
     }
@@ -122,6 +126,7 @@ class RepairAppEditForm extends Component {
         this.setState({
             errors:[],
             successInfoMessages:[],
+            editFormDisabled:false,
             fields:{
                 ...this.state.fields,
                 common : {
@@ -306,7 +311,8 @@ class RepairAppEditForm extends Component {
                                                placeholder=''
                                                maxLength={100}
                                                context={Const.BASE_PACKAGE_CONTEXT}
-                                               chooseDictAction={this.chooseBasePackage.bind(this)}/>
+                                               chooseDictAction={this.chooseBasePackage.bind(this)}
+                                               disabled={this.state.editFormDisabled}/>
                                 </td>
                             </tr>
                             <tr>
@@ -320,7 +326,8 @@ class RepairAppEditForm extends Component {
                                                maxLength={100}
                                                context={Const.USER_CONTEXT}
                                                chooseDictAction={this.chooseClientUser.bind(this)}
-                                               dictFilter={{'RAEDictFilter_userRole_systemName_eq':'client'}}/>
+                                               dictFilter={{'RAEDictFilter_userRole_systemName_eq':'client'}}
+                                               disabled={this.state.editFormDisabled}/>
                                 </td>
                             </tr>
                             </tbody>
@@ -328,31 +335,31 @@ class RepairAppEditForm extends Component {
                         <Tabs defaultActiveKey={1} id="uncontrolled-tab-example" style={{height:'500px'}}>
                             <Tab eventKey={1} title="Объект" style={{width:'100%',height:'460px',overflowY:'auto',borderRight:'1px solid #ddd',borderBottom:'1px solid #ddd',borderLeft:'1px solid #ddd',paddingLeft:'10px'}}>
                                 <div style={{paddingTop:'10px'}}>
-                                    <Field formStyle={{marginRight:'0px'}} fieldWidth='667px' style={{resize:'none',height:'50px'}} labelWidth='80px' label='Адрес' maxLength={255} type={Const.TEXTAREA} value={this.state.fields.realEstate.address} onChange={(event) => this.handleChange(event.target.value,'address','realEstate')}/>
+                                    <Field disabled={this.state.editFormDisabled} formStyle={{marginRight:'0px'}} fieldWidth='667px' style={{resize:'none',height:'50px'}} labelWidth='80px' label='Адрес' maxLength={255} type={Const.TEXTAREA} value={this.state.fields.realEstate.address} onChange={(event) => this.handleChange(event.target.value,'address','realEstate')}/>
                                     <table>
                                         <tbody>
                                         <tr>
                                             <td>
-                                                <Field labelWidth='80px' fieldWidth='150px' label='Подъезд' maxLength={10} type={Const.TEXTFIELD} value={this.state.fields.realEstate.entranceNum} onChange={(event) => this.handleChange(event.target.value,'entranceNum','realEstate')}/>
+                                                <Field disabled={this.state.editFormDisabled} labelWidth='80px' fieldWidth='150px' label='Подъезд' maxLength={10} type={Const.TEXTFIELD} value={this.state.fields.realEstate.entranceNum} onChange={(event) => this.handleChange(event.target.value,'entranceNum','realEstate')}/>
                                             </td>
                                             <td>
-                                                <Field labelWidth='80px' fieldWidth='150px' label='Этаж' maxLength={10} type={Const.TEXTFIELD} value={this.state.fields.realEstate.floor} onChange={(event) => this.handleChange(event.target.value, 'floor','realEstate')}/>
+                                                <Field disabled={this.state.editFormDisabled} labelWidth='80px' fieldWidth='150px' label='Этаж' maxLength={10} type={Const.TEXTFIELD} value={this.state.fields.realEstate.floor} onChange={(event) => this.handleChange(event.target.value, 'floor','realEstate')}/>
                                             </td>
                                         </tr>
                                         </tbody>
                                     </table>
                                     <CollapsePanel style={{width:'99%',marginBottom:'10px'}} title={'Помещения для ремонта'}>
-                                        <RepairAppRoomGrid parent={this} onChangeAction={() => {setTimeout(() => this.cnangeTotalArea(), 0); setTimeout(() => this.changeTotalCost(), 0);}}/>
+                                        <RepairAppRoomGrid disabled={this.state.editFormDisabled} parent={this} onChangeAction={() => {setTimeout(() => this.cnangeTotalArea(), 0); setTimeout(() => this.changeTotalCost(), 0);}}/>
                                     </CollapsePanel>
                                     <CollapsePanel style={{width:'99%',marginBottom:'10px'}} title={'Ограничения'}>
                                         <div style={{height:'200px',overflowY:'auto'}}>
-                                            <Field labelWidth='400px' label='Отсутствие контейнера для строительного мусора' type={Const.CHECKBOX} checked={this.state.fields.realEstate.trashCanNotExist} onChange={(event) => this.handleChange(event.target.checked,'trashCanNotExist','realEstate')}/>
-                                            <Field labelWidth='400px' label='Отсутствие пассажирского лифта' type={Const.CHECKBOX} checked={this.state.fields.realEstate.passLiftNotExist} onChange={(event) => this.handleChange(event.target.checked,'passLiftNotExist','realEstate')}/>
-                                            <Field labelWidth='400px' label='Отсутствие грузового лифта' type={Const.CHECKBOX} checked={this.state.fields.realEstate.serviceLiftNotExist} onChange={(event) => this.handleChange(event.target.checked,'serviceLiftNotExist','realEstate')}/>
-                                            <Field labelWidth='400px' label='Ограничения по высоте борта' type={Const.CHECKBOX} checked={this.state.fields.realEstate.heightRestrictExist} onChange={(event) => this.handleChange(event.target.checked,'heightRestrictExist','realEstate')}/>
-                                            <Field labelWidth='400px' label='Требуется пронос материала от паркинга до подъезда' type={Const.CHECKBOX} checked={this.state.fields.realEstate.needCarryFromParkToEnt} onChange={(event) => this.handleChange(event.target.checked,'needCarryFromParkToEnt','realEstate')}/>
-                                            <Field labelWidth='400px' label='Требуется пронос материала на этаж' type={Const.CHECKBOX} checked={this.state.fields.realEstate.needCarryToFloor} onChange={(event) => this.handleChange(event.target.checked,'needCarryToFloor','realEstate')}/>
-                                            <Field labelWidth='400px' label='Требуется разрешение УК на допуск рабочих' type={Const.CHECKBOX} checked={this.state.fields.realEstate.needUkAccept} onChange={(event) => this.handleChange(event.target.checked,'needUkAccept','realEstate')}/>
+                                            <Field disabled={this.state.editFormDisabled} labelWidth='400px' label='Отсутствие контейнера для строительного мусора' type={Const.CHECKBOX} checked={this.state.fields.realEstate.trashCanNotExist} onChange={(event) => this.handleChange(event.target.checked,'trashCanNotExist','realEstate')}/>
+                                            <Field disabled={this.state.editFormDisabled} labelWidth='400px' label='Отсутствие пассажирского лифта' type={Const.CHECKBOX} checked={this.state.fields.realEstate.passLiftNotExist} onChange={(event) => this.handleChange(event.target.checked,'passLiftNotExist','realEstate')}/>
+                                            <Field disabled={this.state.editFormDisabled} labelWidth='400px' label='Отсутствие грузового лифта' type={Const.CHECKBOX} checked={this.state.fields.realEstate.serviceLiftNotExist} onChange={(event) => this.handleChange(event.target.checked,'serviceLiftNotExist','realEstate')}/>
+                                            <Field disabled={this.state.editFormDisabled} labelWidth='400px' label='Ограничения по высоте борта' type={Const.CHECKBOX} checked={this.state.fields.realEstate.heightRestrictExist} onChange={(event) => this.handleChange(event.target.checked,'heightRestrictExist','realEstate')}/>
+                                            <Field disabled={this.state.editFormDisabled} labelWidth='400px' label='Требуется пронос материала от паркинга до подъезда' type={Const.CHECKBOX} checked={this.state.fields.realEstate.needCarryFromParkToEnt} onChange={(event) => this.handleChange(event.target.checked,'needCarryFromParkToEnt','realEstate')}/>
+                                            <Field disabled={this.state.editFormDisabled} labelWidth='400px' label='Требуется пронос материала на этаж' type={Const.CHECKBOX} checked={this.state.fields.realEstate.needCarryToFloor} onChange={(event) => this.handleChange(event.target.checked,'needCarryToFloor','realEstate')}/>
+                                            <Field disabled={this.state.editFormDisabled} labelWidth='400px' label='Требуется разрешение УК на допуск рабочих' type={Const.CHECKBOX} checked={this.state.fields.realEstate.needUkAccept} onChange={(event) => this.handleChange(event.target.checked,'needUkAccept','realEstate')}/>
                                         </div>
                                     </CollapsePanel>
                                 </div>

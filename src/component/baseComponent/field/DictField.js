@@ -12,12 +12,21 @@ class DictField extends Component {
 
         this.state = {
             visible: false,
-            selectedEntity:null
-        }
+            selectedEntity:null,
+            disabled:false
+        };
 
         this.openDict = this.openDict.bind(this);
         this.closeDict = this.closeDict.bind(this);
         this.chooseDictAction = props.chooseDictAction
+    }
+
+    componentDidUpdate(prevProps) {
+        if (this.props.disabled !== prevProps.disabled) {
+            this.setState({
+                disabled:this.props.disabled
+            });
+        }
     }
 
     openDict() {
@@ -48,6 +57,9 @@ class DictField extends Component {
     }
 
     render() {
+
+        let dictDisabled = this.state.disabled;
+
         return(
             <div className="form-group">
                 {this.props.label ? <label style={{width:this.props.labelWidth}} className="control-label col-sm-2">{this.props.label}</label> : null}
@@ -66,10 +78,10 @@ class DictField extends Component {
                                        disabled={true}/>
                             </td>
                             <td>
-                                <img title={'Открыть справочник'} alt={''} src={dictPng} style={{marginBottom:'1px',marginLeft:'-42px',width:'16px',height:'16px',cursor:'pointer'}} onClick={this.openDict}/>
+                                <img title={'Открыть справочник'} alt={''} src={dictPng} style={{opacity:dictDisabled?'0.5':'1',marginBottom:'1px',marginLeft:'-42px',width:'16px',height:'16px',cursor:'pointer'}} onClick={dictDisabled ? null : this.openDict}/>
                             </td>
                             <td>
-                                <img title={'Очистить'} alt={''} src={dictClearPng} style={{marginBottom:'1px',marginLeft:'-22px',width:'16px',height:'16px',cursor:'pointer'}} onClick={() => this.clearDict()}/>
+                                <img title={'Очистить'} alt={''} src={dictClearPng} style={{opacity:dictDisabled?'0.5':'1',marginBottom:'1px',marginLeft:'-22px',width:'16px',height:'16px',cursor:'pointer'}} onClick={dictDisabled ? null : () => this.clearDict()}/>
                             </td>
                         </tr>
                         </tbody>

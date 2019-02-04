@@ -18,12 +18,14 @@ class RepairAppList extends Component {
             errors:[],
             selectedEntityId:'',
             editFormVisible:false,
+            editFormDisabled:false,
             deleteEntityDialogVisible:false,
             filter:{}
         };
 
         this.addEntity = this.addEntity.bind(this);
         this.editEntity = this.editEntity.bind(this);
+        this.viewEntity = this.viewEntity.bind(this);
         this.deleteEntity = this.deleteEntity.bind(this);
         this.refreshList = this.refreshList.bind(this);
         this.deleteEntityConfirm = this.deleteEntityConfirm.bind(this);
@@ -37,7 +39,10 @@ class RepairAppList extends Component {
 
     addEntity() {
         this.setState({selectedEntityId:''});
-        setTimeout(() => this.setState({editFormVisible:true}), 0);
+        setTimeout(() => this.setState({
+            editFormVisible:true,
+            editFormDisabled:false
+        }), 0);
     }
 
     editEntity() {
@@ -45,7 +50,19 @@ class RepairAppList extends Component {
             this.setState({errors:[{code:'',message:'Необходимо выбрать запись'}]});
         } else {
             this.setState({
-                editFormVisible: true
+                editFormVisible:true,
+                editFormDisabled:false
+            });
+        }
+    }
+
+    viewEntity() {
+        if (CommonUtils.objectIsEmpty(this.state.selectedEntityId)) {
+            this.setState({errors:[{code:'',message:'Необходимо выбрать запись'}]});
+        } else {
+            this.setState({
+                editFormVisible:true,
+                editFormDisabled:true
             });
         }
     }
@@ -78,16 +95,30 @@ class RepairAppList extends Component {
     }
 
     render() {
+        function addActions(comp) {
+            const userRole = cookie.load('userRole');
+            if (userRole !== Const.CLIENT_ROLE) {
+                return (
+                    <div className="form-group" style={{marginLeft:'5px', marginBottom:'0px'}}>
+                        <Button style={{marginLeft:'5px'}} value="Создать" onClick={comp.addEntity}/>
+                        <Button style={{marginLeft:'5px'}} value="Редактировать" onClick={comp.editEntity}/>
+                        <Button style={{marginLeft:'5px'}} value="Удалить" onClick={comp.deleteEntity}/>
+                        <Button style={{marginLeft:'5px'}} value="Обновить" onClick={comp.refreshList}/>
+                    </div>
+                );
+            } else {
+                return(<div className="form-group" style={{marginLeft:'5px', marginBottom:'0px'}}>
+                    <Button style={{marginLeft:'5px'}} value="Просмотр" onClick={comp.viewEntity}/>
+                    <Button style={{marginLeft:'5px'}} value="Обновить" onClick={comp.refreshList}/>
+                </div>)
+            }
+        }
+
         return(
             <div>
-                <div className="form-group" style={{marginLeft:'5px', marginBottom:'0px'}}>
-                    <Button style={{marginLeft:'5px'}} value="Создать" onClick={this.addEntity}/>
-                    <Button style={{marginLeft:'5px'}} value="Редактировать" onClick={this.editEntity}/>
-                    <Button style={{marginLeft:'5px'}} value="Удалить" onClick={this.deleteEntity}/>
-                    <Button style={{marginLeft:'5px'}} value="Обновить" onClick={this.refreshList}/>
-                </div>
+                {addActions(this)}
                 <CommonDbGrid selectAction={this.changeGridSelection.bind(this)} ref={'ULRepairAppGrid'} dataEntityContext={Const.REPAIR_APP_FORM_CONTEXT} pageSize={10}/>
-                <RepairAppEditForm entityId={this.state.selectedEntityId} visible={this.state.editFormVisible} closeAction={() => {this.setState({editFormVisible:false,selectedEntityId:''});this.refreshList()}}/>
+                <RepairAppEditForm disabled={this.state.editFormDisabled} entityId={this.state.selectedEntityId} visible={this.state.editFormVisible} closeAction={() => {this.setState({editFormVisible:false,selectedEntityId:''});this.refreshList()}}/>
                 <ErrorModal errors={this.state.errors} closeAction={() => this.setState({errors:[]})}/>
                 <OkCancelDialog okCancelVisible={this.state.deleteEntityDialogVisible}
                                 cancelAction={() => this.setState({deleteEntityDialogVisible:false})}

@@ -16,6 +16,7 @@ class RepairAppRoomEditForm extends Component {
 
         this.state = {
             errors:[],
+            disabled:false,
             fields:{
                 common:{
                     entityId:'',
@@ -32,6 +33,9 @@ class RepairAppRoomEditForm extends Component {
 
     componentDidUpdate(prevProps) {
         if (this.props.visible && this.props.visible !== prevProps.visible ) {
+            this.setState({
+                disabled:this.props.disabled
+            });
             if (CommonUtils.objectIsEmpty(this.state.fields.common.entityId)) {
                 setTimeout(() => this.getNewUuid(), 0);
             }
@@ -122,6 +126,9 @@ class RepairAppRoomEditForm extends Component {
     }
 
     render() {
+
+        let formDisabled = this.state.disabled;
+
         return (
             <CommonModal title={'Добавить/Редактировать запись'} visible={this.props.visible} style={{width:'540px'}} closeAction={() => this.closeModal()}>
                 <div>
@@ -134,8 +141,9 @@ class RepairAppRoomEditForm extends Component {
                                    placeholder=''
                                    maxLength={100}
                                    context={Const.ROOM_TYPE_CONTEXT}
-                                   chooseDictAction={this.chooseRoomType.bind(this)}/>
-                        <Field labelWidth='150px' fieldWidth='300px' label='Площадь' type={Const.DECIMALFIELD} value={this.state.fields.common.area} onChange={(event) => this.handleChange(event.target.value,'area','common')} maxLength={20}/>
+                                   chooseDictAction={this.chooseRoomType.bind(this)}
+                                   disabled={formDisabled}/>
+                        <Field disabled={formDisabled} labelWidth='150px' fieldWidth='300px' label='Площадь' type={Const.DECIMALFIELD} value={this.state.fields.common.area} onChange={(event) => this.handleChange(event.target.value,'area','common')} maxLength={20}/>
                         <div className="btn-toolbar align-bottom" role="toolbar" style={{justifyContent:'center',display:'flex'}}>
                             <Button value="Ок" onClick={() => this.okAction()}/>
                             <Button value="Отмена" onClick={() => this.closeModal()}/>

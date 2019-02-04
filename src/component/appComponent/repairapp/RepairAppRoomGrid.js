@@ -7,6 +7,7 @@ import ErrorModal from "../../baseComponent/modal/ErrorModal";
 import addActionPng from '../../../media/data/gridAdd.png';
 import deleteActionPng from '../../../media/data/gridDelete.png';
 import editActionPng from '../../../media/data/gridEdit.png';
+import viewActionPng from '../../../media/data/gridView.png';
 
 class RepairAppRoomGrid extends Component {
 
@@ -14,9 +15,19 @@ class RepairAppRoomGrid extends Component {
         super(props);
         this.state = {
             roomEditFormVisible:false,
-            errors:[]
+            roomEditFormDisabled:false,
+            errors:[],
+            disabled:false
         };
         this.onChangeAction = props.onChangeAction;
+    }
+
+    componentDidUpdate(prevProps) {
+        if (this.props.disabled !== prevProps.disabled ) {
+            this.setState({
+                disabled:this.props.disabled,
+            });
+        }
     }
 
     addRoomAction() {
@@ -30,10 +41,13 @@ class RepairAppRoomGrid extends Component {
                 }
             }
         });
-        setTimeout(() => this.setState({roomEditFormVisible:true}), 0)
+        setTimeout(() => this.setState({
+            roomEditFormVisible:true,
+            roomEditFormDisabled:false
+        }), 0)
     }
 
-    editRoomAction() {
+    editRoomAction(disabled) {
         let roomObject = this.refs.roomsGrid.state.selectedItem;
         if (CommonUtils.objectIsEmpty(roomObject)) {
             this.setState({errors:[{code:'',message:'Необходимо выбрать запись'}]});
@@ -44,7 +58,10 @@ class RepairAppRoomGrid extends Component {
                     common:roomObject
                 }
             });
-            setTimeout(() => this.setState({roomEditFormVisible:true}), 0);
+            setTimeout(() => this.setState({
+                roomEditFormVisible:true,
+                roomEditFormDisabled:disabled
+            }), 0);
         }
     }
 
@@ -81,6 +98,9 @@ class RepairAppRoomGrid extends Component {
     }
 
     render() {
+
+        let gridDisabled = this.state.disabled;
+
         return(
             <div>
                 <div style={{width:'100%'}}>
@@ -88,13 +108,16 @@ class RepairAppRoomGrid extends Component {
                         <tbody>
                             <tr>
                                 <td style={{width:'30px'}}>
-                                    <img alt='' title={'Добавить запись'} onClick={() => this.addRoomAction()} src={addActionPng} style={{cursor:'pointer',height:"24px",width:"24px"}}/>
+                                    <img alt='' title={'Добавить запись'} onClick={gridDisabled ? null : () => this.addRoomAction()} src={addActionPng} style={{opacity:gridDisabled?'0.5':'1',cursor:'pointer',height:"24px",width:"24px"}}/>
                                 </td>
                                 <td style={{width:'30px'}}>
-                                    <img alt='' title={'Редактировать запись'} onClick={() => this.editRoomAction()} src={editActionPng} style={{cursor:'pointer',height:"24px",width:"24px"}}/>
+                                    <img alt='' title={'Редактировать запись'} onClick={gridDisabled ? null : () => this.editRoomAction(false)} src={editActionPng} style={{opacity:gridDisabled?'0.5':'1',cursor:'pointer',height:"24px",width:"24px"}}/>
                                 </td>
                                 <td style={{width:'30px'}}>
-                                    <img alt='' title={'Удалить запись'} onClick={() => this.deleteRoomAction()} src={deleteActionPng} style={{cursor:'pointer',height:"24px",width:"24px"}}/>
+                                    <img alt='' title={'Удалить запись'} onClick={gridDisabled ? null : () => this.deleteRoomAction()} src={deleteActionPng} style={{opacity:gridDisabled?'0.5':'1',cursor:'pointer',height:"24px",width:"24px"}}/>
+                                </td>
+                                <td style={{width:'30px'}}>
+                                    <img alt='' title={'Просмотреть запись'} onClick={() => this.editRoomAction(true)} src={viewActionPng} style={{cursor:'pointer',height:"24px",width:"24px"}}/>
                                 </td>
                             </tr>
                         </tbody>
@@ -104,7 +127,7 @@ class RepairAppRoomGrid extends Component {
                 <CommonGrid ref={'roomsGrid'}
                             gridData={this.props.parent && this.props.parent.state && this.props.parent.state.fields.rooms ? this.props.parent.state.fields.rooms : {}}
                             height={'150px'}/>
-                <RepairAppRoomEditForm ref={'roomEditForm'} visible={this.state.roomEditFormVisible} okAction={(event) => this.changeRooms(event)} closeAction={() => {this.setState({roomEditFormVisible:false}); this.refs.roomsGrid.setState({selectedItem:{}});}}/>
+                <RepairAppRoomEditForm disabled={this.state.roomEditFormDisabled} ref={'roomEditForm'} visible={this.state.roomEditFormVisible} okAction={(event) => this.changeRooms(event)} closeAction={() => {this.setState({roomEditFormVisible:false}); this.refs.roomsGrid.setState({selectedItem:{}});}}/>
                 <ErrorModal errors={this.state.errors} closeAction={() => this.setState({errors:[]})}/>
             </div>
         )
