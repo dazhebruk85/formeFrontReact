@@ -55,7 +55,6 @@ class Field extends Component {
                     </div>
                 );
             case Const.PASSWORD:
-
                 return (
                     <div className="form-group">
                         {this.props.label ? <label style={{width:this.props.labelWidth}} className="control-label col-sm-2">{this.props.label}</label> : null}

@@ -25,6 +25,7 @@ class UserEditForm extends Component {
                     birthDate:undefined,
                     phone:'',
                     email:'',
+                    skype:'',
                     passportSeries:'',
                     passportNumber:'',
                     passportIssuedBy:'',
@@ -87,6 +88,7 @@ class UserEditForm extends Component {
                     birthDate:undefined,
                     phone:'',
                     email:'',
+                    skype:'',
                     passportSeries:'',
                     passportNumber:'',
                     passportIssuedBy:'',
@@ -176,6 +178,7 @@ class UserEditForm extends Component {
                         <Field style={{resize:'none',height:'75px'}} labelWidth='150px' fieldWidth='300px' label='Адрес регистрации' type={Const.TEXTAREA} value={this.state.fields.common.regAddress} onChange={(event) => this.handleChange(event.target.value,'regAddress','common')} placeholder='Адрес регистрации' maxLength={255}/>
                         <Field labelWidth='150px' fieldWidth='300px' label='Телефон' type={Const.TEXTFIELD} value={this.state.fields.common.phone} onChange={(event) => this.handleChange(event.target.value,'phone','common')} placeholder='Телефон' maxLength={100}/>
                         <Field labelWidth='150px' fieldWidth='300px' label='Email' type={Const.TEXTFIELD} value={this.state.fields.common.email} onChange={(event) => this.handleChange(event.target.value,'email','common')} placeholder='Email' maxLength={100}/>
+                        <Field labelWidth='150px' fieldWidth='300px' label='Skype' type={Const.TEXTFIELD} value={this.state.fields.common.skype} onChange={(event) => this.handleChange(event.target.value,'skype','common')} placeholder='Skype' maxLength={100}/>
                         <DictField labelWidth='150px'
                                    fieldWidth='300px'
                                    label='Роль пользователя'
