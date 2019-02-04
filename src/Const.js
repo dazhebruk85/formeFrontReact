@@ -30,6 +30,9 @@ export const REPAIR_APP_FORM_CONTEXT = "repairAppForm";
 //Room type context
 export const ROOM_TYPE_CONTEXT = "roomType";
 
+//Config param context
+export const CONFIG_PARAM_CONTEXT = "configParam";
+
 //Common entity actions
 export const ENTITY_LIST = "entityList";
 export const ENTITY_GET = "entityGet";

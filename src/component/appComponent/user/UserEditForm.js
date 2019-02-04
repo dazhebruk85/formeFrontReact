@@ -16,7 +16,6 @@ class UserEditForm extends Component {
         this.state = {
             errors:[],
             isLoading:false,
-            closeAction:props.closeAction,
             successInfoMessages:[],
             fields:{
                 common:{
@@ -38,8 +37,8 @@ class UserEditForm extends Component {
 
         this.handleChange = this.handleChange.bind(this);
         this.closeModal = this.closeModal.bind(this);
-        this.saveUserData = this.saveUserData.bind(this);
-        this.getUserData = this.getUserData.bind(this);
+        this.saveEntityData = this.saveEntityData.bind(this);
+        this.getEntityData = this.getEntityData.bind(this);
         this.closeAction = props.closeAction
     }
 
@@ -56,11 +55,11 @@ class UserEditForm extends Component {
             });
         }
         if (this.props.visible && this.props.visible !== prevProps.visible ) {
-            setTimeout(() => this.getUserData(), 0);
+            setTimeout(() => this.getEntityData(), 0);
         }
     }
 
-    async getUserData() {
+    async getEntityData() {
         if (this.state.fields.common.entityId) {
             this.setState({isLoading:true});
             let params = {entityId: this.state.fields.common.entityId};
@@ -100,7 +99,7 @@ class UserEditForm extends Component {
         this.closeAction()
     }
 
-    async saveUserData() {
+    async saveEntityData() {
         let errors = [];
         if (!this.state.fields.common.fio) {errors.push({code:'',message:'Необходимо заполнить ФИО'})}
         if (!this.state.fields.common.login) {errors.push({code:'',message:'Необходимо заполнить Логин'})}
@@ -187,7 +186,7 @@ class UserEditForm extends Component {
                                    context={Const.USER_ROLE_CONTEXT}
                                    chooseDictAction={this.chooseUserRole.bind(this)}/>
                         <div className="btn-toolbar align-bottom" role="toolbar" style={{justifyContent:'center',display:'flex'}}>
-                            <Button value="Ок" onClick={() => this.saveUserData()}/>
+                            <Button value="Ок" onClick={() => this.saveEntityData()}/>
                             <Button value="Отмена" onClick={() => this.closeModal()}/>
                         </div>
                     </form>

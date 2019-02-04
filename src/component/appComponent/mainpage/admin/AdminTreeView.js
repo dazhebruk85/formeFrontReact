@@ -9,7 +9,7 @@ import userRolesIcon from '../../../../media/tree/userRoles.png'
 import basePackageIcon from '../../../../media/tree/basePackage.png'
 import roomTypeIcon from '../../../../media/tree/roomType.png'
 import systemIcon from '../../../../media/tree/system.png'
-import systemSettingsIcon from '../../../../media/tree/systemSettings.png'
+import configParamIcon from '../../../../media/tree/configParam.png'
 import chatIcon from '../../../../media/tree/chat.png'
 
 import notificationsIcon from '../../../../media/tree/notifocations.png'
@@ -33,7 +33,7 @@ const treeData = [
             ]}
             ,{key:'system',icon:<img alt='' src={systemIcon} style={{width:'20px',height:'20px',marginTop:"0px", marginLeft:"0px"}}/>,title:'Система',children:
                 [
-                    {key:'systemSettings',icon:<img alt='' src={systemSettingsIcon} style={{width:'20px',height:'20px',marginTop:"0px", marginLeft:"0px"}}/>,title:'Настойки системы'}
+                    {key:'configParam',icon:<img alt='' src={configParamIcon} style={{width:'20px',height:'20px',marginTop:"0px", marginLeft:"0px"}}/>,title:'Настойки системы'}
                     ,{key:'notifications',icon:<img alt='' src={notificationsIcon} style={{width:'20px',height:'20px',marginTop:"0px", marginLeft:"0px"}}/>,title:'Оповещения',children:
                         [
                             {key:'notifyTemplates',icon:<img alt='' src={notifyTemplatesIcon} style={{width:'20px',height:'20px',marginTop:"0px", marginLeft:"0px"}}/>,title:'Шаблоны'}

@@ -39,6 +39,7 @@ class UserSetPasswordModal extends Component {
                 fields:{
                     ...this.state.fields,
                     common:{
+                        ...this.state.fields.common,
                         userId:this.props.userId,
                         userLogin:this.props.userLogin
                     }
@@ -54,6 +55,7 @@ class UserSetPasswordModal extends Component {
             fields:{
                 ...this.state.fields,
                 common:{
+                    ...this.state.fields.common,
                     userId:'',
                     userLogin:'',
                     newPassword:'',

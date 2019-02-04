@@ -20,9 +20,7 @@ class RepairAppEditForm extends Component {
         this.state = {
             errors:[],
             isLoading:false,
-            closeAction:props.closeAction,
             successInfoMessages:[],
-            restrictionsOpen:true,
             fields:{
                 common:{
                     entityId: '',
@@ -58,7 +56,8 @@ class RepairAppEditForm extends Component {
 
         this.handleChange = this.handleChange.bind(this);
         this.closeModal = this.closeModal.bind(this);
-        this.getRepairAppData = this.getRepairAppData.bind(this);
+        this.getEntityData = this.getEntityData.bind(this);
+        this.saveEntityData = this.saveEntityData.bind(this);
         this.cnangeTotalArea = this.cnangeTotalArea.bind(this);
         this.changeTotalCost = this.changeTotalCost.bind(this);
         this.closeAction = props.closeAction
@@ -77,11 +76,11 @@ class RepairAppEditForm extends Component {
             });
         }
         if (this.props.visible && this.props.visible !== prevProps.visible ) {
-            setTimeout(() => this.getRepairAppData(), 0);
+            setTimeout(() => this.getEntityData(), 0);
         }
     }
 
-    async getRepairAppData() {
+    async getEntityData() {
         if (this.state.fields.common.entityId) {
             //Редактирование анкеты
             this.setState({isLoading:true});
@@ -166,7 +165,7 @@ class RepairAppEditForm extends Component {
         CommonUtils.commonHandleChange(this,context,fieldName,value)
     }
 
-    async saveRepairAppData() {
+    async saveEntityData() {
         let errors = [];
         if (!this.state.fields.basePackage.entityId) {errors.push({code:'',message:'Необходимо заполнить базовый пакет'})}
         if (errors.length > 0) {
@@ -401,7 +400,7 @@ class RepairAppEditForm extends Component {
                             </tbody>
                         </table>
                         <div className="btn-toolbar align-bottom" role="toolbar" style={{justifyContent:'center',display:'flex'}}>
-                            <Button value="Ок" onClick={() => this.saveRepairAppData()}/>
+                            <Button value="Ок" onClick={() => this.saveEntityData()}/>
                             <Button value="Отмена" onClick={() => this.closeModal()}/>
                         </div>
                     </form>

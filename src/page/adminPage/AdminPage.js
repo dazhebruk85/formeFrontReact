@@ -7,6 +7,7 @@ import UserRoleList from '../../component/appComponent/userrole/UserRoleList';
 import BasePackageList from '../../component/appComponent/basePackage/BasePackageList';
 import RoomTypeList from '../../component/appComponent/roomtype/RoomTypeList';
 import RepairAppList from "../../component/appComponent/repairapp/RepairAppList";
+import ConfigParamList from "../../component/appComponent/configParam/ConfigParamList";
 
 class AdminPage extends Component {
 
@@ -46,11 +47,9 @@ class AdminPage extends Component {
                     return (
                         <RepairAppList/>
                     );
-                case 'systemSettings':
+                case 'configParam':
                     return (
-                        <div>
-                            <label className="control-label col-sm-2">Функционал в разарботке</label>
-                        </div>
+                        <ConfigParamList/>
                     );
                 case 'chat':
                     return (

@@ -21,7 +21,7 @@ class UserList extends Component {
         this.state = {
             errors: [],
             editFormVisible: false,
-            selectedUserId: '',
+            selectedEntityId: '',
             selectedUserLogin: '',
             deleteEntityDialogVisible:false,
             setNewPasswordModalVisible: false,
@@ -36,11 +36,11 @@ class UserList extends Component {
             }
         };
 
-        this.addUserEntity = this.addUserEntity.bind(this);
-        this.editUserEntity = this.editUserEntity.bind(this);
-        this.deleteUserEntity = this.deleteUserEntity.bind(this);
-        this.deleteUserEntityConfirm = this.deleteUserEntityConfirm.bind(this);
-        this.refreshUserList = this.refreshUserList.bind(this);
+        this.addEntity = this.addEntity.bind(this);
+        this.editEntity = this.editEntity.bind(this);
+        this.deleteEntity = this.deleteEntity.bind(this);
+        this.deleteEntityConfirm = this.deleteEntityConfirm.bind(this);
+        this.refreshList = this.refreshList.bind(this);
         this.clearFilter = this.clearFilter.bind(this);
         this.handleChange = this.handleChange.bind(this);
         this.showSetNewPasswordModal = this.showSetNewPasswordModal.bind(this);
@@ -48,7 +48,7 @@ class UserList extends Component {
     }
 
     showSetNewPasswordModal(evt) {
-        if (CommonUtils.objectIsEmpty(this.state.selectedUserId)) {
+        if (CommonUtils.objectIsEmpty(this.state.selectedEntityId)) {
             this.setState({errors:[{code:'',message:'Необходимо выбрать запись'}]});
         } else {
             this.setState({setNewPasswordModalVisible: true})
@@ -61,13 +61,13 @@ class UserList extends Component {
         })
     }
 
-    addUserEntity() {
-        this.setState({selectedUserId:''});
+    addEntity() {
+        this.setState({selectedEntityId:''});
         setTimeout(() => this.setState({editFormVisible:true}), 0);
     }
 
-    editUserEntity() {
-        if (CommonUtils.objectIsEmpty(this.state.selectedUserId)) {
+    editEntity() {
+        if (CommonUtils.objectIsEmpty(this.state.selectedEntityId)) {
             this.setState({errors:[{code:'',message:'Необходимо выбрать запись'}]});
         } else {
             this.setState({
@@ -76,16 +76,16 @@ class UserList extends Component {
         }
     }
 
-    deleteUserEntity() {
-        if (CommonUtils.objectIsEmpty(this.state.selectedUserId)) {
+    deleteEntity() {
+        if (CommonUtils.objectIsEmpty(this.state.selectedEntityId)) {
             this.setState({errors:[{code:'',message:'Необходимо выбрать запись'}]});
         } else {
             this.setState({deleteEntityDialogVisible:true});
         }
     }
 
-    async deleteUserEntityConfirm() {
-        let params = {entityId: this.state.selectedUserId};
+    async deleteEntityConfirm() {
+        let params = {entityId: this.state.selectedEntityId};
         let responseData = await CommonUtils.makeAsyncPostEvent(Const.APP_URL,Const.USER_CONTEXT,Const.ENTITY_DELETE,params,cookie.load('sessionId'));
         if (responseData.errors.length > 0) {
             this.setState({errors: responseData.errors});
@@ -94,22 +94,22 @@ class UserList extends Component {
                 successInfoMessages: [{code:'INFO',message:'Пользователь удален'}],
                 deleteEntityDialogVisible:false
             });
-            this.refreshUserList();
+            this.refreshList();
         }
     }
 
-    refreshUserList() {
+    refreshList() {
         this.refs.ULUserGrid.getGridListData();
         this.setState({
-            selectedUserId:'',
+            selectedEntityId:'',
             selectedUserLogin:''
         })
     }
 
-    changeGridSelection(selectedUser) {
+    changeGridSelection(selectedEntity) {
         this.setState({
-            selectedUserId:selectedUser.entityId,
-            selectedUserLogin:selectedUser.login,
+            selectedEntityId:selectedEntity.entityId,
+            selectedUserLogin:selectedEntity.login,
         });
     }
 
@@ -139,7 +139,7 @@ class UserList extends Component {
                 }
             }
         });
-        setTimeout(() => this.refreshUserList(), 0);
+        setTimeout(() => this.refreshList(), 0);
     }
 
     handleChange(value,fieldName,context) {
@@ -150,10 +150,10 @@ class UserList extends Component {
         return(
             <div>
                 <div className="form-group" style={{marginLeft:'5px', marginBottom:'10px'}}>
-                    <Button style={{marginLeft:'5px'}} value="Создать" onClick={this.addUserEntity}/>
-                    <Button style={{marginLeft:'5px'}} value="Редактировать" onClick={this.editUserEntity}/>
-                    <Button style={{marginLeft:'5px'}} value="Удалить" onClick={this.deleteUserEntity}/>
-                    <Button style={{marginLeft:'5px'}} value="Обновить" onClick={this.refreshUserList}/>
+                    <Button style={{marginLeft:'5px'}} value="Создать" onClick={this.addEntity}/>
+                    <Button style={{marginLeft:'5px'}} value="Редактировать" onClick={this.editEntity}/>
+                    <Button style={{marginLeft:'5px'}} value="Удалить" onClick={this.deleteEntity}/>
+                    <Button style={{marginLeft:'5px'}} value="Обновить" onClick={this.refreshList}/>
                     <Button style={{marginLeft:'5px'}} value="Задать пароль" onClick={this.showSetNewPasswordModal}/>
                 </div>
                 <div style={{marginLeft:'10px'}}>
@@ -195,21 +195,21 @@ class UserList extends Component {
                             </table>
                             <div className="form-group" style={{marginBottom:'0px'}}>
                                 <label style={{width:'110px'}} className="control-label col-sm-2"></label>
-                                <Button style={{marginLeft:'5px'}} value="Применить" onClick={this.refreshUserList}/>
+                                <Button style={{marginLeft:'5px'}} value="Применить" onClick={this.refreshList}/>
                                 <Button style={{marginLeft:'5px'}} value="Очистить" onClick={this.clearFilter}/>
                             </div>
                         </form>
                     </CollapsePanel>
                 </div>
                 <CommonDbGrid filter={this.state.fields.filter} selectAction={this.changeGridSelection.bind(this)} ref={'ULUserGrid'} dataEntityContext={Const.USER_CONTEXT} pageSize={10}/>
-                <UserEditForm entityId={this.state.selectedUserId} visible={this.state.editFormVisible} closeAction={() => {this.setState({editFormVisible:false,selectedUserId:''});this.refreshUserList()}}/>
+                <UserEditForm entityId={this.state.selectedEntityId} visible={this.state.editFormVisible} closeAction={() => {this.setState({editFormVisible:false,selectedEntityId:''});this.refreshList()}}/>
                 <ErrorModal errors={this.state.errors} closeAction={() => this.setState({errors:[]})}/>
                 <OkCancelDialog okCancelVisible={this.state.deleteEntityDialogVisible}
                                 cancelAction={() => this.setState({deleteEntityDialogVisible:false})}
-                                okAction={this.deleteUserEntityConfirm.bind(this)}>
+                                okAction={this.deleteEntityConfirm.bind(this)}>
                     <div>Вы действительно хотите удалить выбранную запись?</div>
                 </OkCancelDialog>
-                <UserSetPasswordModal userId={this.state.selectedUserId} userLogin={this.state.selectedUserLogin} visible={this.state.setNewPasswordModalVisible} closeAction={() => {this.closeSetNewPasswordModal(); this.refreshUserList()}}/>
+                <UserSetPasswordModal userId={this.state.selectedEntityId} userLogin={this.state.selectedUserLogin} visible={this.state.setNewPasswordModalVisible} closeAction={() => {this.closeSetNewPasswordModal(); this.refreshList()}}/>
                 <InfoModal popupData={this.state.successInfoMessages} closeAction={() => this.setState({successInfoMessages:[]})}/>
             </div>
         )
