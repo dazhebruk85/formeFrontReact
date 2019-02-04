@@ -161,7 +161,7 @@ class ConfigParamEditForm extends Component {
                 <OkCancelDialog okCancelVisible={this.state.setValueByDefaultDialogVisible}
                                 cancelAction={() => this.setState({setValueByDefaultDialogVisible:false})}
                                 okAction={() => this.setValueByDefaultValue()}>
-                    <div>Вы действительно хотите значение параметра значением по умолчанию?</div>
+                    <div>Вы действительно хотите заполнить значение параметра значением по умолчанию?</div>
                 </OkCancelDialog>
             </CommonModal>
         )
