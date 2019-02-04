@@ -168,9 +168,9 @@ class WorkCalendarModal extends Component {
                                 <td></td>
                             </tr>
                             <tr>
-                                <td style={{textAlign:'center',width:'30px',cursor:'pointer'}}>
-                                    <div className={'monthBack'}>
-                                        <img onClick={() => this.addMonth(-1)} alt='' src={hideIcon} style={{height:"24px",width:"24px"}}/>
+                                <td style={{textAlign:'center',width:'30px',cursor:'pointer',height:'50px'}}>
+                                    <div className={'monthBack'} onClick={() => this.addMonth(-1)}>
+                                        <img alt='' src={hideIcon} style={{position:'sticky',top:'47%',height:"24px",width:"24px"}}/>
                                     </div>
                                 </td>
                                 <td>
@@ -197,9 +197,9 @@ class WorkCalendarModal extends Component {
                                         </tbody>
                                     </table>
                                 </td>
-                                <td style={{textAlign:'center',width:'30px',cursor:'pointer'}}>
-                                    <div className={'monthForward'}>
-                                        <img onClick={() => this.addMonth(1)} alt='' src={showIcon} style={{height:"24px",width:"24px"}}/>
+                                <td style={{textAlign:'center',width:'30px',cursor:'pointer',height:'50px'}}>
+                                    <div className={'monthForward'} onClick={() => this.addMonth(1)}>
+                                        <img alt='' src={showIcon} style={{position:'sticky',top:'47%',height:"24px",width:"24px"}}/>
                                     </div>
                                 </td>
                             </tr>
