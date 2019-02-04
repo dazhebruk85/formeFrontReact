@@ -36,7 +36,7 @@
 }
 
 .divWeekDayToday {
-    background-color: rgb(230, 230, 230);
+    background-color: rgb(141, 195, 255);
     cursor: pointer;
 }
 
@@ -61,4 +61,12 @@
 .monthBack:hover,
 .monthForward:hover {
     background-color: rgb(230, 230, 230);
+}
+
+.monthAndYearInfoDiv {
+    width:100%;
+    text-align:center;
+    font-weight:bold;
+    padding-bottom:5px;
+    font-size:20px;
 }

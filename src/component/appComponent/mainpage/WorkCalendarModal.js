@@ -1,9 +1,10 @@
 import React, {Component} from 'react';
 import CommonModal from './../../baseComponent/modal/CommonModal'
-import * as DateItils from '../../../utils/DateUtils';
+import * as DateUtils from '../../../utils/DateUtils';
 import './../../../media/workCalendar/workCalendar.css';
 import hideIcon from '../../../media/data/hide.png'
 import showIcon from '../../../media/data/show.png'
+import Button from "../../baseComponent/field/Button";
 
 class WorkCalendarModal extends Component {
 
@@ -24,6 +25,7 @@ class WorkCalendarModal extends Component {
             }
         };
 
+        this.calcSetTodayDate = this.calcSetTodayDate.bind(this);
         this.calcDatePeriodsForCalendar = this.calcDatePeriodsForCalendar.bind(this);
         this.fillDatesArrays = this.fillDatesArrays.bind(this);
         this.addMonth = this.addMonth.bind(this);
@@ -32,16 +34,21 @@ class WorkCalendarModal extends Component {
 
     componentDidUpdate(prevProps) {
         if (this.props.visible && this.props.visible !== prevProps.visible ) {
-            if (!this.state.fields.startDate) {
-                let todayDate = new Date();
-                let startDate = new Date(todayDate.getFullYear(), todayDate.getMonth(),1);
-                this.calcDatePeriodsForCalendar(startDate)
-            }
+            this.calcSetTodayDate();
+        }
+    }
+
+    calcSetTodayDate() {
+        let todayDate = new Date();
+        let startDate = new Date(todayDate.getFullYear(), todayDate.getMonth(),1);
+        if ((!this.state.fields.startDate) || (this.state.fields.startDate && this.state.fields.startDate.getTime() !== startDate.getTime())) {
+            this.calcDatePeriodsForCalendar(startDate)
         }
     }
 
     calcDatePeriodsForCalendar(startDate) {
-        let startDateForCalendar = new Date(startDate.getFullYear(), startDate.getMonth(), startDate.getDate() - startDate.getDay() + 1);
+        let startDateDayOfWeek = startDate.getDay() === 0 ? 7 : startDate.getDay();
+        let startDateForCalendar = new Date(startDate.getFullYear(), startDate.getMonth(), (startDate.getDate() + 1) - startDateDayOfWeek);
         let endDate = new Date(startDate.getFullYear(), startDate.getMonth()+1, 0);
         let endDateForCalendar = new Date(endDate.getFullYear(), endDate.getMonth(), endDate.getDate() + (7 - endDate.getDay()));
         this.setState({
@@ -74,10 +81,26 @@ class WorkCalendarModal extends Component {
             startDateForArr = new Date(startDateForArr.getFullYear(),startDateForArr.getMonth(),startDateForArr.getDate()+1);
         }
         weekArr.push(daysArr);
+
+        let weekArrWithoutWeeksFromAnotherMonth = [];
+        for (let weekIndex in weekArr) {
+            let allDaysFromAnotherMonth = true;
+            for (let dayIndex in weekArr[weekIndex]) {
+                if (weekArr[weekIndex][dayIndex].dayMonth === this.state.fields.calendarCurrentMonth) {
+                    allDaysFromAnotherMonth = false;
+                    break;
+                }
+            }
+            if (!allDaysFromAnotherMonth) {
+                weekArrWithoutWeeksFromAnotherMonth.push(weekArr[weekIndex]);
+            }
+        }
+
+
         this.setState({
             fields: {
                 ...this.state.fields,
-                weekArr:weekArr
+                weekArr:weekArrWithoutWeeksFromAnotherMonth
             }
         })
     }
@@ -118,7 +141,16 @@ class WorkCalendarModal extends Component {
             } else {
                 return 'divWeekDay';
             }
+        }
 
+        function getYearAndMonthLabel(fields) {
+            if (fields.startDate) {
+                let year = fields.startDate.getFullYear();
+                let month = DateUtils.months[fields.startDate.getMonth()];
+                return month + ' ' + year + ' г.'
+            } else {
+                return '';
+            }
         }
 
         return(
@@ -128,7 +160,11 @@ class WorkCalendarModal extends Component {
                         <tbody>
                             <tr>
                                 <td></td>
-                                <td></td>
+                                <td>
+                                    <div className={'monthAndYearInfoDiv'}>
+                                        {getYearAndMonthLabel(this.state.fields)}
+                                    </div>
+                                </td>
                                 <td></td>
                             </tr>
                             <tr>
@@ -141,7 +177,7 @@ class WorkCalendarModal extends Component {
                                     <table>
                                         <thead>
                                         <tr>
-                                            {DateItils.weekDays.map((item, index) => (
+                                            {DateUtils.weekDays.map((item, index) => (
                                                 <td className={'tdWeekDay'} key={'weekHeaderTd'+index}>
                                                     <div className={'divWeekHeaderDay'}>{item.rusShortName}</div>
                                                 </td>
@@ -166,6 +202,15 @@ class WorkCalendarModal extends Component {
                                         <img onClick={() => this.addMonth(1)} alt='' src={showIcon} style={{height:"24px",width:"24px"}}/>
                                     </div>
                                 </td>
+                            </tr>
+                            <tr>
+                                <td></td>
+                                <td>
+                                    <div style={{width:'100%',textAlign:'center',paddingTop:'5px'}}>
+                                        <Button value="Сегодня" onClick={() => this.calcSetTodayDate()}/>
+                                    </div>
+                                </td>
+                                <td></td>
                             </tr>
                         </tbody>
                     </table>

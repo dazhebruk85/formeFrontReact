@@ -31,14 +31,14 @@ const treeData = [
                ,{key:'basePackage',icon:<img alt='' src={basePackageIcon} style={{width:'20px',height:'20px',marginTop:"0px", marginLeft:"0px"}}/>,title:'Базовые пакеты'}
                ,{key:'roomType',icon:<img alt='' src={roomTypeIcon} style={{width:'20px',height:'20px',marginTop:"0px", marginLeft:"0px"}}/>,title:'Типы помещений'}
             ]}
-            ,{key:'notifications',icon:<img alt='' src={notificationsIcon} style={{width:'20px',height:'20px',marginTop:"0px", marginLeft:"0px"}}/>,title:'Оповещения',children:
-                [
-                    {key:'notifyTemplates',icon:<img alt='' src={notifyTemplatesIcon} style={{width:'20px',height:'20px',marginTop:"0px", marginLeft:"0px"}}/>,title:'Шаблоны'}
-                    ,{key:'notifyMessages',icon:<img alt='' src={notifyMessagesIcon} style={{width:'20px',height:'20px',marginTop:"0px", marginLeft:"0px"}}/>,title:'Сообщения'}
-                ]}
             ,{key:'system',icon:<img alt='' src={systemIcon} style={{width:'20px',height:'20px',marginTop:"0px", marginLeft:"0px"}}/>,title:'Система',children:
                 [
                     {key:'systemSettings',icon:<img alt='' src={systemSettingsIcon} style={{width:'20px',height:'20px',marginTop:"0px", marginLeft:"0px"}}/>,title:'Настойки системы'}
+                    ,{key:'notifications',icon:<img alt='' src={notificationsIcon} style={{width:'20px',height:'20px',marginTop:"0px", marginLeft:"0px"}}/>,title:'Оповещения',children:
+                        [
+                            {key:'notifyTemplates',icon:<img alt='' src={notifyTemplatesIcon} style={{width:'20px',height:'20px',marginTop:"0px", marginLeft:"0px"}}/>,title:'Шаблоны'}
+                            ,{key:'notifyMessages',icon:<img alt='' src={notifyMessagesIcon} style={{width:'20px',height:'20px',marginTop:"0px", marginLeft:"0px"}}/>,title:'Сообщения'}
+                        ]}
                 ]}
         ]
     }
@@ -62,10 +62,7 @@ class AdminTreeView extends Component {
     }
 
     onTreeSelect = (selectedKeys, info) => {
-        if ('Main' !== info.node.props.eventKey &&
-            'dicts' !== info.node.props.eventKey &&
-            'system' !== info.node.props.eventKey &&
-            'notifications' !== info.node.props.eventKey) {
+        if (!['Main','dicts','system','notifications'].includes(info.node.props.eventKey)) {
             this.setState({
                 selectedKeys:[info.node.props.eventKey]
             });
