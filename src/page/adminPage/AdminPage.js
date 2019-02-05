@@ -8,6 +8,7 @@ import BasePackageList from '../../component/appComponent/basePackage/BasePackag
 import RoomTypeList from '../../component/appComponent/roomtype/RoomTypeList';
 import RepairAppList from "../../component/appComponent/repairapp/RepairAppList";
 import ConfigParamList from "../../component/appComponent/configParam/ConfigParamList";
+import ChatMainPanel from '../../component/appComponent/chat/ChatMainPanel';
 
 class AdminPage extends Component {
 
@@ -53,9 +54,7 @@ class AdminPage extends Component {
                     );
                 case 'chat':
                     return (
-                        <div>
-                            <label className="control-label col-sm-2">Функционал в разарботке</label>
-                        </div>
+                        <ChatMainPanel/>
                     );
                 case 'notifyTemplates':
                     return (

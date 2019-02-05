@@ -4,6 +4,7 @@ import QuickActionPanel from '../../component/appComponent/mainpage/QuickActionP
 import cookie from 'react-cookies';
 import ClientTreeView from '../../component/appComponent/mainpage/client/ClientTreeView'
 import RepairAppList from '../../component/appComponent/repairapp/RepairAppList';
+import ChatMainPanel from '../../component/appComponent/chat/ChatMainPanel';
 
 class ClientPage extends Component {
 
@@ -30,9 +31,7 @@ class ClientPage extends Component {
                     );
                 case 'chat':
                     return (
-                        <div>
-                            <label className="control-label col-sm-2">Функционал в разарботке</label>
-                        </div>
+                        <ChatMainPanel/>
                     );
                 default:
                     return (

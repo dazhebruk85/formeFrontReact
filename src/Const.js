@@ -1,7 +1,7 @@
 // System consts
 export const WORK_APP_URL = 'http://10.1.53.185:9191/back/FrontServlet';
-export const HOME_APP_URL = 'http://192.168.0.100:9191/back/FrontServlet';
-export const APP_URL = WORK_APP_URL;
+export const HOME_APP_URL = 'http://192.168.0.101:9191/back/FrontServlet';
+export const APP_URL = HOME_APP_URL;
 
 //Auth context
 export const AUTH_CONTEXT = "auth";
@@ -32,6 +32,11 @@ export const ROOM_TYPE_CONTEXT = "roomType";
 
 //Config param context
 export const CONFIG_PARAM_CONTEXT = "configParam";
+
+//Chat context
+export const CHAT_CONTEXT = "chat";
+//Chat actions
+export const GET_USERS_ACTION = "getUserList";
 
 //Common entity actions
 export const ENTITY_LIST = "entityList";
