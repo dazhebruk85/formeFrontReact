@@ -290,7 +290,7 @@ class RepairAppEditForm extends Component {
 
     render() {
         return(
-            <CommonModal loading={this.state.isLoading} title={'Анкета'} visible={this.props.visible} style={{width:'800px'}} closeAction={() => this.closeModal()}>
+            <CommonModal loading={this.state.isLoading} title={'Анкета'} visible={this.props.visible} style={{width:'1000px'}} closeAction={() => this.closeModal()}>
                 <div>
                     <form className="form-horizontal">
                         <table>
@@ -332,10 +332,10 @@ class RepairAppEditForm extends Component {
                             </tr>
                             </tbody>
                         </table>
-                        <Tabs defaultActiveKey={1} id="uncontrolled-tab-example" style={{height:'500px'}}>
-                            <Tab eventKey={1} title="Объект" style={{width:'100%',height:'460px',overflowY:'auto',borderRight:'1px solid #ddd',borderBottom:'1px solid #ddd',borderLeft:'1px solid #ddd',paddingLeft:'10px'}}>
+                        <Tabs defaultActiveKey={1} id="uncontrolled-tab-example" style={{height:'600px'}}>
+                            <Tab eventKey={1} title="Объект" style={{width:'100%',height:'520px',overflowY:'auto',borderRight:'1px solid #ddd',borderBottom:'1px solid #ddd',borderLeft:'1px solid #ddd',paddingLeft:'10px'}}>
                                 <div style={{paddingTop:'10px'}}>
-                                    <Field disabled={this.state.editFormDisabled} formStyle={{marginRight:'0px'}} fieldWidth='667px' style={{resize:'none',height:'50px'}} labelWidth='80px' label='Адрес' maxLength={255} type={Const.TEXTAREA} value={this.state.fields.realEstate.address} onChange={(event) => this.handleChange(event.target.value,'address','realEstate')}/>
+                                    <Field disabled={this.state.editFormDisabled} formStyle={{marginRight:'0px'}} fieldWidth='862px' style={{resize:'none',height:'50px'}} labelWidth='80px' label='Адрес' maxLength={255} type={Const.TEXTAREA} value={this.state.fields.realEstate.address} onChange={(event) => this.handleChange(event.target.value,'address','realEstate')}/>
                                     <table>
                                         <tbody>
                                         <tr>
@@ -364,14 +364,41 @@ class RepairAppEditForm extends Component {
                                     </CollapsePanel>
                                 </div>
                             </Tab>
-                            <Tab eventKey={2} title="Полы" style={{width:'100%',height:'460px',overflowY:'auto',borderRight:'1px solid #ddd',borderBottom:'1px solid #ddd',borderLeft:'1px solid #ddd',paddingLeft:'10px'}}>
-                                Tab 2 content
+                            <Tab eventKey={2} title="Демонтаж" style={{width:'100%',height:'520px',overflowY:'auto',borderRight:'1px solid #ddd',borderBottom:'1px solid #ddd',borderLeft:'1px solid #ddd',paddingLeft:'10px'}}>
+                                Демонтаж
                             </Tab>
-                            <Tab eventKey={3} title="Стены" style={{width:'100%',height:'460px',overflowY:'auto',borderRight:'1px solid #ddd',borderBottom:'1px solid #ddd',borderLeft:'1px solid #ddd',paddingLeft:'10px'}}>
-                                Tab 3 content
+                            <Tab eventKey={3} title="Монтаж" style={{width:'100%',height:'520px',overflowY:'auto',borderRight:'1px solid #ddd',borderBottom:'1px solid #ddd',borderLeft:'1px solid #ddd',paddingLeft:'10px'}}>
+                                Монтаж
                             </Tab>
-                            <Tab eventKey={4} title="Вложения" style={{width:'100%',height:'460px',overflowY:'auto',borderRight:'1px solid #ddd',borderBottom:'1px solid #ddd',borderLeft:'1px solid #ddd',paddingLeft:'10px'}}>
-                                Tab 3 content
+                            <Tab eventKey={4} title="Полы" style={{width:'100%',height:'520px',overflowY:'auto',borderRight:'1px solid #ddd',borderBottom:'1px solid #ddd',borderLeft:'1px solid #ddd',paddingLeft:'10px'}}>
+                                Полы
+                            </Tab>
+                            <Tab eventKey={5} title="Стены" style={{width:'100%',height:'520px',overflowY:'auto',borderRight:'1px solid #ddd',borderBottom:'1px solid #ddd',borderLeft:'1px solid #ddd',paddingLeft:'10px'}}>
+                                Стены
+                            </Tab>
+                            <Tab eventKey={6} title="ХГВС" style={{width:'100%',height:'520px',overflowY:'auto',borderRight:'1px solid #ddd',borderBottom:'1px solid #ddd',borderLeft:'1px solid #ddd',paddingLeft:'10px'}}>
+                                ХГВС
+                            </Tab>
+                            <Tab eventKey={7} title="Электрика" style={{width:'100%',height:'520px',overflowY:'auto',borderRight:'1px solid #ddd',borderBottom:'1px solid #ddd',borderLeft:'1px solid #ddd',paddingLeft:'10px'}}>
+                                Электрика
+                            </Tab>
+                            <Tab eventKey={8} title="Сантехника" style={{width:'100%',height:'520px',overflowY:'auto',borderRight:'1px solid #ddd',borderBottom:'1px solid #ddd',borderLeft:'1px solid #ddd',paddingLeft:'10px'}}>
+                                Электрика
+                            </Tab>
+                            <Tab eventKey={9} title="Керамическая плитка" style={{width:'100%',height:'520px',overflowY:'auto',borderRight:'1px solid #ddd',borderBottom:'1px solid #ddd',borderLeft:'1px solid #ddd',paddingLeft:'10px'}}>
+                                Электрика
+                            </Tab>
+                            <Tab eventKey={11} title="Двери" style={{width:'100%',height:'520px',overflowY:'auto',borderRight:'1px solid #ddd',borderBottom:'1px solid #ddd',borderLeft:'1px solid #ddd',paddingLeft:'10px'}}>
+                                Двери
+                            </Tab>
+                            <Tab eventKey={12} title="Балкон" style={{width:'100%',height:'520px',overflowY:'auto',borderRight:'1px solid #ddd',borderBottom:'1px solid #ddd',borderLeft:'1px solid #ddd',paddingLeft:'10px'}}>
+                                Балкон
+                            </Tab>
+                            <Tab eventKey={10} title="Потолки, подоконники, откосы" style={{width:'100%',height:'520px',overflowY:'auto',borderRight:'1px solid #ddd',borderBottom:'1px solid #ddd',borderLeft:'1px solid #ddd',paddingLeft:'10px'}}>
+                                Потолки, подоконники, откосы
+                            </Tab>
+                            <Tab eventKey={13} title="Прочие работы" style={{width:'100%',height:'520px',overflowY:'auto',borderRight:'1px solid #ddd',borderBottom:'1px solid #ddd',borderLeft:'1px solid #ddd',paddingLeft:'10px'}}>
+                                Прочие работы
                             </Tab>
                         </Tabs>
                         <table style={{marginLeft:'10px',width:'95%'}}>
