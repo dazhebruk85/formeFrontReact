@@ -42,7 +42,7 @@ class ClientPage extends Component {
 
         return (
             <div style={{width:'100%',height:'100%'}}>
-                <div className="panel panel-default" style={{width:'100%',height:'100%',margin:"10px"}}>
+                <div className="panel panel-default" style={{width:'100%',height:'100%',marginBottom:'0px',marginTop:"5px",marginLeft:"5px",marginRight:"5px"}}>
                     <div className="panel-heading" style={{height:'40px'}}>
                         <table style={{width:'100%'}}>
                             <tbody>
