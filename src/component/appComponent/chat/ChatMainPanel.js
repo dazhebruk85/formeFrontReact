@@ -2,8 +2,9 @@ import React, {Component} from "react";
 import * as CommonUtils from "../../../utils/CommonUtils";
 import * as Const from "../../../Const";
 import cookie from "react-cookies";
-import ErrorModal from "../repairapp/RepairAppEditForm";
-import * as DateUtils from "../../../utils/DateUtils";
+import ErrorModal from "../../baseComponent/modal/ErrorModal";
+import './../../../media/chat/chat.css';
+import chatUserPng from "../../../media/chat/chatUser.png";
 
 class ChatMainPanel extends Component {
 
@@ -17,6 +18,7 @@ class ChatMainPanel extends Component {
         };
 
         this.getChatUsers = this.getChatUsers.bind(this);
+        this.handleSelectChatUser = this.handleSelectChatUser.bind(this);
     }
 
     componentDidMount() {
@@ -36,30 +38,54 @@ class ChatMainPanel extends Component {
         }
     }
 
-    render() {
-        return (
-            <div>
-                <table>
-                    <tbody>
-                        <tr>
-                            <td>
-                                <table>
-                                    <tbody>
-                                    {CommonUtils.objectToPropArr(this.state.users).map((item) => (
-                                        <tr>
-                                            <td className={'tdUser'} key={'userTd'+item.entityId}>
-                                                <div className={'divWeekHeaderDay'}>{item.rusShortName}</div>
-                                            </td>
-                                        </tr>
-                                    ))}
-                                    </tbody>
-                                </table>
-                            </td>
-                            <td>Собственно чат</td>
-                        </tr>
-                    </tbody>
-                </table>
+    handleSelectChatUser = (event) => {
+        let selectedChatUserID =  event.currentTarget.getAttribute('chatuserid');
+        let selectedItem = this.state.users[selectedChatUserID];
+        if (!CommonUtils.objectIsEmpty(selectedItem)) {
+            this.setState({
+                selectedUser: selectedItem
+            });
+        }
+    };
 
+    render() {
+
+        let selectedUserId = this.state.selectedUser.entityId;
+
+        return (
+            <div style={{height:'100%',width:'100%'}}>
+                <div className={'chatUserListDiv'}>
+                    <table style={{width:'100%'}}>
+                        <tbody>
+                        {CommonUtils.objectToPropArr(this.state.users).map((item) => (
+                            <tr key={'userChatTd'+item.key}>
+                                <td key={'userChatTd'+item.key}>
+                                    <div className={item.key === selectedUserId ? 'chatDivUserSelected' : 'chatDivUser'} chatuserid={item.key} onClick={this.handleSelectChatUser}>
+                                        <table>
+                                            <tbody>
+                                            <tr>
+                                                <td>
+                                                    <img alt='' src={chatUserPng} style={{height:"24px",width:"24px",marginRight:'3px'}}/>
+                                                </td>
+                                                <td>
+                                                    <div>
+                                                        <div>{item.value.fio}</div>
+                                                        <div>{item.value.userRole}</div>
+                                                    </div>
+                                                </td>
+                                            </tr>
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                </td>
+                            </tr>
+                        ))}
+                        </tbody>
+                    </table>
+                </div>
+                <div className={'chatMessagesDiv'}>
+                    <div className={'chatDialogDiv'}>Собственно чат</div>
+                </div>
                 <ErrorModal errors={this.state.errors} closeAction={() => this.setState({errors:[]})}/>
             </div>
         )

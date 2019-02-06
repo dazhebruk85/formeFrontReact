@@ -1,0 +1,49 @@
+.chatDivUser {
+    border: 1px solid rgb(221, 221, 221);
+    border-radius: 5px;
+    padding: 5px;
+    margin:3px;
+    cursor: pointer;
+}
+
+.chatDivUser:hover {
+    background-color: rgba(141, 195, 255, 0.51);
+}
+
+.chatDivUserSelected {
+    background-color: rgb(141, 195, 255);
+    border: 1px solid rgb(221, 221, 221);
+    border-radius: 5px;
+    padding: 5px;
+    margin:3px;
+    cursor: pointer;
+}
+
+.chatDialogDiv {
+    margin:3px;
+    height:93%;
+}
+
+.chatUserListDiv, .chatMessagesDiv {
+    display: inline-block;
+    *display: inline;
+    vertical-align: top;
+}
+.chatUserListDiv {
+    width: 24%;
+    height: 100%;
+    border: 1px solid rgb(221, 221, 221);
+    border-radius: 5px;
+    margin-left: 5px;
+    overflow:auto;
+}
+
+.chatMessagesDiv {
+    width: 72%;
+    height: 100%;
+    border: 1px solid rgb(221, 221, 221);
+    border-radius: 5px;
+    margin-left: 5px;
+    overflow:auto;
+}
+
