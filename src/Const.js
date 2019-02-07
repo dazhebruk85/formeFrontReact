@@ -1,8 +1,8 @@
 // System consts
 export const WORK_APP_URL = '10.1.53.185:9191/back/';
-export const HOME_APP_URL = '192.168.0.101:9191/back/';
-export const APP_URL = 'http://' + WORK_APP_URL + 'FrontServlet';
-export const CHAT_URL = 'ws://' + WORK_APP_URL + 'chat/';
+export const HOME_APP_URL = '192.168.0.102:9191/back/';
+export const APP_URL = 'http://' + HOME_APP_URL + 'FrontServlet';
+export const CHAT_URL = 'ws://' + HOME_APP_URL + 'chat/';
 
 //Auth context
 export const AUTH_CONTEXT = "auth";

@@ -4,6 +4,7 @@
     padding: 5px;
     margin:3px;
     cursor: pointer;
+    background-color: white;
 }
 
 .chatDivUser:hover {
@@ -45,6 +46,7 @@
     border-radius: 5px;
     margin-left: 5px;
     overflow:auto;
+    background-color: rgb(245, 245, 245);
 }
 
 .chatMessagesDiv {
@@ -53,23 +55,61 @@
     border: 1px solid rgb(221, 221, 221);
     border-radius: 5px;
     margin-left: 5px;
+    background-color: rgb(245, 245, 245);
 }
 
 .myMessage,
 .alienMessage {
-    border: 1px solid rgb(221, 221, 221);
-    border-radius: 5px;
-    padding: 5px;
+    padding: 6px 7px 8px 9px;
     margin-bottom:3px;
     cursor: pointer;
     width: fit-content;
     max-width: 70%;
+    font-size: 14.2px;
+    white-space: pre-wrap;
+    word-wrap: break-word;
 }
 
 .myMessage {
+    border-radius: 10px 0px 10px 10px;
     float: right;
+    background-color: #dcf8c6;
+    margin-right:15px;
 }
 
 .alienMessage {
+    border-radius: 0px 10px 10px 10px;
     float: left;
+    background-color: #ffffff;
+    position: relative;
+    margin-left:15px;
+}
+
+.alienMessage:after {
+    content: '';
+    position: absolute;
+    left: 0;
+    top: 50%;
+    width: 0;
+    height: 0;
+    border: 12px solid transparent;
+    border-right-color: #ffffff;
+    border-left: 0;
+    border-top: 0;
+    margin-top: -17px;
+    margin-left: -12px;
+}
+
+.myMessage:after {
+    content: '';
+    position: absolute;
+    right: 0;
+    width: 0;
+    height: 0;
+    border: 15px solid transparent;
+    border-left-color: #dcf8c6;
+    border-right: 0;
+    border-top: 0;
+    margin-top: -6px;
+    margin-right: 46px;
 }
