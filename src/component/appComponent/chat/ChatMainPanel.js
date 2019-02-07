@@ -23,7 +23,8 @@ class ChatMainPanel extends Component {
                     message:''
                 }
             },
-            messages: new Map()
+            messages: new Map(),
+            noNeedField:''
         };
 
         this.chatSocket = new WebSocket(Const.CHAT_URL + cookie.load('userId'));
@@ -96,26 +97,70 @@ class ChatMainPanel extends Component {
     handleChatMessage(event) {
         let messageData = JSON.parse(event.data);
 
+        let messageObject = {content:messageData.content,date:messageData.date,fromMe:false};
         if (this.state.messages.get(messageData.fromUser)) {
-            this.state.messages.get(messageData.fromUser).push(messageData.content);
+            this.state.messages.get(messageData.fromUser).push(messageObject);
         } else {
             let messageArr = [];
-            messageArr.push(messageData.content);
+            messageArr.push(messageObject);
             this.state.messages.set(messageData.fromUser, messageArr);
         }
-
-        let i=0;
+        this.setState({
+            noNeedField:''
+        })
     }
 
     sendMessageToChat() {
         if (this.state.fields.common.message && !CommonUtils.objectIsEmpty(this.state.selectedUser)) {
             this.chatSocket.send(JSON.stringify({toUser:this.state.selectedUser.entityId,content:this.state.fields.common.message}));
+
+            let messageObject = {content:this.state.fields.common.message,date:new Date(),fromMe:true};
+            if (this.state.messages.get(this.state.selectedUser.entityId)) {
+                this.state.messages.get(this.state.selectedUser.entityId).push(messageObject);
+            } else {
+                let messageArr = [];
+                messageArr.push(messageObject);
+                this.state.messages.set(this.state.selectedUser.entityId, messageArr);
+            }
+
+            this.setState({
+                fields:{
+                    ...this.state.fields,
+                    common:{
+                        ...this.state.fields.common,
+                        message:''
+                    }
+                }
+            });
         }
     }
 
     render() {
 
         let selectedUserId = this.state.selectedUser.entityId;
+
+        function addMessage(messageItem) {
+            return(
+                <tr key={CommonUtils.genGuid()}>
+                    <td key={CommonUtils.genGuid()} style={{width:'100%'}}>
+                        <div className={messageItem.fromMe ? 'myMessage' : 'alienMessage'} key={CommonUtils.genGuid()}>{messageItem.content}</div>
+                    </td>
+                </tr>
+            )
+        }
+
+        function getCurrentUserMessage(state) {
+            if (state.messages.get(state.selectedUser.entityId)) {
+                let messageArr = state.messages.get(state.selectedUser.entityId);
+                return (
+                        messageArr.map((messageItem, messageIndex) => (
+                            addMessage(messageItem)
+                        ))
+                )
+            } else {
+                return (null);
+            }
+        }
 
         return (
             <div style={{height:'100%',width:'100%'}}>
@@ -149,7 +194,13 @@ class ChatMainPanel extends Component {
                     </table>
                 </div>
                 <div className={'chatMessagesDiv'}>
-                    <div className={'chatDialogDiv'}>Собственно чат</div>
+                    <div ref={'chatDialogDiv'} className={'chatDialogDiv'}>
+                        <table style={{width:'100%'}}>
+                            <tbody>
+                                {getCurrentUserMessage(this.state)}
+                            </tbody>
+                        </table>
+                    </div>
                     <div className={'chatMessageSendDiv'}>
                         <table style={{height:'100%',width:'100%',marginRight:'5px'}}>
                             <tbody>

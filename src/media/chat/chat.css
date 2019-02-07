@@ -55,3 +55,21 @@
     margin-left: 5px;
 }
 
+.myMessage,
+.alienMessage {
+    border: 1px solid rgb(221, 221, 221);
+    border-radius: 5px;
+    padding: 5px;
+    margin-bottom:3px;
+    cursor: pointer;
+    width: fit-content;
+    max-width: 70%;
+}
+
+.myMessage {
+    float: right;
+}
+
+.alienMessage {
+    float: left;
+}
