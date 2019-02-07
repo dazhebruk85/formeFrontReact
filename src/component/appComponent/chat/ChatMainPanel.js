@@ -5,7 +5,6 @@ import cookie from "react-cookies";
 import ErrorModal from "../../baseComponent/modal/ErrorModal";
 import './../../../media/chat/chat.css';
 import Field from "../../baseComponent/field/Field";
-
 import chatUserPng from "../../../media/chat/chatUser.png";
 import chatSendMessagePng from "../../../media/chat/chatSendMessage.png";
 import chatAddFilePng from "../../../media/chat/chatAddFile.png";
@@ -23,8 +22,13 @@ class ChatMainPanel extends Component {
                 common:{
                     message:''
                 }
-            }
+            },
+            messages: new Map()
         };
+
+        this.chatSocket = new WebSocket(Const.CHAT_URL + cookie.load('userId'));
+        this.chatSocket.onmessage = this.handleChatMessage.bind(this);
+        this.sendMessageToChat = this.sendMessageToChat.bind(this);
 
         this.getChatUsers = this.getChatUsers.bind(this);
         this.handleSelectChatUser = this.handleSelectChatUser.bind(this);
@@ -34,6 +38,24 @@ class ChatMainPanel extends Component {
         if (CommonUtils.objectIsEmpty(this.state.users)) {
             this.getChatUsers()
         }
+
+        this.chatSocket.onopen = function() {
+            console.log("Соединение установлено.");
+        };
+
+        this.chatSocket.onclose = function(event) {
+            if (event.wasClean) {
+                console.log('Соединение закрыто чисто');
+            } else {
+                console.log('Обрыв соединения'); // например, "убит" процесс сервера
+            }
+            console.log('Код: ' + event.code + ' причина: ' + event.reason);
+        };
+
+        this.chatSocket.onerror = function(error) {
+            console.log("Ошибка " + error.message);
+        };
+
     }
 
     componentDidUpdate(prevProps){
@@ -69,6 +91,26 @@ class ChatMainPanel extends Component {
 
     handleChange(value,fieldName,context) {
         CommonUtils.commonHandleChange(this,context,fieldName,value)
+    }
+
+    handleChatMessage(event) {
+        let messageData = JSON.parse(event.data);
+
+        if (this.state.messages.get(messageData.fromUser)) {
+            this.state.messages.get(messageData.fromUser).push(messageData.content);
+        } else {
+            let messageArr = [];
+            messageArr.push(messageData.content);
+            this.state.messages.set(messageData.fromUser, messageArr);
+        }
+
+        let i=0;
+    }
+
+    sendMessageToChat() {
+        if (this.state.fields.common.message && !CommonUtils.objectIsEmpty(this.state.selectedUser)) {
+            this.chatSocket.send(JSON.stringify({toUser:this.state.selectedUser.entityId,content:this.state.fields.common.message}));
+        }
     }
 
     render() {
@@ -116,7 +158,7 @@ class ChatMainPanel extends Component {
                                         <Field placeholder={'Введите сообщение'} formStyle={{marginRight:'0px',width:'100%'}} fieldWidth='100%' style={{resize:'none',height:'70px'}} maxLength={1000} type={Const.TEXTAREA} value={this.state.fields.common.message} onChange={(event) => this.handleChange(event.target.value,'message','common')}/>
                                     </td>
                                     <td style={{height:'100%',verticalAlign:'top',textAlign:'center',width:'40px'}}>
-                                        <img title={'Отправить сообщение'} alt='' src={chatSendMessagePng} style={{height:"32px",width:"32px",cursor:'pointer'}}/>
+                                        <img onClick={() => this.sendMessageToChat()} title={'Отправить сообщение'} alt='' src={chatSendMessagePng} style={{height:"32px",width:"32px",cursor:'pointer'}}/>
                                     </td>
                                     <td style={{height:'100%',verticalAlign:'top',textAlign:'center',width:'40px'}}>
                                         <img title={'Прикрепить файл'} alt='' src={chatAddFilePng} style={{height:"32px",width:"32px",cursor:'pointer'}}/>

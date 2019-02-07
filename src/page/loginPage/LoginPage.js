@@ -54,6 +54,7 @@ class LoginPage extends Component {
                 cookie.save('userId',responseData.userId,{path:'/'});
                 cookie.save('userFio',responseData.userFio,{path:'/'});
                 cookie.save('userRole',responseData.userRole,{path:'/'});
+                cookie.save('userLogin',responseData.userLogin,{path:'/'});
 
                 if (responseData.userRole === Const.CLIENT_ROLE) {
                     this.props.history.push('/clientPage')
