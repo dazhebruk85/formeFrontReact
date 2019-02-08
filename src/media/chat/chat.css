@@ -23,7 +23,21 @@
 .chatDialogDiv {
     margin:3px;
     height:80%;
-    overflow:auto;
+    max-height:71vh;
+    overflow-y:auto;
+    overflow-x:hidden;
+}
+
+.chatDialogDiv::-webkit-scrollbar {
+    width: 5px !important;
+    height: 5px !important;
+}
+.chatDialogDiv::-webkit-scrollbar-thumb {
+    background-color: rgba(0, 0, 0, 0.2);;
+}
+
+.chatDialogDiv::-webkit-scrollbar-track {
+    background: rgba(255, 255, 255, 0.08);
 }
 
 .chatMessageSendDiv {
@@ -46,7 +60,7 @@
     border-radius: 5px;
     margin-left: 5px;
     overflow:auto;
-    background-color: rgb(245, 245, 245);
+    background-color: rgb(240, 240, 240);
 }
 
 .chatMessagesDiv {
@@ -55,25 +69,27 @@
     border: 1px solid rgb(221, 221, 221);
     border-radius: 5px;
     margin-left: 5px;
-    background-color: rgb(245, 245, 245);
+    background-color: rgb(240, 240, 240);
 }
 
 .myMessage,
 .alienMessage {
     padding: 6px 7px 8px 9px;
-    margin-bottom:3px;
+    margin-bottom:5px;
     cursor: pointer;
     width: fit-content;
-    max-width: 70%;
+    max-width: 60%;
     font-size: 14.2px;
     white-space: pre-wrap;
     word-wrap: break-word;
+    min-width: 200px;
 }
 
 .myMessage {
     border-radius: 10px 0px 10px 10px;
     float: right;
-    background-color: #dcf8c6;
+    background-color: #d4f0bf;
+    position: relative;
     margin-right:15px;
 }
 
@@ -86,30 +102,27 @@
 }
 
 .alienMessage:after {
-    content: '';
+    content: ' ';
     position: absolute;
-    left: 0;
-    top: 50%;
     width: 0;
     height: 0;
-    border: 12px solid transparent;
-    border-right-color: #ffffff;
-    border-left: 0;
-    border-top: 0;
-    margin-top: -17px;
-    margin-left: -12px;
+    left: -15px;
+    right: auto;
+    top: 0px;
+    bottom: auto;
+    border: 15px solid;
+    border-color: #ffffff transparent transparent transparent;
 }
 
 .myMessage:after {
-    content: '';
+    content: ' ';
     position: absolute;
-    right: 0;
     width: 0;
     height: 0;
-    border: 15px solid transparent;
-    border-left-color: #dcf8c6;
-    border-right: 0;
-    border-top: 0;
-    margin-top: -6px;
-    margin-right: 46px;
+    left: auto;
+    right: -15px;
+    top: 0px;
+    bottom: auto;
+    border: 15px solid;
+    border-color: #d4f0bf transparent transparent transparent;
 }
