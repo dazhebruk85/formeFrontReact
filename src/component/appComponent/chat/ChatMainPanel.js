@@ -233,8 +233,8 @@ class ChatMainPanel extends Component {
                                                 </td>
                                                 <td>
                                                     <div>
-                                                        <div>{item.value.fio}</div>
-                                                        <div>{item.value.userRole}</div>
+                                                        <div className={'userFioDiv'}>{item.value.fio}</div>
+                                                        <div className={'userRoleDiv'}>{item.value.userRole}</div>
                                                     </div>
                                                 </td>
                                             </tr>

@@ -135,6 +135,14 @@
     border-color: #d4f0bf transparent transparent transparent;
 }
 
+.userFioDiv {
+    font-size: 11px;
+    font-weight: bold;
+}
+.userRoleDiv {
+    font-size: 10px;
+}
+
 .userImg {
     height:24px;
     width:24px;
@@ -142,9 +150,9 @@
 }
 
 .userStateImg {
-    height: 13px;
-    width: 13px;
+    height: 11px;
+    width: 11px;
     position: absolute;
     margin-left: 19px;
-    margin-top: -10px;
+    margin-top: -5px;
 }
