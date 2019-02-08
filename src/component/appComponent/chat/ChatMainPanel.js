@@ -6,6 +6,7 @@ import ErrorModal from "../../baseComponent/modal/ErrorModal";
 import './../../../media/chat/chat.css';
 import Field from "../../baseComponent/field/Field";
 import $ from "jquery";
+import * as DateUtils from '../../../utils/DateUtils';
 
 import chatUserPng from "../../../media/chat/chatUser.png";
 import chatSendMessagePng from "../../../media/chat/chatSendMessage.png";
@@ -153,7 +154,11 @@ class ChatMainPanel extends Component {
             return(
                 <tr key={CommonUtils.genGuid()}>
                     <td key={CommonUtils.genGuid()} style={{width:'100%'}}>
-                        <div className={messageItem.fromMe ? 'myMessage' : 'alienMessage'} key={CommonUtils.genGuid()}>{messageItem.content}</div>
+                        <div className={messageItem.fromMe ? 'myMessage' : 'alienMessage'} key={CommonUtils.genGuid()}>
+                            <div key={CommonUtils.genGuid()}>{messageItem.content}</div>
+                            <div className={'messageSendTimeDiv'} key={CommonUtils.genGuid()}>Отправлено: {DateUtils.dateToStringWithTime(messageItem.date)}</div>
+                            <div style={{paddingTop:'2px'}} className={'messageSendTimeDiv'} key={CommonUtils.genGuid()}>Прочитано: {DateUtils.dateToStringWithTime(new Date())}</div>
+                        </div>
                     </td>
                 </tr>
             )

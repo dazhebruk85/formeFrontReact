@@ -1,3 +1,10 @@
+import moment from "moment";
+
+export function dateToStringWithTime(date) {
+    let formattedDate = moment(date).format('DD.MM.YYYY HH:mm:ss');
+    return formattedDate
+}
+
 export const months = ['Январь','Февраль','Март','Апрель','Май','Июнь','Июль','Август','Сентябрь','Октябрь','Ноябрь','Декабрь'];
 
 export const weekDays = [

@@ -73,6 +73,12 @@
     background-color: rgb(240, 240, 240);
 }
 
+.messageSendTimeDiv {
+    color: rgba(0, 0, 0, 0.45);
+    font-size: 9px;
+    padding-top: 10px;
+}
+
 .myMessage,
 .alienMessage {
     padding: 6px 7px 8px 9px;
@@ -80,7 +86,8 @@
     cursor: pointer;
     width: fit-content;
     max-width: 60%;
-    font-size: 14.2px;
+    font-size: 12px;
+    font-family: sans-serif;
     white-space: pre-wrap;
     word-wrap: break-word;
     min-width: 200px;
