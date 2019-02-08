@@ -11,6 +11,8 @@ import * as DateUtils from '../../../utils/DateUtils';
 import chatUserPng from "../../../media/chat/chatUser.png";
 import chatSendMessagePng from "../../../media/chat/chatSendMessage.png";
 import chatAddFilePng from "../../../media/chat/chatAddFile.png";
+import userOnlinePng from "../../../media/chat/online.png";
+import userOfflinePng from "../../../media/chat/offline.png";
 
 class ChatMainPanel extends Component {
 
@@ -133,6 +135,15 @@ class ChatMainPanel extends Component {
         } else if (Const.CHAT_USER_STATE === messageData.type) {
             for (let key in messageData.userStateMap) {
                 //TODO прикрутить обработку статусов пользователей (в сети, не в сети)
+                this.setState({
+                    users:{
+                        ...this.state.users,
+                        [key]:{
+                            ...this.state.users[key],
+                            chatState:messageData.userStateMap[key]
+                        }
+                    }
+                })
             }
         }
         this.setState({
@@ -217,7 +228,8 @@ class ChatMainPanel extends Component {
                                             <tbody>
                                             <tr>
                                                 <td>
-                                                    <img alt='' src={chatUserPng} style={{height:"24px",width:"24px",marginRight:'3px'}}/>
+                                                    <img alt={''} title={item.value.chatState === Const.ONLINE_STATE ? 'В сети' : 'Не в сети'} className={'userStateImg'} src={item.value.chatState === Const.ONLINE_STATE ? userOnlinePng : userOfflinePng}/>
+                                                    <img alt={''} className={'userImg'} src={chatUserPng}/>
                                                 </td>
                                                 <td>
                                                     <div>

@@ -134,3 +134,17 @@
     border: 15px solid;
     border-color: #d4f0bf transparent transparent transparent;
 }
+
+.userImg {
+    height:24px;
+    width:24px;
+    margin-right:10px;
+}
+
+.userStateImg {
+    height: 13px;
+    width: 13px;
+    position: absolute;
+    margin-left: 19px;
+    margin-top: -10px;
+}
