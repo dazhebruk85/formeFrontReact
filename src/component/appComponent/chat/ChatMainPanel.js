@@ -73,6 +73,15 @@ class ChatMainPanel extends Component {
             this.setState({
                 users: responseData.params.users
             });
+
+            let userMap = new Map();
+            for (let paramUserIndex in responseData.params.users) {
+                let user = responseData.params.users[paramUserIndex];
+                userMap[user.entityId] = user.chatState;
+            }
+            setTimeout(() =>
+                    this.chatSocket.send(JSON.stringify({allChatUsers:userMap,fromUser:cookie.load('userId'),toUser:cookie.load('userId'),type:Const.CHAT_USER_STATE}))
+                ,0);
         }
     }
 
@@ -92,7 +101,7 @@ class ChatMainPanel extends Component {
             });
         }
         setTimeout(() =>
-            this.chatSocket.send(JSON.stringify({fromUser:cookie.load('userId'),toUser:this.state.selectedUser.entityId,type:Const.DIALOG_HISTORY,pageNumber:selectedItem.dialogPage}))
+            this.chatSocket.send(JSON.stringify({fromUser:cookie.load('userId'),toUser:this.state.selectedUser.entityId,type:Const.CHAT_USER_HISTORY,pageNumber:selectedItem.dialogPage}))
             ,0);
     };
 
@@ -112,7 +121,7 @@ class ChatMainPanel extends Component {
                 messageArr.push(messageObject);
                 this.state.messages.set(messageData.fromUser, messageArr);
             }
-        } else if (Const.DIALOG_HISTORY === messageData.type) {
+        } else if (Const.CHAT_USER_HISTORY === messageData.type) {
             let messageArr = [];
             for (let mesIndex in messageData.chatMessageList) {
                 let chatMessage=messageData.chatMessageList[mesIndex];
@@ -121,6 +130,10 @@ class ChatMainPanel extends Component {
                 messageArr.push(historyMessageObject);
             }
             this.state.messages.set(messageData.toUser, messageArr);
+        } else if (Const.CHAT_USER_STATE === messageData.type) {
+            for (let key in messageData.userStateMap) {
+                //TODO прикрутить обработку статусов пользователей (в сети, не в сети)
+            }
         }
         this.setState({
             noNeedField:''
