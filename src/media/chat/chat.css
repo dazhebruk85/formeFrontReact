@@ -33,7 +33,8 @@
     height: 5px !important;
 }
 .chatDialogDiv::-webkit-scrollbar-thumb {
-    background-color: rgba(0, 0, 0, 0.2);;
+    background-color: rgba(0, 0, 0, 0.2);
+    border-radius: 10px;
 }
 
 .chatDialogDiv::-webkit-scrollbar-track {

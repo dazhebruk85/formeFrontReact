@@ -5,6 +5,8 @@ import cookie from "react-cookies";
 import ErrorModal from "../../baseComponent/modal/ErrorModal";
 import './../../../media/chat/chat.css';
 import Field from "../../baseComponent/field/Field";
+import $ from "jquery";
+
 import chatUserPng from "../../../media/chat/chatUser.png";
 import chatSendMessagePng from "../../../media/chat/chatSendMessage.png";
 import chatAddFilePng from "../../../media/chat/chatAddFile.png";
@@ -59,7 +61,7 @@ class ChatMainPanel extends Component {
 
     }
 
-    componentDidUpdate(prevProps){
+    componentDidUpdate(prevProps) {
     }
 
     async getChatUsers() {
@@ -108,6 +110,7 @@ class ChatMainPanel extends Component {
         this.setState({
             noNeedField:''
         })
+        this.scrollChatDialogDivToBottom()
     }
 
     sendMessageToChat() {
@@ -132,6 +135,13 @@ class ChatMainPanel extends Component {
                     }
                 }
             });
+        }
+        this.scrollChatDialogDivToBottom()
+    }
+
+    scrollChatDialogDivToBottom() {
+        if (this.refs.chatDialogDiv) {
+            setTimeout(() => $('.chatDialogDiv').animate({scrollTop:$('.chatDialogDiv').prop("scrollHeight")},1000),0);
         }
     }
 
@@ -194,7 +204,7 @@ class ChatMainPanel extends Component {
                     </table>
                 </div>
                 <div className={'chatMessagesDiv'}>
-                    <div ref={'chatDialogDiv'} className={'chatDialogDiv'}>
+                    <div ref={'chatDialogDiv'} className={'chatDialogDiv'} id={CommonUtils.genGuid()}>
                         <table style={{width:'100%'}}>
                             <tbody>
                                 {getCurrentUserMessage(this.state)}
