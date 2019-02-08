@@ -91,6 +91,9 @@ class ChatMainPanel extends Component {
                 }
             });
         }
+        setTimeout(() =>
+            this.chatSocket.send(JSON.stringify({fromUser:cookie.load('userId'),toUser:this.state.selectedUser.entityId,type:Const.DIALOG_HISTORY,pageNumber:selectedItem.dialogPage}))
+            ,0);
     };
 
     handleChange(value,fieldName,context) {
@@ -100,25 +103,36 @@ class ChatMainPanel extends Component {
     handleChatMessage(event) {
         let messageData = JSON.parse(event.data);
 
-        let messageObject = {content:messageData.content,date:messageData.date,fromMe:false};
-        if (this.state.messages.get(messageData.fromUser)) {
-            this.state.messages.get(messageData.fromUser).push(messageObject);
-        } else {
+        if (Const.CHAT_MESSAGE_TEXT_TYPE === messageData.type) {
+            let messageObject = {content:messageData.content,sendDate:messageData.sendDate,fromMe:false};
+            if (this.state.messages.get(messageData.fromUser)) {
+                this.state.messages.get(messageData.fromUser).push(messageObject);
+            } else {
+                let messageArr = [];
+                messageArr.push(messageObject);
+                this.state.messages.set(messageData.fromUser, messageArr);
+            }
+        } else if (Const.DIALOG_HISTORY === messageData.type) {
             let messageArr = [];
-            messageArr.push(messageObject);
-            this.state.messages.set(messageData.fromUser, messageArr);
+            for (let mesIndex in messageData.chatMessageList) {
+                let chatMessage=messageData.chatMessageList[mesIndex];
+                let forMe = chatMessage.fromUser === cookie.load('userId');
+                let historyMessageObject = {content:chatMessage.content,sendDate:chatMessage.sendDate,fromMe:forMe};
+                messageArr.push(historyMessageObject);
+            }
+            this.state.messages.set(messageData.toUser, messageArr);
         }
         this.setState({
             noNeedField:''
-        })
-        this.scrollChatDialogDivToBottom()
+        });
+        this.scrollChatDialogDivToBottom();
     }
 
     sendMessageToChat() {
         if (this.state.fields.common.message && !CommonUtils.objectIsEmpty(this.state.selectedUser)) {
-            this.chatSocket.send(JSON.stringify({toUser:this.state.selectedUser.entityId,content:this.state.fields.common.message}));
+            this.chatSocket.send(JSON.stringify({toUser:this.state.selectedUser.entityId,content:this.state.fields.common.message,type:Const.CHAT_MESSAGE_TEXT_TYPE}));
 
-            let messageObject = {content:this.state.fields.common.message,date:new Date(),fromMe:true};
+            let messageObject = {content:this.state.fields.common.message,sendDate:new Date(),fromMe:true};
             if (this.state.messages.get(this.state.selectedUser.entityId)) {
                 this.state.messages.get(this.state.selectedUser.entityId).push(messageObject);
             } else {
@@ -156,7 +170,7 @@ class ChatMainPanel extends Component {
                     <td key={CommonUtils.genGuid()} style={{width:'100%'}}>
                         <div className={messageItem.fromMe ? 'myMessage' : 'alienMessage'} key={CommonUtils.genGuid()}>
                             <div key={CommonUtils.genGuid()}>{messageItem.content}</div>
-                            <div className={'messageSendTimeDiv'} key={CommonUtils.genGuid()}>Отправлено: {DateUtils.dateToStringWithTime(messageItem.date)}</div>
+                            <div className={'messageSendTimeDiv'} key={CommonUtils.genGuid()}>Отправлено: {DateUtils.dateToStringWithTime(messageItem.sendDate)}</div>
                             <div style={{paddingTop:'2px'}} className={'messageSendTimeDiv'} key={CommonUtils.genGuid()}>Прочитано: {DateUtils.dateToStringWithTime(new Date())}</div>
                         </div>
                     </td>

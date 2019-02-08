@@ -25,7 +25,8 @@ class Field extends Component {
                     <div className="form-group">
                         {this.props.label ? <label style={{width:this.props.labelWidth}} className="control-label col-sm-2">{this.props.label}</label> : null}
                         <div className="col-sm-10" style={{width:this.props.fieldWidth,paddingRight:'0px'}}>
-                            <input className="form-control input-sm"
+                            <input id={this.props.id}
+                                   className="form-control input-sm"
                                    value={this.props.value}
                                    onChange={this.props.onChange}
                                    placeholder={this.props.placeholder}
