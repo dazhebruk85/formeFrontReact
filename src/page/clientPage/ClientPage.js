@@ -5,6 +5,7 @@ import cookie from 'react-cookies';
 import ClientTreeView from '../../component/appComponent/mainpage/client/ClientTreeView'
 import RepairAppList from '../../component/appComponent/repairapp/RepairAppList';
 import ChatMainPanel from '../../component/appComponent/chat/ChatMainPanel';
+import * as Const from "../../Const";
 
 class ClientPage extends Component {
 
@@ -12,8 +13,13 @@ class ClientPage extends Component {
         super(props);
 
         this.state = {
-            choosenTreeItem:''
+            choosenTreeItem:'',
+            chatWebSocket:''
         }
+    }
+
+    componentDidMount() {
+        this.setState({chatWebSocket: new WebSocket(Const.CHAT_URL + cookie.load('userId'))});
     }
 
     changeTreeChoice(evt){
@@ -31,7 +37,7 @@ class ClientPage extends Component {
                     );
                 case 'chat':
                     return (
-                        <ChatMainPanel/>
+                        <ChatMainPanel chatWebSocket={props.chatWebSocket}/>
                     );
                 default:
                     return (
@@ -73,7 +79,7 @@ class ClientPage extends Component {
                                 </td>
                                 <td style={{width:'100%',verticalAlign:'top'}}>
                                     <div ref='mainDataDiv' style={{height:'100%',overflow:'auto'}}>
-                                        <MainDivComponent choosenTreeItem={this.state.choosenTreeItem}/>
+                                        <MainDivComponent chatWebSocket={this.state.chatWebSocket} choosenTreeItem={this.state.choosenTreeItem}/>
                                     </div>
                                 </td>
                             </tr>

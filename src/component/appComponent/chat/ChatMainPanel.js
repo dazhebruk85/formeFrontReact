@@ -32,7 +32,7 @@ class ChatMainPanel extends Component {
             noNeedField:''
         };
 
-        this.chatSocket = new WebSocket(Const.CHAT_URL + cookie.load('userId'));
+        this.chatSocket = props.chatWebSocket;
         this.chatSocket.onmessage = this.handleChatMessage.bind(this);
         this.sendMessageToChat = this.sendMessageToChat.bind(this);
 

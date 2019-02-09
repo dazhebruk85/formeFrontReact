@@ -9,6 +9,8 @@ import RoomTypeList from '../../component/appComponent/roomtype/RoomTypeList';
 import RepairAppList from "../../component/appComponent/repairapp/RepairAppList";
 import ConfigParamList from "../../component/appComponent/configParam/ConfigParamList";
 import ChatMainPanel from '../../component/appComponent/chat/ChatMainPanel';
+import * as Const from "../../Const";
+import cookie from "react-cookies";
 
 class AdminPage extends Component {
 
@@ -16,8 +18,13 @@ class AdminPage extends Component {
         super(props);
 
         this.state = {
-            choosenTreeItem:''
+            choosenTreeItem:'',
+            chatWebSocket:''
         }
+    }
+
+    componentDidMount() {
+        this.setState({chatWebSocket: new WebSocket(Const.CHAT_URL + cookie.load('userId'))});
     }
 
     changeTreeChoice(evt){
@@ -54,7 +61,7 @@ class AdminPage extends Component {
                     );
                 case 'chat':
                     return (
-                        <ChatMainPanel/>
+                        <ChatMainPanel chatWebSocket={props.chatWebSocket}/>
                     );
                 case 'notifyTemplates':
                     return (
@@ -108,7 +115,7 @@ class AdminPage extends Component {
                                 </td>
                                 <td style={{width:'100%',verticalAlign:'top'}}>
                                     <div ref='mainDataDiv' style={{height:'100%',overflow:'auto'}}>
-                                        <MainDivComponent choosenTreeItem={this.state.choosenTreeItem}/>
+                                        <MainDivComponent chatWebSocket={this.state.chatWebSocket} choosenTreeItem={this.state.choosenTreeItem}/>
                                     </div>
                                 </td>
                             </tr>
