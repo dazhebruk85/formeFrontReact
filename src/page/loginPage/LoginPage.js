@@ -30,10 +30,10 @@ class LoginPage extends Component {
 
     componentDidMount() {
         let cookieLet = cookie;
-        let cookieMap = Object.entries(cookieLet.loadAll(true)).map(([key, value]) => ({key,value}));
-        cookieMap.forEach(function(element) {
-            cookieLet.remove(element.key, { path: '/' });
-        });
+        let cookieDataObj = cookieLet.loadAll(true);
+        for (let cookiePropName in cookieDataObj) {
+            cookieLet.remove(cookiePropName, { path: '/' });
+        }
         if (this.refs.loginField) {
             $('#'+this.refs.loginField.props.id).focus();
         }
