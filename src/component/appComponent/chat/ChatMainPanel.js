@@ -14,6 +14,7 @@ import chatSendMessagePng from "../../../media/chat/chatSendMessage.png";
 import chatAddFilePng from "../../../media/chat/chatAddFile.png";
 import userOnlinePng from "../../../media/chat/online.png";
 import userOfflinePng from "../../../media/chat/offline.png";
+import newMessageMp3 from "../../../media/chat/chatNewMessage.mp3";
 
 class ChatMainPanel extends Component {
 
@@ -130,6 +131,10 @@ class ChatMainPanel extends Component {
                 messageArr.push(messageObject);
                 this.state.messages.set(messageData.fromUser, messageArr);
             }
+
+            //Звуковое оповещение
+            let audio = new Audio(newMessageMp3);
+            audio.play();
         } else if (Const.CHAT_USER_HISTORY === messageData.type) {
             let messageArr = [];
             for (let mesIndex in messageData.chatMessageList) {
