@@ -150,24 +150,26 @@ class ChatMainPanel extends Component {
             audio.play();
             animateScrollDiv = true;
         } else if (Const.CHAT_USER_HISTORY === messageData.type) {
-            let messageArr = [];
-            for (let mesIndex in messageData.chatMessageList) {
-                let chatMessage=messageData.chatMessageList[mesIndex];
-                let forMe = chatMessage.fromUser === cookie.load('userId');
-                let historyMessageObject = {content:chatMessage.content,sendDate:chatMessage.sendDate,readDate:chatMessage.readDate,fromMe:forMe};
-                messageArr.push(historyMessageObject);
-            }
-            this.state.messages.set(messageData.toUser, messageArr);
-            this.setState({
-                users:{
-                    ...this.state.users,
-                    [this.state.selectedUser.entityId]:{
-                        ...this.state.users[this.state.selectedUser.entityId],
-                        unread:0
-                    }
+            if (this.state.users[messageData.toUser]) {
+                let messageArr = [];
+                for (let mesIndex in messageData.chatMessageList) {
+                    let chatMessage=messageData.chatMessageList[mesIndex];
+                    let forMe = chatMessage.fromUser === cookie.load('userId');
+                    let historyMessageObject = {content:chatMessage.content,sendDate:chatMessage.sendDate,readDate:chatMessage.readDate,fromMe:forMe};
+                    messageArr.push(historyMessageObject);
                 }
-            })
-            animateScrollDiv = false;
+                this.state.messages.set(messageData.toUser, messageArr);
+                this.setState({
+                    users:{
+                        ...this.state.users,
+                        [this.state.selectedUser.entityId]:{
+                            ...this.state.users[this.state.selectedUser.entityId],
+                            unread:0
+                        }
+                    }
+                });
+                animateScrollDiv = false;
+            }
         } else if (Const.CHAT_USER_STATE === messageData.type) {
             for (let key in messageData.chatUserStateMap) {
                 if (this.state.users[key]) {
