@@ -7,6 +7,7 @@ import './../../../media/chat/chat.css';
 import Field from "../../baseComponent/field/Field";
 import $ from "jquery";
 import * as DateUtils from '../../../utils/DateUtils';
+import * as WebSocketUtils from "./../../../utils/WebSocketUtils"
 
 import chatUserPng from "../../../media/chat/chatUser.png";
 import chatSendMessagePng from "../../../media/chat/chatSendMessage.png";
@@ -81,9 +82,12 @@ class ChatMainPanel extends Component {
                 let user = responseData.params.users[paramUserIndex];
                 userMap[user.entityId] = user.chatState;
             }
-            setTimeout(() =>
-                    this.chatSocket.send(JSON.stringify({allChatUsers:userMap,fromUser:cookie.load('userId'),toUser:cookie.load('userId'),type:Const.CHAT_USER_STATE}))
-                ,0);
+
+            setTimeout(() => {
+                    let usersStateMessage = JSON.stringify({allChatUsers:userMap,fromUser:cookie.load('userId'),toUser:cookie.load('userId'),type:Const.CHAT_USER_STATE});
+                    WebSocketUtils.sendMesToWebsocket(this.chatSocket, usersStateMessage)
+            }
+            , 0);
         }
     }
 
@@ -102,9 +106,12 @@ class ChatMainPanel extends Component {
                 }
             });
         }
-        setTimeout(() =>
-            this.chatSocket.send(JSON.stringify({fromUser:cookie.load('userId'),toUser:this.state.selectedUser.entityId,type:Const.CHAT_USER_HISTORY,pageNumber:selectedItem.dialogPage}))
-            ,0);
+
+        setTimeout(() => {
+                let userHistoryMessage = JSON.stringify({fromUser:cookie.load('userId'),toUser:this.state.selectedUser.entityId,type:Const.CHAT_USER_HISTORY,pageNumber:selectedItem.dialogPage})
+                WebSocketUtils.sendMesToWebsocket(this.chatSocket, userHistoryMessage)
+            }
+            , 0);
     };
 
     handleChange(value,fieldName,context) {
@@ -134,16 +141,17 @@ class ChatMainPanel extends Component {
             this.state.messages.set(messageData.toUser, messageArr);
         } else if (Const.CHAT_USER_STATE === messageData.type) {
             for (let key in messageData.userStateMap) {
-                //TODO прикрутить обработку статусов пользователей (в сети, не в сети)
-                this.setState({
-                    users:{
-                        ...this.state.users,
-                        [key]:{
-                            ...this.state.users[key],
-                            chatState:messageData.userStateMap[key]
+                if (this.state.users[key]) {
+                    this.setState({
+                        users:{
+                            ...this.state.users,
+                            [key]:{
+                                ...this.state.users[key],
+                                chatState:messageData.userStateMap[key]
+                            }
                         }
-                    }
-                })
+                    })
+                }
             }
         }
         this.setState({
@@ -154,7 +162,9 @@ class ChatMainPanel extends Component {
 
     sendMessageToChat() {
         if (this.state.fields.common.message && !CommonUtils.objectIsEmpty(this.state.selectedUser)) {
-            this.chatSocket.send(JSON.stringify({toUser:this.state.selectedUser.entityId,content:this.state.fields.common.message,type:Const.CHAT_MESSAGE_TEXT_TYPE}));
+
+            let textMessage = JSON.stringify({toUser:this.state.selectedUser.entityId,content:this.state.fields.common.message,type:Const.CHAT_MESSAGE_TEXT_TYPE});
+            WebSocketUtils.sendMesToWebsocket(this.chatSocket, textMessage);
 
             let messageObject = {content:this.state.fields.common.message,sendDate:new Date(),fromMe:true};
             if (this.state.messages.get(this.state.selectedUser.entityId)) {

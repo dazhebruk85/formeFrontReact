@@ -64,7 +64,7 @@ class ClientPage extends Component {
                                 <td>
                                 </td>
                                 <td style={{width:'120px'}}>
-                                    <QuickActionPanel/>
+                                    <QuickActionPanel chatWebSocket={this.state.chatWebSocket}/>
                                 </td>
                             </tr>
                             </tbody>

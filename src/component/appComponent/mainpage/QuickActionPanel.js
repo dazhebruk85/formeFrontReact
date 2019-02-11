@@ -10,11 +10,12 @@ import OkCancelDialog from '../../../component/baseComponent/modal/OkCancelDialo
 import {Redirect} from "react-router-dom";
 import cookie from 'react-cookies';
 import * as Const from "../../../Const";
+import * as WebSocketUtils from "./../../../utils/WebSocketUtils"
 
 class QuickActionPanel extends Component {
 
-    constructor() {
-        super();
+    constructor(props) {
+        super(props);
         this.state = {
             changePasswordModalVisible: false,
             updateUserDataModalVisible: false,
@@ -23,12 +24,19 @@ class QuickActionPanel extends Component {
             redirectToLoginPage:false
         };
 
+        this.chatSocket = props.chatWebSocket;
         this.showChangePasswordModal = this.showChangePasswordModal.bind(this);
         this.closeChangePasswordModal = this.closeChangePasswordModal.bind(this);
         this.cancelExitDialog = this.cancelExitDialog.bind(this);
         this.okExitDialog = this.okExitDialog.bind(this);
         this.showUpdateUserDataModal = this.showUpdateUserDataModal.bind(this);
         this.closeUpdateUserDataModal = this.closeUpdateUserDataModal.bind(this);
+    }
+
+    componentDidUpdate(prevProps) {
+        if (this.props.chatWebSocket && this.props.chatWebSocket !== prevProps.chatWebSocket ) {
+            this.chatSocket = this.props.chatWebSocket;
+        }
     }
 
     showChangePasswordModal(evt){
@@ -65,7 +73,8 @@ class QuickActionPanel extends Component {
         this.setState({
             exitDialogVisible: false,
             redirectToLoginPage:true
-        })
+        });
+        WebSocketUtils.closeWebsocket(this.chatSocket);
     }
 
     render() {
