@@ -1,8 +1,21 @@
 import moment from "moment";
 
+export function dateToStringWithTimeSec(date) {
+    if (date) {
+        let formattedDate = moment(date).format('DD.MM.YYYY HH:mm:ss');
+        return formattedDate
+    } else {
+        return '';
+    }
+}
+
 export function dateToStringWithTime(date) {
-    let formattedDate = moment(date).format('DD.MM.YYYY HH:mm:ss');
-    return formattedDate
+    if (date) {
+        let formattedDate = moment(date).format('DD.MM.YYYY HH:mm');
+        return formattedDate
+    } else {
+        return '';
+    }
 }
 
 export const months = ['Январь','Февраль','Март','Апрель','Май','Июнь','Июль','Август','Сентябрь','Октябрь','Ноябрь','Декабрь'];

@@ -156,3 +156,24 @@
     margin-left: 19px;
     margin-top: -5px;
 }
+
+.unreadMessagesDiv {
+    background-color: rgb(221, 221, 221);
+    margin-right: 5px;
+    height: 20px;
+    width: 20px;
+    text-align: center;
+    border-radius: 50%;
+}
+
+.unreadMessagesNumber {
+    color: black;
+    font-size: 8.5px;
+    font-weight: 900;
+    padding-top: 4px;
+}
+
+.userWasLastTimeOnline {
+    color: rgba(0, 0, 0, 0.45);
+    font-size: 9px;
+}

@@ -121,9 +121,9 @@ class ChatMainPanel extends Component {
 
     handleChatMessage(event) {
         let messageData = JSON.parse(event.data);
-
+        let animateScrollDiv = false;
         if (Const.CHAT_MESSAGE_TEXT_TYPE === messageData.type) {
-            let messageObject = {content:messageData.content,sendDate:messageData.sendDate,fromMe:false};
+            let messageObject = {content:messageData.content,sendDate:messageData.sendDate,readDate:undefined,fromMe:false};
             if (this.state.messages.get(messageData.fromUser)) {
                 this.state.messages.get(messageData.fromUser).push(messageObject);
             } else {
@@ -132,27 +132,52 @@ class ChatMainPanel extends Component {
                 this.state.messages.set(messageData.fromUser, messageArr);
             }
 
+            if (messageData.fromUser !== this.state.selectedUser.entityId) {
+                let unreadCount = this.state.users[messageData.fromUser].unread;
+                this.setState({
+                    users:{
+                        ...this.state.users,
+                        [messageData.fromUser]:{
+                            ...this.state.users[messageData.fromUser],
+                            unread:unreadCount+1
+                        }
+                    }
+                })
+            }
+
             //Звуковое оповещение
             let audio = new Audio(newMessageMp3);
             audio.play();
+            animateScrollDiv = true;
         } else if (Const.CHAT_USER_HISTORY === messageData.type) {
             let messageArr = [];
             for (let mesIndex in messageData.chatMessageList) {
                 let chatMessage=messageData.chatMessageList[mesIndex];
                 let forMe = chatMessage.fromUser === cookie.load('userId');
-                let historyMessageObject = {content:chatMessage.content,sendDate:chatMessage.sendDate,fromMe:forMe};
+                let historyMessageObject = {content:chatMessage.content,sendDate:chatMessage.sendDate,readDate:chatMessage.readDate,fromMe:forMe};
                 messageArr.push(historyMessageObject);
             }
             this.state.messages.set(messageData.toUser, messageArr);
+            this.setState({
+                users:{
+                    ...this.state.users,
+                    [this.state.selectedUser.entityId]:{
+                        ...this.state.users[this.state.selectedUser.entityId],
+                        unread:0
+                    }
+                }
+            })
+            animateScrollDiv = false;
         } else if (Const.CHAT_USER_STATE === messageData.type) {
-            for (let key in messageData.userStateMap) {
+            for (let key in messageData.chatUserStateMap) {
                 if (this.state.users[key]) {
                     this.setState({
                         users:{
                             ...this.state.users,
                             [key]:{
                                 ...this.state.users[key],
-                                chatState:messageData.userStateMap[key]
+                                chatState:messageData.chatUserStateMap[key].state,
+                                lastWasOnline:messageData.chatUserStateMap[key].lastTimeOnline ? messageData.chatUserStateMap[key].lastTimeOnline : undefined
                             }
                         }
                     })
@@ -162,7 +187,7 @@ class ChatMainPanel extends Component {
         this.setState({
             noNeedField:''
         });
-        this.scrollChatDialogDivToBottom();
+        setTimeout(() => this.scrollChatDialogDivToBottom(animateScrollDiv),0);
     }
 
     sendMessageToChat() {
@@ -171,7 +196,7 @@ class ChatMainPanel extends Component {
             let textMessage = JSON.stringify({toUser:this.state.selectedUser.entityId,content:this.state.fields.common.message,type:Const.CHAT_MESSAGE_TEXT_TYPE});
             WebSocketUtils.sendMesToWebsocket(this.chatSocket, textMessage);
 
-            let messageObject = {content:this.state.fields.common.message,sendDate:new Date(),fromMe:true};
+            let messageObject = {content:this.state.fields.common.message,sendDate:new Date(),readDate:undefined,fromMe:true};
             if (this.state.messages.get(this.state.selectedUser.entityId)) {
                 this.state.messages.get(this.state.selectedUser.entityId).push(messageObject);
             } else {
@@ -190,10 +215,10 @@ class ChatMainPanel extends Component {
                 }
             });
         }
-        this.scrollChatDialogDivToBottom()
+        this.scrollChatDialogDivToBottom(true)
     }
 
-    scrollChatDialogDivToBottom() {
+    scrollChatDialogDivToBottom(animate) {
         if (this.refs.chatDialogDiv) {
             setTimeout(() => $('.chatDialogDiv').animate({scrollTop:$('.chatDialogDiv').prop("scrollHeight")},1000),0);
         }
@@ -209,8 +234,8 @@ class ChatMainPanel extends Component {
                     <td key={CommonUtils.genGuid()} style={{width:'100%'}}>
                         <div className={messageItem.fromMe ? 'myMessage' : 'alienMessage'} key={CommonUtils.genGuid()}>
                             <div key={CommonUtils.genGuid()}>{messageItem.content}</div>
-                            <div className={'messageSendTimeDiv'} key={CommonUtils.genGuid()}>Отправлено: {DateUtils.dateToStringWithTime(messageItem.sendDate)}</div>
-                            <div style={{paddingTop:'2px'}} className={'messageSendTimeDiv'} key={CommonUtils.genGuid()}>Прочитано: {DateUtils.dateToStringWithTime(new Date())}</div>
+                            <div className={'messageSendTimeDiv'} key={CommonUtils.genGuid()}>Отправлено: {DateUtils.dateToStringWithTimeSec(messageItem.sendDate)}</div>
+                            <div style={{paddingTop:'2px'}} className={'messageSendTimeDiv'} key={CommonUtils.genGuid()}>Прочитано: {DateUtils.dateToStringWithTimeSec(messageItem.readDate)}</div>
                         </div>
                     </td>
                 </tr>
@@ -230,6 +255,30 @@ class ChatMainPanel extends Component {
             }
         }
 
+        function addUnreadDiv(unreadCount) {
+            if (unreadCount && unreadCount > 0) {
+                return (
+                    <div title={'Количество непрочитанных сообщений'} className={'unreadMessagesDiv'}>
+                        <div className={'unreadMessagesNumber'}>{unreadCount}</div>
+                    </div>
+                )
+            } else {
+                return (null)
+            }
+        }
+
+        function addWasOnlineDiv(userItem) {
+            let userWasOnline = '';
+            if (userItem.chatState === Const.ONLINE_STATE) {
+                userWasOnline = 'В сети'
+            } else {
+                userWasOnline = 'Был(а) в сети ' + DateUtils.dateToStringWithTime(userItem.lastWasOnline)
+            }
+            return (
+                <div className={'userWasLastTimeOnline'}>{userWasOnline}</div>
+            )
+        }
+
         return (
             <div style={{height:'100%',width:'100%'}}>
                 <div className={'chatUserListDiv'}>
@@ -243,6 +292,9 @@ class ChatMainPanel extends Component {
                                             <tbody>
                                             <tr>
                                                 <td>
+                                                    {addUnreadDiv(item.value.unread)}
+                                                </td>
+                                                <td>
                                                     <img alt={''} title={item.value.chatState === Const.ONLINE_STATE ? 'В сети' : 'Не в сети'} className={'userStateImg'} src={item.value.chatState === Const.ONLINE_STATE ? userOnlinePng : userOfflinePng}/>
                                                     <img alt={''} className={'userImg'} src={chatUserPng}/>
                                                 </td>
@@ -250,6 +302,7 @@ class ChatMainPanel extends Component {
                                                     <div>
                                                         <div className={'userFioDiv'}>{item.value.fio}</div>
                                                         <div className={'userRoleDiv'}>{item.value.userRole}</div>
+                                                        {addWasOnlineDiv(item.value)}
                                                     </div>
                                                 </td>
                                             </tr>
