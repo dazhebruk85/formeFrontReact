@@ -3,6 +3,7 @@ import * as CommonUtils from "../../../utils/CommonUtils";
 import * as Const from "../../../Const";
 import cookie from "react-cookies";
 import ErrorModal from "../../baseComponent/modal/ErrorModal";
+import FileUploadModal from "../../baseComponent/modal/FileUploadModal";
 import './../../../media/chat/chat.css';
 import Field from "../../baseComponent/field/Field";
 import $ from "jquery";
@@ -23,6 +24,7 @@ class ChatMainPanel extends Component {
 
         this.state = {
             errors: [],
+            fileUploadVisible:false,
             selectedUser:{},
             users:{},
             fields:{
@@ -336,7 +338,7 @@ class ChatMainPanel extends Component {
                                         <img onClick={() => this.sendMessageToChat()} title={'Отправить сообщение'} alt='' src={chatSendMessagePng} style={{height:"32px",width:"32px",cursor:'pointer'}}/>
                                     </td>
                                     <td style={{height:'100%',verticalAlign:'top',textAlign:'center',width:'40px'}}>
-                                        <img title={'Прикрепить файл'} alt='' src={chatAddFilePng} style={{height:"32px",width:"32px",cursor:'pointer'}}/>
+                                        <img title={'Прикрепить файл'} alt='' src={chatAddFilePng} style={{height:"32px",width:"32px",cursor:'pointer'}} onClick={() => this.setState({fileUploadVisible:true})}/>
                                     </td>
                                 </tr>
                             </tbody>
@@ -344,6 +346,9 @@ class ChatMainPanel extends Component {
                     </div>
                 </div>
                 <ErrorModal errors={this.state.errors} closeAction={() => this.setState({errors:[]})}/>
+                <FileUploadModal visible={this.state.fileUploadVisible}
+                                 okAction={() => this.setState({fileUploadVisible:false})}
+                                 cancelAction={() => this.setState({fileUploadVisible:false})}/>
             </div>
         )
     }
