@@ -26,7 +26,7 @@ class FileUploadModal extends Component {
             <CommonModal title={'Выбрать файл'} visible={this.props.visible} style={{width:'450px',height:'150px'}} closeAction={this.state.cancelAction}>
                 <div>
                     <form className="form-horizontal">
-                        <FileUploadField ref={'FileUploadField'}/>
+                        <FileUploadField labelWidth='130px' fieldWidth='300px' label='Выбрать файл' ref={'FileUploadField'}/>
                     </form>
                 </div>
                 <div className="btn-toolbar align-bottom" role="toolbar" style={{justifyContent:'center',display:'flex'}}>
