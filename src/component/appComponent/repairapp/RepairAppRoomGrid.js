@@ -8,6 +8,7 @@ import addActionPng from '../../../media/grid/gridAdd.png';
 import deleteActionPng from '../../../media/grid/gridDelete.png';
 import editActionPng from '../../../media/grid/gridEdit.png';
 import viewActionPng from '../../../media/grid/gridView.png';
+import entityCreatePng from "../../../media/common/action/entityCreate.png";
 
 class RepairAppRoomGrid extends Component {
 
@@ -107,17 +108,25 @@ class RepairAppRoomGrid extends Component {
                     <table>
                         <tbody>
                             <tr>
-                                <td style={{width:'30px'}}>
-                                    <img alt='' title={'Добавить запись'} onClick={gridDisabled ? null : () => this.addRoomAction()} src={addActionPng} style={{opacity:gridDisabled?'0.5':'1',cursor:'pointer',height:"24px",width:"24px"}}/>
+                                <td className={'gridActionTd'}>
+                                    <div className={'gridActionDiv'}>
+                                        <img onClick={gridDisabled ? null : () => this.addRoomAction()} title={'Добавить запись'}  alt={'Добавить запись'} src={addActionPng} className={gridDisabled ? 'gridActionImgDis' : 'gridActionImg'}/>
+                                    </div>
                                 </td>
-                                <td style={{width:'30px'}}>
-                                    <img alt='' title={'Редактировать запись'} onClick={gridDisabled ? null : () => this.editRoomAction(false)} src={editActionPng} style={{opacity:gridDisabled?'0.5':'1',cursor:'pointer',height:"24px",width:"24px"}}/>
+                                <td className={'gridActionTd'}>
+                                    <div className={'gridActionDiv'}>
+                                        <img onClick={gridDisabled ? null : () => this.editRoomAction(false)} title={'Редактировать запись'}  alt={'Редактировать запись'} src={editActionPng} className={gridDisabled ? 'gridActionImgDis' : 'gridActionImg'}/>
+                                    </div>
                                 </td>
-                                <td style={{width:'30px'}}>
-                                    <img alt='' title={'Удалить запись'} onClick={gridDisabled ? null : () => this.deleteRoomAction()} src={deleteActionPng} style={{opacity:gridDisabled?'0.5':'1',cursor:'pointer',height:"24px",width:"24px"}}/>
+                                <td className={'gridActionTd'}>
+                                    <div className={'gridActionDiv'}>
+                                        <img onClick={gridDisabled ? null : () => this.deleteRoomAction()} title={'Удалить запись'}  alt={'Удалить запись'} src={deleteActionPng} className={gridDisabled ? 'gridActionImgDis' : 'gridActionImg'}/>
+                                    </div>
                                 </td>
-                                <td style={{width:'30px'}}>
-                                    <img alt='' title={'Просмотреть запись'} onClick={() => this.editRoomAction(true)} src={viewActionPng} style={{cursor:'pointer',height:"24px",width:"24px"}}/>
+                                <td className={'gridActionTd'}>
+                                    <div className={'gridActionDiv'}>
+                                        <img onClick={() => this.editRoomAction(true)} title={'Просмотреть запись'}  alt={'Просмотреть запись'} src={viewActionPng} className={'gridActionImg'}/>
+                                    </div>
                                 </td>
                             </tr>
                         </tbody>

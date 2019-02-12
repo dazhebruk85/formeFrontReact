@@ -39,6 +39,7 @@ class ChatMainPanel extends Component {
         this.chatSocket = props.chatWebSocket;
         this.chatSocket.onmessage = this.handleChatMessage.bind(this);
         this.sendMessageToChat = this.sendMessageToChat.bind(this);
+        this.fileDialogOpen = this.fileDialogOpen.bind(this);
 
         this.getChatUsers = this.getChatUsers.bind(this);
         this.handleSelectChatUser = this.handleSelectChatUser.bind(this);
@@ -196,7 +197,6 @@ class ChatMainPanel extends Component {
 
     sendMessageToChat() {
         if (this.state.fields.common.message && !CommonUtils.objectIsEmpty(this.state.selectedUser)) {
-
             let textMessage = JSON.stringify({toUser:this.state.selectedUser.entityId,content:this.state.fields.common.message,type:Const.CHAT_MESSAGE_TEXT_TYPE});
             WebSocketUtils.sendMesToWebsocket(this.chatSocket, textMessage);
 
@@ -218,8 +218,16 @@ class ChatMainPanel extends Component {
                     }
                 }
             });
+            this.scrollChatDialogDivToBottom(true)
         }
-        this.scrollChatDialogDivToBottom(true)
+    }
+
+    fileDialogOpen() {
+        if (!CommonUtils.objectIsEmpty(this.state.selectedUser)) {
+            this.setState({
+                fileUploadVisible:true
+            })
+        }
     }
 
     scrollChatDialogDivToBottom(animate) {
@@ -338,7 +346,7 @@ class ChatMainPanel extends Component {
                                         <img onClick={() => this.sendMessageToChat()} title={'Отправить сообщение'} alt='' src={chatSendMessagePng} style={{height:"32px",width:"32px",cursor:'pointer'}}/>
                                     </td>
                                     <td style={{height:'100%',verticalAlign:'top',textAlign:'center',width:'40px'}}>
-                                        <img title={'Прикрепить файл'} alt='' src={chatAddFilePng} style={{height:"32px",width:"32px",cursor:'pointer'}} onClick={() => this.setState({fileUploadVisible:true})}/>
+                                        <img onClick={() => this.fileDialogOpen()} title={'Прикрепить файл'} alt='' src={chatAddFilePng} style={{height:"32px",width:"32px",cursor:'pointer'}}/>
                                     </td>
                                 </tr>
                             </tbody>
