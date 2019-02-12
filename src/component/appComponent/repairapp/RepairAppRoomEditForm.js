@@ -130,7 +130,7 @@ class RepairAppRoomEditForm extends Component {
         let formDisabled = this.state.disabled;
 
         return (
-            <CommonModal title={'Добавить/Редактировать запись'} visible={this.props.visible} style={{width:'540px'}} closeAction={() => this.closeModal()}>
+            <CommonModal paddingCloseCross={true} title={'Добавить/Редактировать/Просмотреть запись'} visible={this.props.visible} style={{width:'540px'}} closeAction={() => this.closeModal()}>
                 <div>
                     <div className="form-horizontal">
                         <DictField labelWidth='150px'

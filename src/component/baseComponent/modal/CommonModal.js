@@ -25,7 +25,7 @@ class CommonModal extends Modal {
                                     <label style={{textAlign:'left',width:'100%',height:'24px',paddingLeft:'0px',paddingRight:'0px',paddingTop:'2px'}} className="control-label col-sm-2">{this.props.title}</label>
                                 </td>
                                 <td style={{width:'10%',alignItems:'right'}}>
-                                    <img alt='' onClick={this.props.closeAction} align={'right'} src={closePng} style={{cursor:'pointer',height:"18px",width:"18px",marginBottom:this.props.fromDict ? '0px' : '4px'}}/>
+                                    <img alt='' onClick={this.props.closeAction} align={'right'} src={closePng} style={{cursor:'pointer',height:"18px",width:"18px",marginBottom:this.props.paddingCloseCross ? '0px' : '4px'}}/>
                                 </td>
                             </tr>
                             </tbody>
