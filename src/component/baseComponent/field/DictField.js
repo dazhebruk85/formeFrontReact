@@ -1,6 +1,6 @@
 import React, {Component} from 'react';
-import dictPng from '../../../media/data/dictionary.png'
-import dictClearPng from '../../../media/data/dictionaryClear.png'
+import dictPng from '../../../media/dictionary/dict.png'
+import dictClearPng from '../../../media/common/clear.png'
 import CommonModal from './../modal/CommonModal';
 import Button from './../field/Button';
 import CommonDbGrid from '../grid/CommonDbGrid';
@@ -87,7 +87,7 @@ class DictField extends Component {
                         </tbody>
                     </table>
                 </div>
-                <CommonModal title={'Справочник'} visible={this.state.visible} style={{width:'650px'}} closeAction={this.closeDict}>
+                <CommonModal fromDict={true} title={'Справочник'} visible={this.state.visible} style={{width:'650px'}} closeAction={this.closeDict}>
                     <div onDoubleClick={() => this.chooseDict()}>
                         <CommonDbGrid filter={this.props.dictFilter} selectAction={this.changeGridSelection.bind(this)} dataEntityContext={this.props.context} pageSize={10}/>
                     </div>

@@ -1,6 +1,6 @@
 import React, {Component} from 'react';
 import chooseFilePng from "../../../media/fileUpload/chooseFile.png";
-import clearFilePng from "../../../media/fileUpload/clearFile.png";
+import clearFilePng from "../../../media/common/clear.png";
 import $ from "jquery";
 import * as FileUtils from '../../../utils/FileUtils';
 

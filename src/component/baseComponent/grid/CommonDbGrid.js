@@ -2,10 +2,11 @@ import  React, { Component } from 'react';
 import cookie from "react-cookies";
 import * as Const from "../../../Const";
 import * as CommonUtils from '../../../utils/CommonUtils'
-import nextPagePng from "../../../media/data/nextPage.png";
-import prevPagePng from "../../../media/data/prevPage.png";
+import nextPagePng from "../../../media/grid/nextPage.png";
+import prevPagePng from "../../../media/grid/prevPage.png";
 import Spinner from "../spinner/Spinner";
 import ErrorModal from '../../../component/baseComponent/modal/ErrorModal';
+import './../../../media/grid/commonDbGrid.css';
 
 class CommonDbGrid extends Component {
 
@@ -148,13 +149,13 @@ class CommonDbGrid extends Component {
                                         <img title={'Предыдущая страница'}
                                              alt='Предыдущая страница'
                                              src={prevPagePng}
-                                             style={{width:'28px',height:'28px',cursor:'pointer',marginTop:"0px", marginLeft:"0px"}}
+                                             className={'pageButton'}
                                              onClick={this.prevPage}
                                         />
                                     </div>
                                 </td>
                                 <td>
-                                    <div style={{width:'100%',height:'100%',padding:'0px',textAlign:'-webkit-center'}}>
+                                    <div className={'pageText'} style={{width:'100%',height:'100%',padding:'0px',textAlign:'-webkit-center'}}>
                                         {this.state.pageNumber}
                                     </div>
                                 </td>
@@ -163,7 +164,7 @@ class CommonDbGrid extends Component {
                                         <img title={'Следующая страница'}
                                              alt='Следующая страница'
                                              src={nextPagePng}
-                                             style={{width:'28px',height:'28px',cursor:'pointer',marginTop:"0px", marginLeft:"0px"}}
+                                             className={'pageButton'}
                                              onClick={this.nextPage}
                                         />
                                     </div>

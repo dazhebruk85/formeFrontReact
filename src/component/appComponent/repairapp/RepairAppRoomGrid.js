@@ -4,10 +4,10 @@ import React from "react";
 import RepairAppRoomEditForm from "./RepairAppRoomEditForm";
 import * as CommonUtils from "../../../utils/CommonUtils";
 import ErrorModal from "../../baseComponent/modal/ErrorModal";
-import addActionPng from '../../../media/data/gridAdd.png';
-import deleteActionPng from '../../../media/data/gridDelete.png';
-import editActionPng from '../../../media/data/gridEdit.png';
-import viewActionPng from '../../../media/data/gridView.png';
+import addActionPng from '../../../media/grid/gridAdd.png';
+import deleteActionPng from '../../../media/grid/gridDelete.png';
+import editActionPng from '../../../media/grid/gridEdit.png';
+import viewActionPng from '../../../media/grid/gridView.png';
 
 class RepairAppRoomGrid extends Component {
 

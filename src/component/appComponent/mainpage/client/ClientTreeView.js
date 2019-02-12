@@ -3,8 +3,8 @@ import Tree from 'rc-tree';
 import '../../../../media/tree/tree.css';
 import mainTreeIcon from '../../../../media/tree/mainTreeIcon.png'
 import anketaIcon from '../../../../media/tree/anketa.png'
-import hideIcon from '../../../../media/data/hide.png'
-import showIcon from '../../../../media/data/show.png'
+import hideIcon from '../../../../media/common/hide.png'
+import showIcon from '../../../../media/common/show.png'
 import chatIcon from "../../../../media/tree/chat.png";
 
 const treeData = [
@@ -72,7 +72,7 @@ class ClientTreeView extends Component {
                         />
                     </td>
                     <td style={{verticalAlign:'top'}}>
-                        <img onClick={() => this.showHideTree()} alt='' align={'right'} src={this.state.showTree ? hideIcon : showIcon} style={{marginTop:'5px',marginRight:'5px',cursor:'pointer',height:"24px",width:"24px"}}/>
+                        <img onClick={() => this.showHideTree()} alt='' align={'right'} src={this.state.showTree ? hideIcon : showIcon} className={'showHideButton'}/>
                     </td>
                 </tr>
                 </tbody>

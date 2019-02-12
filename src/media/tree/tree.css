@@ -187,3 +187,17 @@
   transition: transform 300ms;
   transition: transform 300ms, -webkit-transform 300ms;
 }
+
+.showHideButton {
+  width:24px;
+  height:24px;
+  cursor:pointer;
+  margin-top:5px;
+  margin-right:5px;
+  border-radius: 5px;
+}
+
+.showHideButton:hover {
+  background-color: rgb(240, 240, 240);
+  border: 1px solid rgb(221, 221, 221);
+}

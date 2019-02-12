@@ -2,8 +2,8 @@ import React, {Component} from 'react';
 import CommonModal from './../../baseComponent/modal/CommonModal'
 import * as DateUtils from '../../../utils/DateUtils';
 import './../../../media/workCalendar/workCalendar.css';
-import hideIcon from '../../../media/data/hide.png'
-import showIcon from '../../../media/data/show.png'
+import hideIcon from '../../../media/common/hide.png'
+import showIcon from '../../../media/common/show.png'
 import Button from "../../baseComponent/field/Button";
 
 class WorkCalendarModal extends Component {

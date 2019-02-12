@@ -1,0 +1,18 @@
+.pageButton {
+    width:24px;
+    height:24px;
+    cursor:pointer;
+    margin-top:0px;
+    margin-left:0px;
+    border-radius: 5px;
+}
+
+.pageButton:hover {
+    background-color: rgb(240, 240, 240);
+    border: 1px solid rgb(221, 221, 221);
+}
+
+.pageText {
+    color: rgba(0, 0, 0, 0.45);
+    font-size: 12px;
+}

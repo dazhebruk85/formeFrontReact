@@ -1,5 +1,5 @@
 import React, {Component} from "react";
-import questionPng from '../../../media/data/question.png';
+import questionPng from '../../../media/common/question.png';
 import Button from './../field/Button'
 import CommonModal from './CommonModal'
 

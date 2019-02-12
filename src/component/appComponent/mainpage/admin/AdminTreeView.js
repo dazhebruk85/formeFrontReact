@@ -12,12 +12,12 @@ import systemIcon from '../../../../media/tree/system.png'
 import configParamIcon from '../../../../media/tree/configParam.png'
 import chatIcon from '../../../../media/tree/chat.png'
 
-import notificationsIcon from '../../../../media/tree/notifocations.png'
+import notificationsIcon from '../../../../media/tree/notifications.png'
 import notifyTemplatesIcon from '../../../../media/tree/notifyTemplates.png'
 import notifyMessagesIcon from '../../../../media/tree/notifyMessages.png'
 
-import hideIcon from '../../../../media/data/hide.png'
-import showIcon from '../../../../media/data/show.png'
+import hideIcon from '../../../../media/common/hide.png'
+import showIcon from '../../../../media/common/show.png'
 
 const treeData = [
     { key:'Main',icon:<img alt='' src={mainTreeIcon} style={{width:'20px',height:'20px',marginTop:"0px", marginLeft:"0px"}}/>,title:'Главная',children:
@@ -100,7 +100,7 @@ class AdminTreeView extends Component {
                             />
                         </td>
                         <td style={{verticalAlign:'top'}}>
-                            <img onClick={() => this.showHideTree()} alt='' align={'right'} src={this.state.showTree ? hideIcon : showIcon} style={{marginTop:'5px',marginRight:'5px',cursor:'pointer',height:"24px",width:"24px"}}/>
+                            <img onClick={() => this.showHideTree()} alt='' align={'right'} src={this.state.showTree ? hideIcon : showIcon} className={'showHideButton'}/>
                         </td>
                     </tr>
                 </tbody>

@@ -1,5 +1,5 @@
 import React, {Component} from "react";
-import errorPng from "../../../media/data/error.png";
+import errorPng from "../../../media/common/error.png";
 import Button from './../field/Button'
 import * as CommonUtils from "../../../utils/CommonUtils";
 import {Redirect} from "react-router-dom";

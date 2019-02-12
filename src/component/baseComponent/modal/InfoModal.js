@@ -1,6 +1,6 @@
 import React, {Component} from "react";
 import CommonModal from './CommonModal'
-import infoPng from "../../../media/data/info.png";
+import infoPng from "../../../media/common/info.png";
 import * as CommonUtils from "../../../utils/CommonUtils";
 import Button from './../field/Button'
 

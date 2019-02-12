@@ -1,8 +1,8 @@
 import React, {Component} from 'react';
-import exitPng from '../../../media/data/exit.png';
-import changePasswordPng from '../../../media/data/changePassword.png';
-import changeUserDataPng from '../../../media/data/changeUserData.png';
-import taskCalendarPng from '../../../media/data/taskCalendar.png';
+import exitPng from '../../../media/common/exit.png';
+import changePasswordPng from '../../../media/common/changePassword.png';
+import changeUserDataPng from '../../../media/common/changeUserData.png';
+import taskCalendarPng from '../../../media/workCalendar/workCalendar.png';
 import ChangePasswordModal from './ChangePasswordModal';
 import UpdateUserDataModal from './UpdateUserDataModal';
 import WorkCalendarModal from './WorkCalendarModal';

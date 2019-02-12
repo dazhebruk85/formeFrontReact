@@ -8,7 +8,7 @@ import * as Const from "../../../Const";
 import cookie from "react-cookies";
 import Field from "../../baseComponent/field/Field";
 import Button from "../../baseComponent/field/Button";
-import fillByDefaultPng from "../../../media/data/fillByDefault.png";
+import fillByDefaultPng from "../../../media/common/fillByDefault.png";
 import OkCancelDialog from "../../baseComponent/modal/OkCancelDialog";
 
 class ConfigParamEditForm extends Component {
