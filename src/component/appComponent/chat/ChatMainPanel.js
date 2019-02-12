@@ -339,14 +339,18 @@ class ChatMainPanel extends Component {
                         <table style={{height:'100%',width:'100%',marginRight:'5px'}}>
                             <tbody>
                                 <tr>
-                                    <td style={{height:'100%',verticalAlign:'top'}}>
+                                    <td style={{verticalAlign:'top'}}>
                                         <Field placeholder={'Введите сообщение'} formStyle={{marginRight:'0px',width:'100%'}} fieldWidth='100%' style={{resize:'none',height:'70px'}} maxLength={1000} type={Const.TEXTAREA} value={this.state.fields.common.message} onChange={(event) => this.handleChange(event.target.value,'message','common')}/>
                                     </td>
-                                    <td style={{height:'100%',verticalAlign:'top',textAlign:'center',width:'40px'}}>
-                                        <img onClick={() => this.sendMessageToChat()} title={'Отправить сообщение'} alt='' src={chatSendMessagePng} style={{height:"32px",width:"32px",cursor:'pointer'}}/>
+                                    <td className={'chatActionTd'}>
+                                        <div className={'chatActionDiv'}>
+                                            <img onClick={() => this.sendMessageToChat()} title={'Отправить сообщение'}  alt={'Отправить сообщение'} src={chatSendMessagePng} className={'chatActionImg'}/>
+                                        </div>
                                     </td>
-                                    <td style={{height:'100%',verticalAlign:'top',textAlign:'center',width:'40px'}}>
-                                        <img onClick={() => this.fileDialogOpen()} title={'Прикрепить файл'} alt='' src={chatAddFilePng} style={{height:"32px",width:"32px",cursor:'pointer'}}/>
+                                    <td className={'chatActionTd'}>
+                                        <div className={'chatActionDiv'}>
+                                            <img onClick={() => this.fileDialogOpen()} title={'Прикрепить файл'}  alt={'Прикрепить файл'} src={chatAddFilePng} className={'chatActionImg'}/>
+                                        </div>
                                     </td>
                                 </tr>
                             </tbody>

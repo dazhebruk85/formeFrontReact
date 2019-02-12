@@ -17,7 +17,6 @@ class FileUploadModal extends Component {
     }
 
     selectFile() {
-        let lll=0;
         this.state.okAction()
     }
 

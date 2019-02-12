@@ -177,3 +177,35 @@
     color: rgba(0, 0, 0, 0.45);
     font-size: 9px;
 }
+
+.chatActionTd {
+    width:36px;
+    height:36px;
+    vertical-align: text-top;
+}
+
+.chatActionDiv {
+    width:36px;
+    height:36px;
+    padding:0px;
+    text-align:-webkit-center;
+    cursor:pointer;
+    border: 1px solid transparent;
+    border-radius: 5px;
+    margin-left: 3px;
+}
+
+.chatActionDiv:hover {
+    background-color: rgb(240, 240, 240);
+    border: 1px solid rgb(221, 221, 221);
+    border-radius: 5px;
+}
+
+.chatActionImg {
+    vertical-align:text-top;
+    width:32px;
+    height:32px;
+    margin-top:0px;
+    margin-left:0px;
+    opacity:1;
+}
