@@ -434,7 +434,7 @@ class RepairAppEditForm extends Component {
                             </tbody>
                         </table>
                         <div className="btn-toolbar align-bottom" role="toolbar" style={{justifyContent:'center',display:'flex'}}>
-                            <Button value="Ок" onClick={() => this.saveEntityData()}/>
+                            <Button disabled={this.state.editFormDisabled} value="Ок" onClick={() => this.saveEntityData()}/>
                             <Button value="Отмена" onClick={() => this.closeModal()}/>
                         </div>
                     </form>

@@ -16,7 +16,7 @@ class Button extends Component {
                        className="btn btn-primary btn-sm"
                        onClick={this.props.onClick}
                        style={buttonStyle}
-                       />
+                       disabled={this.props.disabled}/>
             </div>
         )
     }

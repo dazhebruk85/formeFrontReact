@@ -145,7 +145,7 @@ class RepairAppRoomEditForm extends Component {
                                    disabled={formDisabled}/>
                         <Field disabled={formDisabled} labelWidth='150px' fieldWidth='300px' label='Площадь' type={Const.DECIMALFIELD} value={this.state.fields.common.area} onChange={(event) => this.handleChange(event.target.value,'area','common')} maxLength={20}/>
                         <div className="btn-toolbar align-bottom" role="toolbar" style={{justifyContent:'center',display:'flex'}}>
-                            <Button value="Ок" onClick={() => this.okAction()}/>
+                            <Button disabled={formDisabled} value="Ок" onClick={() => this.okAction()}/>
                             <Button value="Отмена" onClick={() => this.closeModal()}/>
                         </div>
                     </div>
