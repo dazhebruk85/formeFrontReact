@@ -3,7 +3,7 @@ import * as CommonUtils from "../../../utils/CommonUtils";
 import * as Const from "../../../Const";
 import cookie from "react-cookies";
 import ErrorModal from "../../baseComponent/modal/ErrorModal";
-import FileUploadModal from "../../baseComponent/modal/FileUploadModal";
+import ChatFileUploadModal from "./ChatFileUploadModal";
 import './../../../media/chat/chat.css';
 import Field from "../../baseComponent/field/Field";
 import $ from "jquery";
@@ -38,7 +38,7 @@ class ChatMainPanel extends Component {
 
         this.chatSocket = props.chatWebSocket;
         this.chatSocket.onmessage = this.handleChatMessage.bind(this);
-        this.sendMessageToChat = this.sendMessageToChat.bind(this);
+        this.sendTextMessageToChat = this.sendTextMessageToChat.bind(this);
         this.fileDialogOpen = this.fileDialogOpen.bind(this);
 
         this.getChatUsers = this.getChatUsers.bind(this);
@@ -125,8 +125,8 @@ class ChatMainPanel extends Component {
     handleChatMessage(event) {
         let messageData = JSON.parse(event.data);
         let animateScrollDiv = false;
-        if (Const.CHAT_MESSAGE_TEXT_TYPE === messageData.type) {
-            let messageObject = {content:messageData.content,sendDate:messageData.sendDate,readDate:undefined,fromMe:false};
+        if ([Const.CHAT_MESSAGE_TEXT_TYPE,Const.CHAT_MESSAGE_FILE_TYPE].includes(messageData.type)) {
+            let messageObject = {content:messageData.content,sendDate:messageData.sendDate,readDate:undefined,fromMe:false,type:messageData.type,fileId:messageData.fileId};
             if (this.state.messages.get(messageData.fromUser)) {
                 this.state.messages.get(messageData.fromUser).push(messageObject);
             } else {
@@ -158,7 +158,7 @@ class ChatMainPanel extends Component {
                 for (let mesIndex in messageData.chatMessageList) {
                     let chatMessage=messageData.chatMessageList[mesIndex];
                     let forMe = chatMessage.fromUser === cookie.load('userId');
-                    let historyMessageObject = {content:chatMessage.content,sendDate:chatMessage.sendDate,readDate:chatMessage.readDate,fromMe:forMe};
+                    let historyMessageObject = {content:chatMessage.content,sendDate:chatMessage.sendDate,readDate:chatMessage.readDate,fromMe:forMe,type:chatMessage.type,fileId:chatMessage.fileId};
                     messageArr.push(historyMessageObject);
                 }
                 this.state.messages.set(messageData.toUser, messageArr);
@@ -195,31 +195,46 @@ class ChatMainPanel extends Component {
         setTimeout(() => this.scrollChatDialogDivToBottom(animateScrollDiv),0);
     }
 
-    sendMessageToChat() {
+    async sendFileMessageToChat(fileAndMessageObject) {
+        let responseData = await CommonUtils.makeAsyncPostEvent(Const.APP_URL,Const.ATTACH_FILE_CONTEXT,Const.ATTACH_SAVE_FILE,fileAndMessageObject.file,cookie.load('sessionId'));
+        if (responseData.errors.length > 0) {
+            this.setState({errors: responseData.errors});
+        } else {
+            let fileMessage = JSON.stringify({toUser:this.state.selectedUser.entityId,content:fileAndMessageObject.message,fileId:responseData.params.fileId,type:Const.CHAT_MESSAGE_FILE_TYPE});
+            WebSocketUtils.sendMesToWebsocket(this.chatSocket, fileMessage);
+            this.addMessageToChatDiv(fileAndMessageObject.message,Const.CHAT_MESSAGE_FILE_TYPE,responseData.params.fileId)
+        }
+        this.setState({fileUploadVisible:false})
+    }
+
+    sendTextMessageToChat() {
         if (this.state.fields.common.message && !CommonUtils.objectIsEmpty(this.state.selectedUser)) {
             let textMessage = JSON.stringify({toUser:this.state.selectedUser.entityId,content:this.state.fields.common.message,type:Const.CHAT_MESSAGE_TEXT_TYPE});
             WebSocketUtils.sendMesToWebsocket(this.chatSocket, textMessage);
-
-            let messageObject = {content:this.state.fields.common.message,sendDate:new Date(),readDate:undefined,fromMe:true};
-            if (this.state.messages.get(this.state.selectedUser.entityId)) {
-                this.state.messages.get(this.state.selectedUser.entityId).push(messageObject);
-            } else {
-                let messageArr = [];
-                messageArr.push(messageObject);
-                this.state.messages.set(this.state.selectedUser.entityId, messageArr);
-            }
-
-            this.setState({
-                fields:{
-                    ...this.state.fields,
-                    common:{
-                        ...this.state.fields.common,
-                        message:''
-                    }
-                }
-            });
-            this.scrollChatDialogDivToBottom(true)
+            this.addMessageToChatDiv(this.state.fields.common.message,Const.CHAT_MESSAGE_TEXT_TYPE,'')
         }
+    }
+
+    addMessageToChatDiv(content, type, fileId) {
+        let messageObject = {content:content,sendDate:new Date(),readDate:undefined,fromMe:true,type:type,fileId:fileId};
+        if (this.state.messages.get(this.state.selectedUser.entityId)) {
+            this.state.messages.get(this.state.selectedUser.entityId).push(messageObject);
+        } else {
+            let messageArr = [];
+            messageArr.push(messageObject);
+            this.state.messages.set(this.state.selectedUser.entityId, messageArr);
+        }
+
+        this.setState({
+            fields:{
+                ...this.state.fields,
+                common:{
+                    ...this.state.fields.common,
+                    message:''
+                }
+            }
+        });
+        this.scrollChatDialogDivToBottom(true)
     }
 
     fileDialogOpen() {
@@ -344,12 +359,12 @@ class ChatMainPanel extends Component {
                                     </td>
                                     <td className={'chatActionTd'}>
                                         <div className={'chatActionDiv'}>
-                                            <img onClick={() => this.sendMessageToChat()} title={'Отправить сообщение'}  alt={'Отправить сообщение'} src={chatSendMessagePng} className={'chatActionImg'}/>
+                                            <img onClick={() => this.sendTextMessageToChat()} title={'Отправить сообщение'}  alt={'Отправить сообщение'} src={chatSendMessagePng} className={'chatActionImg'}/>
                                         </div>
                                     </td>
                                     <td className={'chatActionTd'}>
                                         <div className={'chatActionDiv'}>
-                                            <img onClick={() => this.fileDialogOpen()} title={'Прикрепить файл'}  alt={'Прикрепить файл'} src={chatAddFilePng} className={'chatActionImg'}/>
+                                            <img onClick={() => this.fileDialogOpen()} title={'Отправить файл'}  alt={'Отправить файл'} src={chatAddFilePng} className={'chatActionImg'}/>
                                         </div>
                                     </td>
                                 </tr>
@@ -358,8 +373,8 @@ class ChatMainPanel extends Component {
                     </div>
                 </div>
                 <ErrorModal errors={this.state.errors} closeAction={() => this.setState({errors:[]})}/>
-                <FileUploadModal visible={this.state.fileUploadVisible}
-                                 okAction={() => this.setState({fileUploadVisible:false})}
+                <ChatFileUploadModal visible={this.state.fileUploadVisible}
+                                 okAction={this.sendFileMessageToChat.bind(this)}
                                  cancelAction={() => this.setState({fileUploadVisible:false})}/>
             </div>
         )

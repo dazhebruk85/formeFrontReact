@@ -332,8 +332,8 @@ class RepairAppEditForm extends Component {
                             </tr>
                             </tbody>
                         </table>
-                        <Tabs defaultActiveKey={1} id="uncontrolled-tab-example" style={{height:'600px'}}>
-                            <Tab eventKey={1} title="Объект" style={{width:'100%',height:'520px',overflowY:'auto',borderRight:'1px solid #ddd',borderBottom:'1px solid #ddd',borderLeft:'1px solid #ddd',paddingLeft:'10px'}}>
+                        <Tabs defaultActiveKey={1} id="uncontrolled-tab-example" style={{height:'500px'}}>
+                            <Tab eventKey={1} title="Объект" style={{width:'100%',height:'420px',overflowY:'auto',borderRight:'1px solid #ddd',borderBottom:'1px solid #ddd',borderLeft:'1px solid #ddd',paddingLeft:'10px'}}>
                                 <div style={{paddingTop:'10px'}}>
                                     <Field disabled={this.state.editFormDisabled} formStyle={{marginRight:'0px'}} fieldWidth='862px' style={{resize:'none',height:'50px'}} labelWidth='80px' label='Адрес' maxLength={255} type={Const.TEXTAREA} value={this.state.fields.realEstate.address} onChange={(event) => this.handleChange(event.target.value,'address','realEstate')}/>
                                     <table>

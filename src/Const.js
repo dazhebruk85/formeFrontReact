@@ -40,6 +40,12 @@ export const CHAT_CONTEXT = "chat";
 //Chat actions
 export const GET_USERS_ACTION = "getUserList";
 
+//File context
+export const ATTACH_FILE_CONTEXT = "attachFile";
+//File actions
+export const ATTACH_SAVE_FILE = "saveFile";
+export const ATTACH_GET_FILE = "getFile";
+
 //Common entity actions
 export const ENTITY_LIST = "entityList";
 export const ENTITY_GET = "entityGet";

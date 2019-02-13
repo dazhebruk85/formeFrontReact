@@ -2,6 +2,9 @@ import React, {Component} from "react";
 import CommonModal from "./CommonModal";
 import Button from "../field/Button";
 import FileUploadField from "../field/FileUploadField";
+import ErrorModal from "./ErrorModal";
+import Field from "../field/Field";
+import * as Const from "../../../Const";
 
 class FileUploadModal extends Component {
 
@@ -9,6 +12,7 @@ class FileUploadModal extends Component {
         super(props);
 
         this.state = {
+            errors:[],
             cancelAction:props.cancelAction,
             okAction:props.okAction
         };
@@ -16,22 +20,31 @@ class FileUploadModal extends Component {
         this.selectFile = this.selectFile.bind(this);
     }
 
+    componentDidUpdate(prevProps) {
+        if (this.props.visible && this.props.visible !== prevProps.visible ) {
+            this.refs.FileUploadField.clearFile()
+        }
+    }
+
     selectFile() {
-        this.state.okAction()
+        if (this.refs.FileUploadField.state.selectedFile.size > 0) {
+            this.state.okAction(this.refs.FileUploadField.state.selectedFile);
+        } else {
+            this.setState({errors: [{code:'NO_FILE_ERROR',message:'Необходимо выбрать файл'}]});
+        }
     }
 
     render() {
         return(
-            <CommonModal title={'Выбрать файл'} visible={this.props.visible} style={{width:'450px',height:'150px'}} closeAction={this.state.cancelAction}>
-                <div>
-                    <form className="form-horizontal">
-                        <FileUploadField labelWidth='130px' fieldWidth='300px' label='Выбрать файл' ref={'FileUploadField'}/>
-                    </form>
+            <CommonModal title={'Выбрать файл'} visible={this.props.visible} style={{width:'450px'}} closeAction={this.state.cancelAction}>
+                <div className="form-horizontal">
+                    <FileUploadField style={{marginBottom:'10px'}} labelWidth='130px' fieldWidth='303px' label='Выбрать файл' ref={'FileUploadField'}/>
+                    <div className="btn-toolbar align-bottom" role="toolbar" style={{justifyContent:'center',display:'flex'}}>
+                        <Button value="Ок" onClick={() => this.selectFile()}/>
+                        <Button value="Отмена" onClick={this.state.cancelAction}/>
+                    </div>
                 </div>
-                <div className="btn-toolbar align-bottom" role="toolbar" style={{justifyContent:'center',display:'flex'}}>
-                    <Button value="Ок" onClick={() => this.selectFile()}/>
-                    <Button value="Отмена" onClick={this.state.cancelAction}/>
-                </div>
+                <ErrorModal errors={this.state.errors} closeAction={() => this.setState({errors:[]})}/>
             </CommonModal>
         )
     }
