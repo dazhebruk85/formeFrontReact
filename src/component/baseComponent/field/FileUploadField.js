@@ -100,10 +100,10 @@ class FileUploadField extends Component {
                                            disabled={true}/>
                                 </td>
                                 <td>
-                                    <img title={'Выбрать файл'} alt={''} src={chooseFilePng} style={{opacity:fileUploadDisabled?'0.5':'1',marginBottom:'8px',marginLeft:'-42px',width:'16px',height:'16px',cursor:'pointer'}} onClick={fileUploadDisabled ? null : () => this.selectFile()}/>
+                                    <img title={'Выбрать файл'} alt={''} src={chooseFilePng} style={{opacity:fileUploadDisabled?'0.5':'1',marginBottom:'8px',marginLeft:'-42px',width:'16px',height:'16px',cursor:'pointer',position:'relative'}} onClick={fileUploadDisabled ? null : () => this.selectFile()}/>
                                 </td>
                                 <td>
-                                    <img title={'Очистить'} alt={''} src={clearFilePng} style={{opacity:fileUploadDisabled?'0.5':'1',marginBottom:'8px',marginLeft:'-22px',width:'16px',height:'16px',cursor:'pointer'}} onClick={fileUploadDisabled ? null : () => this.clearFile()}/>
+                                    <img title={'Очистить'} alt={''} src={clearFilePng} style={{opacity:fileUploadDisabled?'0.5':'1',marginBottom:'8px',marginLeft:'-22px',width:'16px',height:'16px',cursor:'pointer',position:'relative'}} onClick={fileUploadDisabled ? null : () => this.clearFile()}/>
                                 </td>
                             </tr>
                         </tbody>

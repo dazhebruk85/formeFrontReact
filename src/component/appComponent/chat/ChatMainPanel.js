@@ -9,12 +9,15 @@ import Field from "../../baseComponent/field/Field";
 import $ from "jquery";
 import * as DateUtils from '../../../utils/DateUtils';
 import * as WebSocketUtils from "./../../../utils/WebSocketUtils"
+import FileSaver from 'file-saver';
 
 import chatUserPng from "../../../media/chat/chatUser.png";
 import chatSendMessagePng from "../../../media/chat/chatSendMessage.png";
 import chatAddFilePng from "../../../media/chat/chatAddFile.png";
 import userOnlinePng from "../../../media/chat/online.png";
 import userOfflinePng from "../../../media/chat/offline.png";
+import downloadFilePng from "../../../media/fileUpload/downloadFile.png";
+import openFileInNewWindowPng from "../../../media/fileUpload/openFileInNewWindow.png";
 import newMessageMp3 from "../../../media/chat/chatNewMessage.mp3";
 
 class ChatMainPanel extends Component {
@@ -126,7 +129,7 @@ class ChatMainPanel extends Component {
         let messageData = JSON.parse(event.data);
         let animateScrollDiv = false;
         if ([Const.CHAT_MESSAGE_TEXT_TYPE,Const.CHAT_MESSAGE_FILE_TYPE].includes(messageData.type)) {
-            let messageObject = {content:messageData.content,sendDate:messageData.sendDate,readDate:undefined,fromMe:false,type:messageData.type,fileId:messageData.fileId};
+            let messageObject = {content:messageData.content,sendDate:messageData.sendDate,readDate:undefined,fromMe:false,type:messageData.type,fileId:messageData.fileId,fileName:messageData.fileName};
             if (this.state.messages.get(messageData.fromUser)) {
                 this.state.messages.get(messageData.fromUser).push(messageObject);
             } else {
@@ -158,7 +161,7 @@ class ChatMainPanel extends Component {
                 for (let mesIndex in messageData.chatMessageList) {
                     let chatMessage=messageData.chatMessageList[mesIndex];
                     let forMe = chatMessage.fromUser === cookie.load('userId');
-                    let historyMessageObject = {content:chatMessage.content,sendDate:chatMessage.sendDate,readDate:chatMessage.readDate,fromMe:forMe,type:chatMessage.type,fileId:chatMessage.fileId};
+                    let historyMessageObject = {content:chatMessage.content,sendDate:chatMessage.sendDate,readDate:chatMessage.readDate,fromMe:forMe,type:chatMessage.type,fileId:chatMessage.fileId,fileName:chatMessage.fileName};
                     messageArr.push(historyMessageObject);
                 }
                 this.state.messages.set(messageData.toUser, messageArr);
@@ -200,9 +203,9 @@ class ChatMainPanel extends Component {
         if (responseData.errors.length > 0) {
             this.setState({errors: responseData.errors});
         } else {
-            let fileMessage = JSON.stringify({toUser:this.state.selectedUser.entityId,content:fileAndMessageObject.message,fileId:responseData.params.fileId,type:Const.CHAT_MESSAGE_FILE_TYPE});
+            let fileMessage = JSON.stringify({toUser:this.state.selectedUser.entityId,content:fileAndMessageObject.message,fileId:responseData.params.fileId,fileName:responseData.params.fileName,type:Const.CHAT_MESSAGE_FILE_TYPE});
             WebSocketUtils.sendMesToWebsocket(this.chatSocket, fileMessage);
-            this.addMessageToChatDiv(fileAndMessageObject.message,Const.CHAT_MESSAGE_FILE_TYPE,responseData.params.fileId)
+            this.addMessageToChatDiv(fileAndMessageObject.message,Const.CHAT_MESSAGE_FILE_TYPE,responseData.params.fileId,responseData.params.fileName)
         }
         this.setState({fileUploadVisible:false})
     }
@@ -211,12 +214,12 @@ class ChatMainPanel extends Component {
         if (this.state.fields.common.message && !CommonUtils.objectIsEmpty(this.state.selectedUser)) {
             let textMessage = JSON.stringify({toUser:this.state.selectedUser.entityId,content:this.state.fields.common.message,type:Const.CHAT_MESSAGE_TEXT_TYPE});
             WebSocketUtils.sendMesToWebsocket(this.chatSocket, textMessage);
-            this.addMessageToChatDiv(this.state.fields.common.message,Const.CHAT_MESSAGE_TEXT_TYPE,'')
+            this.addMessageToChatDiv(this.state.fields.common.message,Const.CHAT_MESSAGE_TEXT_TYPE,'','')
         }
     }
 
-    addMessageToChatDiv(content, type, fileId) {
-        let messageObject = {content:content,sendDate:new Date(),readDate:undefined,fromMe:true,type:type,fileId:fileId};
+    addMessageToChatDiv(content, type, fileId, fileName) {
+        let messageObject = {content:content,sendDate:new Date(),readDate:undefined,fromMe:true,type:type,fileId:fileId,fileName:fileName};
         if (this.state.messages.get(this.state.selectedUser.entityId)) {
             this.state.messages.get(this.state.selectedUser.entityId).push(messageObject);
         } else {
@@ -245,6 +248,31 @@ class ChatMainPanel extends Component {
         }
     }
 
+    async downloadFile(event) {
+        let fileId = event.currentTarget.getAttribute('fileid');
+        let responseData = await CommonUtils.makeAsyncPostEvent(Const.APP_URL,Const.ATTACH_FILE_CONTEXT,Const.ATTACH_GET_FILE,{fileId:fileId},cookie.load('sessionId'));
+        if (responseData.errors.length > 0) {
+            this.setState({errors: responseData.errors});
+        } else {
+            let fileData = responseData.params;
+            FileSaver.saveAs(fileData.content,fileData.fileName,fileData.mimeType)
+        }
+    }
+
+    async openFileInNewWindow(event) {
+        let fileId = event.currentTarget.getAttribute('fileid');
+        let responseData = await CommonUtils.makeAsyncPostEvent(Const.APP_URL,Const.ATTACH_FILE_CONTEXT,Const.ATTACH_GET_FILE,{fileId:fileId},cookie.load('sessionId'));
+        if (responseData.errors.length > 0) {
+            this.setState({errors: responseData.errors});
+        } else {
+            let fileData = responseData.params;
+            let windowForFile = window.open('about:blank');
+            setTimeout(function() {
+                windowForFile.document.write("<iframe width='100%' height='100%' src='" + fileData.content +"'></iframe>")
+            }, 0);
+        }
+    }
+
     scrollChatDialogDivToBottom(animate) {
         if (this.refs.chatDialogDiv) {
             setTimeout(() => $('.chatDialogDiv').animate({scrollTop:$('.chatDialogDiv').prop("scrollHeight")},1000),0);
@@ -255,11 +283,26 @@ class ChatMainPanel extends Component {
 
         let selectedUserId = this.state.selectedUser.entityId;
 
-        function addMessage(messageItem) {
+        function addFileDivIfExist(messageItem, page) {
+            if (messageItem.type === Const.CHAT_MESSAGE_FILE_TYPE && messageItem.fileId) {
+                return(
+                    <div className={messageItem.fromMe ? 'myChatFileDownloadDiv' : 'alienChatFileDownloadDiv'}>
+                        <img className={'chatActionFileDownloadImg'} fileid={messageItem.fileId} title={'Загрузить файл'} alt={''} src={downloadFilePng} onClick={page.downloadFile.bind(this)}/>
+                        <img className={'chatActionFileDownloadImg'} fileid={messageItem.fileId} title={'Открыть файл в новом окне'} alt={''} src={openFileInNewWindowPng} onClick={page.openFileInNewWindow.bind(this)}/>
+                        <div className={'chatDownloadFileNameDiv'}>Файл: {messageItem.fileName}</div>
+                    </div>
+                )
+            } else {
+                return(null);
+            }
+        }
+
+        function addMessage(messageItem, page) {
             return(
                 <tr key={CommonUtils.genGuid()}>
                     <td key={CommonUtils.genGuid()} style={{width:'100%'}}>
                         <div className={messageItem.fromMe ? 'myMessage' : 'alienMessage'} key={CommonUtils.genGuid()}>
+                            {addFileDivIfExist(messageItem, page)}
                             <div key={CommonUtils.genGuid()}>{messageItem.content}</div>
                             <div className={'messageSendTimeDiv'} key={CommonUtils.genGuid()}>Отправлено: {DateUtils.dateToStringWithTimeSec(messageItem.sendDate)}</div>
                             <div style={{paddingTop:'2px'}} className={'messageSendTimeDiv'} key={CommonUtils.genGuid()}>Прочитано: {DateUtils.dateToStringWithTimeSec(messageItem.readDate)}</div>
@@ -269,12 +312,12 @@ class ChatMainPanel extends Component {
             )
         }
 
-        function getCurrentUserMessage(state) {
-            if (state.messages.get(state.selectedUser.entityId)) {
-                let messageArr = state.messages.get(state.selectedUser.entityId);
+        function getCurrentUserMessage(page) {
+            if (page.state.messages.get(page.state.selectedUser.entityId)) {
+                let messageArr = page.state.messages.get(page.state.selectedUser.entityId);
                 return (
                         messageArr.map((messageItem, messageIndex) => (
-                            addMessage(messageItem)
+                            addMessage(messageItem, page)
                         ))
                 )
             } else {
@@ -346,7 +389,7 @@ class ChatMainPanel extends Component {
                     <div ref={'chatDialogDiv'} className={'chatDialogDiv'} id={CommonUtils.genGuid()}>
                         <table style={{width:'100%'}}>
                             <tbody>
-                                {getCurrentUserMessage(this.state)}
+                                {getCurrentUserMessage(this)}
                             </tbody>
                         </table>
                     </div>
