@@ -70,6 +70,14 @@ class ChatMainPanel extends Component {
             console.log("Ошибка " + error.message);
         };
 
+        if (this.refs.chatDialogDiv) {
+            $('.chatDialogDiv').scroll(function () {
+                if ($('.chatDialogDiv').scrollTop() == 0) {
+                    console.log('Scrolled to Page Top');
+                }
+            });
+        }
+
     }
 
     componentDidUpdate(prevProps) {
