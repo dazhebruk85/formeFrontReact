@@ -10,6 +10,7 @@ import $ from "jquery";
 import * as DateUtils from '../../../utils/DateUtils';
 import * as WebSocketUtils from "./../../../utils/WebSocketUtils"
 import FileSaver from 'file-saver';
+import * as FileUtils from '../../../utils/FileUtils';
 
 import chatUserPng from "../../../media/chat/chatUser.png";
 import chatSendMessagePng from "../../../media/chat/chatSendMessage.png";
@@ -72,7 +73,7 @@ class ChatMainPanel extends Component {
 
         if (this.refs.chatDialogDiv) {
             $('.chatDialogDiv').scroll(function () {
-                if ($('.chatDialogDiv').scrollTop() == 0) {
+                if ($('.chatDialogDiv').scrollTop() === 0) {
                     console.log('Scrolled to Page Top');
                 }
             });
@@ -263,7 +264,12 @@ class ChatMainPanel extends Component {
             this.setState({errors: responseData.errors});
         } else {
             let fileData = responseData.params;
-            FileSaver.saveAs(fileData.content,fileData.fileName,fileData.mimeType)
+            let blob = FileUtils.base64ToBlob(fileData.content, fileData.mimeType);
+            if (CommonUtils.getBrowserInfo().name !== Const.BROWSER_IE) {
+                FileSaver.saveAs(blob,fileData.fileName,fileData.mimeType)
+            } else {
+                window.navigator.msSaveOrOpenBlob(blob, fileData.fileName);
+            }
         }
     }
 
@@ -274,10 +280,12 @@ class ChatMainPanel extends Component {
             this.setState({errors: responseData.errors});
         } else {
             let fileData = responseData.params;
-            let windowForFile = window.open('about:blank');
-            setTimeout(function() {
-                windowForFile.document.write("<iframe width='100%' height='100%' src='" + fileData.content +"'></iframe>")
-            }, 0);
+            let blob = FileUtils.base64ToBlob(fileData.content, fileData.mimeType);
+            if (CommonUtils.getBrowserInfo().name !== Const.BROWSER_IE) {
+                window.open(URL.createObjectURL(blob));
+            } else {
+                window.navigator.msSaveOrOpenBlob(blob, fileData.fileName);
+            }
         }
     }
 

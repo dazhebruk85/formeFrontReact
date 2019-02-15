@@ -5,6 +5,11 @@ export const DACHA_APP_URL = '192.168.1.38:9191/back/';
 export const APP_URL = 'http://' + WORK_APP_URL + 'FrontServlet';
 export const CHAT_URL = 'ws://' + WORK_APP_URL + 'chat/';
 
+//Supported browsers
+export const BROWSER_CHROME = "CHROME";
+export const BROWSER_FIREFOX = "FIREFOX";
+export const BROWSER_IE = "IE";
+
 //Auth context
 export const AUTH_CONTEXT = "auth";
 
