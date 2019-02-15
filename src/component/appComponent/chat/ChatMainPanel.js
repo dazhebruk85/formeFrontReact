@@ -162,7 +162,7 @@ class ChatMainPanel extends Component {
         let messageData = JSON.parse(event.data);
         let animateScrollDiv = false;
         if ([Const.CHAT_MESSAGE_TEXT_TYPE,Const.CHAT_MESSAGE_FILE_TYPE].includes(messageData.type)) {
-            let messageObject = {content:messageData.content,sendDate:messageData.sendDate,readDate:undefined,fromMe:false,type:messageData.type,fileId:messageData.fileId,fileName:messageData.fileName};
+            let messageObject = {content:messageData.content,sendDate:messageData.sendDate,readDate:undefined,fromMe:false,type:messageData.type,fileId:messageData.fileId,fileName:messageData.fileName,smallImgContent:messageData.smallImgContent};
             if (this.state.messages.get(messageData.fromUser)) {
                 this.state.messages.get(messageData.fromUser).push(messageObject);
             } else {
@@ -215,9 +215,9 @@ class ChatMainPanel extends Component {
         if (responseData.errors.length > 0) {
             this.setState({errors: responseData.errors});
         } else {
-            let fileMessage = JSON.stringify({toUser:this.state.selectedUser.entityId,content:fileAndMessageObject.message,fileId:responseData.params.fileId,fileName:responseData.params.fileName,type:Const.CHAT_MESSAGE_FILE_TYPE});
+            let fileMessage = JSON.stringify({toUser:this.state.selectedUser.entityId,content:fileAndMessageObject.message,fileId:responseData.params.fileId,fileName:responseData.params.fileName,type:Const.CHAT_MESSAGE_FILE_TYPE,smallImgContent:responseData.params.smallImgContent});
             WebSocketUtils.sendMesToWebsocket(this.chatSocket, fileMessage);
-            this.addMessageToChatDiv(fileAndMessageObject.message,Const.CHAT_MESSAGE_FILE_TYPE,responseData.params.fileId,responseData.params.fileName)
+            this.addMessageToChatDiv(fileAndMessageObject.message,Const.CHAT_MESSAGE_FILE_TYPE,responseData.params.fileId,responseData.params.fileName,responseData.params.smallImgContent)
         }
         this.setState({fileUploadVisible:false})
     }
@@ -226,12 +226,12 @@ class ChatMainPanel extends Component {
         if (this.state.fields.common.message && !CommonUtils.objectIsEmpty(this.state.selectedUser)) {
             let textMessage = JSON.stringify({toUser:this.state.selectedUser.entityId,content:this.state.fields.common.message,type:Const.CHAT_MESSAGE_TEXT_TYPE});
             WebSocketUtils.sendMesToWebsocket(this.chatSocket, textMessage);
-            this.addMessageToChatDiv(this.state.fields.common.message,Const.CHAT_MESSAGE_TEXT_TYPE,'','')
+            this.addMessageToChatDiv(this.state.fields.common.message,Const.CHAT_MESSAGE_TEXT_TYPE,'','','')
         }
     }
 
-    addMessageToChatDiv(content, type, fileId, fileName) {
-        let messageObject = {content:content,sendDate:new Date(),readDate:undefined,fromMe:true,type:type,fileId:fileId,fileName:fileName};
+    addMessageToChatDiv(content, type, fileId, fileName, smallImgContent) {
+        let messageObject = {content:content,sendDate:new Date(),readDate:undefined,fromMe:true,type:type,fileId:fileId,fileName:fileName,smallImgContent:smallImgContent};
         if (this.state.messages.get(this.state.selectedUser.entityId)) {
             this.state.messages.get(this.state.selectedUser.entityId).push(messageObject);
         } else {
@@ -294,7 +294,7 @@ class ChatMainPanel extends Component {
 
     scrollChatDialogDivToBottom(animate) {
         if (this.refs.chatDialogDiv) {
-            setTimeout(() => $('.chatDialogDiv').animate({scrollTop:$('.chatDialogDiv').prop("scrollHeight")},1000),0);
+            setTimeout(() => $('.chatDialogDiv').animate({scrollTop:$('.chatDialogDiv').prop("scrollHeight")},500),0);
         }
     }
 
@@ -305,7 +305,7 @@ class ChatMainPanel extends Component {
         function addSmallCopyImgIfExist(messageItem) {
             if (messageItem.smallImgContent) {
                 return(
-                    <img alt={''} src={messageItem.smallImgContent}/>
+                    <img style={{width:'100%',height:'100%'}} alt={''} src={messageItem.smallImgContent}/>
                 )
             }
         }
@@ -319,7 +319,7 @@ class ChatMainPanel extends Component {
                             <img className={'chatActionFileDownloadImg'} fileid={messageItem.fileId} title={'Открыть файл в новом окне'} alt={''} src={openFileInNewWindowPng} onClick={page.openFileInNewWindow.bind(this)}/>
                             <div className={'chatDownloadFileNameDiv'}>Файл: {messageItem.fileName}</div>
                         </div>
-                        <div style={{marginBottom:'10px'}}>
+                        <div style={{marginBottom:'10px',width:'100%',height:'100%'}}>
                             {addSmallCopyImgIfExist(messageItem)}
                         </div>
                     </div>
