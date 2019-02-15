@@ -44,6 +44,7 @@ export const CONFIG_PARAM_CONTEXT = "configParam";
 export const CHAT_CONTEXT = "chat";
 //Chat actions
 export const GET_USERS_ACTION = "getUserList";
+export const GET_USER_HISTORY_ACTION = "getUserHistory";
 
 //File context
 export const ATTACH_FILE_CONTEXT = "attachFile";

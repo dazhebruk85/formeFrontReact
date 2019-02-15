@@ -107,7 +107,7 @@ class ChatMainPanel extends Component {
         }
     }
 
-    handleSelectChatUser = (event) => {
+    handleSelectChatUser = async (event) => {
         let selectedChatUserID =  event.currentTarget.getAttribute('chatuserid');
         let selectedItem = this.state.users[selectedChatUserID];
         if (!CommonUtils.objectIsEmpty(selectedItem)) {
@@ -123,11 +123,35 @@ class ChatMainPanel extends Component {
             });
         }
 
-        setTimeout(() => {
-                let userHistoryMessage = JSON.stringify({fromUser:cookie.load('userId'),toUser:this.state.selectedUser.entityId,type:Const.CHAT_USER_HISTORY,pageNumber:selectedItem.dialogPage})
-                WebSocketUtils.sendMesToWebsocket(this.chatSocket, userHistoryMessage)
+        setTimeout( async () => {
+            let fromUser = cookie.load('userId');
+            let toUser = this.state.selectedUser.entityId;
+            let params = {fromUserId:fromUser,toUserId:toUser,pageNumber:selectedItem.dialogPage};
+            let responseData = await CommonUtils.makeAsyncPostEvent(Const.APP_URL,Const.CHAT_CONTEXT,Const.GET_USER_HISTORY_ACTION,params,cookie.load('sessionId'));
+            if (responseData.errors.length > 0) {
+                this.setState({errors: responseData.errors});
+            } else {
+                let messageArr = [];
+                for (let mesIndex in responseData.chatMessageList) {
+                    let chatMessage = responseData.chatMessageList[mesIndex];
+                    let forMe = chatMessage.fromUser === cookie.load('userId');
+                    let historyMessageObject = {content:chatMessage.content,sendDate:chatMessage.sendDate,readDate:chatMessage.readDate,fromMe:forMe,type:chatMessage.type,fileId:chatMessage.fileId,fileName:chatMessage.fileName,smallImgContent:chatMessage.smallImgContent};
+                    messageArr.push(historyMessageObject);
+                }
+                this.state.messages.set(toUser, messageArr);
+                this.setState({
+                    users:{
+                        ...this.state.users,
+                        [this.state.selectedUser.entityId]:{
+                            ...this.state.users[this.state.selectedUser.entityId],
+                            unread:0
+                        }
+                    }
+                });
+                setTimeout(() => this.scrollChatDialogDivToBottom(false),0);
             }
-            , 0);
+        },0);
+
     };
 
     handleChange(value,fieldName,context) {
@@ -164,27 +188,6 @@ class ChatMainPanel extends Component {
             let audio = new Audio(newMessageMp3);
             audio.play();
             animateScrollDiv = true;
-        } else if (Const.CHAT_USER_HISTORY === messageData.type) {
-            if (this.state.users[messageData.toUser]) {
-                let messageArr = [];
-                for (let mesIndex in messageData.chatMessageList) {
-                    let chatMessage=messageData.chatMessageList[mesIndex];
-                    let forMe = chatMessage.fromUser === cookie.load('userId');
-                    let historyMessageObject = {content:chatMessage.content,sendDate:chatMessage.sendDate,readDate:chatMessage.readDate,fromMe:forMe,type:chatMessage.type,fileId:chatMessage.fileId,fileName:chatMessage.fileName};
-                    messageArr.push(historyMessageObject);
-                }
-                this.state.messages.set(messageData.toUser, messageArr);
-                this.setState({
-                    users:{
-                        ...this.state.users,
-                        [this.state.selectedUser.entityId]:{
-                            ...this.state.users[this.state.selectedUser.entityId],
-                            unread:0
-                        }
-                    }
-                });
-                animateScrollDiv = false;
-            }
         } else if (Const.CHAT_USER_STATE === messageData.type) {
             for (let key in messageData.chatUserStateMap) {
                 if (this.state.users[key]) {
@@ -299,13 +302,26 @@ class ChatMainPanel extends Component {
 
         let selectedUserId = this.state.selectedUser.entityId;
 
+        function addSmallCopyImgIfExist(messageItem) {
+            if (messageItem.smallImgContent) {
+                return(
+                    <img alt={''} src={messageItem.smallImgContent}/>
+                )
+            }
+        }
+
         function addFileDivIfExist(messageItem, page) {
             if (messageItem.type === Const.CHAT_MESSAGE_FILE_TYPE && messageItem.fileId) {
                 return(
-                    <div className={messageItem.fromMe ? 'myChatFileDownloadDiv' : 'alienChatFileDownloadDiv'}>
-                        <img className={'chatActionFileDownloadImg'} fileid={messageItem.fileId} title={'Загрузить файл'} alt={''} src={downloadFilePng} onClick={page.downloadFile.bind(this)}/>
-                        <img className={'chatActionFileDownloadImg'} fileid={messageItem.fileId} title={'Открыть файл в новом окне'} alt={''} src={openFileInNewWindowPng} onClick={page.openFileInNewWindow.bind(this)}/>
-                        <div className={'chatDownloadFileNameDiv'}>Файл: {messageItem.fileName}</div>
+                    <div>
+                        <div className={messageItem.fromMe ? 'myChatFileDownloadDiv' : 'alienChatFileDownloadDiv'}>
+                            <img className={'chatActionFileDownloadImg'} fileid={messageItem.fileId} title={'Загрузить файл'} alt={''} src={downloadFilePng} onClick={page.downloadFile.bind(this)}/>
+                            <img className={'chatActionFileDownloadImg'} fileid={messageItem.fileId} title={'Открыть файл в новом окне'} alt={''} src={openFileInNewWindowPng} onClick={page.openFileInNewWindow.bind(this)}/>
+                            <div className={'chatDownloadFileNameDiv'}>Файл: {messageItem.fileName}</div>
+                        </div>
+                        <div style={{marginBottom:'10px'}}>
+                            {addSmallCopyImgIfExist(messageItem)}
+                        </div>
                     </div>
                 )
             } else {
