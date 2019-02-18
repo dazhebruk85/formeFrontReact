@@ -1,11 +1,11 @@
 import React, {Component} from 'react';
-import logo from '../../media/logo.png';
-import QuickActionPanel from '../../component/appComponent/mainpage/QuickActionPanel'
-import cookie from 'react-cookies';
-import ClientTreeView from '../../component/appComponent/mainpage/client/ClientTreeView'
-import RepairAppList from '../../component/appComponent/repairapp/RepairAppList';
-import ChatMainPanel from '../../component/appComponent/chat/ChatMainPanel';
-import * as Const from "../../Const";
+import logo from '../media/logo.png';
+import QuickActionPanel from '../component/appComponent/mainpage/QuickActionPanel'
+import ClientTreeView from '../component/appComponent/mainpage/client/ClientTreeView'
+import RepairAppList from '../component/appComponent/repairapp/RepairAppList';
+import ChatMainPanel from '../component/appComponent/chat/ChatMainPanel';
+import * as Const from "../Const";
+import * as CommonUtils from "../utils/CommonUtils";
 
 class ClientPage extends Component {
 
@@ -19,7 +19,7 @@ class ClientPage extends Component {
     }
 
     componentDidMount() {
-        this.setState({chatWebSocket: new WebSocket(Const.CHAT_URL + cookie.load('userId'))});
+        this.setState({chatWebSocket: new WebSocket(Const.CHAT_URL + CommonUtils.getFormLocalStorage('userId'))});
     }
 
     changeTreeChoice(evt){
@@ -33,11 +33,11 @@ class ClientPage extends Component {
             switch(props.choosenTreeItem) {
                 case 'repairApp':
                     return (
-                        <RepairAppList/>
+                        <RepairAppList mainPageComp={this.props.mainPageComp}/>
                     );
                 case 'chat':
                     return (
-                        <ChatMainPanel chatWebSocket={props.chatWebSocket}/>
+                        <ChatMainPanel mainPageComp={this.props.mainPageComp} chatWebSocket={props.chatWebSocket}/>
                     );
                 default:
                     return (
@@ -58,13 +58,13 @@ class ClientPage extends Component {
                                 </td>
                                 <td style={{width:'500px',height:'28px'}}>
                                     <div style={{width:'100%',height:'100%',padding:'0px'}}>
-                                        <label style={{height:'28px',width:'100%',marginBottom:'0px', paddingTop:'6px',fontSize:'large'}} className="control-label col-sm-2" htmlFor="loginTextbox">Здравствуйте {cookie.load('userFio')}</label>
+                                        <label style={{height:'28px',width:'100%',marginBottom:'0px', paddingTop:'6px',fontSize:'large'}} className="control-label col-sm-2" htmlFor="loginTextbox">Здравствуйте {CommonUtils.getFormLocalStorage('userFio')}</label>
                                     </div>
                                 </td>
                                 <td>
                                 </td>
                                 <td style={{width:'120px'}}>
-                                    <QuickActionPanel chatWebSocket={this.state.chatWebSocket}/>
+                                    <QuickActionPanel chatWebSocket={this.state.chatWebSocket} mainPageComp={this.props.mainPageComp}/>
                                 </td>
                             </tr>
                             </tbody>

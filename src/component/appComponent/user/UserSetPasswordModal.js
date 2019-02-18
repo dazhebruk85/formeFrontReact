@@ -7,7 +7,6 @@ import Field from "../../baseComponent/field/Field";
 import * as Const from "../../../Const";
 import Button from "../../baseComponent/field/Button";
 import * as CommonUtils from "../../../utils/CommonUtils";
-import cookie from "react-cookies";
 
 class UserSetPasswordModal extends Component {
 
@@ -76,7 +75,7 @@ class UserSetPasswordModal extends Component {
             this.setState({errors: errors});
         } else {
             let params = this.state.fields;
-            let responseData = await CommonUtils.makeAsyncPostEvent(Const.APP_URL,Const.SET_NEW_PASSWORD_CONTEXT,'',params,cookie.load('sessionId'));
+            let responseData = await CommonUtils.makeAsyncPostEvent(Const.APP_URL,Const.SET_NEW_PASSWORD_CONTEXT,'',params);
             if (responseData.errors.length > 0) {
                 this.setState({errors: responseData.errors});
             } else {

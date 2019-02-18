@@ -1,5 +1,4 @@
 import  React, { Component } from 'react';
-import cookie from "react-cookies";
 import * as Const from "../../../Const";
 import * as CommonUtils from '../../../utils/CommonUtils'
 import nextPagePng from "../../../media/grid/nextPage.png";
@@ -40,7 +39,7 @@ class CommonDbGrid extends Component {
     async getGridListData() {
         this.setState({isLoading:true});
         let params = {pageNumber:this.state.pageNumber,pageSize:this.state.pageSize,filter:this.props.filter};
-        let responseData = await CommonUtils.makeAsyncPostEvent(Const.APP_URL,this.state.dataEntityContext,Const.ENTITY_LIST,params,cookie.load('sessionId'));
+        let responseData = await CommonUtils.makeAsyncPostEvent(Const.APP_URL,this.state.dataEntityContext,Const.ENTITY_LIST,params);
         this.setState({isLoading:false});
         if (responseData.errors.length > 0) {
             this.setState({errors: responseData.errors});

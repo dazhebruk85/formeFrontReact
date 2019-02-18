@@ -1,8 +1,6 @@
 import React, {Component} from 'react';
 import CommonModal from './../../baseComponent/modal/CommonModal'
-import cookie from 'react-cookies';
 import * as Const from '../../../Const';
-import { Redirect } from 'react-router-dom'
 import InfoModal from "../../baseComponent/modal/InfoModal";
 import Field from '../../baseComponent/field/Field'
 import Button from './../../baseComponent/field/Button'
@@ -15,9 +13,7 @@ class ChangePasswordModal extends Component {
         super(props);
 
         this.state = {
-            errors:[],
             successInfoMessages:[],
-            redirectToLoginPage:false,
             closeAction:props.closeAction,
             fields:{
                 common:{
@@ -36,9 +32,7 @@ class ChangePasswordModal extends Component {
 
     closeModal() {
         this.setState({
-            errors: [],
             successInfoMessages: [],
-            redirectToLoginPage:false,
             fields:{
                 ...this.state.fields,
                 common:{
@@ -63,7 +57,7 @@ class ChangePasswordModal extends Component {
             this.setState({errors: errors});
         } else {
             let params = this.state.fields;
-            let responseData = await CommonUtils.makeAsyncPostEvent(Const.APP_URL,Const.CHANGE_PASSWORD_CONTEXT,'',params,cookie.load('sessionId'));
+            let responseData = await CommonUtils.makeAsyncPostEvent(Const.APP_URL,Const.CHANGE_PASSWORD_CONTEXT,'',params);
             if (responseData.errors.length > 0) {
                 this.setState({errors: responseData.errors});
             } else {
@@ -77,12 +71,6 @@ class ChangePasswordModal extends Component {
     }
 
     render() {
-        const { redirectToLoginPage } = this.state;
-
-        if (redirectToLoginPage) {
-            return <Redirect to='/front'/>;
-        }
-
         return (
             <CommonModal title={'Смена пароля'} visible={this.props.visible} style={{width:'540px'}} closeAction={() => this.closeModal()}>
                 <div>
@@ -96,9 +84,9 @@ class ChangePasswordModal extends Component {
                         </div>
                     </form>
                 </div>
-                <ErrorModal errors={this.state.errors} closeAction={() => this.setState({errors:[]})}/>
+                <ErrorModal mainPageComp={this.props.mainPageComp} errors={this.state.errors} closeAction={() => this.setState({errors:[]})}/>
                 <InfoModal popupData={this.state.successInfoMessages}
-                           closeAction={() => this.setState({successInfoMessages:[],redirectToLoginPage:true})}/>
+                           closeAction={() => {this.setState({successInfoMessages:[]});this.props.mainPageComp.setState({sessionId:''})}}/>
             </CommonModal>
         )
     }

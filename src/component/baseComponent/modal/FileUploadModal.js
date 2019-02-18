@@ -3,8 +3,6 @@ import CommonModal from "./CommonModal";
 import Button from "../field/Button";
 import FileUploadField from "../field/FileUploadField";
 import ErrorModal from "./ErrorModal";
-import Field from "../field/Field";
-import * as Const from "../../../Const";
 
 class FileUploadModal extends Component {
 

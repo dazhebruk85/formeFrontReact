@@ -1,7 +1,6 @@
 import React, {Component} from "react";
 import * as CommonUtils from "../../../utils/CommonUtils";
 import * as Const from "../../../Const";
-import cookie from "react-cookies";
 import ErrorModal from "../../baseComponent/modal/ErrorModal";
 import ChatFileUploadModal from "./ChatFileUploadModal";
 import './../../../media/chat/chat.css';
@@ -85,7 +84,7 @@ class ChatMainPanel extends Component {
     }
 
     async getChatUsers() {
-        let responseData = await CommonUtils.makeAsyncPostEvent(Const.APP_URL,Const.CHAT_CONTEXT,Const.GET_USERS_ACTION,{},cookie.load('sessionId'));
+        let responseData = await CommonUtils.makeAsyncPostEvent(Const.APP_URL,Const.CHAT_CONTEXT,Const.GET_USERS_ACTION,{});
         if (responseData.errors.length > 0) {
             this.setState({errors: responseData.errors});
         } else {
@@ -100,8 +99,9 @@ class ChatMainPanel extends Component {
             }
 
             setTimeout(() => {
-                    let usersStateMessage = JSON.stringify({allChatUsers:userMap,fromUser:cookie.load('userId'),toUser:cookie.load('userId'),type:Const.CHAT_USER_STATE});
-                    WebSocketUtils.sendMesToWebsocket(this.chatSocket, usersStateMessage)
+                let currentUserId = CommonUtils.getFormLocalStorage('userId');
+                let usersStateMessage = JSON.stringify({allChatUsers:userMap,fromUser:currentUserId,toUser:currentUserId,type:Const.CHAT_USER_STATE});
+                WebSocketUtils.sendMesToWebsocket(this.chatSocket, usersStateMessage)
             }
             , 0);
         }
@@ -124,17 +124,17 @@ class ChatMainPanel extends Component {
         }
 
         setTimeout( async () => {
-            let fromUser = cookie.load('userId');
+            let fromUser = CommonUtils.getFormLocalStorage('userId');
             let toUser = this.state.selectedUser.entityId;
             let params = {fromUserId:fromUser,toUserId:toUser,pageNumber:selectedItem.dialogPage};
-            let responseData = await CommonUtils.makeAsyncPostEvent(Const.APP_URL,Const.CHAT_CONTEXT,Const.GET_USER_HISTORY_ACTION,params,cookie.load('sessionId'));
+            let responseData = await CommonUtils.makeAsyncPostEvent(Const.APP_URL,Const.CHAT_CONTEXT,Const.GET_USER_HISTORY_ACTION,params);
             if (responseData.errors.length > 0) {
                 this.setState({errors: responseData.errors});
             } else {
                 let messageArr = [];
                 for (let mesIndex in responseData.chatMessageList) {
                     let chatMessage = responseData.chatMessageList[mesIndex];
-                    let forMe = chatMessage.fromUser === cookie.load('userId');
+                    let forMe = chatMessage.fromUser === fromUser;
                     let historyMessageObject = {content:chatMessage.content,sendDate:chatMessage.sendDate,readDate:chatMessage.readDate,fromMe:forMe,type:chatMessage.type,fileId:chatMessage.fileId,fileName:chatMessage.fileName,smallImgContent:chatMessage.smallImgContent};
                     messageArr.push(historyMessageObject);
                 }
@@ -211,7 +211,7 @@ class ChatMainPanel extends Component {
     }
 
     async sendFileMessageToChat(fileAndMessageObject) {
-        let responseData = await CommonUtils.makeAsyncPostEvent(Const.APP_URL,Const.ATTACH_FILE_CONTEXT,Const.ATTACH_SAVE_FILE,fileAndMessageObject.file,cookie.load('sessionId'));
+        let responseData = await CommonUtils.makeAsyncPostEvent(Const.APP_URL,Const.ATTACH_FILE_CONTEXT,Const.ATTACH_SAVE_FILE,fileAndMessageObject.file);
         if (responseData.errors.length > 0) {
             this.setState({errors: responseData.errors});
         } else {
@@ -262,7 +262,7 @@ class ChatMainPanel extends Component {
 
     async downloadFile(event) {
         let fileId = event.currentTarget.getAttribute('fileid');
-        let responseData = await CommonUtils.makeAsyncPostEvent(Const.APP_URL,Const.ATTACH_FILE_CONTEXT,Const.ATTACH_GET_FILE,{fileId:fileId},cookie.load('sessionId'));
+        let responseData = await CommonUtils.makeAsyncPostEvent(Const.APP_URL,Const.ATTACH_FILE_CONTEXT,Const.ATTACH_GET_FILE,{fileId:fileId});
         if (responseData.errors.length > 0) {
             this.setState({errors: responseData.errors});
         } else {
@@ -278,7 +278,7 @@ class ChatMainPanel extends Component {
 
     async openFileInNewWindow(event) {
         let fileId = event.currentTarget.getAttribute('fileid');
-        let responseData = await CommonUtils.makeAsyncPostEvent(Const.APP_URL,Const.ATTACH_FILE_CONTEXT,Const.ATTACH_GET_FILE,{fileId:fileId},cookie.load('sessionId'));
+        let responseData = await CommonUtils.makeAsyncPostEvent(Const.APP_URL,Const.ATTACH_FILE_CONTEXT,Const.ATTACH_GET_FILE,{fileId:fileId});
         if (responseData.errors.length > 0) {
             this.setState({errors: responseData.errors});
         } else {

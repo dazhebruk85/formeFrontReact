@@ -2,7 +2,6 @@ import React, {Component} from "react";
 import errorPng from "../../../media/common/error.png";
 import Button from './../field/Button'
 import * as CommonUtils from "../../../utils/CommonUtils";
-import {Redirect} from "react-router-dom";
 import CommonModal from './CommonModal'
 
 class ErrorModal extends Component {
@@ -11,8 +10,7 @@ class ErrorModal extends Component {
         super(props);
 
         this.state = {
-            errors: [],
-            redirectToLoginPage:false
+            errors: []
         }
     }
 
@@ -23,18 +21,12 @@ class ErrorModal extends Component {
     }
 
     redirectToLoginPage(evt){
-        this.setState({
-            redirectToLoginPage:true
-        });
+        this.props.mainPageComp.setState({
+            sessionId: ''
+        })
     }
 
     render() {
-
-        const { redirectToLoginPage } = this.state;
-
-        if (redirectToLoginPage) {
-            return <Redirect to='/front'/>;
-        }
 
         let sessionExpire = false;
         if (this.props && this.props.errors && this.props.errors.length > 0) {

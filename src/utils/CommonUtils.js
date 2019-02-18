@@ -46,13 +46,13 @@ export function strToBigDecimal(value) {
     return parseFloat(value.replace(/[,]+/g, '.')).toFixed(2);
 }
 
-export async function makeAsyncPostEvent(url, context, action, params, sessionId) {
+export async function makeAsyncPostEvent(url, context, action, params) {
     try {
         const asyncPostEvent = await axios.post(url, {
             context: context,
             action: action,
             params: params,
-            sessionId: sessionId
+            sessionId: getFormLocalStorage("sessionId")
         });
         return asyncPostEvent.data
     } catch (e) {
@@ -63,6 +63,14 @@ export async function makeAsyncPostEvent(url, context, action, params, sessionId
             return {errors:[{code:'SYS',message:'Непредвиденная ошибка на сервере'}]};
         }
     }
+}
+
+export function getFormLocalStorage(key) {
+    return window.localStorage.getItem(key)
+}
+
+export function putToLocalStorage(key, value) {
+    return window.localStorage.setItem(key,value)
 }
 
 export function getBrowserInfo() {

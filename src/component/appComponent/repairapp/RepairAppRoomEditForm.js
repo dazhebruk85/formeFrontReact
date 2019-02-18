@@ -1,7 +1,6 @@
 import {Component} from "react";
 import * as CommonUtils from "../../../utils/CommonUtils";
 import * as Const from "../../../Const";
-import cookie from "react-cookies";
 import Field from "../../baseComponent/field/Field";
 import Button from "../../baseComponent/field/Button";
 import ErrorModal from "../../baseComponent/modal/ErrorModal";
@@ -43,7 +42,7 @@ class RepairAppRoomEditForm extends Component {
     }
 
     async getNewUuid() {
-        let responseData = await CommonUtils.makeAsyncPostEvent(Const.APP_URL,Const.GEN_UUID_CONTEXT,'',null,cookie.load('sessionId'));
+        let responseData = await CommonUtils.makeAsyncPostEvent(Const.APP_URL,Const.GEN_UUID_CONTEXT,'',null);
         this.setState({
             fields:{
                 ...this.state.fields,

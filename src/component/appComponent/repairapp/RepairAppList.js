@@ -3,7 +3,6 @@ import * as Const from '../../../Const';
 import CommonDbGrid from '../../baseComponent/grid/CommonDbGrid';
 import RepairAppEditForm from './RepairAppEditForm'
 import * as CommonUtils from "../../../utils/CommonUtils";
-import cookie from "react-cookies";
 import ErrorModal from "../../baseComponent/modal/ErrorModal";
 import OkCancelDialog from "../../baseComponent/modal/OkCancelDialog";
 import InfoModal from "../../baseComponent/modal/InfoModal";
@@ -88,7 +87,7 @@ class RepairAppList extends Component {
 
     async deleteEntityConfirm() {
         let params = {entityId: this.state.selectedEntityId};
-        let responseData = await CommonUtils.makeAsyncPostEvent(Const.APP_URL,Const.REPAIR_APP_FORM_CONTEXT,Const.ENTITY_DELETE,params,cookie.load('sessionId'));
+        let responseData = await CommonUtils.makeAsyncPostEvent(Const.APP_URL,Const.REPAIR_APP_FORM_CONTEXT,Const.ENTITY_DELETE,params);
         if (responseData.errors.length > 0) {
             this.setState({errors: responseData.errors});
         } else {
@@ -102,7 +101,7 @@ class RepairAppList extends Component {
 
     render() {
         function addActions(comp) {
-            const userRole = cookie.load('userRole');
+            const userRole = CommonUtils.getFormLocalStorage('userRole');
             if (userRole !== Const.CLIENT_ROLE) {
                 return (
                     <div className="form-group" style={{marginLeft:'10px', marginBottom:'0px'}}>

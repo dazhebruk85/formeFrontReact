@@ -1,6 +1,5 @@
 import React, {Component} from 'react';
 import CommonModal from './../../baseComponent/modal/CommonModal'
-import cookie from 'react-cookies';
 import * as Const from '../../../Const';
 import InfoModal from "../../baseComponent/modal/InfoModal";
 import Field from '../../baseComponent/field/Field'
@@ -48,8 +47,8 @@ class UpdateUserDataModal extends Component {
 
     async getUserData() {
         this.setState({isLoading:true});
-        let params = {entityId: cookie.load('userId')};
-        let responseData = await CommonUtils.makeAsyncPostEvent(Const.APP_URL,Const.USER_CONTEXT,Const.ENTITY_GET,params,cookie.load('sessionId'));
+        let params = {entityId: CommonUtils.getFormLocalStorage('userId')};
+        let responseData = await CommonUtils.makeAsyncPostEvent(Const.APP_URL,Const.USER_CONTEXT,Const.ENTITY_GET,params);
         this.setState({isLoading:false});
         if (responseData.errors.length > 0) {
             this.setState({errors: responseData.errors});
@@ -98,8 +97,8 @@ class UpdateUserDataModal extends Component {
         } else {
             this.setState({isLoading:true});
             let params = this.state.fields;
-            params['entityId'] = cookie.load('userId');
-            let responseData = await CommonUtils.makeAsyncPostEvent(Const.APP_URL,Const.USER_CONTEXT,Const.ENTITY_SAVE,params,cookie.load('sessionId'));
+            params['entityId'] = CommonUtils.getFormLocalStorage('userId');
+            let responseData = await CommonUtils.makeAsyncPostEvent(Const.APP_URL,Const.USER_CONTEXT,Const.ENTITY_SAVE,params);
             this.setState({isLoading:false});
             if (responseData.errors.length > 0) {
                 this.setState({errors: responseData.errors});

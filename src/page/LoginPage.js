@@ -1,12 +1,11 @@
 import React, {Component} from 'react';
-import logo from '../../media/logo.png';
-import * as Const from '../../Const';
-import cookie from 'react-cookies';
-import ErrorModal from '../../component/baseComponent/modal/ErrorModal';
-import Field from '../../component/baseComponent/field/Field'
-import Button from '../../component/baseComponent/field/Button'
-import * as CommonUtils from "../../utils/CommonUtils";
-import Spinner from '../../component/baseComponent/spinner/Spinner';
+import logo from '../media/logo.png';
+import * as Const from '../Const';
+import ErrorModal from '../component/baseComponent/modal/ErrorModal';
+import Field from '../component/baseComponent/field/Field'
+import Button from '../component/baseComponent/field/Button'
+import * as CommonUtils from "../utils/CommonUtils";
+import Spinner from '../component/baseComponent/spinner/Spinner';
 import $ from "jquery";
 
 class LoginPage extends Component {
@@ -29,11 +28,7 @@ class LoginPage extends Component {
     }
 
     componentDidMount() {
-        let cookieLet = cookie;
-        let cookieDataObj = cookieLet.loadAll(true);
-        for (let cookiePropName in cookieDataObj) {
-            cookieLet.remove(cookiePropName, { path: '/' });
-        }
+        window.localStorage.clear();
         if (this.refs.loginField) {
             $('#'+this.refs.loginField.props.id).focus();
         }
@@ -53,18 +48,16 @@ class LoginPage extends Component {
             if (responseData.errors.length > 0) {
                 this.setState({errors:responseData.errors});
             } else {
-                cookie.save('sessionId',responseData.sessionId,{path:'/'});
-                cookie.save('userId',responseData.userId,{path:'/'});
-                cookie.save('userFio',responseData.userFio,{path:'/'});
-                cookie.save('userRole',responseData.userRole,{path:'/'});
-                cookie.save('userLogin',responseData.userLogin,{path:'/'});
-
-                if (responseData.userRole === Const.CLIENT_ROLE) {
-                    this.props.history.push('/clientPage')
-                } else {
-                    this.props.history.push('/adminPage')
-                }
+                CommonUtils.putToLocalStorage("sessionId",responseData.sessionId);
+                CommonUtils.putToLocalStorage("userId",responseData.userId);
+                CommonUtils.putToLocalStorage("userFio",responseData.userFio);
+                CommonUtils.putToLocalStorage("userRole",responseData.userRole);
+                CommonUtils.putToLocalStorage("userLogin",responseData.userLogin);
             }
+            this.props.mainPageComp.setState({
+                sessionId:responseData.sessionId,
+                userRole:responseData.userRole
+            })
         }
     }
 

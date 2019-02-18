@@ -8,7 +8,6 @@ import Field from '../../baseComponent/field/Field'
 import Button from './../../baseComponent/field/Button'
 import DictField from '../../baseComponent/field/DictField'
 import OkCancelDialog from '../../../component/baseComponent/modal/OkCancelDialog';
-import cookie from 'react-cookies';
 import InfoModal from "../../baseComponent/modal/InfoModal";
 import CollapsePanel from './../../baseComponent/panel/CollapsePanel'
 import UserSetPasswordModal from "./UserSetPasswordModal";
@@ -93,7 +92,7 @@ class UserList extends Component {
 
     async deleteEntityConfirm() {
         let params = {entityId: this.state.selectedEntityId};
-        let responseData = await CommonUtils.makeAsyncPostEvent(Const.APP_URL,Const.USER_CONTEXT,Const.ENTITY_DELETE,params,cookie.load('sessionId'));
+        let responseData = await CommonUtils.makeAsyncPostEvent(Const.APP_URL,Const.USER_CONTEXT,Const.ENTITY_DELETE,params);
         if (responseData.errors.length > 0) {
             this.setState({errors: responseData.errors});
         } else {

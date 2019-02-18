@@ -1,16 +1,16 @@
 import React, {Component} from 'react';
-import logo from '../../media/logo.png';
-import QuickActionPanel from '../../component/appComponent/mainpage/QuickActionPanel'
-import AdminTreeView from "../../component/appComponent/mainpage/admin/AdminTreeView";
-import UserList from '../../component/appComponent/user/UserList';
-import UserRoleList from '../../component/appComponent/userrole/UserRoleList';
-import BasePackageList from '../../component/appComponent/basePackage/BasePackageList';
-import RoomTypeList from '../../component/appComponent/roomtype/RoomTypeList';
-import RepairAppList from "../../component/appComponent/repairapp/RepairAppList";
-import ConfigParamList from "../../component/appComponent/configParam/ConfigParamList";
-import ChatMainPanel from '../../component/appComponent/chat/ChatMainPanel';
-import * as Const from "../../Const";
-import cookie from "react-cookies";
+import logo from '../media/logo.png';
+import QuickActionPanel from '../component/appComponent/mainpage/QuickActionPanel'
+import AdminTreeView from "../component/appComponent/mainpage/admin/AdminTreeView";
+import UserList from '../component/appComponent/user/UserList';
+import UserRoleList from '../component/appComponent/userrole/UserRoleList';
+import BasePackageList from '../component/appComponent/basePackage/BasePackageList';
+import RoomTypeList from '../component/appComponent/roomtype/RoomTypeList';
+import RepairAppList from "../component/appComponent/repairapp/RepairAppList";
+import ConfigParamList from "../component/appComponent/configParam/ConfigParamList";
+import ChatMainPanel from '../component/appComponent/chat/ChatMainPanel';
+import * as Const from "../Const";
+import * as CommonUtils from "../utils/CommonUtils";
 
 class AdminPage extends Component {
 
@@ -24,7 +24,7 @@ class AdminPage extends Component {
     }
 
     componentDidMount() {
-        this.setState({chatWebSocket: new WebSocket(Const.CHAT_URL + cookie.load('userId'))});
+        this.setState({chatWebSocket: new WebSocket(Const.CHAT_URL + CommonUtils.getFormLocalStorage('userId'))});
     }
 
     changeTreeChoice(evt){
@@ -37,31 +37,31 @@ class AdminPage extends Component {
             switch(props.choosenTreeItem) {
                 case 'user':
                     return (
-                        <UserList/>
+                        <UserList mainPageComp={this.props.mainPageComp}/>
                     );
                 case 'userRole':
                     return (
-                        <UserRoleList/>
+                        <UserRoleList mainPageComp={this.props.mainPageComp}/>
                     );
                 case 'basePackage':
                     return (
-                        <BasePackageList/>
+                        <BasePackageList mainPageComp={this.props.mainPageComp}/>
                     );
                 case 'roomType':
                     return (
-                        <RoomTypeList/>
+                        <RoomTypeList mainPageComp={this.props.mainPageComp}/>
                     );
                 case 'repairApp':
                     return (
-                        <RepairAppList/>
+                        <RepairAppList mainPageComp={this.props.mainPageComp}/>
                     );
                 case 'configParam':
                     return (
-                        <ConfigParamList/>
+                        <ConfigParamList mainPageComp={this.props.mainPageComp}/>
                     );
                 case 'chat':
                     return (
-                        <ChatMainPanel chatWebSocket={props.chatWebSocket}/>
+                        <ChatMainPanel mainPageComp={this.props.mainPageComp} chatWebSocket={props.chatWebSocket}/>
                     );
                 case 'notifyTemplates':
                     return (
@@ -100,7 +100,7 @@ class AdminPage extends Component {
                                     <td>
                                     </td>
                                     <td style={{width:'120px'}}>
-                                        <QuickActionPanel chatWebSocket={this.state.chatWebSocket}/>
+                                        <QuickActionPanel chatWebSocket={this.state.chatWebSocket} mainPageComp={this.props.mainPageComp}/>
                                     </td>
                                 </tr>
                             </tbody>

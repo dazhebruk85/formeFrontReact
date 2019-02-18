@@ -7,10 +7,9 @@ import ChangePasswordModal from './ChangePasswordModal';
 import UpdateUserDataModal from './UpdateUserDataModal';
 import WorkCalendarModal from './WorkCalendarModal';
 import OkCancelDialog from '../../../component/baseComponent/modal/OkCancelDialog';
-import {Redirect} from "react-router-dom";
-import cookie from 'react-cookies';
 import * as Const from "../../../Const";
 import * as WebSocketUtils from "./../../../utils/WebSocketUtils"
+import * as CommonUtils from "../../../utils/CommonUtils";
 
 class QuickActionPanel extends Component {
 
@@ -20,8 +19,7 @@ class QuickActionPanel extends Component {
             changePasswordModalVisible: false,
             updateUserDataModalVisible: false,
             exitDialogVisible:false,
-            workCalendarVisible:false,
-            redirectToLoginPage:false
+            workCalendarVisible:false
         };
 
         this.chatSocket = props.chatWebSocket;
@@ -71,21 +69,19 @@ class QuickActionPanel extends Component {
 
     okExitDialog(evt){
         this.setState({
-            exitDialogVisible: false,
-            redirectToLoginPage:true
+            exitDialogVisible: false
         });
+        //Выход из чата
         WebSocketUtils.closeWebsocket(this.chatSocket);
+        //Удаление сессии из глобального компонента, соответсвенно перекинет на логин
+        this.props.mainPageComp.setState({
+            sessionId: ''
+        })
     }
 
     render() {
-        const { redirectToLoginPage } = this.state;
-
-        if (redirectToLoginPage) {
-            return <Redirect to='/front'/>;
-        }
-
         function addWorkCalendar(comp) {
-            const userRole = cookie.load('userRole');
+            const userRole = CommonUtils.getFormLocalStorage('userRole');
             if (userRole !== Const.CLIENT_ROLE) {
                 return (
                     <div style={{width: '100%', height: '100%', padding: '0px', textAlign: '-webkit-center'}}>
@@ -140,7 +136,7 @@ class QuickActionPanel extends Component {
                     </tbody>
                 </table>
                 <UpdateUserDataModal visible={this.state.updateUserDataModalVisible} closeAction={this.closeUpdateUserDataModal.bind(this)}/>
-                <ChangePasswordModal visible={this.state.changePasswordModalVisible} closeAction={this.closeChangePasswordModal.bind(this)}/>
+                <ChangePasswordModal mainPageComp={this.props.mainPageComp} visible={this.state.changePasswordModalVisible} closeAction={this.closeChangePasswordModal.bind(this)}/>
                 <OkCancelDialog okCancelVisible={this.state.exitDialogVisible}
                                 cancelAction={this.cancelExitDialog.bind(this)}
                                 okAction={this.okExitDialog.bind(this)}>

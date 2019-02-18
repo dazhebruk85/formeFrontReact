@@ -2,7 +2,6 @@ import React, {Component} from 'react';
 import CommonModal from './../../baseComponent/modal/CommonModal'
 import * as Const from '../../../Const';
 import * as CommonUtils from "../../../utils/CommonUtils";
-import cookie from 'react-cookies';
 import { Tabs, Tab} from 'react-bootstrap';
 import Button from './../../baseComponent/field/Button'
 import Field from '../../baseComponent/field/Field'
@@ -89,7 +88,7 @@ class RepairAppEditForm extends Component {
             //Редактирование анкеты
             this.setState({isLoading:true});
             let params = {entityId: this.state.fields.common.entityId};
-            let responseData = await CommonUtils.makeAsyncPostEvent(Const.APP_URL,Const.REPAIR_APP_FORM_CONTEXT,Const.ENTITY_GET,params,cookie.load('sessionId'));
+            let responseData = await CommonUtils.makeAsyncPostEvent(Const.APP_URL,Const.REPAIR_APP_FORM_CONTEXT,Const.ENTITY_GET,params);
             this.setState({isLoading:false});
             if (responseData.errors.length > 0) {
                 this.setState({errors: responseData.errors});
@@ -99,7 +98,7 @@ class RepairAppEditForm extends Component {
         } else {
             //Новая анкета
             this.setState({isLoading:true});
-            let responseData = await CommonUtils.makeAsyncPostEvent(Const.APP_URL,Const.REPAIR_APP_FORM_CONTEXT,Const.ENTITY_NEW,{},cookie.load('sessionId'));
+            let responseData = await CommonUtils.makeAsyncPostEvent(Const.APP_URL,Const.REPAIR_APP_FORM_CONTEXT,Const.ENTITY_NEW,{});
             if (responseData.errors.length > 0) {
                 this.setState({errors: responseData.errors});
             } else {
@@ -181,7 +180,7 @@ class RepairAppEditForm extends Component {
             this.setState({isLoading:true});
             let params = this.state.fields;
             params['entityId'] = this.state.fields.common.entityId;
-            let responseData = await CommonUtils.makeAsyncPostEvent(Const.APP_URL,Const.REPAIR_APP_FORM_CONTEXT,Const.ENTITY_SAVE,params,cookie.load('sessionId'));
+            let responseData = await CommonUtils.makeAsyncPostEvent(Const.APP_URL,Const.REPAIR_APP_FORM_CONTEXT,Const.ENTITY_SAVE,params);
             this.setState({isLoading:false});
             if (responseData.errors.length > 0) {
                 this.setState({errors: responseData.errors});

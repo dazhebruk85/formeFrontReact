@@ -5,7 +5,6 @@ import * as CommonUtils from "../../../utils/CommonUtils";
 import ErrorModal from "../../baseComponent/modal/ErrorModal";
 import InfoModal from "../../baseComponent/modal/InfoModal";
 import * as Const from "../../../Const";
-import cookie from "react-cookies";
 import Field from "../../baseComponent/field/Field";
 import Button from "../../baseComponent/field/Button";
 import fillByDefaultPng from "../../../media/common/fillByDefault.png";
@@ -17,7 +16,6 @@ class ConfigParamEditForm extends Component {
         super(props);
 
         this.state = {
-            errors:[],
             isLoading:false,
             closeAction:props.closeAction,
             successInfoMessages:[],
@@ -31,7 +29,7 @@ class ConfigParamEditForm extends Component {
                     defaultValue:''
                 }
             }
-        }
+        };
 
         this.handleChange = this.handleChange.bind(this);
         this.closeModal = this.closeModal.bind(this);
@@ -62,7 +60,7 @@ class ConfigParamEditForm extends Component {
         if (this.state.fields.common.entityId) {
             this.setState({isLoading:true});
             let params = {entityId: this.state.fields.common.entityId};
-            let responseData = await CommonUtils.makeAsyncPostEvent(Const.APP_URL,Const.CONFIG_PARAM_CONTEXT,Const.ENTITY_GET,params,cookie.load('sessionId'));
+            let responseData = await CommonUtils.makeAsyncPostEvent(Const.APP_URL,Const.CONFIG_PARAM_CONTEXT,Const.ENTITY_GET,params);
             this.setState({isLoading:false});
             if (responseData.errors.length > 0) {
                 this.setState({errors: responseData.errors});
@@ -107,7 +105,7 @@ class ConfigParamEditForm extends Component {
             this.setState({isLoading:true});
             let params = this.state.fields;
             params['entityId'] = this.state.fields.common.entityId;
-            let responseData = await CommonUtils.makeAsyncPostEvent(Const.APP_URL,Const.CONFIG_PARAM_CONTEXT,Const.ENTITY_SAVE,params,cookie.load('sessionId'));
+            let responseData = await CommonUtils.makeAsyncPostEvent(Const.APP_URL,Const.CONFIG_PARAM_CONTEXT,Const.ENTITY_SAVE,params);
             this.setState({isLoading:false});
             if (responseData.errors.length > 0) {
                 this.setState({errors: responseData.errors});
@@ -156,7 +154,6 @@ class ConfigParamEditForm extends Component {
                         </div>
                     </form>
                 </div>
-                <ErrorModal errors={this.state.errors} closeAction={() => this.setState({errors:[]})}/>
                 <InfoModal popupData={this.state.successInfoMessages} closeAction={() => {this.setState({successInfoMessages: []}); this.closeModal()}}/>
                 <OkCancelDialog okCancelVisible={this.state.setValueByDefaultDialogVisible}
                                 cancelAction={() => this.setState({setValueByDefaultDialogVisible:false})}

@@ -1,30 +1,23 @@
 import React, { Component } from 'react';
 import { HashRouter as Router, Switch, Route, Redirect} from 'react-router-dom';
-import LoginPage from './page/loginPage/LoginPage'
-import ClientPage from './page/clientPage/ClientPage'
-import AdminPage from './page/adminPage/AdminPage'
+import MainPage from './page/MainPage'
 
 class App extends Component {
 
     render() {
 
       return (
-        <Router basename={process.env.PUBLIC_URL}>
-          <div style={{width:'100%',height:'100%'}}>
-              <Switch>
-                  <Route exact path="/" render={() => (<Redirect to="/front/loginPage"/>)}/>
-                  <Route exact path="/front" render={() => (<Redirect to="/front/loginPage"/>)}/>
-                  <Route exact path="/front/loginPage" component={LoginPage} />
-
-                  <Route exact path="/clientPage" render={() => (<Redirect to="/front/clientPage"/>)}/>
-                  <Route exact path="/front/clientPage" component={ClientPage} />
-
-                  <Route exact path="/adminPage" render={() => (<Redirect to="/front/adminPage"/>)}/>
-                  <Route exact path="/front/adminPage" component={AdminPage} />
-
-              </Switch>
-        </div>
-      </Router>
+          <Router basename={process.env.PUBLIC_URL}>
+              <div style={{width:'100%',height:'100%'}}>
+                  <Switch>
+                      <Route exact path="/" render={() => (<Redirect to="/front/mainPage"/>)}/>
+                      <Route exact path="/front" render={() => (<Redirect to="/front/mainPage"/>)}/>
+                      <Route exact path="/front/mainPage" render={() => (
+                          <MainPage ref={'mainPageComp'}/>)
+                      } />
+                  </Switch>
+              </div>
+          </Router>
       );
 
     }

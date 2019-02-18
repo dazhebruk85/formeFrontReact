@@ -74,7 +74,6 @@ export const CHECKBOX = "CHECKBOX";
 //ChatMessage type
 export const CHAT_MESSAGE_TEXT_TYPE = "text";
 export const CHAT_MESSAGE_FILE_TYPE = "file";
-export const CHAT_USER_HISTORY = "chatUserHistory";
 export const CHAT_USER_STATE = "chatUserState";
 
 //Chat user state
