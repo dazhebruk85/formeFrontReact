@@ -363,40 +363,40 @@ class RepairAppEditForm extends Component {
                                     </CollapsePanel>
                                 </div>
                             </Tab>
-                            <Tab eventKey={2} title="Демонтаж" style={{width:'100%',height:'520px',overflowY:'auto',borderRight:'1px solid #ddd',borderBottom:'1px solid #ddd',borderLeft:'1px solid #ddd',paddingLeft:'10px'}}>
+                            <Tab eventKey={2} title="Демонтаж" style={{width:'100%',height:'420px',overflowY:'auto',borderRight:'1px solid #ddd',borderBottom:'1px solid #ddd',borderLeft:'1px solid #ddd',paddingLeft:'10px'}}>
                                 Демонтаж
                             </Tab>
-                            <Tab eventKey={3} title="Монтаж" style={{width:'100%',height:'520px',overflowY:'auto',borderRight:'1px solid #ddd',borderBottom:'1px solid #ddd',borderLeft:'1px solid #ddd',paddingLeft:'10px'}}>
+                            <Tab eventKey={3} title="Монтаж" style={{width:'100%',height:'420px',overflowY:'auto',borderRight:'1px solid #ddd',borderBottom:'1px solid #ddd',borderLeft:'1px solid #ddd',paddingLeft:'10px'}}>
                                 Монтаж
                             </Tab>
-                            <Tab eventKey={4} title="Полы" style={{width:'100%',height:'520px',overflowY:'auto',borderRight:'1px solid #ddd',borderBottom:'1px solid #ddd',borderLeft:'1px solid #ddd',paddingLeft:'10px'}}>
+                            <Tab eventKey={4} title="Полы" style={{width:'100%',height:'420px',overflowY:'auto',borderRight:'1px solid #ddd',borderBottom:'1px solid #ddd',borderLeft:'1px solid #ddd',paddingLeft:'10px'}}>
                                 Полы
                             </Tab>
-                            <Tab eventKey={5} title="Стены" style={{width:'100%',height:'520px',overflowY:'auto',borderRight:'1px solid #ddd',borderBottom:'1px solid #ddd',borderLeft:'1px solid #ddd',paddingLeft:'10px'}}>
+                            <Tab eventKey={5} title="Стены" style={{width:'100%',height:'420px',overflowY:'auto',borderRight:'1px solid #ddd',borderBottom:'1px solid #ddd',borderLeft:'1px solid #ddd',paddingLeft:'10px'}}>
                                 Стены
                             </Tab>
-                            <Tab eventKey={6} title="ХГВС" style={{width:'100%',height:'520px',overflowY:'auto',borderRight:'1px solid #ddd',borderBottom:'1px solid #ddd',borderLeft:'1px solid #ddd',paddingLeft:'10px'}}>
+                            <Tab eventKey={6} title="ХГВС" style={{width:'100%',height:'420px',overflowY:'auto',borderRight:'1px solid #ddd',borderBottom:'1px solid #ddd',borderLeft:'1px solid #ddd',paddingLeft:'10px'}}>
                                 ХГВС
                             </Tab>
-                            <Tab eventKey={7} title="Электрика" style={{width:'100%',height:'520px',overflowY:'auto',borderRight:'1px solid #ddd',borderBottom:'1px solid #ddd',borderLeft:'1px solid #ddd',paddingLeft:'10px'}}>
+                            <Tab eventKey={7} title="Электрика" style={{width:'100%',height:'420px',overflowY:'auto',borderRight:'1px solid #ddd',borderBottom:'1px solid #ddd',borderLeft:'1px solid #ddd',paddingLeft:'10px'}}>
                                 Электрика
                             </Tab>
-                            <Tab eventKey={8} title="Сантехника" style={{width:'100%',height:'520px',overflowY:'auto',borderRight:'1px solid #ddd',borderBottom:'1px solid #ddd',borderLeft:'1px solid #ddd',paddingLeft:'10px'}}>
+                            <Tab eventKey={8} title="Сантехника" style={{width:'100%',height:'420px',overflowY:'auto',borderRight:'1px solid #ddd',borderBottom:'1px solid #ddd',borderLeft:'1px solid #ddd',paddingLeft:'10px'}}>
                                 Электрика
                             </Tab>
-                            <Tab eventKey={9} title="Керамическая плитка" style={{width:'100%',height:'520px',overflowY:'auto',borderRight:'1px solid #ddd',borderBottom:'1px solid #ddd',borderLeft:'1px solid #ddd',paddingLeft:'10px'}}>
+                            <Tab eventKey={9} title="Керамическая плитка" style={{width:'100%',height:'420px',overflowY:'auto',borderRight:'1px solid #ddd',borderBottom:'1px solid #ddd',borderLeft:'1px solid #ddd',paddingLeft:'10px'}}>
                                 Электрика
                             </Tab>
-                            <Tab eventKey={11} title="Двери" style={{width:'100%',height:'520px',overflowY:'auto',borderRight:'1px solid #ddd',borderBottom:'1px solid #ddd',borderLeft:'1px solid #ddd',paddingLeft:'10px'}}>
+                            <Tab eventKey={11} title="Двери" style={{width:'100%',height:'420px',overflowY:'auto',borderRight:'1px solid #ddd',borderBottom:'1px solid #ddd',borderLeft:'1px solid #ddd',paddingLeft:'10px'}}>
                                 Двери
                             </Tab>
-                            <Tab eventKey={12} title="Балкон" style={{width:'100%',height:'520px',overflowY:'auto',borderRight:'1px solid #ddd',borderBottom:'1px solid #ddd',borderLeft:'1px solid #ddd',paddingLeft:'10px'}}>
+                            <Tab eventKey={12} title="Балкон" style={{width:'100%',height:'420px',overflowY:'auto',borderRight:'1px solid #ddd',borderBottom:'1px solid #ddd',borderLeft:'1px solid #ddd',paddingLeft:'10px'}}>
                                 Балкон
                             </Tab>
-                            <Tab eventKey={10} title="Потолки, подоконники, откосы" style={{width:'100%',height:'520px',overflowY:'auto',borderRight:'1px solid #ddd',borderBottom:'1px solid #ddd',borderLeft:'1px solid #ddd',paddingLeft:'10px'}}>
+                            <Tab eventKey={10} title="Потолки, подоконники, откосы" style={{width:'100%',height:'420px',overflowY:'auto',borderRight:'1px solid #ddd',borderBottom:'1px solid #ddd',borderLeft:'1px solid #ddd',paddingLeft:'10px'}}>
                                 Потолки, подоконники, откосы
                             </Tab>
-                            <Tab eventKey={13} title="Прочие работы" style={{width:'100%',height:'520px',overflowY:'auto',borderRight:'1px solid #ddd',borderBottom:'1px solid #ddd',borderLeft:'1px solid #ddd',paddingLeft:'10px'}}>
+                            <Tab eventKey={13} title="Прочие работы" style={{width:'100%',height:'420px',overflowY:'auto',borderRight:'1px solid #ddd',borderBottom:'1px solid #ddd',borderLeft:'1px solid #ddd',paddingLeft:'10px'}}>
                                 Прочие работы
                             </Tab>
                         </Tabs>
