@@ -107,7 +107,7 @@ class CommonDbGrid extends Component {
 
         if (this.state.listData === undefined || this.state.listData === null) {
             return (
-                <ErrorModal errors={this.state.errors} closeAction={() => this.setState({errors:[]})}/>
+                <ErrorModal mainPageComp={this.props.mainPageComp} errors={this.state.errors} closeAction={() => this.setState({errors:[]})}/>
             )
         } else {
             return (
@@ -171,7 +171,7 @@ class CommonDbGrid extends Component {
                             </tr>
                         </tbody>
                     </table>
-                    <ErrorModal errors={this.state.errors} closeAction={() => this.setState({errors:[]})}/>
+                    <ErrorModal mainPageComp={this.props.mainPageComp} errors={this.state.errors} closeAction={() => this.setState({errors:[]})}/>
                 </div>
             );
         }

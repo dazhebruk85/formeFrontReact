@@ -16,6 +16,7 @@ class ConfigParamEditForm extends Component {
         super(props);
 
         this.state = {
+            errors:[],
             isLoading:false,
             closeAction:props.closeAction,
             successInfoMessages:[],
@@ -160,6 +161,7 @@ class ConfigParamEditForm extends Component {
                                 okAction={() => this.setValueByDefaultValue()}>
                     <div>Вы действительно хотите заполнить значение параметра значением по умолчанию?</div>
                 </OkCancelDialog>
+                <ErrorModal mainPageComp={this.props.mainPageComp} errors={this.state.errors} closeAction={() => this.setState({errors:[]})}/>
             </CommonModal>
         )
     }

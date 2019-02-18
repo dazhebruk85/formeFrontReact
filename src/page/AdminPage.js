@@ -37,31 +37,31 @@ class AdminPage extends Component {
             switch(props.choosenTreeItem) {
                 case 'user':
                     return (
-                        <UserList mainPageComp={this.props.mainPageComp}/>
+                        <UserList mainPageComp={props.mainPageComp}/>
                     );
                 case 'userRole':
                     return (
-                        <UserRoleList mainPageComp={this.props.mainPageComp}/>
+                        <UserRoleList mainPageComp={props.mainPageComp}/>
                     );
                 case 'basePackage':
                     return (
-                        <BasePackageList mainPageComp={this.props.mainPageComp}/>
+                        <BasePackageList mainPageComp={props.mainPageComp}/>
                     );
                 case 'roomType':
                     return (
-                        <RoomTypeList mainPageComp={this.props.mainPageComp}/>
+                        <RoomTypeList mainPageComp={props.mainPageComp}/>
                     );
                 case 'repairApp':
                     return (
-                        <RepairAppList mainPageComp={this.props.mainPageComp}/>
+                        <RepairAppList mainPageComp={props.mainPageComp}/>
                     );
                 case 'configParam':
                     return (
-                        <ConfigParamList mainPageComp={this.props.mainPageComp}/>
+                        <ConfigParamList mainPageComp={props.mainPageComp}/>
                     );
                 case 'chat':
                     return (
-                        <ChatMainPanel mainPageComp={this.props.mainPageComp} chatWebSocket={props.chatWebSocket}/>
+                        <ChatMainPanel mainPageComp={props.mainPageComp} chatWebSocket={props.chatWebSocket}/>
                     );
                 case 'notifyTemplates':
                     return (
@@ -115,7 +115,7 @@ class AdminPage extends Component {
                                 </td>
                                 <td style={{width:'100%',verticalAlign:'top'}}>
                                     <div ref='mainDataDiv' style={{height:'100%',overflow:'auto'}}>
-                                        <MainDivComponent chatWebSocket={this.state.chatWebSocket} choosenTreeItem={this.state.choosenTreeItem}/>
+                                        <MainDivComponent mainPageComp={this.props.mainPageComp} chatWebSocket={this.state.chatWebSocket} choosenTreeItem={this.state.choosenTreeItem}/>
                                     </div>
                                 </td>
                             </tr>

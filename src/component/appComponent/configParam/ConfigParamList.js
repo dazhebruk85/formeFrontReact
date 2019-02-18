@@ -9,6 +9,7 @@ import ConfigParamEditForm from "./ConfigParamEditForm";
 import '../../../media/common/action/entityAction.css';
 import entityEditPng from "../../../media/common/action/entityEdit.png";
 import entityRefreshPng from "../../../media/common/action/entityRefresh.png";
+import CommonModal from "../../baseComponent/modal/CommonModal";
 
 class ConfigParamList extends Component {
 
@@ -68,9 +69,9 @@ class ConfigParamList extends Component {
                         </tbody>
                     </table>
                 </div>
-                <CommonDbGrid entityId={this.state.selectedEntityId} ref={'CPLConfigParamGrid'} selectAction={this.changeGridSelection.bind(this)} dataEntityContext={Const.CONFIG_PARAM_CONTEXT} pageSize={10}/>
-                <ErrorModal errors={this.state.errors} closeAction={() => this.setState({errors:[]})}/>
-                <ConfigParamEditForm entityId={this.state.selectedEntityId} visible={this.state.editFormVisible} closeAction={() => {this.setState({editFormVisible:false,selectedEntityId:''});this.refreshList()}}/>
+                <CommonDbGrid mainPageComp={this.props.mainPageComp} entityId={this.state.selectedEntityId} ref={'CPLConfigParamGrid'} selectAction={this.changeGridSelection.bind(this)} dataEntityContext={Const.CONFIG_PARAM_CONTEXT} pageSize={10}/>
+                <ErrorModal mainPageComp={this.props.mainPageComp} errors={this.state.errors} closeAction={() => this.setState({errors:[]})}/>
+                <ConfigParamEditForm mainPageComp={this.props.mainPageComp} entityId={this.state.selectedEntityId} visible={this.state.editFormVisible} closeAction={() => {this.setState({editFormVisible:false,selectedEntityId:''});this.refreshList()}}/>
             </div>
         )
     }

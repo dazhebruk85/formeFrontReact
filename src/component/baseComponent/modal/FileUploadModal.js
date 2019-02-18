@@ -36,13 +36,13 @@ class FileUploadModal extends Component {
         return(
             <CommonModal title={'Выбрать файл'} visible={this.props.visible} style={{width:'450px'}} closeAction={this.state.cancelAction}>
                 <div className="form-horizontal">
-                    <FileUploadField style={{marginBottom:'10px'}} labelWidth='130px' fieldWidth='303px' label='Выбрать файл' ref={'FileUploadField'}/>
+                    <FileUploadField mainPageComp={this.props.mainPageComp} style={{marginBottom:'10px'}} labelWidth='130px' fieldWidth='303px' label='Выбрать файл' ref={'FileUploadField'}/>
                     <div className="btn-toolbar align-bottom" role="toolbar" style={{justifyContent:'center',display:'flex'}}>
                         <Button value="Ок" onClick={() => this.selectFile()}/>
                         <Button value="Отмена" onClick={this.state.cancelAction}/>
                     </div>
                 </div>
-                <ErrorModal errors={this.state.errors} closeAction={() => this.setState({errors:[]})}/>
+                <ErrorModal mainPageComp={this.props.mainPageComp} errors={this.state.errors} closeAction={() => this.setState({errors:[]})}/>
             </CommonModal>
         )
     }

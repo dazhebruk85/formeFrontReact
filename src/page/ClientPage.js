@@ -6,6 +6,7 @@ import RepairAppList from '../component/appComponent/repairapp/RepairAppList';
 import ChatMainPanel from '../component/appComponent/chat/ChatMainPanel';
 import * as Const from "../Const";
 import * as CommonUtils from "../utils/CommonUtils";
+import CommonModal from "../component/baseComponent/modal/CommonModal";
 
 class ClientPage extends Component {
 
@@ -33,11 +34,11 @@ class ClientPage extends Component {
             switch(props.choosenTreeItem) {
                 case 'repairApp':
                     return (
-                        <RepairAppList mainPageComp={this.props.mainPageComp}/>
+                        <RepairAppList mainPageComp={props.mainPageComp}/>
                     );
                 case 'chat':
                     return (
-                        <ChatMainPanel mainPageComp={this.props.mainPageComp} chatWebSocket={props.chatWebSocket}/>
+                        <ChatMainPanel mainPageComp={props.mainPageComp} chatWebSocket={props.chatWebSocket}/>
                     );
                 default:
                     return (
@@ -79,7 +80,7 @@ class ClientPage extends Component {
                                 </td>
                                 <td style={{width:'100%',verticalAlign:'top'}}>
                                     <div ref='mainDataDiv' style={{height:'100%',overflow:'auto'}}>
-                                        <MainDivComponent chatWebSocket={this.state.chatWebSocket} choosenTreeItem={this.state.choosenTreeItem}/>
+                                        <MainDivComponent mainPageComp={this.props.mainPageComp} chatWebSocket={this.state.chatWebSocket} choosenTreeItem={this.state.choosenTreeItem}/>
                                     </div>
                                 </td>
                             </tr>

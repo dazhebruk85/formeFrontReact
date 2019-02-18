@@ -348,7 +348,7 @@ class RepairAppEditForm extends Component {
                                         </tbody>
                                     </table>
                                     <CollapsePanel style={{width:'99%',marginBottom:'10px'}} title={'Помещения для ремонта'}>
-                                        <RepairAppRoomGrid disabled={this.state.editFormDisabled} parent={this} onChangeAction={() => {setTimeout(() => this.cnangeTotalArea(), 0); setTimeout(() => this.changeTotalCost(), 0);}}/>
+                                        <RepairAppRoomGrid mainPageComp={this.props.mainPageComp} disabled={this.state.editFormDisabled} parent={this} onChangeAction={() => {setTimeout(() => this.cnangeTotalArea(), 0); setTimeout(() => this.changeTotalCost(), 0);}}/>
                                     </CollapsePanel>
                                     <CollapsePanel style={{width:'99%',marginBottom:'10px'}} title={'Ограничения'}>
                                         <div style={{height:'200px',overflowY:'auto'}}>
@@ -438,7 +438,7 @@ class RepairAppEditForm extends Component {
                         </div>
                     </form>
                 </div>
-                <ErrorModal errors={this.state.errors} closeAction={() => this.setState({errors:[]})}/>
+                <ErrorModal mainPageComp={this.props.mainPageComp} errors={this.state.errors} closeAction={() => this.setState({errors:[]})}/>
                 <InfoModal popupData={this.state.successInfoMessages} closeAction={() => {this.setState({successInfoMessages: []}); this.closeModal()}}/>
             </CommonModal>
         )

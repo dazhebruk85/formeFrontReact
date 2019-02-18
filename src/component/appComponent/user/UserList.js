@@ -18,6 +18,7 @@ import entityRefreshPng from "../../../media/common/action/entityRefresh.png";
 import entityCreatePng from "../../../media/common/action/entityCreate.png";
 import entityDeletePng from "../../../media/common/action/entityDelete.png";
 import setPasswordPng from "../../../media/common/action/setPassword.png";
+import CommonModal from "../../baseComponent/modal/CommonModal";
 
 class UserList extends Component {
 
@@ -234,15 +235,15 @@ class UserList extends Component {
                         </form>
                     </CollapsePanel>
                 </div>
-                <CommonDbGrid filter={this.state.fields.filter} selectAction={this.changeGridSelection.bind(this)} ref={'ULUserGrid'} dataEntityContext={Const.USER_CONTEXT} pageSize={10}/>
-                <UserEditForm entityId={this.state.selectedEntityId} visible={this.state.editFormVisible} closeAction={() => {this.setState({editFormVisible:false,selectedEntityId:''});this.refreshList()}}/>
-                <ErrorModal errors={this.state.errors} closeAction={() => this.setState({errors:[]})}/>
+                <CommonDbGrid mainPageComp={this.props.mainPageComp} filter={this.state.fields.filter} selectAction={this.changeGridSelection.bind(this)} ref={'ULUserGrid'} dataEntityContext={Const.USER_CONTEXT} pageSize={10}/>
+                <UserEditForm mainPageComp={this.props.mainPageComp} entityId={this.state.selectedEntityId} visible={this.state.editFormVisible} closeAction={() => {this.setState({editFormVisible:false,selectedEntityId:''});this.refreshList()}}/>
+                <ErrorModal mainPageComp={this.props.mainPageComp} errors={this.state.errors} closeAction={() => this.setState({errors:[]})}/>
                 <OkCancelDialog okCancelVisible={this.state.deleteEntityDialogVisible}
                                 cancelAction={() => this.setState({deleteEntityDialogVisible:false})}
                                 okAction={this.deleteEntityConfirm.bind(this)}>
                     <div>Вы действительно хотите удалить выбранную запись?</div>
                 </OkCancelDialog>
-                <UserSetPasswordModal userId={this.state.selectedEntityId} userLogin={this.state.selectedUserLogin} visible={this.state.setNewPasswordModalVisible} closeAction={() => {this.closeSetNewPasswordModal(); this.refreshList()}}/>
+                <UserSetPasswordModal mainPageComp={this.props.mainPageComp} userId={this.state.selectedEntityId} userLogin={this.state.selectedUserLogin} visible={this.state.setNewPasswordModalVisible} closeAction={() => {this.closeSetNewPasswordModal(); this.refreshList()}}/>
                 <InfoModal popupData={this.state.successInfoMessages} closeAction={() => this.setState({successInfoMessages:[]})}/>
             </div>
         )

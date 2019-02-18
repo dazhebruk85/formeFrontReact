@@ -13,6 +13,7 @@ import entityEditPng from "../../../media/common/action/entityEdit.png";
 import entityDeletePng from "../../../media/common/action/entityDelete.png";
 import entityViewPng from "../../../media/common/action/entityView.png";
 import entityRefreshPng from "../../../media/common/action/entityRefresh.png";
+import CommonModal from "../../baseComponent/modal/CommonModal";
 
 class RepairAppList extends Component {
 
@@ -165,9 +166,9 @@ class RepairAppList extends Component {
         return(
             <div>
                 {addActions(this)}
-                <CommonDbGrid selectAction={this.changeGridSelection.bind(this)} ref={'ULRepairAppGrid'} dataEntityContext={Const.REPAIR_APP_FORM_CONTEXT} pageSize={10}/>
-                <RepairAppEditForm disabled={this.state.editFormDisabled} entityId={this.state.selectedEntityId} visible={this.state.editFormVisible} closeAction={() => {this.setState({editFormVisible:false,selectedEntityId:''});this.refreshList()}}/>
-                <ErrorModal errors={this.state.errors} closeAction={() => this.setState({errors:[]})}/>
+                <CommonDbGrid mainPageComp={this.props.mainPageComp} selectAction={this.changeGridSelection.bind(this)} ref={'ULRepairAppGrid'} dataEntityContext={Const.REPAIR_APP_FORM_CONTEXT} pageSize={10}/>
+                <RepairAppEditForm mainPageComp={this.props.mainPageComp} disabled={this.state.editFormDisabled} entityId={this.state.selectedEntityId} visible={this.state.editFormVisible} closeAction={() => {this.setState({editFormVisible:false,selectedEntityId:''});this.refreshList()}}/>
+                <ErrorModal mainPageComp={this.props.mainPageComp} errors={this.state.errors} closeAction={() => this.setState({errors:[]})}/>
                 <OkCancelDialog okCancelVisible={this.state.deleteEntityDialogVisible}
                                 cancelAction={() => this.setState({deleteEntityDialogVisible:false})}
                                 okAction={this.deleteEntityConfirm.bind(this)}>

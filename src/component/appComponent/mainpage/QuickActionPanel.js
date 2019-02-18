@@ -10,6 +10,7 @@ import OkCancelDialog from '../../../component/baseComponent/modal/OkCancelDialo
 import * as Const from "../../../Const";
 import * as WebSocketUtils from "./../../../utils/WebSocketUtils"
 import * as CommonUtils from "../../../utils/CommonUtils";
+import CommonModal from "../../baseComponent/modal/CommonModal";
 
 class QuickActionPanel extends Component {
 
@@ -135,7 +136,7 @@ class QuickActionPanel extends Component {
                     </tr>
                     </tbody>
                 </table>
-                <UpdateUserDataModal visible={this.state.updateUserDataModalVisible} closeAction={this.closeUpdateUserDataModal.bind(this)}/>
+                <UpdateUserDataModal mainPageComp={this.props.mainPageComp} visible={this.state.updateUserDataModalVisible} closeAction={this.closeUpdateUserDataModal.bind(this)}/>
                 <ChangePasswordModal mainPageComp={this.props.mainPageComp} visible={this.state.changePasswordModalVisible} closeAction={this.closeChangePasswordModal.bind(this)}/>
                 <OkCancelDialog okCancelVisible={this.state.exitDialogVisible}
                                 cancelAction={this.cancelExitDialog.bind(this)}

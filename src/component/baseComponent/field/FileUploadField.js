@@ -113,7 +113,7 @@ class FileUploadField extends Component {
                        onChange={this.onChangeHiddenFileInput}
                        style={{visibility:'hidden',height:'0px'}}
                        type="file"/>
-                <ErrorModal errors={this.state.errors} closeAction={() => this.setState({errors:[]})}/>
+                <ErrorModal mainPageComp={this.props.mainPageComp} errors={this.state.errors} closeAction={() => this.setState({errors:[]})}/>
             </div>
         )
     }

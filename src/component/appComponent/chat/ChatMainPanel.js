@@ -447,8 +447,8 @@ class ChatMainPanel extends Component {
                         </table>
                     </div>
                 </div>
-                <ErrorModal errors={this.state.errors} closeAction={() => this.setState({errors:[]})}/>
-                <ChatFileUploadModal visible={this.state.fileUploadVisible}
+                <ErrorModal mainPageComp={this.props.mainPageComp} errors={this.state.errors} closeAction={() => this.setState({errors:[]})}/>
+                <ChatFileUploadModal mainPageComp={this.props.mainPageComp} visible={this.state.fileUploadVisible}
                                  okAction={this.sendFileMessageToChat.bind(this)}
                                  cancelAction={() => this.setState({fileUploadVisible:false})}/>
             </div>

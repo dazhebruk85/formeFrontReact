@@ -85,7 +85,7 @@ class LoginPage extends Component {
                         </div>
                     </div>
                 </div>
-                <ErrorModal errors={this.state.errors} closeAction={() => this.setState({errors:[]})}/>
+                <ErrorModal mainPageComp={this.props.mainPageComp} errors={this.state.errors} closeAction={() => this.setState({errors:[]})}/>
             </div>
         );
     }

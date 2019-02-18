@@ -1,6 +1,7 @@
 import React, {Component} from "react";
 import CommonDbGrid from '../../baseComponent/grid/CommonDbGrid';
 import * as Const from '../../../Const';
+import CommonModal from "../../baseComponent/modal/CommonModal";
 
 class BasePackageList extends Component {
 
@@ -15,7 +16,7 @@ class BasePackageList extends Component {
     render() {
         return(
             <div>
-                <CommonDbGrid selectAction={null} dataEntityContext={Const.BASE_PACKAGE_CONTEXT} pageSize={10}/>
+                <CommonDbGrid mainPageComp={this.props.mainPageComp} selectAction={null} dataEntityContext={Const.BASE_PACKAGE_CONTEXT} pageSize={10}/>
             </div>
         )
     }

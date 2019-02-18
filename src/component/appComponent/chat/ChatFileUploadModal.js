@@ -57,14 +57,14 @@ class ChatFileUploadModal extends Component {
         return(
             <CommonModal title={'Отправить файл'} visible={this.props.visible} style={{width:'450px'}} closeAction={this.state.cancelAction}>
                 <div className="form-horizontal">
-                    <FileUploadField style={{marginBottom:'10px'}} labelWidth='130px' fieldWidth='303px' label='Выбрать файл' ref={'FileUploadField'}/>
+                    <FileUploadField mainPageComp={this.props.mainPageComp} style={{marginBottom:'10px'}} labelWidth='130px' fieldWidth='303px' label='Выбрать файл' ref={'FileUploadField'}/>
                     <Field placeholder={'Введите сообщение'} formStyle={{marginRight:'0px'}} fieldWidth='100%' style={{resize:'none',height:'70px'}} maxLength={1000} type={Const.TEXTAREA} value={this.state.fields.common.message} onChange={(event) => this.handleChange(event.target.value,'message','common')}/>
                     <div className="btn-toolbar align-bottom" role="toolbar" style={{justifyContent:'center',display:'flex'}}>
                         <Button value="Ок" onClick={() => this.selectFile()}/>
                         <Button value="Отмена" onClick={this.state.cancelAction}/>
                     </div>
                 </div>
-                <ErrorModal errors={this.state.errors} closeAction={() => this.setState({errors:[]})}/>
+                <ErrorModal mainPageComp={this.props.mainPageComp} errors={this.state.errors} closeAction={() => this.setState({errors:[]})}/>
             </CommonModal>
         )
     }

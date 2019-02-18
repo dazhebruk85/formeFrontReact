@@ -8,6 +8,7 @@ import addActionPng from '../../../media/grid/gridAdd.png';
 import deleteActionPng from '../../../media/grid/gridDelete.png';
 import editActionPng from '../../../media/grid/gridEdit.png';
 import viewActionPng from '../../../media/grid/gridView.png';
+import CommonModal from "../../baseComponent/modal/CommonModal";
 
 class RepairAppRoomGrid extends Component {
 
@@ -135,8 +136,8 @@ class RepairAppRoomGrid extends Component {
                 <CommonGrid ref={'roomsGrid'}
                             gridData={this.props.parent && this.props.parent.state && this.props.parent.state.fields.rooms ? this.props.parent.state.fields.rooms : {}}
                             height={'150px'}/>
-                <RepairAppRoomEditForm disabled={this.state.roomEditFormDisabled} ref={'roomEditForm'} visible={this.state.roomEditFormVisible} okAction={(event) => this.changeRooms(event)} closeAction={() => {this.setState({roomEditFormVisible:false}); this.refs.roomsGrid.setState({selectedItem:{}});}}/>
-                <ErrorModal errors={this.state.errors} closeAction={() => this.setState({errors:[]})}/>
+                <RepairAppRoomEditForm mainPageComp={this.props.mainPageComp} disabled={this.state.roomEditFormDisabled} ref={'roomEditForm'} visible={this.state.roomEditFormVisible} okAction={(event) => this.changeRooms(event)} closeAction={() => {this.setState({roomEditFormVisible:false}); this.refs.roomsGrid.setState({selectedItem:{}});}}/>
+                <ErrorModal mainPageComp={this.props.mainPageComp} errors={this.state.errors} closeAction={() => this.setState({errors:[]})}/>
             </div>
         )
     }

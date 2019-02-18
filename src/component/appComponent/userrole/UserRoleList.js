@@ -1,6 +1,7 @@
 import React, {Component} from "react";
 import CommonDbGrid from '../../baseComponent/grid/CommonDbGrid';
 import * as Const from '../../../Const';
+import CommonModal from "../../baseComponent/modal/CommonModal";
 
 class UserRoleList extends Component {
 
@@ -15,7 +16,7 @@ class UserRoleList extends Component {
     render() {
         return(
             <div id='ULMainDiv'>
-                <CommonDbGrid selectAction={null} ref={'ULUserRoleGrid'} dataEntityContext={Const.USER_ROLE_CONTEXT} pageSize={10}/>
+                <CommonDbGrid mainPageComp={this.props.mainPageComp} selectAction={null} ref={'ULUserRoleGrid'} dataEntityContext={Const.USER_ROLE_CONTEXT} pageSize={10}/>
             </div>
         )
     }

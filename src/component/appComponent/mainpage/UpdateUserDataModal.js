@@ -148,7 +148,7 @@ class UpdateUserDataModal extends Component {
                             </div>
                         </form>
                     </div>
-                    <ErrorModal errors={this.state.errors} closeAction={() => this.setState({errors:[]})}/>
+                    <ErrorModal mainPageComp={this.props.mainPageComp} errors={this.state.errors} closeAction={() => this.setState({errors:[]})}/>
                     <InfoModal popupData={this.state.successInfoMessages}
                                closeAction={() => {this.setState({successInfoMessages:[]});this.closeModal()}}/>
                 </CommonModal>
