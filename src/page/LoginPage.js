@@ -53,11 +53,11 @@ class LoginPage extends Component {
                 CommonUtils.putToLocalStorage("userFio",responseData.userFio);
                 CommonUtils.putToLocalStorage("userRole",responseData.userRole);
                 CommonUtils.putToLocalStorage("userLogin",responseData.userLogin);
+                this.props.mainPageComp.setState({
+                    sessionId:responseData.sessionId,
+                    userRole:responseData.userRole
+                })
             }
-            this.props.mainPageComp.setState({
-                sessionId:responseData.sessionId,
-                userRole:responseData.userRole
-            })
         }
     }
 
@@ -67,7 +67,7 @@ class LoginPage extends Component {
 
     render() {
         return (
-            <div className="container" style={{width:'100%',height:'100%'}}>
+            <div ref={'mainContainer'} id={CommonUtils.genGuid()} className="container" style={{width:'100%',height:'100%'}}>
                 <div className="panel-group">
                     <img alt='' src={logo} style={{marginTop:"20px", marginLeft:"30px"}}/>
                     <div className="panel panel-default" style={{width:'400px', marginTop:"20px", marginLeft:"30px"}}>

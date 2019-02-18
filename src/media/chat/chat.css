@@ -158,12 +158,10 @@
 }
 
 .unreadMessagesDiv {
-    background-color: rgb(221, 221, 221);
     margin-right: 5px;
-    height: 20px;
-    width: 20px;
+    height: 24px;
+    width: 24px;
     text-align: center;
-    border-radius: 50%;
 }
 
 .unreadMessagesNumber {

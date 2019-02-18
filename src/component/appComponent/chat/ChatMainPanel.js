@@ -19,6 +19,7 @@ import userOfflinePng from "../../../media/chat/offline.png";
 import downloadFilePng from "../../../media/fileUpload/downloadFile.png";
 import openFileInNewWindowPng from "../../../media/fileUpload/openFileInNewWindow.png";
 import newMessageMp3 from "../../../media/chat/chatNewMessage.mp3";
+import unreadPng from "../../../media/chat/unread.png";
 
 class ChatMainPanel extends Component {
 
@@ -360,7 +361,7 @@ class ChatMainPanel extends Component {
         function addUnreadDiv(unreadCount) {
             if (unreadCount && unreadCount > 0) {
                 return (
-                    <div title={'Количество непрочитанных сообщений'} className={'unreadMessagesDiv'}>
+                    <div style={{backgroundImage:`url(${unreadPng})`,backgroundSize:'cover'}} title={'Количество непрочитанных сообщений'} className={'unreadMessagesDiv'}>
                         <div className={'unreadMessagesNumber'}>{unreadCount}</div>
                     </div>
                 )
@@ -382,7 +383,7 @@ class ChatMainPanel extends Component {
         }
 
         return (
-            <div style={{height:'100%',width:'100%'}}>
+            <div style={{height:'99%',width:'100%'}}>
                 <div className={'chatUserListDiv'}>
                     <table style={{width:'100%'}}>
                         <tbody>

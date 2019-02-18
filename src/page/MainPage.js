@@ -11,7 +11,6 @@ class MainPage extends Component {
     constructor() {
         super();
         this.state = {
-            errors:[],
             sessionId: CommonUtils.getFormLocalStorage('sessionId'),
             userRole: CommonUtils.getFormLocalStorage('userRole')
         };
