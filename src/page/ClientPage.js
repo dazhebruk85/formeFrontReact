@@ -6,7 +6,6 @@ import RepairAppList from '../component/appComponent/repairapp/RepairAppList';
 import ChatMainPanel from '../component/appComponent/chat/ChatMainPanel';
 import * as Const from "../Const";
 import * as CommonUtils from "../utils/CommonUtils";
-import CommonModal from "../component/baseComponent/modal/CommonModal";
 
 class ClientPage extends Component {
 

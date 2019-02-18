@@ -9,7 +9,6 @@ import ConfigParamEditForm from "./ConfigParamEditForm";
 import '../../../media/common/action/entityAction.css';
 import entityEditPng from "../../../media/common/action/entityEdit.png";
 import entityRefreshPng from "../../../media/common/action/entityRefresh.png";
-import CommonModal from "../../baseComponent/modal/CommonModal";
 
 class ConfigParamList extends Component {
 

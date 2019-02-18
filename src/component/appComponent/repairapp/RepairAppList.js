@@ -13,7 +13,6 @@ import entityEditPng from "../../../media/common/action/entityEdit.png";
 import entityDeletePng from "../../../media/common/action/entityDelete.png";
 import entityViewPng from "../../../media/common/action/entityView.png";
 import entityRefreshPng from "../../../media/common/action/entityRefresh.png";
-import CommonModal from "../../baseComponent/modal/CommonModal";
 
 class RepairAppList extends Component {
 

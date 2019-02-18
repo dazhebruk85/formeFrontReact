@@ -18,7 +18,6 @@ import entityRefreshPng from "../../../media/common/action/entityRefresh.png";
 import entityCreatePng from "../../../media/common/action/entityCreate.png";
 import entityDeletePng from "../../../media/common/action/entityDelete.png";
 import setPasswordPng from "../../../media/common/action/setPassword.png";
-import CommonModal from "../../baseComponent/modal/CommonModal";
 
 class UserList extends Component {
 

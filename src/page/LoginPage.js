@@ -30,7 +30,7 @@ class LoginPage extends Component {
     componentDidMount() {
         window.localStorage.clear();
         if (this.refs.loginField) {
-            $('#'+this.refs.loginField.props.id).focus();
+            setTimeout(() => {$('#'+this.refs.loginField.props.id).focus()});
         }
     }
 
@@ -75,7 +75,7 @@ class LoginPage extends Component {
                         <div className="panel-heading">Войти в личный кабинет</div>
                         <div className="panel-body">
                             <form className="form-horizontal">
-                                <Field ref={'loginField'} id={CommonUtils.genGuid()} labelWidth='70px' fieldWidth='300px' label='Логин' type={Const.TEXTFIELD} value={this.state.fields.common.login} onChange={(event) => this.handleChange(event.target.value,'login','common')} maxLength={50}/>
+                                <Field className={'loginField'} ref={'loginField'} id={CommonUtils.genGuid()} labelWidth='70px' fieldWidth='300px' label='Логин' type={Const.TEXTFIELD} value={this.state.fields.common.login} onChange={(event) => this.handleChange(event.target.value,'login','common')} maxLength={50}/>
                                 <Field labelWidth='70px' fieldWidth='300px' label='Пароль' type={Const.PASSWORD} value={this.state.fields.common.password} onChange={(event) => this.handleChange(event.target.value,'password','common')} maxLength={50}/>
                                 <div className="form-group" style={{marginBottom:'0px'}}>
                                     <label style={{width:'70px'}} className="control-label col-sm-2"></label>

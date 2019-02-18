@@ -8,7 +8,6 @@ import addActionPng from '../../../media/grid/gridAdd.png';
 import deleteActionPng from '../../../media/grid/gridDelete.png';
 import editActionPng from '../../../media/grid/gridEdit.png';
 import viewActionPng from '../../../media/grid/gridView.png';
-import CommonModal from "../../baseComponent/modal/CommonModal";
 
 class RepairAppRoomGrid extends Component {
 

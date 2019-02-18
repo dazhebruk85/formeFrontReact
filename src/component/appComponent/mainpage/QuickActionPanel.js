@@ -10,7 +10,6 @@ import OkCancelDialog from '../../../component/baseComponent/modal/OkCancelDialo
 import * as Const from "../../../Const";
 import * as WebSocketUtils from "./../../../utils/WebSocketUtils"
 import * as CommonUtils from "../../../utils/CommonUtils";
-import CommonModal from "../../baseComponent/modal/CommonModal";
 
 class QuickActionPanel extends Component {
 
