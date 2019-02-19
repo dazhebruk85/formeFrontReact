@@ -1,6 +1,6 @@
 import React, {Component} from 'react';
-import * as CommonUtils from "../../../../utils/CommonUtils";
-import '../../../../media/common/action/entityAction.css';
+import * as CommonUtils from "../../../utils/CommonUtils";
+import '../../../media/common/action/entityAction.css';
 import ActionWithDropdown from "./ActionWithDropdown";
 import Action from "./Action";
 

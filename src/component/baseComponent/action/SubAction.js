@@ -1,5 +1,5 @@
 import React, {Component} from 'react';
-import '../../../../media/common/action/entityAction.css';
+import '../../../media/common/action/entityAction.css';
 
 class SubAction extends Component {
 

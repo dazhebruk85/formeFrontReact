@@ -2,11 +2,17 @@ import React, {Component} from 'react';
 import logo from '../media/logo.png';
 import * as Const from '../Const';
 import ErrorModal from '../component/baseComponent/modal/ErrorModal';
-import Field from '../component/baseComponent/field/Field'
 import Button from '../component/baseComponent/field/Button'
 import * as CommonUtils from "../utils/CommonUtils";
 import Spinner from '../component/baseComponent/spinner/Spinner';
 import $ from "jquery";
+
+import VerticalPanel from "../component/baseComponent/panel/VerticalPanel";
+import HorizontalPanel from "../component/baseComponent/panel/HorizontalPanel";
+
+import Label from "../component/baseComponent/fieldMy/Label";
+import TextField from "../component/baseComponent/fieldMy/TextField";
+import PasswordField from "../component/baseComponent/fieldMy/PasswordField";
 
 class LoginPage extends Component {
 
@@ -67,21 +73,27 @@ class LoginPage extends Component {
 
     render() {
         return (
-            <div ref={'mainContainer'} id={CommonUtils.genGuid()} className="container" style={{width:'100%',height:'100%'}}>
+            <div className="container" style={{width:'100%',height:'100%'}}>
                 <div className="panel-group">
                     <img alt='' src={logo} style={{marginTop:"20px", marginLeft:"30px"}}/>
                     <div className="panel panel-default" style={{width:'400px', marginTop:"20px", marginLeft:"30px"}}>
                         <Spinner isLoading={this.state.isLoading}/>
-                        <div className="panel-heading">Войти в личный кабинет</div>
+                        <div className="panel-heading" style={{fontWeight:'bold'}}>Войти в личный кабинет</div>
                         <div className="panel-body">
-                            <form className="form-horizontal">
-                                <Field className={'loginField'} ref={'loginField'} id={CommonUtils.genGuid()} labelWidth='70px' fieldWidth='300px' label='Логин' type={Const.TEXTFIELD} value={this.state.fields.common.login} onChange={(event) => this.handleChange(event.target.value,'login','common')} maxLength={50}/>
-                                <Field labelWidth='70px' fieldWidth='300px' label='Пароль' type={Const.PASSWORD} value={this.state.fields.common.password} onChange={(event) => this.handleChange(event.target.value,'password','common')} maxLength={50}/>
-                                <div className="form-group" style={{marginBottom:'0px'}}>
-                                    <label style={{width:'70px'}} className="control-label col-sm-2"></label>
+                            <VerticalPanel>
+                                <HorizontalPanel>
+                                    <Label value={'Логин'} width={'70px'}/>
+                                    <TextField ref={'loginField'} id={CommonUtils.genGuid()} width={'300px'} value={this.state.fields.common.login} onChange={(event) => this.handleChange(event.target.value,'login','common')}/>
+                                </HorizontalPanel>
+                                <HorizontalPanel>
+                                    <Label value={'Пароль'} width={'70px'}/>
+                                    <PasswordField width={'300px'} value={this.state.fields.common.password} onChange={(event) => this.handleChange(event.target.value,'password','common')}/>
+                                </HorizontalPanel>
+                                <HorizontalPanel>
+                                    <Label value={''} width={'70px'}/>
                                     <Button style={{marginLeft:'5px'}} value="Войти" onClick={this.doLogin}/>
-                                </div>
-                            </form>
+                                </HorizontalPanel>
+                            </VerticalPanel>
                         </div>
                     </div>
                 </div>

@@ -1,6 +1,6 @@
 import React, {Component} from 'react';
-import '../../../../media/common/action/entityAction.css';
-import * as CommonUtils from "../../../../utils/CommonUtils";
+import '../../../media/common/action/entityAction.css';
+import * as CommonUtils from "../../../utils/CommonUtils";
 
 class ActionWithDropdown extends Component {
 

@@ -17,8 +17,8 @@ import entityRefreshPng from "../../../media/common/action/entityRefresh.png";
 import entityCreatePng from "../../../media/common/action/entityCreate.png";
 import entityDeletePng from "../../../media/common/action/entityDelete.png";
 import setPasswordPng from "../../../media/common/action/setPassword.png";
-import Action from "../../baseComponent/field/action/Action";
-import ActionBar from "../../baseComponent/field/action/ActionBar";
+import Action from "../../baseComponent/action/Action";
+import ActionBar from "../../baseComponent/action/ActionBar";
 
 class UserList extends Component {
 

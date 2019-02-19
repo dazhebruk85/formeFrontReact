@@ -12,10 +12,10 @@ import entityEditPng from "../../../media/common/action/entityEdit.png";
 import entityDeletePng from "../../../media/common/action/entityDelete.png";
 import entityViewPng from "../../../media/common/action/entityView.png";
 import entityRefreshPng from "../../../media/common/action/entityRefresh.png";
-import ActionBar from "../../baseComponent/field/action/ActionBar";
-import Action from "../../baseComponent/field/action/Action";
-import ActionWithDropdown from "../../baseComponent/field/action/ActionWithDropdown";
-import SubAction from "../../baseComponent/field/action/SubAction";
+import ActionBar from "../../baseComponent/action/ActionBar";
+import Action from "../../baseComponent/action/Action";
+import ActionWithDropdown from "../../baseComponent/action/ActionWithDropdown";
+import SubAction from "../../baseComponent/action/SubAction";
 
 class RepairAppList extends Component {
 

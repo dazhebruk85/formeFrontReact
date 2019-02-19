@@ -8,8 +8,8 @@ import ConfigParamEditForm from "./ConfigParamEditForm";
 
 import entityEditPng from "../../../media/common/action/entityEdit.png";
 import entityRefreshPng from "../../../media/common/action/entityRefresh.png";
-import Action from "../../baseComponent/field/action/Action";
-import ActionBar from "../../baseComponent/field/action/ActionBar";
+import Action from "../../baseComponent/action/Action";
+import ActionBar from "../../baseComponent/action/ActionBar";
 
 class ConfigParamList extends Component {
 
