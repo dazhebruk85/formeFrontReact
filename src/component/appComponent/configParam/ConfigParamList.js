@@ -6,9 +6,10 @@ import * as CommonUtils from "../../../utils/CommonUtils";
 import ErrorModal from "../../baseComponent/modal/ErrorModal";
 import ConfigParamEditForm from "./ConfigParamEditForm";
 
-import '../../../media/common/action/entityAction.css';
 import entityEditPng from "../../../media/common/action/entityEdit.png";
 import entityRefreshPng from "../../../media/common/action/entityRefresh.png";
+import Action from "../../baseComponent/field/action/Action";
+import ActionBar from "../../baseComponent/field/action/ActionBar";
 
 class ConfigParamList extends Component {
 
@@ -51,22 +52,10 @@ class ConfigParamList extends Component {
         return(
             <div>
                 <div className="form-group" style={{marginLeft:'10px', marginBottom:'0px'}}>
-                    <table>
-                        <tbody>
-                        <tr>
-                            <td className={'entityActionTd'}>
-                                <div className={'entityActionDiv'}>
-                                    <img onClick={this.editEntity} title={'Редактировать'}  alt={'Редактировать'} src={entityEditPng} className={'entityActionImg'}/>
-                                </div>
-                            </td>
-                            <td className={'entityActionTd'}>
-                                <div className={'entityActionDiv'}>
-                                    <img onClick={this.refreshList} title={'Обновить'}  alt={'Обновить'} src={entityRefreshPng} className={'entityActionImg'}/>
-                                </div>
-                            </td>
-                        </tr>
-                        </tbody>
-                    </table>
+                    <ActionBar>
+                        <Action onClick={this.editEntity} title={'Редактировать'}  alt={'Редактировать'} src={entityEditPng}/>
+                        <Action onClick={this.refreshList} title={'Обновить'}  alt={'Обновить'} src={entityRefreshPng}/>
+                    </ActionBar>
                 </div>
                 <CommonDbGrid mainPageComp={this.props.mainPageComp} entityId={this.state.selectedEntityId} ref={'CPLConfigParamGrid'} selectAction={this.changeGridSelection.bind(this)} dataEntityContext={Const.CONFIG_PARAM_CONTEXT} pageSize={10}/>
                 <ErrorModal mainPageComp={this.props.mainPageComp} errors={this.state.errors} closeAction={() => this.setState({errors:[]})}/>

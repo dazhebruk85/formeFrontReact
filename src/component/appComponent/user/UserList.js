@@ -12,12 +12,13 @@ import InfoModal from "../../baseComponent/modal/InfoModal";
 import CollapsePanel from './../../baseComponent/panel/CollapsePanel'
 import UserSetPasswordModal from "./UserSetPasswordModal";
 
-import '../../../media/common/action/entityAction.css';
 import entityEditPng from "../../../media/common/action/entityEdit.png";
 import entityRefreshPng from "../../../media/common/action/entityRefresh.png";
 import entityCreatePng from "../../../media/common/action/entityCreate.png";
 import entityDeletePng from "../../../media/common/action/entityDelete.png";
 import setPasswordPng from "../../../media/common/action/setPassword.png";
+import Action from "../../baseComponent/field/action/Action";
+import ActionBar from "../../baseComponent/field/action/ActionBar";
 
 class UserList extends Component {
 
@@ -156,37 +157,13 @@ class UserList extends Component {
         return(
             <div>
                 <div className="form-group" style={{marginLeft:'10px', marginBottom:'10px'}}>
-                    <table>
-                        <tbody>
-                        <tr>
-                            <td className={'entityActionTd'}>
-                                <div className={'entityActionDiv'}>
-                                    <img onClick={this.addEntity} title={'Создать'}  alt={'Создать'} src={entityCreatePng} className={'entityActionImg'}/>
-                                </div>
-                            </td>
-                            <td className={'entityActionTd'}>
-                                <div className={'entityActionDiv'}>
-                                    <img onClick={this.editEntity} title={'Редактировать'}  alt={'Редактировать'} src={entityEditPng} className={'entityActionImg'}/>
-                                </div>
-                            </td>
-                            <td className={'entityActionTd'}>
-                                <div className={'entityActionDiv'}>
-                                    <img onClick={this.deleteEntity} title={'Удалить'}  alt={'Удалить'} src={entityDeletePng} className={'entityActionImg'}/>
-                                </div>
-                            </td>
-                            <td className={'entityActionTd'}>
-                                <div className={'entityActionDiv'}>
-                                    <img onClick={this.refreshList} title={'Обновить'}  alt={'Обновить'} src={entityRefreshPng} className={'entityActionImg'}/>
-                                </div>
-                            </td>
-                            <td className={'entityActionTd'}>
-                                <div className={'entityActionDiv'}>
-                                    <img onClick={this.showSetNewPasswordModal} title={'Задать пароль'}  alt={'Задать пароль'} src={setPasswordPng} className={'entityActionImg'}/>
-                                </div>
-                            </td>
-                        </tr>
-                        </tbody>
-                    </table>
+                    <ActionBar>
+                        <Action onClick={this.addEntity} title={'Создать'}  alt={'Создать'} src={entityCreatePng}/>
+                        <Action onClick={this.editEntity} title={'Редактировать'}  alt={'Редактировать'} src={entityEditPng}/>
+                        <Action onClick={this.deleteEntity} title={'Удалить'}  alt={'Удалить'} src={entityDeletePng}/>
+                        <Action onClick={this.refreshList} title={'Обновить'}  alt={'Обновить'} src={entityRefreshPng}/>
+                        <Action onClick={this.showSetNewPasswordModal} title={'Задать пароль'}  alt={'Задать пароль'} src={setPasswordPng}/>
+                    </ActionBar>
                 </div>
 
                 <div style={{marginLeft:'10px'}}>

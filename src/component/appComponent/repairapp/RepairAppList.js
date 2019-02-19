@@ -7,12 +7,13 @@ import ErrorModal from "../../baseComponent/modal/ErrorModal";
 import OkCancelDialog from "../../baseComponent/modal/OkCancelDialog";
 import InfoModal from "../../baseComponent/modal/InfoModal";
 
-import '../../../media/common/action/entityAction.css';
 import entityCreatePng from "../../../media/common/action/entityCreate.png";
 import entityEditPng from "../../../media/common/action/entityEdit.png";
 import entityDeletePng from "../../../media/common/action/entityDelete.png";
 import entityViewPng from "../../../media/common/action/entityView.png";
 import entityRefreshPng from "../../../media/common/action/entityRefresh.png";
+import ActionBar from "../../baseComponent/field/action/ActionBar";
+import Action from "../../baseComponent/field/action/Action";
 
 class RepairAppList extends Component {
 
@@ -105,58 +106,22 @@ class RepairAppList extends Component {
             if (userRole !== Const.CLIENT_ROLE) {
                 return (
                     <div className="form-group" style={{marginLeft:'10px', marginBottom:'0px'}}>
-                        <table>
-                            <tbody>
-                                <tr>
-                                    <td className={'entityActionTd'}>
-                                        <div className={'entityActionDiv'}>
-                                            <img onClick={comp.addEntity} title={'Создать'}  alt={'Создать'} src={entityCreatePng} className={'entityActionImg'}/>
-                                        </div>
-                                    </td>
-                                    <td className={'entityActionTd'}>
-                                        <div className={'entityActionDiv'}>
-                                            <img onClick={comp.editEntity} title={'Редактировать'}  alt={'Редактировать'} src={entityEditPng} className={'entityActionImg'}/>
-                                        </div>
-                                    </td>
-                                    <td className={'entityActionTd'}>
-                                        <div className={'entityActionDiv'}>
-                                            <img onClick={comp.deleteEntity} title={'Удалить'}  alt={'Удалить'} src={entityDeletePng} className={'entityActionImg'}/>
-                                        </div>
-                                    </td>
-                                    <td className={'entityActionTd'}>
-                                        <div className={'entityActionDiv'}>
-                                            <img onClick={comp.viewEntity} title={'Просмотр'}  alt={'Просмотр'} src={entityViewPng} className={'entityActionImg'}/>
-                                        </div>
-                                    </td>
-                                    <td className={'entityActionTd'}>
-                                        <div className={'entityActionDiv'}>
-                                            <img onClick={comp.refreshList} title={'Обновить'}  alt={'Обновить'} src={entityRefreshPng} className={'entityActionImg'}/>
-                                        </div>
-                                    </td>
-                                </tr>
-                            </tbody>
-                        </table>
+                        <ActionBar>
+                            <Action onClick={comp.addEntity} title={'Создать'}  alt={'Создать'} src={entityCreatePng}/>
+                            <Action onClick={comp.editEntity} title={'Редактировать'}  alt={'Редактировать'} src={entityEditPng}/>
+                            <Action onClick={comp.deleteEntity} title={'Удалить'}  alt={'Удалить'} src={entityDeletePng}/>
+                            <Action onClick={comp.viewEntity} title={'Просмотр'}  alt={'Просмотр'} src={entityViewPng}/>
+                            <Action onClick={comp.refreshList} title={'Обновить'}  alt={'Обновить'} src={entityRefreshPng}/>
+                        </ActionBar>
                     </div>
                 );
             } else {
                 return(
                     <div className="form-group" style={{marginLeft:'10px', marginBottom:'0px'}}>
-                        <table>
-                            <tbody>
-                            <tr>
-                                <td className={'entityActionTd'}>
-                                    <div className={'entityActionDiv'}>
-                                        <img onClick={comp.viewEntity} title={'Просмотр'}  alt={'Просмотр'} src={entityViewPng} className={'entityActionImg'}/>
-                                    </div>
-                                </td>
-                                <td className={'entityActionTd'}>
-                                    <div className={'entityActionDiv'}>
-                                        <img onClick={comp.refreshList} title={'Обновить'}  alt={'Обновить'} src={entityRefreshPng} className={'entityActionImg'}/>
-                                    </div>
-                                </td>
-                            </tr>
-                            </tbody>
-                        </table>
+                        <ActionBar>
+                            <Action onClick={comp.viewEntity} title={'Просмотр'}  alt={'Просмотр'} src={entityViewPng}/>
+                            <Action onClick={comp.refreshList} title={'Обновить'}  alt={'Обновить'} src={entityRefreshPng}/>
+                        </ActionBar>
                     </div>
                 )
             }
