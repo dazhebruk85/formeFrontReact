@@ -1,7 +1,7 @@
 import {Component} from "react";
 import React from "react";
 
-class TextField extends Component {
+export default class PasswordField extends Component {
 
     render() {
         return (
@@ -19,5 +19,3 @@ class TextField extends Component {
         )
     }
 }
-
-export default TextField;

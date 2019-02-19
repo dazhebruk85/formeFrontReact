@@ -6,6 +6,11 @@ import Field from '../../baseComponent/field/Field'
 import Button from './../../baseComponent/field/Button'
 import ErrorModal from '../../../component/baseComponent/modal/ErrorModal';
 import * as CommonUtils from "../../../utils/CommonUtils";
+import VerticalPanel from "../../baseComponent/panel/VerticalPanel";
+import Label from "../../baseComponent/fieldMy/Label";
+import TextField from "../../baseComponent/fieldMy/TextField";
+import HorizontalPanel from "../../baseComponent/panel/HorizontalPanel";
+import TextAreaField from "../../baseComponent/fieldMy/TextAreaField";
 
 class UpdateUserDataModal extends Component {
 
@@ -14,7 +19,6 @@ class UpdateUserDataModal extends Component {
 
         this.state = {
             errors:[],
-            closeAction:props.closeAction,
             successInfoMessages:[],
             isLoading:false,
             fields:{
@@ -114,44 +118,50 @@ class UpdateUserDataModal extends Component {
 
     render() {
         return(
-                <CommonModal loading={this.state.isLoading} title={'Изменить данные пользователя'} visible={this.props.visible} style={{width:'460px'}} closeAction={() => this.closeModal()}>
-                    <div>
-                        <form className="form-horizontal">
-                            <Field labelWidth='150px' fieldWidth='300px' label='ФИО' type={Const.TEXTFIELD} value={this.state.fields.common.fio} onChange={(event) => this.handleChange(event.target.value,'fio','common')} placeholder='ФИО' maxLength={255}/>
-                            <Field labelWidth='150px' fieldWidth='300px' label='Дата рождения' type={Const.DATEPICKER} value={this.state.fields.common.birthDate} onChange={(date) => this.handleChange(date,"birthDate",'common')} placeholder='Дата рождения'/>
-                            <div className="form-group">
-                                <label style={{width:'150px'}} className="control-label col-sm-2">Паспорт</label>
-                                <div className="col-sm-10" style={{width:'300px',paddingRight:'0px'}}>
-                                    <table>
-                                        <tbody>
-                                        <tr>
-                                            <td>
-                                                <input style={{width:'100px'}} placeholder="Серия" maxLength={4} className="form-control input-sm" type="text" value={this.state.fields.common.passportSeries} onChange={(event) => this.handleChange(event.target.value,'passportSeries','common')}/>
-                                            </td>
-                                            <td style={{width:'10px'}}></td>
-                                            <td>
-                                                <input placeholder="Номер" maxLength={6} className="form-control input-sm" type="text" value={this.state.fields.common.passportNumber} onChange={(event) => this.handleChange(event.target.value,'passportNumber','common')}/>
-                                            </td>
-                                        </tr>
-                                        </tbody>
-                                    </table>
-                                </div>
-                            </div>
-                            <Field style={{resize:'none',height:'75px'}} labelWidth='150px' fieldWidth='300px' label='выдан' type={Const.TEXTAREA} value={this.state.fields.common.passportIssuedBy} onChange={(event) => this.handleChange(event.target.value,'passportIssuedBy','common')} placeholder='Кем выдан паспорт' maxLength={255}/>
-                            <Field style={{resize:'none',height:'75px'}} labelWidth='150px' fieldWidth='300px' label='Адрес регистрации' type={Const.TEXTAREA} value={this.state.fields.common.regAddress} onChange={(event) => this.handleChange(event.target.value,'regAddress','common')} placeholder='Адрес регистрации' maxLength={255}/>
-                            <Field labelWidth='150px' fieldWidth='300px' label='Телефон' type={Const.TEXTFIELD} value={this.state.fields.common.phone} onChange={(event) => this.handleChange(event.target.value,'phone','common')} placeholder='Телефон' maxLength={100}/>
-                            <Field labelWidth='150px' fieldWidth='300px' label='Email' type={Const.TEXTFIELD} value={this.state.fields.common.email} onChange={(event) => this.handleChange(event.target.value,'email','common')} placeholder='Email' maxLength={100}/>
-                            <Field labelWidth='150px' fieldWidth='300px' label='Skype' type={Const.TEXTFIELD} value={this.state.fields.common.skype} onChange={(event) => this.handleChange(event.target.value,'skype','common')} placeholder='Skype' maxLength={100}/>
-                            <div className="btn-toolbar align-bottom" role="toolbar" style={{justifyContent:'center',display:'flex'}}>
-                                <Button value="Ок" onClick={() => this.saveUserData()}/>
-                                <Button value="Отмена" onClick={() => this.closeModal()}/>
-                            </div>
-                        </form>
+            <CommonModal loading={this.state.isLoading} title={'Изменить данные пользователя'} visible={this.props.visible} closeAction={() => this.closeModal()}>
+                <VerticalPanel>
+                    <HorizontalPanel>
+                        <Label value={'ФИО'} width={'115px'}/>
+                        <TextField width={'300px'} value={this.state.fields.common.fio} onChange={(event) => this.handleChange(event.target.value,'fio','common')}/>
+                    </HorizontalPanel>
+                    <HorizontalPanel>
+                        <Label value={'Дата рождения'} width={'115px'}/>
+                        <Field fieldWidth='300px' type={Const.DATEPICKER} value={this.state.fields.common.birthDate} onChange={(date) => this.handleChange(date,'birthDate','common')}/>
+                    </HorizontalPanel>
+                    <HorizontalPanel>
+                        <Label value={'Паспорт серия'} width={'115px'}/>
+                        <TextField width={'100px'} value={this.state.fields.common.passportSeries} onChange={(event) => this.handleChange(event.target.value,'passportSeries','common')}/>
+                        <Label value={'номер'} width={'100px'}/>
+                        <TextField width={'100px'} value={this.state.fields.common.passportNumber} onChange={(event) => this.handleChange(event.target.value,'passportNumber','common')}/>
+                    </HorizontalPanel>
+                    <HorizontalPanel>
+                        <Label value={'выдан'} width={'115px'}/>
+                        <TextAreaField style={{resize:'none',height:'75px'}} width={'300px'} value={this.state.fields.common.passportIssuedBy} onChange={(event) => this.handleChange(event.target.value,'passportIssuedBy','common')}/>
+                    </HorizontalPanel>
+                    <HorizontalPanel>
+                        <Label value={'Адрес'} width={'115px'}/>
+                        <TextAreaField style={{resize:'none',height:'75px'}} width={'300px'} value={this.state.fields.common.regAddress} onChange={(event) => this.handleChange(event.target.value,'regAddress','common')}/>
+                    </HorizontalPanel>
+                    <HorizontalPanel>
+                        <Label value={'Телефон'} width={'115px'}/>
+                        <TextField width={'300px'} value={this.state.fields.common.phone} onChange={(event) => this.handleChange(event.target.value,'phone','common')}/>
+                    </HorizontalPanel>
+                    <HorizontalPanel>
+                        <Label value={'Email'} width={'115px'}/>
+                        <TextField width={'300px'} value={this.state.fields.common.email} onChange={(event) => this.handleChange(event.target.value,'email','common')}/>
+                    </HorizontalPanel>
+                    <HorizontalPanel>
+                        <Label value={'Skype'} width={'115px'}/>
+                        <TextField width={'300px'} value={this.state.fields.common.skype} onChange={(event) => this.handleChange(event.target.value,'skype','common')}/>
+                    </HorizontalPanel>
+                    <div className="btn-toolbar align-bottom" role="toolbar" style={{justifyContent:'center',display:'flex'}}>
+                        <Button value="Ок" onClick={() => this.saveUserData()}/>
+                        <Button value="Отмена" onClick={() => this.closeModal()}/>
                     </div>
-                    <ErrorModal mainPageComp={this.props.mainPageComp} errors={this.state.errors} closeAction={() => this.setState({errors:[]})}/>
-                    <InfoModal popupData={this.state.successInfoMessages}
-                               closeAction={() => {this.setState({successInfoMessages:[]});this.closeModal()}}/>
-                </CommonModal>
+                </VerticalPanel>
+                <ErrorModal mainPageComp={this.props.mainPageComp} errors={this.state.errors} closeAction={() => this.setState({errors:[]})}/>
+                <InfoModal popupData={this.state.successInfoMessages} closeAction={() => {this.setState({successInfoMessages:[]});this.closeModal()}}/>
+            </CommonModal>
         )
     }
 }

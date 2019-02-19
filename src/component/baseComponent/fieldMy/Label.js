@@ -1,7 +1,7 @@
 import {Component} from "react";
 import React from "react";
 
-class Label extends Component {
+export default class Label extends Component {
 
     render() {
 
@@ -13,5 +13,3 @@ class Label extends Component {
     }
 
 }
-
-export default Label;

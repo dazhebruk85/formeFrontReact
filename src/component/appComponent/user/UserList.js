@@ -4,12 +4,9 @@ import * as Const from '../../../Const';
 import * as CommonUtils from "../../../utils/CommonUtils";
 import ErrorModal from '../../../component/baseComponent/modal/ErrorModal';
 import UserEditForm from './UserEditForm';
-import Field from '../../baseComponent/field/Field'
-import Button from './../../baseComponent/field/Button'
 import DictField from '../../baseComponent/field/DictField'
 import OkCancelDialog from '../../../component/baseComponent/modal/OkCancelDialog';
 import InfoModal from "../../baseComponent/modal/InfoModal";
-import CollapsePanel from './../../baseComponent/panel/CollapsePanel'
 import UserSetPasswordModal from "./UserSetPasswordModal";
 
 import entityEditPng from "../../../media/common/action/entityEdit.png";
@@ -19,6 +16,14 @@ import entityDeletePng from "../../../media/common/action/entityDelete.png";
 import setPasswordPng from "../../../media/common/action/setPassword.png";
 import Action from "../../baseComponent/action/Action";
 import ActionBar from "../../baseComponent/action/ActionBar";
+
+import HorizontalPanel from "../../baseComponent/panel/HorizontalPanel";
+import VerticalPanel from "../../baseComponent/panel/VerticalPanel";
+import CollapsePanel from './../../baseComponent/panel/CollapsePanel'
+
+import Label from "../../baseComponent/fieldMy/Label";
+import TextField from "../../baseComponent/fieldMy/TextField";
+import Button from './../../baseComponent/fieldMy/Button'
 
 class UserList extends Component {
 
@@ -168,47 +173,35 @@ class UserList extends Component {
 
                 <div style={{marginLeft:'10px'}}>
                     <CollapsePanel title={'Фильтр'}>
-                        <form className="form-horizontal" style={{paddingTop:'10px'}}>
-                            <table>
-                                <tbody>
-                                <tr>
-                                    <td>
-                                        <Field labelWidth='110px' fieldWidth='300px' label='Логин' type={Const.TEXTFIELD} value={this.state.fields.filter.ULFilter_main_login_like} onChange={(event) => this.handleChange(event.target.value,'ULFilter_main_login_like','filter')} maxLength={255}/>
-                                    </td>
-                                    <td>
-                                        <Field labelWidth='110px' fieldWidth='300px' label='ФИО' type={Const.TEXTFIELD} value={this.state.fields.filter.ULFilter_main_fio_like} onChange={(event) => this.handleChange(event.target.value,'ULFilter_main_fio_like','filter')} maxLength={255}/>
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td>
-                                        <Field labelWidth='110px' fieldWidth='300px' label='Email' type={Const.TEXTFIELD} value={this.state.fields.filter.ULFilter_main_email_like} onChange={(event) => this.handleChange(event.target.value,'ULFilter_main_email_like','filter')} maxLength={255}/>
-
-                                    </td>
-                                    <td>
-                                        <Field labelWidth='110px' fieldWidth='300px' label='Телефон' type={Const.TEXTFIELD} value={this.state.fields.filter.ULFilter_main_phone_like} onChange={(event) => this.handleChange(event.target.value,'ULFilter_main_phone_like','filter')} maxLength={255}/>
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td>
-                                        <DictField labelWidth='110px'
-                                                   fieldWidth='300px'
-                                                   label='Роль'
-                                                   type={Const.TEXTFIELD}
-                                                   value={this.state.fields.filter.ULFilter_userRole_name_eq}
-                                                   placeholder=''
-                                                   maxLength={100}
-                                                   context={Const.USER_ROLE_CONTEXT}
-                                                   chooseDictAction={this.chooseUserRoleForFilter.bind(this)}/>
-                                    </td>
-                                </tr>
-                                </tbody>
-                            </table>
-                            <div className="form-group" style={{marginBottom:'0px'}}>
-                                <label style={{width:'110px'}} className="control-label col-sm-2"></label>
+                        <VerticalPanel>
+                            <HorizontalPanel>
+                                <Label value={'Логин'} width={'70px'}/>
+                                <TextField width={'250px'} value={this.state.fields.filter.ULFilter_main_login_like} onChange={(event) => this.handleChange(event.target.value,'ULFilter_main_login_like','filter')}/>
+                                <Label value={'ФИО'} width={'70px'}/>
+                                <TextField width={'250px'} value={this.state.fields.filter.ULFilter_main_fio_like} onChange={(event) => this.handleChange(event.target.value,'ULFilter_main_fio_like','filter')}/>
+                            </HorizontalPanel>
+                            <HorizontalPanel>
+                                <Label value={'Email'} width={'70px'}/>
+                                <TextField width={'250px'} value={this.state.fields.filter.ULFilter_main_email_like} onChange={(event) => this.handleChange(event.target.value,'ULFilter_main_email_like','filter')}/>
+                                <Label value={'Телефон'} width={'70px'}/>
+                                <TextField width={'250px'} value={this.state.fields.filter.ULFilter_main_phone_like} onChange={(event) => this.handleChange(event.target.value,'ULFilter_main_phone_like','filter')}/>
+                            </HorizontalPanel>
+                            <HorizontalPanel>
+                                <Label value={'Роль'} width={'70px'}/>
+                                <DictField fieldWidth='250px'
+                                           type={Const.TEXTFIELD}
+                                           value={this.state.fields.filter.ULFilter_userRole_name_eq}
+                                           placeholder=''
+                                           maxLength={100}
+                                           context={Const.USER_ROLE_CONTEXT}
+                                           chooseDictAction={this.chooseUserRoleForFilter.bind(this)}/>
+                            </HorizontalPanel>
+                            <HorizontalPanel>
+                                <Label value={''} width={'70px'}/>
                                 <Button style={{marginLeft:'5px'}} value="Применить" onClick={this.refreshList}/>
                                 <Button style={{marginLeft:'5px'}} value="Очистить" onClick={this.clearFilter}/>
-                            </div>
-                        </form>
+                            </HorizontalPanel>
+                        </VerticalPanel>
                     </CollapsePanel>
                 </div>
                 <CommonDbGrid mainPageComp={this.props.mainPageComp} filter={this.state.fields.filter} selectAction={this.changeGridSelection.bind(this)} ref={'ULUserGrid'} dataEntityContext={Const.USER_CONTEXT} pageSize={10}/>

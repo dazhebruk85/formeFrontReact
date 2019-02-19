@@ -2,7 +2,6 @@ import React, {Component} from 'react';
 import logo from '../media/logo.png';
 import * as Const from '../Const';
 import ErrorModal from '../component/baseComponent/modal/ErrorModal';
-import Button from '../component/baseComponent/field/Button'
 import * as CommonUtils from "../utils/CommonUtils";
 import Spinner from '../component/baseComponent/spinner/Spinner';
 import $ from "jquery";
@@ -13,6 +12,7 @@ import HorizontalPanel from "../component/baseComponent/panel/HorizontalPanel";
 import Label from "../component/baseComponent/fieldMy/Label";
 import TextField from "../component/baseComponent/fieldMy/TextField";
 import PasswordField from "../component/baseComponent/fieldMy/PasswordField";
+import Button from '../component/baseComponent/fieldMy/Button'
 
 class LoginPage extends Component {
 

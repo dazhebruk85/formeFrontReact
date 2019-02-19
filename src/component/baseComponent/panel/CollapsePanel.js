@@ -23,14 +23,14 @@ class CollapsePanel extends Component {
 
         return (
             <Panel style={panelStyle} expanded={this.state.panelOpen} onToggle={() => {}}>
-                <Panel.Heading style={{padding:'7px 10px'}}>
+                <Panel.Heading style={{padding:'5px 5px'}}>
                     <div style={{fontWeight:'700'}}>
                         <img onClick={() => this.setState({panelOpen: !this.state.panelOpen})} alt='' align={'left'} src={this.state.panelOpen ? collapseIcon : expandIcon} className={'collapseExpandButton'}/>
                         {this.props.title}
                     </div>
                 </Panel.Heading>
                 <Panel.Collapse>
-                    <Panel.Body style={{paddingTop:'5px'}}>
+                    <Panel.Body style={{padding:'5px'}}>
                         {this.props.children}
                     </Panel.Body>
                 </Panel.Collapse>

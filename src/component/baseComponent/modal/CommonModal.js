@@ -12,6 +12,7 @@ class CommonModal extends Modal {
 
         let bodyStyle = this.props.bodyStyle ? this.props.bodyStyle : {};
         bodyStyle.overflow = 'auto';
+        bodyStyle.padding = '5px';
 
         return(
             <Modal visible={this.props.visible} effect="fadeInDown">
