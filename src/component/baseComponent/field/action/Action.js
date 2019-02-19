@@ -1,4 +1,5 @@
-import React, {Component}from 'react';
+import React, {Component} from 'react';
+import '../../../../media/common/action/entityAction.css';
 
 class Action extends Component {
 

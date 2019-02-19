@@ -14,6 +14,8 @@ import entityViewPng from "../../../media/common/action/entityView.png";
 import entityRefreshPng from "../../../media/common/action/entityRefresh.png";
 import ActionBar from "../../baseComponent/field/action/ActionBar";
 import Action from "../../baseComponent/field/action/Action";
+import ActionWithDropdown from "../../baseComponent/field/action/ActionWithDropdown";
+import SubAction from "../../baseComponent/field/action/SubAction";
 
 class RepairAppList extends Component {
 
@@ -107,7 +109,10 @@ class RepairAppList extends Component {
                 return (
                     <div className="form-group" style={{marginLeft:'10px', marginBottom:'0px'}}>
                         <ActionBar>
-                            <Action onClick={comp.addEntity} title={'Создать'}  alt={'Создать'} src={entityCreatePng}/>
+                            <ActionWithDropdown onClick={comp.addEntity} title={'Создать'}  alt={'Создать'} src={entityCreatePng}>
+                                <SubAction onClick={comp.addEntity} text={'Открыть в новом окне'}/>
+                                <SubAction onClick={null} text={'Открыть форму справа'}/>
+                            </ActionWithDropdown>
                             <Action onClick={comp.editEntity} title={'Редактировать'}  alt={'Редактировать'} src={entityEditPng}/>
                             <Action onClick={comp.deleteEntity} title={'Удалить'}  alt={'Удалить'} src={entityDeletePng}/>
                             <Action onClick={comp.viewEntity} title={'Просмотр'}  alt={'Просмотр'} src={entityViewPng}/>

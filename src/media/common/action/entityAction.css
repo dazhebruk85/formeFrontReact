@@ -26,3 +26,24 @@
     margin-top:0px;
     margin-left:0px
 }
+
+.dropDownMenu {
+    position:absolute;
+    z-index: 1000;
+    margin-top: 1px;
+    margin-left: -5px;
+    border: 1px solid rgb(221, 221, 221);
+    background-color: rgb(240, 240, 240);
+    border-radius: 5px;
+}
+
+.entitySubActionDiv {
+    margin:3px 5px 3px 5px;
+    padding:3px 7px 3px 7px;
+    cursor: pointer;
+}
+
+.entitySubActionDiv:hover {
+    background-color: rgb(215, 215, 215);
+    border-radius: 5px;
+}
