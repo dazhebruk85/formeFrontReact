@@ -54,14 +54,14 @@ class LoginPage extends Component {
             if (responseData.errors.length > 0) {
                 this.setState({errors:responseData.errors});
             } else {
-                CommonUtils.putToLocalStorage("sessionId",responseData.sessionId);
-                CommonUtils.putToLocalStorage("userId",responseData.userId);
-                CommonUtils.putToLocalStorage("userFio",responseData.userFio);
-                CommonUtils.putToLocalStorage("userRole",responseData.userRole);
-                CommonUtils.putToLocalStorage("userLogin",responseData.userLogin);
+                CommonUtils.putToLocalStorage("sessionId",responseData.params.sessionId);
+                CommonUtils.putToLocalStorage("userId",responseData.params.userId);
+                CommonUtils.putToLocalStorage("userFio",responseData.params.userFio);
+                CommonUtils.putToLocalStorage("userRole",responseData.params.userRole);
+                CommonUtils.putToLocalStorage("userLogin",responseData.params.userLogin);
                 this.props.mainPageComp.setState({
-                    sessionId:responseData.sessionId,
-                    userRole:responseData.userRole
+                    sessionId:responseData.params.sessionId,
+                    userRole:responseData.params.userRole
                 })
             }
         }
