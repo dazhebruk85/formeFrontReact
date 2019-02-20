@@ -31,28 +31,38 @@ export function objectIsEmpty(obj) {
 }
 
 export function commonHandleChange(component,context,fieldName,value) {
-    component.setState({
-        fields: {
-            ...component.state.fields,
-            [context]: {
-                ...component.state.fields[context],
+    if (context) {
+        component.setState({
+            fields: {
+                ...component.state.fields,
+                [context]: {
+                    ...component.state.fields[context],
+                    [fieldName]: value
+                }
+            }
+        });
+    } else {
+        component.setState({
+            fields: {
+                ...component.state.fields,
                 [fieldName]: value
             }
-        }
-    });
+        })
+    }
 }
 
 export function strToBigDecimal(value) {
     return parseFloat(value.replace(/[,]+/g, '.')).toFixed(2);
 }
 
-export async function makeAsyncPostEvent(url, context, action, params) {
+export async function makeAsyncPostEvent(url, context, action, params, entity) {
     try {
         const asyncPostEvent = await axios.post(url, {
             context: context,
             action: action,
             params: params,
-            sessionId: getFormLocalStorage("sessionId")
+            sessionId: getFormLocalStorage("sessionId"),
+            entity: entity ? entity : ''
         });
         return asyncPostEvent.data
     } catch (e) {

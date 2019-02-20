@@ -26,13 +26,11 @@ class ConfigParamEditForm extends Component {
             successInfoMessages:[],
             setValueByDefaultDialogVisible:false,
             fields:{
-                common:{
-                    entityId: '',
-                    name:'',
-                    systemName:'',
-                    value:'',
-                    defaultValue:''
-                }
+                id: '',
+                name:'',
+                systemName:'',
+                value:'',
+                defaultValue:''
             }
         };
 
@@ -49,10 +47,7 @@ class ConfigParamEditForm extends Component {
             this.setState({
                 fields:{
                     ...this.state.fields,
-                    common:{
-                        ...this.state.fields.common,
-                        entityId:this.props.entityId
-                    }
+                    id:this.props.entityId
                 }
             });
         }
@@ -62,15 +57,15 @@ class ConfigParamEditForm extends Component {
     }
 
     async getEntityData() {
-        if (this.state.fields.common.entityId) {
+        if (this.state.fields.id) {
             this.setState({isLoading:true});
-            let params = {entityId: this.state.fields.common.entityId};
+            let params = {entityId: this.state.fields.id};
             let responseData = await CommonUtils.makeAsyncPostEvent(Const.APP_URL,Const.CONFIG_PARAM_CONTEXT,Const.ENTITY_GET,params);
             this.setState({isLoading:false});
             if (responseData.errors.length > 0) {
                 this.setState({errors: responseData.errors});
             } else {
-                this.setState({fields: responseData.params});
+                this.setState({fields: responseData.entity});
             }
         }
     }
@@ -82,14 +77,11 @@ class ConfigParamEditForm extends Component {
             setValueByDefaultDialogVisible:false,
             fields:{
                 ...this.state.fields,
-                common : {
-                    ...this.state.fields.common,
-                    entityId: '',
-                    name:'',
-                    systemName:'',
-                    value:'',
-                    defaultValue:''
-                }
+                id: '',
+                name:'',
+                systemName:'',
+                value:'',
+                defaultValue:''
             }
         });
         this.closeAction()
@@ -101,16 +93,14 @@ class ConfigParamEditForm extends Component {
 
     async saveEntityData() {
         let errors = [];
-        if (!this.state.fields.common.value) {errors.push({code:'',message:'Необходимо заполнить значение параметра'})}
+        if (!this.state.fields.value) {errors.push({code:'',message:'Необходимо заполнить значение параметра'})}
         if (errors.length > 0) {
             this.setState({
                 errors: errors
             });
         } else {
             this.setState({isLoading:true});
-            let params = this.state.fields;
-            params['entityId'] = this.state.fields.common.entityId;
-            let responseData = await CommonUtils.makeAsyncPostEvent(Const.APP_URL,Const.CONFIG_PARAM_CONTEXT,Const.ENTITY_SAVE,params);
+            let responseData = await CommonUtils.makeAsyncPostEvent(Const.APP_URL,Const.CONFIG_PARAM_CONTEXT,Const.ENTITY_SAVE,{entityId:this.state.fields.id},JSON.stringify(this.state.fields));
             this.setState({isLoading:false});
             if (responseData.errors.length > 0) {
                 this.setState({errors: responseData.errors});
@@ -125,10 +115,7 @@ class ConfigParamEditForm extends Component {
             setValueByDefaultDialogVisible:false,
             fields:{
                 ...this.state.fields,
-                common : {
-                    ...this.state.fields.common,
-                    value:this.state.fields.common.defaultValue
-                }
+                value:this.state.fields.defaultValue
             }
         })
     }
@@ -139,15 +126,15 @@ class ConfigParamEditForm extends Component {
                 <VerticalPanel>
                     <HorizontalPanel>
                         <Label value={'Наименование'} width={'200px'}/>
-                        <TextField width={'350px'} value={this.state.fields.common.name} onChange={(event) => this.handleChange(event.target.value,'name','common')} disabled={true}/>
+                        <TextField width={'350px'} value={this.state.fields.name} onChange={(event) => this.handleChange(event.target.value,'name','')} disabled={true}/>
                     </HorizontalPanel>
                     <HorizontalPanel>
                         <Label value={'Системное наименование'} width={'200px'}/>
-                        <TextField width={'350px'} value={this.state.fields.common.systemName} onChange={(event) => this.handleChange(event.target.value,'systemName','common')} disabled={true}/>
+                        <TextField width={'350px'} value={this.state.fields.systemName} onChange={(event) => this.handleChange(event.target.value,'systemName','')} disabled={true}/>
                     </HorizontalPanel>
                     <HorizontalPanel>
                         <Label value={'Значение'} width={'200px'}/>
-                        <TextAreaField ref={'ConfigParamTA'} style={{resize:'none',height:'75px'}} width={'350px'} maxLength={4000} value={this.state.fields.common.value} onChange={(event) => this.handleChange(event.target.value,'value','common')}/>
+                        <TextAreaField ref={'ConfigParamTA'} style={{resize:'none',height:'75px'}} width={'350px'} maxLength={4000} value={this.state.fields.value} onChange={(event) => this.handleChange(event.target.value,'value','')}/>
                         <img title={'Загрузить данные по умолчанию'} alt={''} src={fillByDefaultPng} style={{opacity:'1',position:'relative',marginBottom:'50px',marginLeft:'-40px',width:'20px',height:'20px',cursor:'pointer'}} onClick={() => this.setState({setValueByDefaultDialogVisible:true})}/>
                     </HorizontalPanel>
                     <div className="btn-toolbar align-bottom" role="toolbar" style={{justifyContent:'center',display:'flex'}}>
