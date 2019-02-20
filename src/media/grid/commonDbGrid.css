@@ -39,10 +39,9 @@
 }
 
 .gridActionImg {
-    vertical-align:text-top;
     width:24px;
     height:24px;
-    margin-top:0px;
+    margin-top:3px;
     margin-left:0px;
     opacity:1;
 }

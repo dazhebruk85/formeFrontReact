@@ -49,37 +49,35 @@ class CommonGrid extends Component {
 
         if (!CommonUtils.objectIsEmpty(this.state.gridData) && !CommonUtils.objectIsEmpty(this.state.gridData.headers)) {
             return (
-                <div className="container" style={{paddingLeft:'0px', paddingRight:'0px', width:'100%',height:'100%'}}>
-                    <div style={{height:this.state.height,overflowY:'auto'}}>
-                        <table style={{marginBottom:'0px'}} className='table table-hover table-condensed' ref="CommonDbGrid">
-                            <thead className='.thead-light'>
-                            <tr>
-                                {CommonUtils.objectToPropArr(this.state.gridData.headers).map(entity =>
-                                    <th style={{display: entity.key === "entityId" ? 'none' : ''}} key={entity.key+'headerTd'}>
-                                        {entity.value}
-                                    </th>
-                                )}
-                            </tr>
-                            </thead>
-                            <tbody>
-                            {CommonUtils.objectToPropArr(this.state.gridData).map(entity =>
-                                {if("headers" !== entity.key) {
-                                    return(
-                                        <tr onClick={this.handleSelectEntity} style={{cursor:'pointer',height:'30px',background:getSelectedBgColor(entity.key, this.state)}} key={entity.key+'valueTr'}>
-                                            {CommonUtils.objectToPropArr(entity.value).map(entityData =>
-                                                <td entitydatakey={entityData.key} style={{padding:'5px',height:'30px',display: entityData.key === "entityId" ? 'none' : ''}} key={entityData.key+'valueTd'}>
-                                                    {entityData.value}
-                                                </td>
-                                            )}
-                                        </tr>
-                                    )
-                                }
-                                return null
-                                }
+                <div style={{height:this.state.height,overflowY:'auto',border:'1px solid #ddd',borderRadius:'4px'}}>
+                    <table style={{marginBottom:'0px'}} className='table table-hover table-condensed' ref="CommonDbGrid">
+                        <thead className='.thead-light'>
+                        <tr>
+                            {CommonUtils.objectToPropArr(this.state.gridData.headers).map(entity =>
+                                <th style={{display: entity.key === "entityId" ? 'none' : ''}} key={entity.key+'headerTd'}>
+                                    {entity.value}
+                                </th>
                             )}
-                            </tbody>
-                        </table>
-                    </div>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        {CommonUtils.objectToPropArr(this.state.gridData).map(entity =>
+                            {if("headers" !== entity.key) {
+                                return(
+                                    <tr onClick={this.handleSelectEntity} style={{cursor:'pointer',height:'30px',background:getSelectedBgColor(entity.key, this.state)}} key={entity.key+'valueTr'}>
+                                        {CommonUtils.objectToPropArr(entity.value).map(entityData =>
+                                            <td entitydatakey={entityData.key} style={{padding:'5px',height:'30px',display: entityData.key === "entityId" ? 'none' : ''}} key={entityData.key+'valueTd'}>
+                                                {entityData.value}
+                                            </td>
+                                        )}
+                                    </tr>
+                                )
+                            }
+                            return null
+                            }
+                        )}
+                        </tbody>
+                    </table>
                 </div>
             )
         } else {

@@ -8,6 +8,8 @@ import addActionPng from '../../../media/grid/gridAdd.png';
 import deleteActionPng from '../../../media/grid/gridDelete.png';
 import editActionPng from '../../../media/grid/gridEdit.png';
 import viewActionPng from '../../../media/grid/gridView.png';
+import VerticalPanel from "../../baseComponent/panel/VerticalPanel";
+import HorizontalPanel from "../../baseComponent/panel/HorizontalPanel";
 
 class RepairAppRoomGrid extends Component {
 
@@ -102,42 +104,35 @@ class RepairAppRoomGrid extends Component {
         let gridDisabled = this.state.disabled;
 
         return(
-            <div>
-                <div style={{width:'100%'}}>
-                    <table>
-                        <tbody>
-                            <tr>
-                                <td className={'gridActionTd'}>
-                                    <div className={'gridActionDiv'}>
-                                        <img onClick={gridDisabled ? null : () => this.addRoomAction()} title={'Добавить запись'}  alt={'Добавить запись'} src={addActionPng} className={gridDisabled ? 'gridActionImgDis' : 'gridActionImg'}/>
-                                    </div>
-                                </td>
-                                <td className={'gridActionTd'}>
-                                    <div className={'gridActionDiv'}>
-                                        <img onClick={gridDisabled ? null : () => this.editRoomAction(false)} title={'Редактировать запись'}  alt={'Редактировать запись'} src={editActionPng} className={gridDisabled ? 'gridActionImgDis' : 'gridActionImg'}/>
-                                    </div>
-                                </td>
-                                <td className={'gridActionTd'}>
-                                    <div className={'gridActionDiv'}>
-                                        <img onClick={gridDisabled ? null : () => this.deleteRoomAction()} title={'Удалить запись'}  alt={'Удалить запись'} src={deleteActionPng} className={gridDisabled ? 'gridActionImgDis' : 'gridActionImg'}/>
-                                    </div>
-                                </td>
-                                <td className={'gridActionTd'}>
-                                    <div className={'gridActionDiv'}>
-                                        <img onClick={() => this.editRoomAction(true)} title={'Просмотреть запись'}  alt={'Просмотреть запись'} src={viewActionPng} className={'gridActionImg'}/>
-                                    </div>
-                                </td>
-                            </tr>
-                        </tbody>
-                    </table>
-                    <div style={{width:'100%',height:'2px',marginTop:'3px',backgroundColor:'#ddd'}}/>
-                </div>
+            <VerticalPanel style={{width:'100%'}}>
+                <HorizontalPanel style={{marginBottom:'1px'}}>
+                    <div className={'gridActionTd'}>
+                        <div className={'gridActionDiv'}>
+                            <img onClick={gridDisabled ? null : () => this.addRoomAction()} title={'Добавить запись'}  alt={'Добавить запись'} src={addActionPng} className={gridDisabled ? 'gridActionImgDis' : 'gridActionImg'}/>
+                        </div>
+                    </div>
+                    <div className={'gridActionTd'}>
+                        <div className={'gridActionDiv'}>
+                            <img onClick={gridDisabled ? null : () => this.editRoomAction(false)} title={'Редактировать запись'}  alt={'Редактировать запись'} src={editActionPng} className={gridDisabled ? 'gridActionImgDis' : 'gridActionImg'}/>
+                        </div>
+                    </div>
+                    <div className={'gridActionTd'}>
+                        <div className={'gridActionDiv'}>
+                            <img onClick={gridDisabled ? null : () => this.deleteRoomAction()} title={'Удалить запись'}  alt={'Удалить запись'} src={deleteActionPng} className={gridDisabled ? 'gridActionImgDis' : 'gridActionImg'}/>
+                        </div>
+                    </div>
+                    <div className={'gridActionTd'}>
+                        <div className={'gridActionDiv'}>
+                            <img onClick={() => this.editRoomAction(true)} title={'Просмотреть запись'}  alt={'Просмотреть запись'} src={viewActionPng} className={'gridActionImg'}/>
+                        </div>
+                    </div>
+                </HorizontalPanel>
                 <CommonGrid ref={'roomsGrid'}
                             gridData={this.props.parent && this.props.parent.state && this.props.parent.state.fields.rooms ? this.props.parent.state.fields.rooms : {}}
                             height={'150px'}/>
                 <RepairAppRoomEditForm mainPageComp={this.props.mainPageComp} disabled={this.state.roomEditFormDisabled} ref={'roomEditForm'} visible={this.state.roomEditFormVisible} okAction={(event) => this.changeRooms(event)} closeAction={() => {this.setState({roomEditFormVisible:false}); this.refs.roomsGrid.setState({selectedItem:{}});}}/>
                 <ErrorModal mainPageComp={this.props.mainPageComp} errors={this.state.errors} closeAction={() => this.setState({errors:[]})}/>
-            </div>
+            </VerticalPanel>
         )
     }
 }

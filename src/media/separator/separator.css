@@ -1,0 +1,23 @@
+.separator {
+    width: 100%;
+    font-size: 12px;
+    font-weight: bold;
+    position: relative;
+    z-index: 1;
+    margin-top: 10px;
+    margin-bottom: 3px;
+}
+
+.separator:before {
+    border-top: 1px solid #dfdfdf;
+    content:"";
+    position: absolute; /* positioning must be absolute here, and relative positioning must be applied to the parent */
+    top: 50%; left: 0; right: 0; bottom: 0;
+    z-index: -1;
+}
+
+.separatorSpan {
+    background: #fff;
+    padding: 0 5px;
+    margin-left: 50px;
+}

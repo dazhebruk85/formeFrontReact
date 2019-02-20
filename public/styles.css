@@ -1341,7 +1341,7 @@ html {
 
 body {
     font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
-    font-size: 14px;
+    font-size: 12px;
     line-height: 1.42857143;
     color: #333;
     background-color: #fff
@@ -3063,8 +3063,8 @@ fieldset[disabled] input[type=checkbox], fieldset[disabled] input[type=radio], i
 }
 
 .input-sm {
-    height: 30px;
-    padding: 5px 10px;
+    height: 26px;
+    padding: 5px 5px;
     font-size: 12px;
     line-height: 1.5;
     border-radius: 3px
@@ -3719,7 +3719,7 @@ a.btn.disabled, fieldset[disabled] a.btn {
 }
 
 .btn-group-sm > .btn, .btn-sm {
-    padding: 5px 10px;
+    padding: 3px 10px;
     font-size: 12px;
     line-height: 1.5;
     border-radius: 3px
@@ -4281,7 +4281,7 @@ select[multiple].input-group-sm > .form-control, select[multiple].input-group-sm
 .nav > li > a {
     position: relative;
     display: block;
-    padding: 7px 10px
+    padding: 2px 7px
 }
 
 .nav > li > a:focus, .nav > li > a:hover {

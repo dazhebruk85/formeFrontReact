@@ -5,6 +5,13 @@ export default class VerticalPanel extends Component {
 
     render() {
 
+        let panelStyle = this.props.style ? this.props.style : {};
+
+        let tableStyle = {};
+        if (panelStyle.width === '100%') {
+            tableStyle.width = '100%';
+        }
+
         function addChild(child,index) {
             return (
                 <tr key={'verticalPanelTr'+index}>
@@ -30,11 +37,13 @@ export default class VerticalPanel extends Component {
         }
 
         return (
-            <table>
-                <tbody>
-                    {addChildren(this.props.children)}
-                </tbody>
-            </table>
+            <div style={panelStyle}>
+                <table style={tableStyle}>
+                    <tbody>
+                        {addChildren(this.props.children)}
+                    </tbody>
+                </table>
+            </div>
         )
     }
 }

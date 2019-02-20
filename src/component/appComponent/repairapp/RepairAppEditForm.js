@@ -4,13 +4,19 @@ import * as Const from '../../../Const';
 import * as CommonUtils from "../../../utils/CommonUtils";
 import { Tabs, Tab} from 'react-bootstrap';
 import Button from './../../baseComponent/field/Button'
-import Field from '../../baseComponent/field/Field'
-import CollapsePanel from './../../baseComponent/panel/CollapsePanel'
 import ErrorModal from "../../baseComponent/modal/ErrorModal";
 import InfoModal from "../../baseComponent/modal/InfoModal";
 import DictField from "../../baseComponent/field/DictField";
 import RepairAppRoomGrid from "./RepairAppRoomGrid";
 import Label from "../../baseComponent/field/Label";
+import VerticalPanel from "../../baseComponent/panel/VerticalPanel";
+import HorizontalPanel from "../../baseComponent/panel/HorizontalPanel";
+import TextField from "../../baseComponent/field/TextField";
+import DateField from "../../baseComponent/field/DateField";
+import DecimalField from "../../baseComponent/field/DecimalField";
+import TextAreaField from "../../baseComponent/field/TextAreaField";
+import CheckBoxField from "../../baseComponent/field/CheckBoxField";
+import Separator from "../../baseComponent/field/Separator";
 
 class RepairAppEditForm extends Component {
 
@@ -290,149 +296,118 @@ class RepairAppEditForm extends Component {
 
     render() {
         return(
-            <CommonModal loading={this.state.isLoading} title={'Анкета'} visible={this.props.visible} style={{width:'1000px'}} closeAction={() => this.closeModal()}>
-                <div>
-                    <form className="form-horizontal">
-                        <table>
-                            <tbody>
-                            <tr>
-                                <td>
-                                    <Field disabled={true} labelWidth='80px' fieldWidth='150px' label='Номер' type={Const.TEXTFIELD} value={this.state.fields.common.appNum} onChange={(event) => this.handleChange(event.target.value,'appNum','common')} maxLength={255}/>
-                                </td>
-                                <td>
-                                    <Field disabled={true} labelWidth='80px' fieldWidth='150px' label='Дата' type={Const.DATEPICKER} value={this.state.fields.common.appDate} onChange={(date) => this.handleChange(date,'appDate','common')}/>
-                                </td>
-                                <td>
-                                    <Label value={'Базовый пакет'} width={'150px'}/>
-                                    <DictField width='235px'
-                                               value={this.state.fields.basePackage.name}
-                                               maxLength={100}
-                                               context={Const.BASE_PACKAGE_CONTEXT}
-                                               chooseDictAction={this.chooseBasePackage.bind(this)}
-                                               disabled={this.state.editFormDisabled}/>
-                                </td>
-                            </tr>
-                            <tr>
-                                <td colSpan="2">
-                                    <Label value={'Клиент'} width={'80px'}/>
-                                    <DictField width='350px'
-                                               value={this.state.fields.common.clientUserLogin}
-                                               maxLength={100}
-                                               context={Const.USER_CONTEXT}
-                                               chooseDictAction={this.chooseClientUser.bind(this)}
-                                               dictFilter={{'RAEDictFilter_userRole_systemName_eq':'client'}}
-                                               disabled={this.state.editFormDisabled}/>
-                                </td>
-                            </tr>
-                            </tbody>
-                        </table>
-                        <Tabs defaultActiveKey={1} id="uncontrolled-tab-example" style={{height:'500px'}}>
-                            <Tab eventKey={1} title="Объект" style={{width:'100%',height:'420px',overflowY:'auto',borderRight:'1px solid #ddd',borderBottom:'1px solid #ddd',borderLeft:'1px solid #ddd',paddingLeft:'10px'}}>
-                                <div style={{paddingTop:'10px'}}>
-                                    <Field disabled={this.state.editFormDisabled} formStyle={{marginRight:'0px'}} fieldWidth='862px' style={{resize:'none',height:'50px'}} labelWidth='80px' label='Адрес' maxLength={255} type={Const.TEXTAREA} value={this.state.fields.realEstate.address} onChange={(event) => this.handleChange(event.target.value,'address','realEstate')}/>
-                                    <table>
-                                        <tbody>
-                                        <tr>
-                                            <td>
-                                                <Field disabled={this.state.editFormDisabled} labelWidth='80px' fieldWidth='150px' label='Подъезд' maxLength={10} type={Const.TEXTFIELD} value={this.state.fields.realEstate.entranceNum} onChange={(event) => this.handleChange(event.target.value,'entranceNum','realEstate')}/>
-                                            </td>
-                                            <td>
-                                                <Field disabled={this.state.editFormDisabled} labelWidth='80px' fieldWidth='150px' label='Этаж' maxLength={10} type={Const.TEXTFIELD} value={this.state.fields.realEstate.floor} onChange={(event) => this.handleChange(event.target.value, 'floor','realEstate')}/>
-                                            </td>
-                                        </tr>
-                                        </tbody>
-                                    </table>
-                                    <CollapsePanel style={{width:'99%',marginBottom:'10px'}} title={'Помещения для ремонта'}>
-                                        <RepairAppRoomGrid mainPageComp={this.props.mainPageComp} disabled={this.state.editFormDisabled} parent={this} onChangeAction={() => {setTimeout(() => this.cnangeTotalArea(), 0); setTimeout(() => this.changeTotalCost(), 0);}}/>
-                                    </CollapsePanel>
-                                    <CollapsePanel style={{width:'99%',marginBottom:'10px'}} title={'Ограничения'}>
-                                        <div style={{height:'200px',overflowY:'auto'}}>
-                                            <Field disabled={this.state.editFormDisabled} labelWidth='400px' label='Отсутствие контейнера для строительного мусора' type={Const.CHECKBOX} checked={this.state.fields.realEstate.trashCanNotExist} onChange={(event) => this.handleChange(event.target.checked,'trashCanNotExist','realEstate')}/>
-                                            <Field disabled={this.state.editFormDisabled} labelWidth='400px' label='Отсутствие пассажирского лифта' type={Const.CHECKBOX} checked={this.state.fields.realEstate.passLiftNotExist} onChange={(event) => this.handleChange(event.target.checked,'passLiftNotExist','realEstate')}/>
-                                            <Field disabled={this.state.editFormDisabled} labelWidth='400px' label='Отсутствие грузового лифта' type={Const.CHECKBOX} checked={this.state.fields.realEstate.serviceLiftNotExist} onChange={(event) => this.handleChange(event.target.checked,'serviceLiftNotExist','realEstate')}/>
-                                            <Field disabled={this.state.editFormDisabled} labelWidth='400px' label='Ограничения по высоте борта' type={Const.CHECKBOX} checked={this.state.fields.realEstate.heightRestrictExist} onChange={(event) => this.handleChange(event.target.checked,'heightRestrictExist','realEstate')}/>
-                                            <Field disabled={this.state.editFormDisabled} labelWidth='400px' label='Требуется пронос материала от паркинга до подъезда' type={Const.CHECKBOX} checked={this.state.fields.realEstate.needCarryFromParkToEnt} onChange={(event) => this.handleChange(event.target.checked,'needCarryFromParkToEnt','realEstate')}/>
-                                            <Field disabled={this.state.editFormDisabled} labelWidth='400px' label='Требуется пронос материала на этаж' type={Const.CHECKBOX} checked={this.state.fields.realEstate.needCarryToFloor} onChange={(event) => this.handleChange(event.target.checked,'needCarryToFloor','realEstate')}/>
-                                            <Field disabled={this.state.editFormDisabled} labelWidth='400px' label='Требуется разрешение УК на допуск рабочих' type={Const.CHECKBOX} checked={this.state.fields.realEstate.needUkAccept} onChange={(event) => this.handleChange(event.target.checked,'needUkAccept','realEstate')}/>
-                                        </div>
-                                    </CollapsePanel>
-                                </div>
-                            </Tab>
-                            <Tab eventKey={2} title="Демонтаж" style={{width:'100%',height:'420px',overflowY:'auto',borderRight:'1px solid #ddd',borderBottom:'1px solid #ddd',borderLeft:'1px solid #ddd',paddingLeft:'10px'}}>
-                                Демонтаж
-                            </Tab>
-                            <Tab eventKey={3} title="Монтаж" style={{width:'100%',height:'420px',overflowY:'auto',borderRight:'1px solid #ddd',borderBottom:'1px solid #ddd',borderLeft:'1px solid #ddd',paddingLeft:'10px'}}>
-                                Монтаж
-                            </Tab>
-                            <Tab eventKey={4} title="Полы" style={{width:'100%',height:'420px',overflowY:'auto',borderRight:'1px solid #ddd',borderBottom:'1px solid #ddd',borderLeft:'1px solid #ddd',paddingLeft:'10px'}}>
-                                Полы
-                            </Tab>
-                            <Tab eventKey={5} title="Стены" style={{width:'100%',height:'420px',overflowY:'auto',borderRight:'1px solid #ddd',borderBottom:'1px solid #ddd',borderLeft:'1px solid #ddd',paddingLeft:'10px'}}>
-                                Стены
-                            </Tab>
-                            <Tab eventKey={6} title="ХГВС" style={{width:'100%',height:'420px',overflowY:'auto',borderRight:'1px solid #ddd',borderBottom:'1px solid #ddd',borderLeft:'1px solid #ddd',paddingLeft:'10px'}}>
-                                ХГВС
-                            </Tab>
-                            <Tab eventKey={7} title="Электрика" style={{width:'100%',height:'420px',overflowY:'auto',borderRight:'1px solid #ddd',borderBottom:'1px solid #ddd',borderLeft:'1px solid #ddd',paddingLeft:'10px'}}>
-                                Электрика
-                            </Tab>
-                            <Tab eventKey={8} title="Сантехника" style={{width:'100%',height:'420px',overflowY:'auto',borderRight:'1px solid #ddd',borderBottom:'1px solid #ddd',borderLeft:'1px solid #ddd',paddingLeft:'10px'}}>
-                                Электрика
-                            </Tab>
-                            <Tab eventKey={9} title="Керамическая плитка" style={{width:'100%',height:'420px',overflowY:'auto',borderRight:'1px solid #ddd',borderBottom:'1px solid #ddd',borderLeft:'1px solid #ddd',paddingLeft:'10px'}}>
-                                Электрика
-                            </Tab>
-                            <Tab eventKey={11} title="Двери" style={{width:'100%',height:'420px',overflowY:'auto',borderRight:'1px solid #ddd',borderBottom:'1px solid #ddd',borderLeft:'1px solid #ddd',paddingLeft:'10px'}}>
-                                Двери
-                            </Tab>
-                            <Tab eventKey={12} title="Балкон" style={{width:'100%',height:'420px',overflowY:'auto',borderRight:'1px solid #ddd',borderBottom:'1px solid #ddd',borderLeft:'1px solid #ddd',paddingLeft:'10px'}}>
-                                Балкон
-                            </Tab>
-                            <Tab eventKey={10} title="Потолки, подоконники, откосы" style={{width:'100%',height:'420px',overflowY:'auto',borderRight:'1px solid #ddd',borderBottom:'1px solid #ddd',borderLeft:'1px solid #ddd',paddingLeft:'10px'}}>
-                                Потолки, подоконники, откосы
-                            </Tab>
-                            <Tab eventKey={13} title="Прочие работы" style={{width:'100%',height:'420px',overflowY:'auto',borderRight:'1px solid #ddd',borderBottom:'1px solid #ddd',borderLeft:'1px solid #ddd',paddingLeft:'10px'}}>
-                                Прочие работы
-                            </Tab>
-                        </Tabs>
-                        <table style={{marginLeft:'10px',width:'95%'}}>
-                            <tbody>
-                            <tr>
-                                <td>
-                                    <label style={{width:'130px',textAlign:'left',paddingLeft:'0px'}} className="control-label col-sm-2">Цена за м²</label>
-                                </td>
-                                <td>
-                                    <label style={{width:'130px',textAlign:'left',paddingLeft:'0px'}} className="control-label col-sm-2">Общая площадь</label>
-                                </td>
-                                <td>
-                                    <label style={{width:'130px',textAlign:'left',paddingLeft:'0px'}} className="control-label col-sm-2">Cтоимость</label>
-                                </td>
-                                <td>
-                                    <label style={{width:'130px',textAlign:'left',paddingLeft:'0px'}} className="control-label col-sm-2">Доп. опции</label>
-                                </td>
-                            </tr>
-                            <tr>
-                                <td>
-                                    <Field style={{paddingLeft:'0px'}} labelWidth='0px' disabled={true} fieldWidth='140px' type={Const.DECIMALFIELD} value={this.state.fields.common.finalPriceForMeter} onChange={(event) => this.handleChange(event.target.value,'finalPriceForMeter','common')}/>
-                                </td>
-                                <td>
-                                    <Field style={{paddingLeft:'0px'}} labelWidth='0px' disabled={true} fieldWidth='140px' type={Const.DECIMALFIELD} value={this.state.fields.common.totalArea} onChange={(event) => this.handleChange(event.target.value,'totalArea','common')}/>
-                                </td>
-                                <td>
-                                    <Field style={{paddingLeft:'0px'}} labelWidth='0px' disabled={true} fieldWidth='140px' type={Const.DECIMALFIELD} value={this.state.fields.common.totalCost} onChange={(event) => this.handleChange(event,'totalCost','common')}/>
-                                </td>
-                                <td>
-                                    <Field style={{paddingLeft:'0px'}} labelWidth='0px' disabled={true} fieldWidth='140px' type={Const.DECIMALFIELD} value={this.state.fields.common.addOptionCost} onChange={(event) => this.handleChange(event,'addOptionCost','common')}/>
-                                </td>
-                            </tr>
-                            </tbody>
-                        </table>
-                        <div className="btn-toolbar align-bottom" role="toolbar" style={{justifyContent:'center',display:'flex'}}>
-                            <Button disabled={this.state.editFormDisabled} value="Ок" onClick={() => this.saveEntityData()}/>
-                            <Button value="Отмена" onClick={() => this.closeModal()}/>
-                        </div>
-                    </form>
-                </div>
+            <CommonModal loading={this.state.isLoading} title={'Анкета'} visible={this.props.visible} style={{width:'800px'}} closeAction={() => this.closeModal()}>
+                <VerticalPanel>
+                    <HorizontalPanel>
+                        <Label value={'Номер'} width={'70px'}/>
+                        <TextField disabled={true} width={'120px'} value={this.state.fields.common.appNum} onChange={(event) => this.handleChange(event.target.value,'appNum','common')}/>
+                        <Label value={'Дата'} width={'70px'}/>
+                        <DateField disabled={true} width={'120px'} value={this.state.fields.common.appDate} onChange={(date) => this.handleChange(date,'appDate','common')}/>
+                        <Label value={'Базовый пакет'} width={'120px'}/>
+                        <DictField width='290px'
+                                   value={this.state.fields.basePackage.name}
+                                   maxLength={100}
+                                   context={Const.BASE_PACKAGE_CONTEXT}
+                                   chooseDictAction={this.chooseBasePackage.bind(this)}
+                                   disabled={this.state.editFormDisabled}/>
+                    </HorizontalPanel>
+                    <HorizontalPanel>
+                        <Label value={'Клиент'} width={'70px'}/>
+                        <DictField width='310px'
+                                   value={this.state.fields.common.clientUserLogin}
+                                   maxLength={100}
+                                   context={Const.USER_CONTEXT}
+                                   chooseDictAction={this.chooseClientUser.bind(this)}
+                                   dictFilter={{'RAEDictFilter_userRole_systemName_eq':'client'}}
+                                   disabled={this.state.editFormDisabled}/>
+                    </HorizontalPanel>
+                    <Tabs defaultActiveKey={1} id="uncontrolled-tab-example" style={{height:'500px',width:'100%'}}>
+                        <Tab eventKey={1} title="Объект" style={{width:'100%',height:'420px',overflowY:'auto',borderRight:'1px solid #ddd',borderBottom:'1px solid #ddd',borderLeft:'1px solid #ddd'}}>
+                            <VerticalPanel style={{width:'100%',paddingLeft:'5px',paddingRight:'5px'}}>
+                                <HorizontalPanel style={{marginTop:'5px',width:'100%'}}>
+                                    <Label value={'Адрес'} width={'70px'}/>
+                                    <TextAreaField disabled={this.state.editFormDisabled} style={{resize:'none',height:'50px'}} width={'100%'} value={this.state.fields.realEstate.address} onChange={(event) => this.handleChange(event.target.value,'address','realEstate')}/>
+                                </HorizontalPanel>
+                                <HorizontalPanel>
+                                    <Label value={'Подъезд'} width={'70px'}/>
+                                    <TextField disabled={this.state.editFormDisabled} width={'150px'} value={this.state.fields.realEstate.entranceNum} onChange={(event) => this.handleChange(event.target.value,'entranceNum','realEstate')} maxLength={10}/>
+                                    <Label value={'Этаж'} width={'60px'}/>
+                                    <TextField disabled={this.state.editFormDisabled} width={'150px'} value={this.state.fields.realEstate.floor} onChange={(event) => this.handleChange(event.target.value, 'floor','realEstate')} maxLength={10}/>
+                                </HorizontalPanel>
+                                <Separator text={'Помещения для ремонта'}/>
+                                <HorizontalPanel style={{width:'100%'}}>
+                                    <RepairAppRoomGrid mainPageComp={this.props.mainPageComp} disabled={this.state.editFormDisabled} parent={this} onChangeAction={() => {setTimeout(() => this.cnangeTotalArea(), 0); setTimeout(() => this.changeTotalCost(), 0);}}/>
+                                </HorizontalPanel>
+                                <Separator text={'Ограничения'}/>
+                                <CheckBoxField disabled={this.state.editFormDisabled} text='Отсутствие контейнера для строительного мусора' checked={this.state.fields.realEstate.trashCanNotExist} onChange={(event) => this.handleChange(event.target.checked,'trashCanNotExist','realEstate')}/>
+                                <CheckBoxField disabled={this.state.editFormDisabled} text='Отсутствие пассажирского лифта' checked={this.state.fields.realEstate.passLiftNotExist} onChange={(event) => this.handleChange(event.target.checked,'passLiftNotExist','realEstate')}/>
+                                <CheckBoxField disabled={this.state.editFormDisabled} text='Отсутствие грузового лифта' checked={this.state.fields.realEstate.serviceLiftNotExist} onChange={(event) => this.handleChange(event.target.checked,'serviceLiftNotExist','realEstate')}/>
+                                <CheckBoxField disabled={this.state.editFormDisabled} text='Ограничения по высоте борта' checked={this.state.fields.realEstate.heightRestrictExist} onChange={(event) => this.handleChange(event.target.checked,'heightRestrictExist','realEstate')}/>
+                                <CheckBoxField disabled={this.state.editFormDisabled} text='Требуется пронос материала от паркинга до подъезда' checked={this.state.fields.realEstate.needCarryFromParkToEnt} onChange={(event) => this.handleChange(event.target.checked,'needCarryFromParkToEnt','realEstate')}/>
+                                <CheckBoxField disabled={this.state.editFormDisabled} text='Требуется пронос материала на этаж' checked={this.state.fields.realEstate.needCarryToFloor} onChange={(event) => this.handleChange(event.target.checked,'needCarryToFloor','realEstate')}/>
+                                <CheckBoxField disabled={this.state.editFormDisabled} text='Требуется разрешение УК на допуск рабочих' checked={this.state.fields.realEstate.needUkAccept} onChange={(event) => this.handleChange(event.target.checked,'needUkAccept','realEstate')}/>
+                            </VerticalPanel>
+                          </Tab>
+                        <Tab eventKey={2} title="Демонтаж" style={{width:'100%',height:'420px',overflowY:'auto',borderRight:'1px solid #ddd',borderBottom:'1px solid #ddd',borderLeft:'1px solid #ddd',paddingLeft:'10px'}}>
+                            Демонтаж
+                        </Tab>
+                        <Tab eventKey={3} title="Монтаж" style={{width:'100%',height:'420px',overflowY:'auto',borderRight:'1px solid #ddd',borderBottom:'1px solid #ddd',borderLeft:'1px solid #ddd',paddingLeft:'10px'}}>
+                            Монтаж
+                        </Tab>
+                        <Tab eventKey={4} title="Полы" style={{width:'100%',height:'420px',overflowY:'auto',borderRight:'1px solid #ddd',borderBottom:'1px solid #ddd',borderLeft:'1px solid #ddd',paddingLeft:'10px'}}>
+                            Полы
+                        </Tab>
+                        <Tab eventKey={5} title="Стены" style={{width:'100%',height:'420px',overflowY:'auto',borderRight:'1px solid #ddd',borderBottom:'1px solid #ddd',borderLeft:'1px solid #ddd',paddingLeft:'10px'}}>
+                            Стены
+                        </Tab>
+                        <Tab eventKey={6} title="ХГВС" style={{width:'100%',height:'420px',overflowY:'auto',borderRight:'1px solid #ddd',borderBottom:'1px solid #ddd',borderLeft:'1px solid #ddd',paddingLeft:'10px'}}>
+                            ХГВС
+                        </Tab>
+                        <Tab eventKey={7} title="Электрика" style={{width:'100%',height:'420px',overflowY:'auto',borderRight:'1px solid #ddd',borderBottom:'1px solid #ddd',borderLeft:'1px solid #ddd',paddingLeft:'10px'}}>
+                            Электрика
+                        </Tab>
+                        <Tab eventKey={8} title="Сантехника" style={{width:'100%',height:'420px',overflowY:'auto',borderRight:'1px solid #ddd',borderBottom:'1px solid #ddd',borderLeft:'1px solid #ddd',paddingLeft:'10px'}}>
+                            Электрика
+                        </Tab>
+                        <Tab eventKey={9} title="Керамическая плитка" style={{width:'100%',height:'420px',overflowY:'auto',borderRight:'1px solid #ddd',borderBottom:'1px solid #ddd',borderLeft:'1px solid #ddd',paddingLeft:'10px'}}>
+                            Электрика
+                        </Tab>
+                        <Tab eventKey={11} title="Двери" style={{width:'100%',height:'420px',overflowY:'auto',borderRight:'1px solid #ddd',borderBottom:'1px solid #ddd',borderLeft:'1px solid #ddd',paddingLeft:'10px'}}>
+                            Двери
+                        </Tab>
+                        <Tab eventKey={12} title="Балкон" style={{width:'100%',height:'420px',overflowY:'auto',borderRight:'1px solid #ddd',borderBottom:'1px solid #ddd',borderLeft:'1px solid #ddd',paddingLeft:'10px'}}>
+                            Балкон
+                        </Tab>
+                        <Tab eventKey={10} title="Потолки, подоконники, откосы" style={{width:'100%',height:'420px',overflowY:'auto',borderRight:'1px solid #ddd',borderBottom:'1px solid #ddd',borderLeft:'1px solid #ddd',paddingLeft:'10px'}}>
+                            Потолки, подоконники, откосы
+                        </Tab>
+                        <Tab eventKey={13} title="Прочие работы" style={{width:'100%',height:'420px',overflowY:'auto',borderRight:'1px solid #ddd',borderBottom:'1px solid #ddd',borderLeft:'1px solid #ddd',paddingLeft:'10px'}}>
+                            Прочие работы
+                        </Tab>
+                    </Tabs>
+                    <HorizontalPanel style={{width:'100%'}}>
+                        <VerticalPanel>
+                            <Label value={'Цена за м²'} width={'130px'}/>
+                            <DecimalField disabled={true} width={'140px'} value={this.state.fields.common.finalPriceForMeter} onChange={(event) => this.handleChange(event.target.value,'finalPriceForMeter','common')}/>
+                        </VerticalPanel>
+                        <VerticalPanel>
+                            <Label value={'Общая площадь'} width={'130px'} />
+                            <DecimalField disabled={true} width={'140px'} value={this.state.fields.common.totalArea} onChange={(event) => this.handleChange(event.target.value,'totalArea','common')}/>
+                        </VerticalPanel>
+                        <VerticalPanel>
+                            <Label value={'Cтоимость'} width={'130px'}/>
+                            <DecimalField disabled={true} width={'140px'} value={this.state.fields.common.totalCost} onChange={(event) => this.handleChange(event,'totalCost','common')}/>
+                        </VerticalPanel>
+                        <VerticalPanel>
+                            <Label value={'Доп. опции'} width={'130px'}/>
+                            <DecimalField disabled={true} width={'140px'} value={this.state.fields.common.addOptionCost} onChange={(event) => this.handleChange(event,'addOptionCost','common')}/>
+                        </VerticalPanel>
+                    </HorizontalPanel>
+                    <div className="btn-toolbar align-bottom" role="toolbar" style={{justifyContent:'center',display:'flex'}}>
+                        <Button disabled={this.state.editFormDisabled} value="Ок" onClick={() => this.saveEntityData()}/>
+                        <Button value="Отмена" onClick={() => this.closeModal()}/>
+                    </div>
+                </VerticalPanel>
                 <ErrorModal mainPageComp={this.props.mainPageComp} errors={this.state.errors} closeAction={() => this.setState({errors:[]})}/>
                 <InfoModal popupData={this.state.successInfoMessages} closeAction={() => {this.setState({successInfoMessages: []}); this.closeModal()}}/>
             </CommonModal>
