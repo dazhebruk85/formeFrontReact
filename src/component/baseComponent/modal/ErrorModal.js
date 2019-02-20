@@ -3,6 +3,7 @@ import errorPng from "../../../media/common/error.png";
 import Button from './../field/Button'
 import * as CommonUtils from "../../../utils/CommonUtils";
 import CommonModal from './CommonModal'
+import VerticalPanel from "../panel/VerticalPanel";
 
 class ErrorModal extends Component {
 
@@ -45,11 +46,11 @@ class ErrorModal extends Component {
                     <tr key={CommonUtils.genGuid()} style={{height:'30px'}}>
                         <td key={CommonUtils.genGuid()} style={{width:'7%'}}>
                             <div key={CommonUtils.genGuid()}>
-                                <img alt='' src={errorPng} style={{height:"24px",width:"24px"}}/>
+                                <img alt='' src={errorPng} style={{margin:'3px',height:"24px",width:"24px"}}/>
                             </div>
                         </td>
                         <td key={CommonUtils.genGuid()} style={{width:'93%'}}>
-                            <div key={CommonUtils.genGuid()}>{dataObj.message}</div>
+                            <div style={{margin:'3px'}} key={CommonUtils.genGuid()}>{dataObj.message}</div>
                         </td>
                     </tr>
                 );
@@ -62,14 +63,16 @@ class ErrorModal extends Component {
         }
 
         return(
-            <CommonModal title={'Ошибка'} visible={this.state.errors.length > 0} style={{width:'450px',height:'195px'}} closeAction={this.props.closeAction}>
-                <div style={{height:'100px',overflow:'auto'}}>
-                    <table style={{width:'100%'}}>
-                        <tbody>
+            <CommonModal title={'Ошибка'} visible={this.state.errors.length > 0} style={{width:'450px',height:'150px'}} closeAction={this.props.closeAction}>
+                <VerticalPanel style={{width:'100%'}}>
+                    <div style={{width:'100%',height:'80px',overflow:'auto'}}>
+                        <table style={{width:'100%'}}>
+                            <tbody>
                             <ErrorList dataList={this.state.errors}/>
-                        </tbody>
-                    </table>
-                </div>
+                            </tbody>
+                        </table>
+                    </div>
+                </VerticalPanel>
                 <div className="btn-toolbar align-bottom" role="toolbar" style={{paddingTop:'5px',justifyContent:'center',display:'flex'}}>
                     <Button value="Ок" onClick={this.props.closeAction}/>
                     <Button value="На страницу логина" onClick={this.redirectToLoginPage.bind(this)} visible={sessionExpire}/>

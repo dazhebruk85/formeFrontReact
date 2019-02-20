@@ -3,6 +3,7 @@ import CommonModal from './CommonModal'
 import infoPng from "../../../media/common/info.png";
 import * as CommonUtils from "../../../utils/CommonUtils";
 import Button from './../field/Button'
+import VerticalPanel from "../panel/VerticalPanel";
 
 class InfoModal extends Component {
 
@@ -39,11 +40,11 @@ class InfoModal extends Component {
                     <tr key={CommonUtils.genGuid()} style={{height:'30px'}}>
                         <td key={CommonUtils.genGuid()} style={{width:'7%'}}>
                             <div key={CommonUtils.genGuid()}>
-                                <img alt='' src={infoPng} style={{height:"24px",width:"24px"}}/>
+                                <img alt='' src={infoPng} style={{margin:'3px',height:"24px",width:"24px"}}/>
                             </div>
                         </td>
                         <td key={CommonUtils.genGuid()} style={{width:'93%'}}>
-                            <div key={CommonUtils.genGuid()}>{dataObj.message}</div>
+                            <div key={CommonUtils.genGuid()} style={{margin:'3px'}}>{dataObj.message}</div>
                         </td>
                     </tr>
                 );
@@ -57,14 +58,16 @@ class InfoModal extends Component {
 
         return (
 
-            <CommonModal title={'Информация'} visible={this.state.popupVisible} style={{width:'450px'}} closeAction={this.props.closeAction}>
-                <div style={{height:'60px',overflow:'auto'}}>
-                    <table style={{width:'100%'}}>
-                        <tbody>
-                            <PopupDataList dataList={this.state.popupData}/>
-                        </tbody>
-                    </table>
-                </div>
+            <CommonModal title={'Информация'} visible={this.state.popupVisible} style={{width:'450px',height:'150px'}} closeAction={this.props.closeAction}>
+                <VerticalPanel style={{width:'100%'}}>
+                    <div style={{width:'100%',height:'80px',overflow:'auto'}}>
+                        <table style={{width:'100%'}}>
+                            <tbody>
+                                <PopupDataList dataList={this.state.popupData}/>
+                            </tbody>
+                        </table>
+                    </div>
+                </VerticalPanel>
                 <div className="btn-toolbar align-bottom" role="toolbar" style={{paddingTop:'5px',justifyContent:'center',display:'flex'}}>
                     <Button value="Ок" onClick={this.props.closeAction}/>
                 </div>
