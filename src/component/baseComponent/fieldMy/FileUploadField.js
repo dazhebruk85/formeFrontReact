@@ -4,6 +4,8 @@ import clearFilePng from "../../../media/common/clear.png";
 import $ from "jquery";
 import * as FileUtils from '../../../utils/FileUtils';
 import ErrorModal from "../modal/ErrorModal";
+import HorizontalPanel from "../panel/HorizontalPanel";
+import VerticalPanel from "../panel/VerticalPanel";
 
 class FileUploadField extends Component {
 
@@ -85,30 +87,21 @@ class FileUploadField extends Component {
         let fileUploadDisabled = this.state.disabled;
 
         return(
-            <div className="form-group" style={{marginBottom:'0px'}}>
-                {this.props.label ? <label style={{width:this.props.labelWidth}} className="control-label col-sm-2">{this.props.label}</label> : null}
-                <div className="col-sm-10" style={{width:this.props.fieldWidth,paddingRight:'0px'}}>
-                    <table style={{width:'100%'}}>
-                        <tbody>
-                            <tr>
-                                <td style={{width:'100%'}}>
-                                    <input className="form-control input-sm"
-                                           value={this.state.selectedFile.name}
-                                           placeholder={this.props.placeholder}
-                                           style={this.props.style}
-                                           type="text"
-                                           disabled={true}/>
-                                </td>
-                                <td>
-                                    <img title={'Выбрать файл'} alt={''} src={chooseFilePng} style={{opacity:fileUploadDisabled?'0.5':'1',marginBottom:'8px',marginLeft:'-42px',width:'16px',height:'16px',cursor:'pointer',position:'relative'}} onClick={fileUploadDisabled ? null : () => this.selectFile()}/>
-                                </td>
-                                <td>
-                                    <img title={'Очистить'} alt={''} src={clearFilePng} style={{opacity:fileUploadDisabled?'0.5':'1',marginBottom:'8px',marginLeft:'-22px',width:'16px',height:'16px',cursor:'pointer',position:'relative'}} onClick={fileUploadDisabled ? null : () => this.clearFile()}/>
-                                </td>
-                            </tr>
-                        </tbody>
-                    </table>
-                </div>
+            <div>
+                <VerticalPanel>
+                    <HorizontalPanel style={{marginBottom:'0px'}}>
+                        <div className="col-sm-10" style={{width:this.props.width,paddingRight:'0px'}}>
+                            <input className="form-control input-sm"
+                                   value={this.state.selectedFile.name}
+                                   placeholder={this.props.placeholder}
+                                   style={this.props.style}
+                                   type="text"
+                                   disabled={true}/>
+                        </div>
+                        <img title={'Выбрать файл'} alt={''} src={chooseFilePng} style={{opacity:fileUploadDisabled?'0.5':'1',marginLeft:'-42px',width:'16px',height:'16px',cursor:'pointer',position:'relative'}} onClick={fileUploadDisabled ? null : () => this.selectFile()}/>
+                        <img title={'Очистить'} alt={''} src={clearFilePng} style={{opacity:fileUploadDisabled?'0.5':'1',marginLeft:'-22px',width:'16px',height:'16px',cursor:'pointer',position:'relative'}} onClick={fileUploadDisabled ? null : () => this.clearFile()}/>
+                    </HorizontalPanel>
+                </VerticalPanel>
                 <input className={'hiddenFileInput'}
                        onChange={this.onChangeHiddenFileInput}
                        style={{visibility:'hidden',height:'0px'}}

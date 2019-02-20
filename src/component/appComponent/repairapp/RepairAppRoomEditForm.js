@@ -1,12 +1,15 @@
 import {Component} from "react";
 import * as CommonUtils from "../../../utils/CommonUtils";
 import * as Const from "../../../Const";
-import Field from "../../baseComponent/field/Field";
 import Button from "../../baseComponent/field/Button";
 import ErrorModal from "../../baseComponent/modal/ErrorModal";
 import CommonModal from "../../baseComponent/modal/CommonModal";
 import React from "react";
 import DictField from "../../baseComponent/field/DictField";
+import Label from "../../baseComponent/fieldMy/Label";
+import HorizontalPanel from "../../baseComponent/panel/HorizontalPanel";
+import VerticalPanel from "../../baseComponent/panel/VerticalPanel";
+import DecimalField from "../../baseComponent/fieldMy/DecimalField";
 
 class RepairAppRoomEditForm extends Component {
 
@@ -129,25 +132,25 @@ class RepairAppRoomEditForm extends Component {
         let formDisabled = this.state.disabled;
 
         return (
-            <CommonModal paddingCloseCross={true} title={'Добавить/Редактировать/Просмотреть запись'} visible={this.props.visible} style={{width:'540px'}} closeAction={() => this.closeModal()}>
-                <div>
-                    <div className="form-horizontal">
-                        <DictField labelWidth='150px'
-                                   fieldWidth='300px'
-                                   label='Тип помещения'
-                                   type={Const.TEXTFIELD}
+            <CommonModal paddingCloseCross={true} title={'Добавить/Редактировать/Просмотреть запись'} visible={this.props.visible} closeAction={() => this.closeModal()}>
+                <VerticalPanel>
+                    <HorizontalPanel>
+                        <Label value={'Тип помещения'} width={'120px'}/>
+                        <DictField width='300px'
                                    value={this.state.fields.common.name}
-                                   placeholder=''
                                    maxLength={100}
                                    context={Const.ROOM_TYPE_CONTEXT}
                                    chooseDictAction={this.chooseRoomType.bind(this)}
                                    disabled={formDisabled}/>
-                        <Field disabled={formDisabled} labelWidth='150px' fieldWidth='300px' label='Площадь' type={Const.DECIMALFIELD} value={this.state.fields.common.area} onChange={(event) => this.handleChange(event.target.value,'area','common')} maxLength={20}/>
-                        <div className="btn-toolbar align-bottom" role="toolbar" style={{justifyContent:'center',display:'flex'}}>
-                            <Button disabled={formDisabled} value="Ок" onClick={() => this.okAction()}/>
-                            <Button value="Отмена" onClick={() => this.closeModal()}/>
-                        </div>
-                    </div>
+                    </HorizontalPanel>
+                    <HorizontalPanel>
+                        <Label value={'Площадь'} width={'120px'}/>
+                        <DecimalField disabled={formDisabled} width={'300px'} value={this.state.fields.common.area} onChange={(event) => this.handleChange(event.target.value,'area','common')}/>
+                    </HorizontalPanel>
+                </VerticalPanel>
+                <div className="btn-toolbar align-bottom" role="toolbar" style={{justifyContent:'center',display:'flex'}}>
+                    <Button disabled={formDisabled} value="Ок" onClick={() => this.okAction()}/>
+                    <Button value="Отмена" onClick={() => this.closeModal()}/>
                 </div>
                 <ErrorModal mainPageComp={this.props.mainPageComp} errors={this.state.errors} closeAction={() => this.setState({errors:[]})}/>
             </CommonModal>

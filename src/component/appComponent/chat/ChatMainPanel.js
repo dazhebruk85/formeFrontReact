@@ -4,7 +4,6 @@ import * as Const from "../../../Const";
 import ErrorModal from "../../baseComponent/modal/ErrorModal";
 import ChatFileUploadModal from "./ChatFileUploadModal";
 import './../../../media/chat/chat.css';
-import Field from "../../baseComponent/field/Field";
 import $ from "jquery";
 import * as DateUtils from '../../../utils/DateUtils';
 import * as WebSocketUtils from "./../../../utils/WebSocketUtils"
@@ -20,6 +19,8 @@ import downloadFilePng from "../../../media/fileUpload/downloadFile.png";
 import openFileInNewWindowPng from "../../../media/fileUpload/openFileInNewWindow.png";
 import newMessageMp3 from "../../../media/chat/chatNewMessage.mp3";
 import unreadPng from "../../../media/chat/unread.png";
+import HorizontalPanel from "../../baseComponent/panel/HorizontalPanel";
+import TextAreaField from "../../baseComponent/fieldMy/TextAreaField";
 
 class ChatMainPanel extends Component {
 
@@ -427,25 +428,19 @@ class ChatMainPanel extends Component {
                         </table>
                     </div>
                     <div className={'chatMessageSendDiv'}>
-                        <table style={{height:'100%',width:'100%',marginRight:'5px'}}>
-                            <tbody>
-                                <tr>
-                                    <td style={{verticalAlign:'top'}}>
-                                        <Field placeholder={'Введите сообщение'} formStyle={{marginRight:'0px',width:'100%'}} fieldWidth='100%' style={{resize:'none',height:'70px'}} maxLength={1000} type={Const.TEXTAREA} value={this.state.fields.common.message} onChange={(event) => this.handleChange(event.target.value,'message','common')}/>
-                                    </td>
-                                    <td className={'chatActionTd'}>
-                                        <div className={'chatActionDiv'}>
-                                            <img onClick={() => this.sendTextMessageToChat()} title={'Отправить сообщение'}  alt={'Отправить сообщение'} src={chatSendMessagePng} className={'chatActionImg'}/>
-                                        </div>
-                                    </td>
-                                    <td className={'chatActionTd'}>
-                                        <div className={'chatActionDiv'}>
-                                            <img onClick={() => this.fileDialogOpen()} title={'Отправить файл'}  alt={'Отправить файл'} src={chatAddFilePng} className={'chatActionImg'}/>
-                                        </div>
-                                    </td>
-                                </tr>
-                            </tbody>
-                        </table>
+                        <HorizontalPanel style={{width:'100%'}}>
+                            <TextAreaField width={'100%'} style={{resize:'none',height:'70px'}} placeholder={'Введите сообщение'} value={this.state.fields.common.message} onChange={(event) => this.handleChange(event.target.value,'message','common')}/>
+                            <div className={'chatActionTd'}>
+                                <div className={'chatActionDiv'}>
+                                    <img onClick={() => this.sendTextMessageToChat()} title={'Отправить сообщение'}  alt={'Отправить сообщение'} src={chatSendMessagePng} className={'chatActionImg'}/>
+                                </div>
+                            </div>
+                            <div className={'chatActionTd'}>
+                                <div className={'chatActionDiv'}>
+                                    <img onClick={() => this.fileDialogOpen()} title={'Отправить файл'}  alt={'Отправить файл'} src={chatAddFilePng} className={'chatActionImg'}/>
+                                </div>
+                            </div>
+                        </HorizontalPanel>
                     </div>
                 </div>
                 <ErrorModal mainPageComp={this.props.mainPageComp} errors={this.state.errors} closeAction={() => this.setState({errors:[]})}/>

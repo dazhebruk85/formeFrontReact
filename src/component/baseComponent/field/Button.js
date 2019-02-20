@@ -1,6 +1,6 @@
 import React, {Component}from 'react';
 
-class Button extends Component {
+export default class Button extends Component {
 
     render() {
 
@@ -10,16 +10,12 @@ class Button extends Component {
         }
 
         return (
-            <div className="btn-group mr-2" role="group">
-                <input type="button"
-                       value={this.props.value}
-                       className="btn btn-primary btn-sm"
-                       onClick={this.props.onClick}
-                       style={buttonStyle}
-                       disabled={this.props.disabled}/>
-            </div>
+            <input type="button"
+                   value={this.props.value}
+                   className="btn btn-primary btn-sm"
+                   onClick={this.props.onClick}
+                   style={buttonStyle}
+                   disabled={this.props.disabled}/>
         )
     }
 }
-
-export default Button;

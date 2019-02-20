@@ -3,7 +3,6 @@ import CommonModal from './../../baseComponent/modal/CommonModal'
 import ErrorModal from '../../../component/baseComponent/modal/ErrorModal';
 import * as Const from '../../../Const';
 import * as CommonUtils from "../../../utils/CommonUtils";
-import Field from '../../baseComponent/field/Field'
 import Button from './../../baseComponent/field/Button'
 import DictField from '../../baseComponent/field/DictField'
 import InfoModal from "../../baseComponent/modal/InfoModal";
@@ -12,6 +11,7 @@ import VerticalPanel from "../../baseComponent/panel/VerticalPanel";
 import Label from "../../baseComponent/fieldMy/Label";
 import TextField from "../../baseComponent/fieldMy/TextField";
 import TextAreaField from "../../baseComponent/fieldMy/TextAreaField";
+import DateField from "../../baseComponent/field/DateField";
 
 class UserEditForm extends Component {
     constructor(props) {
@@ -166,21 +166,20 @@ class UserEditForm extends Component {
                     </HorizontalPanel>
                     <HorizontalPanel>
                         <Label value={'Дата рождения'} width={'115px'}/>
-                        <Field fieldWidth='300px' type={Const.DATEPICKER} value={this.state.fields.common.birthDate} onChange={(date) => this.handleChange(date,'birthDate','common')}/>
+                        <DateField width={'300px'} value={this.state.fields.common.birthDate} onChange={(date) => this.handleChange(date,'birthDate','common')}/>
                     </HorizontalPanel>
                     <HorizontalPanel>
-                        <Label value={'Паспорт серия'} width={'115px'}/>
-                        <TextField width={'100px'} value={this.state.fields.common.passportSeries} onChange={(event) => this.handleChange(event.target.value,'passportSeries','common')}/>
-                        <Label value={'номер'} width={'100px'}/>
-                        <TextField width={'100px'} value={this.state.fields.common.passportNumber} onChange={(event) => this.handleChange(event.target.value,'passportNumber','common')}/>
+                        <Label value={'Паспорт'} width={'115px'}/>
+                        <TextField width={'100px'} value={this.state.fields.common.passportSeries} onChange={(event) => this.handleChange(event.target.value,'passportSeries','common')} placeholder={'Серия'}/>
+                        <TextField width={'100px'} value={this.state.fields.common.passportNumber} onChange={(event) => this.handleChange(event.target.value,'passportNumber','common')} placeholder={'Номер'}/>
                     </HorizontalPanel>
                     <HorizontalPanel>
                         <Label value={'выдан'} width={'115px'}/>
-                        <TextAreaField style={{resize:'none',height:'75px'}} width={'300px'} value={this.state.fields.common.passportIssuedBy} onChange={(event) => this.handleChange(event.target.value,'passportIssuedBy','common')}/>
+                        <TextAreaField style={{resize:'none',height:'50px'}} width={'300px'} value={this.state.fields.common.passportIssuedBy} onChange={(event) => this.handleChange(event.target.value,'passportIssuedBy','common')}/>
                     </HorizontalPanel>
                     <HorizontalPanel>
                         <Label value={'Адрес'} width={'115px'}/>
-                        <TextAreaField style={{resize:'none',height:'75px'}} width={'300px'} value={this.state.fields.common.regAddress} onChange={(event) => this.handleChange(event.target.value,'regAddress','common')}/>
+                        <TextAreaField style={{resize:'none',height:'50px'}} width={'300px'} value={this.state.fields.common.regAddress} onChange={(event) => this.handleChange(event.target.value,'regAddress','common')}/>
                     </HorizontalPanel>
                     <HorizontalPanel>
                         <Label value={'Телефон'} width={'115px'}/>
@@ -196,11 +195,8 @@ class UserEditForm extends Component {
                     </HorizontalPanel>
                     <HorizontalPanel>
                         <Label value={'Роль'} width={'115px'}/>
-                        <DictField labelWidth='150px'
-                                   fieldWidth='300px'
-                                   type={Const.TEXTFIELD}
+                        <DictField width='300px'
                                    value={this.state.fields.common.userRoleName}
-                                   placeholder=''
                                    maxLength={100}
                                    context={Const.USER_ROLE_CONTEXT}
                                    chooseDictAction={this.chooseUserRole.bind(this)}/>

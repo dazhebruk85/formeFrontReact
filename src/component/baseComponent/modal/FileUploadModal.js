@@ -1,7 +1,7 @@
 import React, {Component} from "react";
 import CommonModal from "./CommonModal";
 import Button from "../field/Button";
-import FileUploadField from "../field/FileUploadField";
+import FileUploadField from "../fieldMy/FileUploadField";
 import ErrorModal from "./ErrorModal";
 
 class FileUploadModal extends Component {

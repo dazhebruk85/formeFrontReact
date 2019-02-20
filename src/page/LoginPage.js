@@ -12,7 +12,7 @@ import HorizontalPanel from "../component/baseComponent/panel/HorizontalPanel";
 import Label from "../component/baseComponent/fieldMy/Label";
 import TextField from "../component/baseComponent/fieldMy/TextField";
 import PasswordField from "../component/baseComponent/fieldMy/PasswordField";
-import Button from '../component/baseComponent/fieldMy/Button'
+import Button from '../component/baseComponent/field/Button'
 
 class LoginPage extends Component {
 

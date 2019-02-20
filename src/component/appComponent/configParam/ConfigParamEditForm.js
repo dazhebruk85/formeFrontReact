@@ -5,10 +5,14 @@ import * as CommonUtils from "../../../utils/CommonUtils";
 import ErrorModal from "../../baseComponent/modal/ErrorModal";
 import InfoModal from "../../baseComponent/modal/InfoModal";
 import * as Const from "../../../Const";
-import Field from "../../baseComponent/field/Field";
 import Button from "../../baseComponent/field/Button";
 import fillByDefaultPng from "../../../media/common/fillByDefault.png";
 import OkCancelDialog from "../../baseComponent/modal/OkCancelDialog";
+import HorizontalPanel from "../../baseComponent/panel/HorizontalPanel";
+import Label from "../../baseComponent/fieldMy/Label";
+import TextField from "../../baseComponent/fieldMy/TextField";
+import VerticalPanel from "../../baseComponent/panel/VerticalPanel";
+import TextAreaField from "../../baseComponent/fieldMy/TextAreaField";
 
 class ConfigParamEditForm extends Component {
 
@@ -131,30 +135,26 @@ class ConfigParamEditForm extends Component {
 
     render() {
         return(
-            <CommonModal loading={this.state.isLoading} title={'Системный параметр'} visible={this.props.visible} style={{width:'600px'}} closeAction={() => this.closeModal()}>
-                <div>
-                    <form className="form-horizontal">
-                        <Field disabled={true} labelWidth='210px' fieldWidth='370px' label='Наименование' type={Const.TEXTFIELD} value={this.state.fields.common.name} onChange={(event) => this.handleChange(event.target.value,'name','common')} maxLength={255}/>
-                        <Field disabled={true} labelWidth='210px' fieldWidth='370px' label='Системное наименование' type={Const.TEXTFIELD} value={this.state.fields.common.systemName} onChange={(event) => this.handleChange(event.target.value,'systemName','common')} maxLength={255}/>
-
-                        <table style={{width:'100%'}}>
-                            <tbody>
-                                <tr>
-                                    <td style={{width:'100%'}}>
-                                        <Field formStyle={{marginRight:'0px'}} labelWidth='210px' fieldWidth='370px' style={{resize:'none',height:'100px'}}  label='Значение' maxLength={4000} type={Const.TEXTAREA} value={this.state.fields.common.value} onChange={(event) => this.handleChange(event.target.value,'value','common')}/>
-                                    </td>
-                                    <td>
-                                        <img title={'Загрузить данные по умолчанию'} alt={''} src={fillByDefaultPng} style={{position:'relative',marginBottom:'92px',marginLeft:'-25px',width:'20px',height:'20px',cursor:'pointer'}} onClick={() => this.setState({setValueByDefaultDialogVisible:true})}/>
-                                    </td>
-                                </tr>
-                            </tbody>
-                        </table>
-                        <div className="btn-toolbar align-bottom" role="toolbar" style={{justifyContent:'center',display:'flex'}}>
-                            <Button value="Ок" onClick={() => this.saveEntityData()}/>
-                            <Button value="Отмена" onClick={() => this.closeModal()}/>
-                        </div>
-                    </form>
-                </div>
+            <CommonModal loading={this.state.isLoading} title={'Системный параметр'} visible={this.props.visible} closeAction={() => this.closeModal()}>
+                <VerticalPanel>
+                    <HorizontalPanel>
+                        <Label value={'Наименование'} width={'200px'}/>
+                        <TextField width={'350px'} value={this.state.fields.common.name} onChange={(event) => this.handleChange(event.target.value,'name','common')} disabled={true}/>
+                    </HorizontalPanel>
+                    <HorizontalPanel>
+                        <Label value={'Системное наименование'} width={'200px'}/>
+                        <TextField width={'350px'} value={this.state.fields.common.systemName} onChange={(event) => this.handleChange(event.target.value,'systemName','common')} disabled={true}/>
+                    </HorizontalPanel>
+                    <HorizontalPanel>
+                        <Label value={'Значение'} width={'200px'}/>
+                        <TextAreaField ref={'ConfigParamTA'} style={{resize:'none',height:'75px'}} width={'350px'} maxLength={4000} value={this.state.fields.common.value} onChange={(event) => this.handleChange(event.target.value,'value','common')}/>
+                        <img title={'Загрузить данные по умолчанию'} alt={''} src={fillByDefaultPng} style={{opacity:'1',position:'relative',marginBottom:'50px',marginLeft:'-40px',width:'20px',height:'20px',cursor:'pointer'}} onClick={() => this.setState({setValueByDefaultDialogVisible:true})}/>
+                    </HorizontalPanel>
+                    <div className="btn-toolbar align-bottom" role="toolbar" style={{justifyContent:'center',display:'flex'}}>
+                        <Button value="Ок" onClick={() => this.saveEntityData()}/>
+                        <Button value="Отмена" onClick={() => this.closeModal()}/>
+                    </div>
+                </VerticalPanel>
                 <InfoModal popupData={this.state.successInfoMessages} closeAction={() => {this.setState({successInfoMessages: []}); this.closeModal()}}/>
                 <OkCancelDialog okCancelVisible={this.state.setValueByDefaultDialogVisible}
                                 cancelAction={() => this.setState({setValueByDefaultDialogVisible:false})}

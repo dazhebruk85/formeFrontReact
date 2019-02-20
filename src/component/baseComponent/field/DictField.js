@@ -4,6 +4,8 @@ import dictClearPng from '../../../media/common/clear.png'
 import CommonModal from './../modal/CommonModal';
 import Button from './../field/Button';
 import CommonDbGrid from '../grid/CommonDbGrid';
+import HorizontalPanel from "../panel/HorizontalPanel";
+import VerticalPanel from "../panel/VerticalPanel";
 
 class DictField extends Component {
 
@@ -61,32 +63,23 @@ class DictField extends Component {
         let dictDisabled = this.state.disabled;
 
         return(
-            <div className="form-group">
-                {this.props.label ? <label style={{width:this.props.labelWidth}} className="control-label col-sm-2">{this.props.label}</label> : null}
-                <div className="col-sm-10" style={{width:this.props.fieldWidth,paddingRight:'0px'}}>
-                    <table style={{width:'100%'}}>
-                        <tbody>
-                        <tr>
-                            <td style={{width:'100%'}}>
-                                <input className="form-control input-sm"
-                                       value={this.props.value}
-                                       onChange={this.props.onChange}
-                                       placeholder={this.props.placeholder}
-                                       maxLength={this.props.maxLength}
-                                       style={this.props.style}
-                                       type="text"
-                                       disabled={true}/>
-                            </td>
-                            <td>
-                                <img title={'Открыть справочник'} alt={''} src={dictPng} style={{opacity:dictDisabled?'0.5':'1',marginBottom:'1px',marginLeft:'-42px',width:'16px',height:'16px',cursor:'pointer'}} onClick={dictDisabled ? null : this.openDict}/>
-                            </td>
-                            <td>
-                                <img title={'Очистить'} alt={''} src={dictClearPng} style={{opacity:dictDisabled?'0.5':'1',marginBottom:'1px',marginLeft:'-22px',width:'16px',height:'16px',cursor:'pointer'}} onClick={dictDisabled ? null : () => this.clearDict()}/>
-                            </td>
-                        </tr>
-                        </tbody>
-                    </table>
-                </div>
+            <div>
+                <VerticalPanel>
+                    <HorizontalPanel style={{marginBottom:'0px'}}>
+                        <div className="col-sm-10" style={{width:this.props.width,paddingRight:'0px'}}>
+                            <input className="form-control input-sm"
+                                   value={this.props.value}
+                                   onChange={this.props.onChange}
+                                   placeholder={this.props.placeholder}
+                                   maxLength={this.props.maxLength}
+                                   style={this.props.style}
+                                   type="text"
+                                   disabled={true}/>
+                        </div>
+                        <img title={'Открыть справочник'} alt={''} src={dictPng} style={{opacity:dictDisabled?'0.5':'1',marginBottom:'1px',marginLeft:'-42px',width:'16px',height:'16px',cursor:'pointer',position:'relative'}} onClick={dictDisabled ? null : this.openDict}/>
+                        <img title={'Очистить'} alt={''} src={dictClearPng} style={{opacity:dictDisabled?'0.5':'1',marginBottom:'1px',marginLeft:'-22px',width:'16px',height:'16px',cursor:'pointer',position:'relative'}} onClick={dictDisabled ? null : () => this.clearDict()}/>
+                    </HorizontalPanel>
+                </VerticalPanel>
                 <CommonModal paddingCloseCross={true} title={'Справочник'} visible={this.state.visible} style={{width:'650px'}} closeAction={this.closeDict}>
                     <div onDoubleClick={() => this.chooseDict()}>
                         <CommonDbGrid mainPageComp={this.props.mainPageComp} filter={this.props.dictFilter} selectAction={this.changeGridSelection.bind(this)} dataEntityContext={this.props.context} pageSize={10}/>

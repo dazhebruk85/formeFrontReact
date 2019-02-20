@@ -23,7 +23,7 @@ import CollapsePanel from './../../baseComponent/panel/CollapsePanel'
 
 import Label from "../../baseComponent/fieldMy/Label";
 import TextField from "../../baseComponent/fieldMy/TextField";
-import Button from './../../baseComponent/fieldMy/Button'
+import Button from './../../baseComponent/field/Button'
 
 class UserList extends Component {
 
@@ -188,10 +188,8 @@ class UserList extends Component {
                             </HorizontalPanel>
                             <HorizontalPanel>
                                 <Label value={'Роль'} width={'70px'}/>
-                                <DictField fieldWidth='250px'
-                                           type={Const.TEXTFIELD}
+                                <DictField width='250px'
                                            value={this.state.fields.filter.ULFilter_userRole_name_eq}
-                                           placeholder=''
                                            maxLength={100}
                                            context={Const.USER_ROLE_CONTEXT}
                                            chooseDictAction={this.chooseUserRoleForFilter.bind(this)}/>

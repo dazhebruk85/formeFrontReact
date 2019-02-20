@@ -10,6 +10,7 @@ import ErrorModal from "../../baseComponent/modal/ErrorModal";
 import InfoModal from "../../baseComponent/modal/InfoModal";
 import DictField from "../../baseComponent/field/DictField";
 import RepairAppRoomGrid from "./RepairAppRoomGrid";
+import Label from "../../baseComponent/fieldMy/Label";
 
 class RepairAppEditForm extends Component {
 
@@ -302,12 +303,9 @@ class RepairAppEditForm extends Component {
                                     <Field disabled={true} labelWidth='80px' fieldWidth='150px' label='Дата' type={Const.DATEPICKER} value={this.state.fields.common.appDate} onChange={(date) => this.handleChange(date,'appDate','common')}/>
                                 </td>
                                 <td>
-                                    <DictField labelWidth='150px'
-                                               fieldWidth='235px'
-                                               label='Базовый пакет'
-                                               type={Const.TEXTFIELD}
+                                    <Label value={'Базовый пакет'} width={'150px'}/>
+                                    <DictField width='235px'
                                                value={this.state.fields.basePackage.name}
-                                               placeholder=''
                                                maxLength={100}
                                                context={Const.BASE_PACKAGE_CONTEXT}
                                                chooseDictAction={this.chooseBasePackage.bind(this)}
@@ -316,12 +314,9 @@ class RepairAppEditForm extends Component {
                             </tr>
                             <tr>
                                 <td colSpan="2">
-                                    <DictField labelWidth='80px'
-                                               fieldWidth='350px'
-                                               label='Клиент'
-                                               type={Const.TEXTFIELD}
+                                    <Label value={'Клиент'} width={'80px'}/>
+                                    <DictField width='350px'
                                                value={this.state.fields.common.clientUserLogin}
-                                               placeholder=''
                                                maxLength={100}
                                                context={Const.USER_CONTEXT}
                                                chooseDictAction={this.chooseClientUser.bind(this)}

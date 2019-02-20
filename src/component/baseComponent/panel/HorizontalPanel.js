@@ -5,9 +5,24 @@ export default class HorizontalPanel extends Component {
 
     render() {
 
+        let panelStyle = this.props.style ? this.props.style : {};
+        if (!panelStyle.marginBottom) {
+            panelStyle.marginBottom = '5px';
+        }
+
+        let tableStyle = {};
+        if (panelStyle.width === '100%') {
+            tableStyle.width = '100%';
+        }
+
         function addChild(child,index) {
+            let childWidth = child.props.width ? child.props.width : '';
+            let tdStyle = {};
+            if (childWidth === '100%') {
+                tdStyle.width = '100%';
+            }
             return (
-                <td key={'horizontalPanelTd'+index}>
+                <td style={tdStyle} key={'horizontalPanelTd'+index}>
                     {child}
                 </td>
             )
@@ -32,8 +47,8 @@ export default class HorizontalPanel extends Component {
         }
 
         return (
-            <div style={{marginBottom:'5px'}}>
-                <table>
+            <div style={panelStyle}>
+                <table style={tableStyle}>
                     <tbody>
                     {addChildren(this.props.children)}
                     </tbody>

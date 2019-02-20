@@ -2,10 +2,13 @@ import React, {Component} from 'react';
 import CommonModal from './../../baseComponent/modal/CommonModal'
 import * as Const from '../../../Const';
 import InfoModal from "../../baseComponent/modal/InfoModal";
-import Field from '../../baseComponent/field/Field'
 import Button from './../../baseComponent/field/Button'
 import ErrorModal from '../../../component/baseComponent/modal/ErrorModal';
 import * as CommonUtils from "../../../utils/CommonUtils";
+import HorizontalPanel from "../../baseComponent/panel/HorizontalPanel";
+import Label from "../../baseComponent/fieldMy/Label";
+import VerticalPanel from "../../baseComponent/panel/VerticalPanel";
+import PasswordField from "../../baseComponent/fieldMy/PasswordField";
 
 class ChangePasswordModal extends Component {
 
@@ -72,18 +75,25 @@ class ChangePasswordModal extends Component {
 
     render() {
         return (
-            <CommonModal title={'Смена пароля'} visible={this.props.visible} style={{width:'540px'}} closeAction={() => this.closeModal()}>
-                <div>
-                    <form className="form-horizontal">
-                        <Field labelWidth='220px' fieldWidth='300px' label='Введите старый пароль' type={Const.PASSWORD} value={this.state.fields.common.oldPassword} onChange={(event) => this.handleChange(event.target.value,'oldPassword','common')} maxLength={20}/>
-                        <Field labelWidth='220px' fieldWidth='300px' label='Введите новый пароль' type={Const.PASSWORD} value={this.state.fields.common.newPassword} onChange={(event) => this.handleChange(event.target.value,'newPassword','common')} maxLength={20}/>
-                        <Field labelWidth='220px' fieldWidth='300px' label='Повторите новый пароль' type={Const.PASSWORD} value={this.state.fields.common.newPasswordRepeat} onChange={(event) => this.handleChange(event.target.value,'newPasswordRepeat','common')} maxLength={20}/>
-                        <div className="btn-toolbar align-bottom" role="toolbar" style={{justifyContent:'center',display:'flex'}}>
-                            <Button value="Ок" onClick={() => this.changePassword()}/>
-                            <Button value="Отмена" onClick={() => this.closeModal()}/>
-                        </div>
-                    </form>
-                </div>
+            <CommonModal title={'Смена пароля'} visible={this.props.visible} closeAction={() => this.closeModal()}>
+                <VerticalPanel>
+                    <HorizontalPanel>
+                        <Label value={'Введите старый пароль'} width={'200px'}/>
+                        <PasswordField width={'250px'} value={this.state.fields.common.oldPassword} onChange={(event) => this.handleChange(event.target.value,'oldPassword','common')}/>
+                    </HorizontalPanel>
+                    <HorizontalPanel>
+                        <Label value={'Введите новый пароль'} width={'200px'}/>
+                        <PasswordField width={'250px'} value={this.state.fields.common.newPassword} onChange={(event) => this.handleChange(event.target.value,'newPassword','common')}/>
+                    </HorizontalPanel>
+                    <HorizontalPanel>
+                        <Label value={'Повторите новый пароль'} width={'200px'}/>
+                        <PasswordField width={'250px'} value={this.state.fields.common.newPasswordRepeat} onChange={(event) => this.handleChange(event.target.value,'newPasswordRepeat','common')}/>
+                    </HorizontalPanel>
+                    <div className="btn-toolbar align-bottom" role="toolbar" style={{justifyContent:'center',display:'flex'}}>
+                        <Button value="Ок" onClick={() => this.changePassword()}/>
+                        <Button value="Отмена" onClick={() => this.closeModal()}/>
+                    </div>
+                </VerticalPanel>
                 <ErrorModal mainPageComp={this.props.mainPageComp} errors={this.state.errors} closeAction={() => this.setState({errors:[]})}/>
                 <InfoModal popupData={this.state.successInfoMessages}
                            closeAction={() => {this.setState({successInfoMessages:[]});this.props.mainPageComp.setState({sessionId:''})}}/>

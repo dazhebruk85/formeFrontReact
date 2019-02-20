@@ -3,10 +3,13 @@ import CommonModal from "../../baseComponent/modal/CommonModal";
 import React from "react";
 import ErrorModal from "../../baseComponent/modal/ErrorModal";
 import InfoModal from "../../baseComponent/modal/InfoModal";
-import Field from "../../baseComponent/field/Field";
 import * as Const from "../../../Const";
 import Button from "../../baseComponent/field/Button";
 import * as CommonUtils from "../../../utils/CommonUtils";
+import HorizontalPanel from "../../baseComponent/panel/HorizontalPanel";
+import Label from "../../baseComponent/fieldMy/Label";
+import VerticalPanel from "../../baseComponent/panel/VerticalPanel";
+import TextField from "../../baseComponent/fieldMy/TextField";
 
 class UserSetPasswordModal extends Component {
 
@@ -86,16 +89,17 @@ class UserSetPasswordModal extends Component {
 
     render() {
         return (
-            <CommonModal title={'Задать пользователю новый пароль'} visible={this.props.visible} style={{width:'540px'}} closeAction={() => this.closeModal()}>
-                <div>
-                    <form className="form-horizontal">
-                        <Field labelWidth='220px' fieldWidth='300px' label='Введите новый пароль' type={Const.TEXTFIELD} value={this.state.fields.common.newPassword} onChange={(event) => this.handleChange(event.target.value,'newPassword','common')} maxLength={20}/>
-                        <div className="btn-toolbar align-bottom" role="toolbar" style={{justifyContent:'center',display:'flex'}}>
-                            <Button value="Ок" onClick={() => this.setNewPassword()}/>
-                            <Button value="Отмена" onClick={() => this.closeModal()}/>
-                        </div>
-                    </form>
-                </div>
+            <CommonModal title={'Задать пользователю новый пароль'} visible={this.props.visible} closeAction={() => this.closeModal()}>
+                <VerticalPanel>
+                    <HorizontalPanel>
+                        <Label value={'Введите новый пароль'} width={'180px'}/>
+                        <TextField width={'250px'} value={this.state.fields.common.newPassword} onChange={(event) => this.handleChange(event.target.value,'newPassword','common')}/>
+                    </HorizontalPanel>
+                    <div className="btn-toolbar align-bottom" role="toolbar" style={{justifyContent:'center',display:'flex'}}>
+                        <Button value="Ок" onClick={() => this.setNewPassword()}/>
+                        <Button value="Отмена" onClick={() => this.closeModal()}/>
+                    </div>
+                </VerticalPanel>
                 <ErrorModal mainPageComp={this.props.mainPageComp} errors={this.state.errors} closeAction={() => this.setState({errors:[]})}/>
                 <InfoModal popupData={this.state.successInfoMessages} closeAction={() => {this.setState({successInfoMessages:[]}); this.closeModal()}}/>
             </CommonModal>
