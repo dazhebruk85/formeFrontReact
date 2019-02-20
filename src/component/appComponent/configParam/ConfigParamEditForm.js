@@ -9,10 +9,10 @@ import Button from "../../baseComponent/field/Button";
 import fillByDefaultPng from "../../../media/common/fillByDefault.png";
 import OkCancelDialog from "../../baseComponent/modal/OkCancelDialog";
 import HorizontalPanel from "../../baseComponent/panel/HorizontalPanel";
-import Label from "../../baseComponent/fieldMy/Label";
-import TextField from "../../baseComponent/fieldMy/TextField";
+import Label from "../../baseComponent/field/Label";
+import TextField from "../../baseComponent/field/TextField";
 import VerticalPanel from "../../baseComponent/panel/VerticalPanel";
-import TextAreaField from "../../baseComponent/fieldMy/TextAreaField";
+import TextAreaField from "../../baseComponent/field/TextAreaField";
 
 class ConfigParamEditForm extends Component {
 

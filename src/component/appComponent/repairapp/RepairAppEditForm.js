@@ -10,7 +10,7 @@ import ErrorModal from "../../baseComponent/modal/ErrorModal";
 import InfoModal from "../../baseComponent/modal/InfoModal";
 import DictField from "../../baseComponent/field/DictField";
 import RepairAppRoomGrid from "./RepairAppRoomGrid";
-import Label from "../../baseComponent/fieldMy/Label";
+import Label from "../../baseComponent/field/Label";
 
 class RepairAppEditForm extends Component {
 

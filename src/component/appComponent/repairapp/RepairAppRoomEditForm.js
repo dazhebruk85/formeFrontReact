@@ -6,10 +6,10 @@ import ErrorModal from "../../baseComponent/modal/ErrorModal";
 import CommonModal from "../../baseComponent/modal/CommonModal";
 import React from "react";
 import DictField from "../../baseComponent/field/DictField";
-import Label from "../../baseComponent/fieldMy/Label";
+import Label from "../../baseComponent/field/Label";
 import HorizontalPanel from "../../baseComponent/panel/HorizontalPanel";
 import VerticalPanel from "../../baseComponent/panel/VerticalPanel";
-import DecimalField from "../../baseComponent/fieldMy/DecimalField";
+import DecimalField from "../../baseComponent/field/DecimalField";
 
 class RepairAppRoomEditForm extends Component {
 

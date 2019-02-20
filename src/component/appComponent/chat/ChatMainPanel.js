@@ -20,7 +20,7 @@ import openFileInNewWindowPng from "../../../media/fileUpload/openFileInNewWindo
 import newMessageMp3 from "../../../media/chat/chatNewMessage.mp3";
 import unreadPng from "../../../media/chat/unread.png";
 import HorizontalPanel from "../../baseComponent/panel/HorizontalPanel";
-import TextAreaField from "../../baseComponent/fieldMy/TextAreaField";
+import TextAreaField from "../../baseComponent/field/TextAreaField";
 
 class ChatMainPanel extends Component {
 

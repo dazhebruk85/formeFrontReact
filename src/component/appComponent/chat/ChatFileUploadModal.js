@@ -1,13 +1,13 @@
 import React, {Component} from "react";
 import CommonModal from "../../baseComponent/modal/CommonModal";
 import Button from "../../baseComponent/field/Button";
-import FileUploadField from "../../baseComponent/fieldMy/FileUploadField";
+import FileUploadField from "../../baseComponent/field/FileUploadField";
 import ErrorModal from "../../baseComponent/modal/ErrorModal";
 import * as CommonUtils from "../../../utils/CommonUtils";
 import HorizontalPanel from "../../baseComponent/panel/HorizontalPanel";
-import Label from "../../baseComponent/fieldMy/Label";
+import Label from "../../baseComponent/field/Label";
 import VerticalPanel from "../../baseComponent/panel/VerticalPanel";
-import TextAreaField from "../../baseComponent/fieldMy/TextAreaField";
+import TextAreaField from "../../baseComponent/field/TextAreaField";
 
 class ChatFileUploadModal extends Component {
 

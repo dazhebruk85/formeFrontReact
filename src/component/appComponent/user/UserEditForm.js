@@ -8,9 +8,9 @@ import DictField from '../../baseComponent/field/DictField'
 import InfoModal from "../../baseComponent/modal/InfoModal";
 import HorizontalPanel from "../../baseComponent/panel/HorizontalPanel";
 import VerticalPanel from "../../baseComponent/panel/VerticalPanel";
-import Label from "../../baseComponent/fieldMy/Label";
-import TextField from "../../baseComponent/fieldMy/TextField";
-import TextAreaField from "../../baseComponent/fieldMy/TextAreaField";
+import Label from "../../baseComponent/field/Label";
+import TextField from "../../baseComponent/field/TextField";
+import TextAreaField from "../../baseComponent/field/TextAreaField";
 import DateField from "../../baseComponent/field/DateField";
 
 class UserEditForm extends Component {

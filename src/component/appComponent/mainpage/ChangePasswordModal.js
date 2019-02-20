@@ -6,9 +6,9 @@ import Button from './../../baseComponent/field/Button'
 import ErrorModal from '../../../component/baseComponent/modal/ErrorModal';
 import * as CommonUtils from "../../../utils/CommonUtils";
 import HorizontalPanel from "../../baseComponent/panel/HorizontalPanel";
-import Label from "../../baseComponent/fieldMy/Label";
+import Label from "../../baseComponent/field/Label";
 import VerticalPanel from "../../baseComponent/panel/VerticalPanel";
-import PasswordField from "../../baseComponent/fieldMy/PasswordField";
+import PasswordField from "../../baseComponent/field/PasswordField";
 
 class ChangePasswordModal extends Component {
 

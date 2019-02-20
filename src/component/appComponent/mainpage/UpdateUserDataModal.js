@@ -6,10 +6,10 @@ import Button from './../../baseComponent/field/Button'
 import ErrorModal from '../../../component/baseComponent/modal/ErrorModal';
 import * as CommonUtils from "../../../utils/CommonUtils";
 import VerticalPanel from "../../baseComponent/panel/VerticalPanel";
-import Label from "../../baseComponent/fieldMy/Label";
-import TextField from "../../baseComponent/fieldMy/TextField";
+import Label from "../../baseComponent/field/Label";
+import TextField from "../../baseComponent/field/TextField";
 import HorizontalPanel from "../../baseComponent/panel/HorizontalPanel";
-import TextAreaField from "../../baseComponent/fieldMy/TextAreaField";
+import TextAreaField from "../../baseComponent/field/TextAreaField";
 import DateField from "../../baseComponent/field/DateField";
 
 class UpdateUserDataModal extends Component {

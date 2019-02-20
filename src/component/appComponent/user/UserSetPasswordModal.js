@@ -7,9 +7,9 @@ import * as Const from "../../../Const";
 import Button from "../../baseComponent/field/Button";
 import * as CommonUtils from "../../../utils/CommonUtils";
 import HorizontalPanel from "../../baseComponent/panel/HorizontalPanel";
-import Label from "../../baseComponent/fieldMy/Label";
+import Label from "../../baseComponent/field/Label";
 import VerticalPanel from "../../baseComponent/panel/VerticalPanel";
-import TextField from "../../baseComponent/fieldMy/TextField";
+import TextField from "../../baseComponent/field/TextField";
 
 class UserSetPasswordModal extends Component {
 

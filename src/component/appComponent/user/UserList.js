@@ -21,8 +21,8 @@ import HorizontalPanel from "../../baseComponent/panel/HorizontalPanel";
 import VerticalPanel from "../../baseComponent/panel/VerticalPanel";
 import CollapsePanel from './../../baseComponent/panel/CollapsePanel'
 
-import Label from "../../baseComponent/fieldMy/Label";
-import TextField from "../../baseComponent/fieldMy/TextField";
+import Label from "../../baseComponent/field/Label";
+import TextField from "../../baseComponent/field/TextField";
 import Button from './../../baseComponent/field/Button'
 
 class UserList extends Component {
