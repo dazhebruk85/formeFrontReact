@@ -22,17 +22,15 @@ class UpdateUserDataModal extends Component {
             successInfoMessages:[],
             isLoading:false,
             fields:{
-                common:{
-                    fio:'',
-                    birthDate:undefined,
-                    phone:'',
-                    email:'',
-                    skype:'',
-                    passportSeries:'',
-                    passportNumber:'',
-                    passportIssuedBy:'',
-                    regAddress:'',
-                }
+                fio:'',
+                birthDate:undefined,
+                phone:'',
+                email:'',
+                skype:'',
+                passportSeries:'',
+                passportNumber:'',
+                passportIssuedBy:'',
+                regAddress:'',
             }
         };
 
@@ -57,7 +55,7 @@ class UpdateUserDataModal extends Component {
         if (responseData.errors.length > 0) {
             this.setState({errors: responseData.errors});
         } else {
-            this.setState({fields: responseData.params});
+            this.setState({fields: responseData.entity});
         }
     }
 
@@ -67,18 +65,15 @@ class UpdateUserDataModal extends Component {
             successInfoMessages:[],
             fields:{
                 ...this.state.fields,
-                common:{
-                    ...this.state.fields.common,
-                    fio:'',
-                    birthDate:undefined,
-                    phone:'',
-                    email:'',
-                    skype:'',
-                    passportSeries:'',
-                    passportNumber:'',
-                    passportIssuedBy:'',
-                    regAddress:'',
-                }
+                fio:'',
+                birthDate:undefined,
+                phone:'',
+                email:'',
+                skype:'',
+                passportSeries:'',
+                passportNumber:'',
+                passportIssuedBy:'',
+                regAddress:'',
             }
         });
         this.closeAction()
@@ -86,23 +81,21 @@ class UpdateUserDataModal extends Component {
 
     async saveUserData() {
         let errors = []
-        if (!this.state.fields.common.fio) {errors.push({code:'',message:'Необходимо заполнить ФИО'})}
-        if (!this.state.fields.common.birthDate) {errors.push({code:'',message:'Необходимо заполнить дату рождения'})}
-        if (!this.state.fields.common.phone) {errors.push({code:'',message:'Необходимо заполнить телефон'})}
-        if (!this.state.fields.common.email) {errors.push({code:'',message:'Необходимо заполнить email'})}
-        if (!this.state.fields.common.passportSeries) {errors.push({code:'',message:'Необходимо заполнить серию паспорта'})}
-        if (!this.state.fields.common.passportNumber) {errors.push({code:'',message:'Необходимо заполнить номер паспорта'})}
-        if (!this.state.fields.common.passportIssuedBy) {errors.push({code:'',message:'Необходимо заполнить орган, выдавший паспорт'})}
-        if (!this.state.fields.common.regAddress) {errors.push({code:'',message:'Необходимо заполнить адрес регистрации'})}
+        if (!this.state.fields.fio) {errors.push({code:'',message:'Необходимо заполнить ФИО'})}
+        if (!this.state.fields.birthDate) {errors.push({code:'',message:'Необходимо заполнить дату рождения'})}
+        if (!this.state.fields.phone) {errors.push({code:'',message:'Необходимо заполнить телефон'})}
+        if (!this.state.fields.email) {errors.push({code:'',message:'Необходимо заполнить email'})}
+        if (!this.state.fields.passportSeries) {errors.push({code:'',message:'Необходимо заполнить серию паспорта'})}
+        if (!this.state.fields.passportNumber) {errors.push({code:'',message:'Необходимо заполнить номер паспорта'})}
+        if (!this.state.fields.passportIssuedBy) {errors.push({code:'',message:'Необходимо заполнить орган, выдавший паспорт'})}
+        if (!this.state.fields.regAddress) {errors.push({code:'',message:'Необходимо заполнить адрес регистрации'})}
         if (errors.length > 0) {
             this.setState({
                 errors: errors
             });
         } else {
             this.setState({isLoading:true});
-            let params = this.state.fields;
-            params['entityId'] = CommonUtils.getFormLocalStorage('userId');
-            let responseData = await CommonUtils.makeAsyncPostEvent(Const.APP_URL,Const.USER_CONTEXT,Const.ENTITY_SAVE,params);
+            let responseData = await CommonUtils.makeAsyncPostEvent(Const.APP_URL,Const.USER_CONTEXT,Const.ENTITY_SAVE,{entityId:CommonUtils.getFormLocalStorage('userId')},JSON.stringify(this.state.fields));
             this.setState({isLoading:false});
             if (responseData.errors.length > 0) {
                 this.setState({errors: responseData.errors});
@@ -122,36 +115,36 @@ class UpdateUserDataModal extends Component {
                 <VerticalPanel>
                     <HorizontalPanel>
                         <Label value={'ФИО'} width={'115px'}/>
-                        <TextField width={'300px'} value={this.state.fields.common.fio} onChange={(event) => this.handleChange(event.target.value,'fio','common')}/>
+                        <TextField width={'300px'} value={this.state.fields.fio} onChange={(event) => this.handleChange(event.target.value,'fio','')}/>
                     </HorizontalPanel>
                     <HorizontalPanel>
                         <Label value={'Дата рождения'} width={'115px'}/>
-                        <DateField width={'300px'} value={this.state.fields.common.birthDate} onChange={(date) => this.handleChange(date,'birthDate','common')}/>
+                        <DateField width={'300px'} value={this.state.fields.birthDate} onChange={(date) => this.handleChange(date,'birthDate','')}/>
                     </HorizontalPanel>
                     <HorizontalPanel>
                         <Label value={'Паспорт'} width={'115px'}/>
-                        <TextField width={'100px'} value={this.state.fields.common.passportSeries} onChange={(event) => this.handleChange(event.target.value,'passportSeries','common')} placeholder={'Серия'}/>
-                        <TextField width={'100px'} value={this.state.fields.common.passportNumber} onChange={(event) => this.handleChange(event.target.value,'passportNumber','common')} placeholder={'Номер'}/>
+                        <TextField width={'100px'} value={this.state.fields.passportSeries} onChange={(event) => this.handleChange(event.target.value,'passportSeries','')} placeholder={'Серия'}/>
+                        <TextField width={'100px'} value={this.state.fields.passportNumber} onChange={(event) => this.handleChange(event.target.value,'passportNumber','')} placeholder={'Номер'}/>
                     </HorizontalPanel>
                     <HorizontalPanel>
                         <Label value={'выдан'} width={'115px'}/>
-                        <TextAreaField style={{resize:'none',height:'50px'}} width={'300px'} value={this.state.fields.common.passportIssuedBy} onChange={(event) => this.handleChange(event.target.value,'passportIssuedBy','common')}/>
+                        <TextAreaField style={{resize:'none',height:'50px'}} width={'300px'} value={this.state.fields.passportIssuedBy} onChange={(event) => this.handleChange(event.target.value,'passportIssuedBy','')}/>
                     </HorizontalPanel>
                     <HorizontalPanel>
                         <Label value={'Адрес'} width={'115px'}/>
-                        <TextAreaField style={{resize:'none',height:'50px'}} width={'300px'} value={this.state.fields.common.regAddress} onChange={(event) => this.handleChange(event.target.value,'regAddress','common')}/>
+                        <TextAreaField style={{resize:'none',height:'50px'}} width={'300px'} value={this.state.fields.regAddress} onChange={(event) => this.handleChange(event.target.value,'regAddress','')}/>
                     </HorizontalPanel>
                     <HorizontalPanel>
                         <Label value={'Телефон'} width={'115px'}/>
-                        <TextField width={'300px'} value={this.state.fields.common.phone} onChange={(event) => this.handleChange(event.target.value,'phone','common')}/>
+                        <TextField width={'300px'} value={this.state.fields.phone} onChange={(event) => this.handleChange(event.target.value,'phone','')}/>
                     </HorizontalPanel>
                     <HorizontalPanel>
                         <Label value={'Email'} width={'115px'}/>
-                        <TextField width={'300px'} value={this.state.fields.common.email} onChange={(event) => this.handleChange(event.target.value,'email','common')}/>
+                        <TextField width={'300px'} value={this.state.fields.email} onChange={(event) => this.handleChange(event.target.value,'email','')}/>
                     </HorizontalPanel>
                     <HorizontalPanel>
                         <Label value={'Skype'} width={'115px'}/>
-                        <TextField width={'300px'} value={this.state.fields.common.skype} onChange={(event) => this.handleChange(event.target.value,'skype','common')}/>
+                        <TextField width={'300px'} value={this.state.fields.skype} onChange={(event) => this.handleChange(event.target.value,'skype','')}/>
                     </HorizontalPanel>
                     <div className="btn-toolbar align-bottom" role="toolbar" style={{justifyContent:'center',display:'flex'}}>
                         <Button value="Ок" onClick={() => this.saveUserData()}/>

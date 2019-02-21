@@ -129,7 +129,7 @@ class RepairAppRoomGrid extends Component {
                 </HorizontalPanel>
                 <CommonGrid ref={'roomsGrid'}
                             gridData={this.props.parent && this.props.parent.state && this.props.parent.state.fields.rooms ? this.props.parent.state.fields.rooms : {}}
-                            height={'150px'}/>
+                            height={'120px'}/>
                 <RepairAppRoomEditForm mainPageComp={this.props.mainPageComp} disabled={this.state.roomEditFormDisabled} ref={'roomEditForm'} visible={this.state.roomEditFormVisible} okAction={(event) => this.changeRooms(event)} closeAction={() => {this.setState({roomEditFormVisible:false}); this.refs.roomsGrid.setState({selectedItem:{}});}}/>
                 <ErrorModal mainPageComp={this.props.mainPageComp} errors={this.state.errors} closeAction={() => this.setState({errors:[]})}/>
             </VerticalPanel>

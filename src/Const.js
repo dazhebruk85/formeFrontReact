@@ -63,14 +63,6 @@ export const ENTITY_DELETE = "entityDelete";
 export const SUPERUSER_ROLE = "superuser"; // Суперпользователь
 export const CLIENT_ROLE = "client"; // Клиент светелкина
 
-//FieldTypes
-export const TEXTFIELD = "TEXTFIELD";
-export const DECIMALFIELD = "DECIMALFIELD";
-export const PASSWORD = "PASSWORD";
-export const TEXTAREA = "TEXTAREA";
-export const DATEPICKER = "DATEPICKER";
-export const CHECKBOX = "CHECKBOX";
-
 //ChatMessage type
 export const CHAT_MESSAGE_TEXT_TYPE = "text";
 export const CHAT_MESSAGE_FILE_TYPE = "file";
