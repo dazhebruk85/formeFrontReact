@@ -93,8 +93,6 @@ class UserEditForm extends Component {
                 passportNumber:'',
                 passportIssuedBy:'',
                 regAddress:'',
-                userRoleName:'',
-                userRoleId:'',
                 userRole: {
                     ...this.state.fields.userRole,
                     id:'',
