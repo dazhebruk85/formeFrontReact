@@ -321,7 +321,7 @@ class RepairAppEditForm extends Component {
                                    dictFilter={{'RAEDictFilter_userRole_systemName_eq':'client'}}
                                    disabled={this.state.editFormDisabled}/>
                     </HorizontalPanel>
-                    <Tabs defaultActiveKey={1} id="uncontrolled-tab-example" style={{height:'500px',width:'100%'}}>
+                    <Tabs defaultActiveKey={1} id="uncontrolled-tab-example" style={{height:'470px',width:'100%'}}>
                         <Tab eventKey={1} title="Объект" style={{width:'100%',height:'420px',overflowY:'auto',borderRight:'1px solid #ddd',borderBottom:'1px solid #ddd',borderLeft:'1px solid #ddd'}}>
                             <VerticalPanel style={{width:'100%',paddingLeft:'5px',paddingRight:'5px'}}>
                                 <HorizontalPanel style={{marginTop:'5px',width:'100%'}}>
