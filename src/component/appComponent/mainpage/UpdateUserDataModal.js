@@ -12,6 +12,18 @@ import HorizontalPanel from "../../baseComponent/panel/HorizontalPanel";
 import TextAreaField from "../../baseComponent/field/TextAreaField";
 import DateField from "../../baseComponent/field/DateField";
 
+let fieldsObject = {
+    fio:'',
+    birthDate:undefined,
+    phone:'',
+    email:'',
+    skype:'',
+    passportSeries:'',
+    passportNumber:'',
+    passportIssuedBy:'',
+    regAddress:''
+};
+
 class UpdateUserDataModal extends Component {
 
     constructor(props) {
@@ -21,17 +33,7 @@ class UpdateUserDataModal extends Component {
             errors:[],
             successInfoMessages:[],
             isLoading:false,
-            fields:{
-                fio:'',
-                birthDate:undefined,
-                phone:'',
-                email:'',
-                skype:'',
-                passportSeries:'',
-                passportNumber:'',
-                passportIssuedBy:'',
-                regAddress:'',
-            }
+            fields:fieldsObject
         };
 
         this.handleChange = this.handleChange.bind(this);
@@ -63,24 +65,13 @@ class UpdateUserDataModal extends Component {
         this.setState({
             errors:[],
             successInfoMessages:[],
-            fields:{
-                ...this.state.fields,
-                fio:'',
-                birthDate:undefined,
-                phone:'',
-                email:'',
-                skype:'',
-                passportSeries:'',
-                passportNumber:'',
-                passportIssuedBy:'',
-                regAddress:'',
-            }
+            fields:fieldsObject
         });
         this.closeAction()
     }
 
     async saveUserData() {
-        let errors = []
+        let errors = [];
         if (!this.state.fields.fio) {errors.push({code:'',message:'Необходимо заполнить ФИО'})}
         if (!this.state.fields.birthDate) {errors.push({code:'',message:'Необходимо заполнить дату рождения'})}
         if (!this.state.fields.phone) {errors.push({code:'',message:'Необходимо заполнить телефон'})}

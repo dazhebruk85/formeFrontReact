@@ -13,6 +13,25 @@ import TextField from "../../baseComponent/field/TextField";
 import TextAreaField from "../../baseComponent/field/TextAreaField";
 import DateField from "../../baseComponent/field/DateField";
 
+let fieldsObject = {
+    id:'',
+    fio:'',
+    login:'',
+    birthDate:undefined,
+    phone:'',
+    email:'',
+    skype:'',
+    passportSeries:'',
+    passportNumber:'',
+    passportIssuedBy:'',
+    regAddress:'',
+    userRole: {
+        id:'',
+        name:'',
+        systemName:''
+    }
+};
+
 class UserEditForm extends Component {
     constructor(props) {
         super(props);
@@ -21,24 +40,7 @@ class UserEditForm extends Component {
             errors:[],
             isLoading:false,
             successInfoMessages:[],
-            fields:{
-                id:'',
-                fio:'',
-                login:'',
-                birthDate:undefined,
-                phone:'',
-                email:'',
-                skype:'',
-                passportSeries:'',
-                passportNumber:'',
-                passportIssuedBy:'',
-                regAddress:'',
-                userRole: {
-                    id:'',
-                    name:'',
-                    systemName:''
-                }
-            }
+            fields: fieldsObject
         };
 
         this.handleChange = this.handleChange.bind(this);
@@ -49,23 +51,15 @@ class UserEditForm extends Component {
     }
 
     componentDidUpdate(prevProps) {
-        if (this.props.entityId !== prevProps.entityId ) {
-            this.setState({
-                fields:{
-                    ...this.state.fields,
-                    id:this.props.entityId
-                }
-            });
-        }
         if (this.props.visible && this.props.visible !== prevProps.visible ) {
             setTimeout(() => this.getEntityData(), 0);
         }
     }
 
     async getEntityData() {
-        if (this.state.fields.id) {
+        if (this.props.entityId) {
             this.setState({isLoading:true});
-            let params = {entityId: this.state.fields.id};
+            let params = {entityId: this.props.entityId};
             let responseData = await CommonUtils.makeAsyncPostEvent(Const.APP_URL,Const.USER_CONTEXT,Const.ENTITY_GET,params);
             this.setState({isLoading:false});
             if (responseData.errors.length > 0) {
@@ -80,26 +74,7 @@ class UserEditForm extends Component {
         this.setState({
             errors:[],
             successInfoMessages:[],
-            fields:{
-                ...this.state.fields,
-                id:'',
-                fio:'',
-                login:'',
-                birthDate:undefined,
-                phone:'',
-                email:'',
-                skype:'',
-                passportSeries:'',
-                passportNumber:'',
-                passportIssuedBy:'',
-                regAddress:'',
-                userRole: {
-                    ...this.state.fields.userRole,
-                    id:'',
-                    name:'',
-                    systemName:''
-                }
-            }
+            fields:fieldsObject
         });
         this.closeAction()
     }

@@ -14,6 +14,14 @@ import TextField from "../../baseComponent/field/TextField";
 import VerticalPanel from "../../baseComponent/panel/VerticalPanel";
 import TextAreaField from "../../baseComponent/field/TextAreaField";
 
+let fieldsObject = {
+    id: '',
+    name:'',
+    systemName:'',
+    value:'',
+    defaultValue:''
+};
+
 class ConfigParamEditForm extends Component {
 
     constructor(props) {
@@ -25,13 +33,7 @@ class ConfigParamEditForm extends Component {
             closeAction:props.closeAction,
             successInfoMessages:[],
             setValueByDefaultDialogVisible:false,
-            fields:{
-                id: '',
-                name:'',
-                systemName:'',
-                value:'',
-                defaultValue:''
-            }
+            fields:fieldsObject
         };
 
         this.handleChange = this.handleChange.bind(this);
@@ -75,14 +77,7 @@ class ConfigParamEditForm extends Component {
             errors:[],
             successInfoMessages:[],
             setValueByDefaultDialogVisible:false,
-            fields:{
-                ...this.state.fields,
-                id: '',
-                name:'',
-                systemName:'',
-                value:'',
-                defaultValue:''
-            }
+            fields:fieldsObject
         });
         this.closeAction()
     }

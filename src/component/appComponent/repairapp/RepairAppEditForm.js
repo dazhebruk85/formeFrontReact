@@ -18,6 +18,38 @@ import TextAreaField from "../../baseComponent/field/TextAreaField";
 import CheckBoxField from "../../baseComponent/field/CheckBoxField";
 import Separator from "../../baseComponent/field/Separator";
 
+let fieldsObject = {
+    common:{
+        entityId: '',
+        appNum:'',
+        appDate:new Date(),
+        finalPriceForMeter:'0.00',
+        totalCost:'0.00',
+        totalArea:'0.00',
+        addOptionCost:'0.00',
+        clientUserId: '',
+        clientUserLogin: ''
+    },
+    basePackage:{
+        entityId:'',
+        name:'',
+        priceForMeter:''
+    },
+    realEstate:{
+        address:'',
+        entranceNum:'',
+        floor:'',
+        trashCanNotExist:false,
+        passLiftNotExist:false,
+        serviceLiftNotExist:false,
+        heightRestrictExist:false,
+        needCarryFromParkToEnt:false,
+        needCarryToFloor:false,
+        needUkAccept:false
+    },
+    rooms:{}
+};
+
 class RepairAppEditForm extends Component {
 
     constructor(props) {
@@ -28,37 +60,7 @@ class RepairAppEditForm extends Component {
             isLoading:false,
             successInfoMessages:[],
             editFormDisabled:false,
-            fields:{
-                common:{
-                    entityId: '',
-                    appNum:'',
-                    appDate:undefined,
-                    finalPriceForMeter:'0.00',
-                    totalCost:'0.00',
-                    totalArea:'0.00',
-                    addOptionCost:'0.00',
-                    clientUserId: '',
-                    clientUserLogin: ''
-                },
-                basePackage:{
-                    entityId:'',
-                    name:'',
-                    priceForMeter:''
-                },
-                realEstate:{
-                    address:'',
-                    entranceNum:'',
-                    floor:'',
-                    trashCanNotExist:false,
-                    passLiftNotExist:false,
-                    serviceLiftNotExist:false,
-                    heightRestrictExist:false,
-                    needCarryFromParkToEnt:false,
-                    needCarryToFloor:false,
-                    needUkAccept:false
-                },
-                rooms:{}
-            }
+            fields:fieldsObject
         };
 
         this.handleChange = this.handleChange.bind(this);
@@ -102,29 +104,6 @@ class RepairAppEditForm extends Component {
             } else {
                 this.setState({fields: responseData.params});
             }
-        } else {
-            //Новая анкета
-            this.setState({isLoading:true});
-            let responseData = await CommonUtils.makeAsyncPostEvent(Const.APP_URL,Const.REPAIR_APP_FORM_CONTEXT,Const.ENTITY_NEW,{});
-            if (responseData.errors.length > 0) {
-                this.setState({errors: responseData.errors});
-            } else {
-                this.setState({fields: responseData.params});
-            }
-            this.setState({
-                fields:{
-                    ...this.state.fields,
-                    common : {
-                        ...this.state.fields.common,
-                        appNum:'',
-                        appDate: new Date(),
-                        finalPriceForMeter:'0.00',
-                        totalCost:'0.00',
-                        totalArea:'0.00',
-                        addOptionCost:'0.00'
-                    }
-                }});
-            this.setState({isLoading:false});
         }
     }
 
@@ -133,41 +112,7 @@ class RepairAppEditForm extends Component {
             errors:[],
             successInfoMessages:[],
             editFormDisabled:false,
-            fields:{
-                ...this.state.fields,
-                common : {
-                    ...this.state.fields.common,
-                    entityId: '',
-                    appNum:'',
-                    appDate:undefined,
-                    finalPriceForMeter:'0.00',
-                    totalCost:'0.00',
-                    totalArea:'0.00',
-                    addOptionCost:'0.00',
-                    clientUserId: '',
-                    clientUserLogin: ''
-                },
-                basePackage : {
-                    ...this.state.fields.basePackage,
-                    entityId: '',
-                    name: '',
-                    priceForMeter: ''
-                },
-                realEstate : {
-                    ...this.state.fields.realEstate,
-                    address:'',
-                    entranceNum:'',
-                    floor:'',
-                    trashCanNotExist:false,
-                    passLiftNotExist:false,
-                    serviceLiftNotExist:false,
-                    heightRestrictExist:false,
-                    needCarryFromParkToEnt:false,
-                    needCarryToFloor:false,
-                    needUkAccept:false
-                },
-                rooms:{}
-            }
+            fields:fieldsObject
         });
         this.closeAction()
     }
