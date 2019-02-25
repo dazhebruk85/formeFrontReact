@@ -19,21 +19,21 @@ import CheckBoxField from "../../baseComponent/field/CheckBoxField";
 import Separator from "../../baseComponent/field/Separator";
 
 let fieldsObject = {
-    common:{
-        entityId: '',
-        appNum:'',
-        appDate:new Date(),
-        finalPriceForMeter:'0.00',
-        totalCost:'0.00',
-        totalArea:'0.00',
-        addOptionCost:'0.00',
-        clientUserId: '',
-        clientUserLogin: ''
+    id:'',
+    appDate:new Date(),
+    appNum:'',
+    finalPriceForMeter:0,
+    totalArea:0,
+    totalCost:0,
+    addOptionCost:0,
+    clientUser:{
+        id:'',
+        login:''
     },
     basePackage:{
-        entityId:'',
+        id:'',
         name:'',
-        priceForMeter:''
+        priceForMeter:0
     },
     realEstate:{
         address:'',
@@ -47,7 +47,7 @@ let fieldsObject = {
         needCarryToFloor:false,
         needUkAccept:false
     },
-    rooms:{}
+    roomList:{}
 };
 
 class RepairAppEditForm extends Component {
@@ -73,17 +73,6 @@ class RepairAppEditForm extends Component {
     }
 
     componentDidUpdate(prevProps) {
-        if (this.props.entityId !== prevProps.entityId ) {
-            this.setState({
-                fields:{
-                    ...this.state.fields,
-                    common:{
-                        ...this.state.fields.common,
-                        entityId:this.props.entityId
-                    }
-                }
-            });
-        }
         if (this.props.visible && this.props.visible !== prevProps.visible ) {
             this.setState({
                 editFormDisabled:this.props.disabled
@@ -93,17 +82,14 @@ class RepairAppEditForm extends Component {
     }
 
     async getEntityData() {
-        if (this.state.fields.common.entityId) {
-            //Редактирование анкеты
-            this.setState({isLoading:true});
-            let params = {entityId: this.state.fields.common.entityId};
-            let responseData = await CommonUtils.makeAsyncPostEvent(Const.APP_URL,Const.REPAIR_APP_FORM_CONTEXT,Const.ENTITY_GET,params);
-            this.setState({isLoading:false});
-            if (responseData.errors.length > 0) {
-                this.setState({errors: responseData.errors});
-            } else {
-                this.setState({fields: responseData.params});
-            }
+        this.setState({isLoading:true});
+        let params = {entityId:this.props.entityId};
+        let responseData = await CommonUtils.makeAsyncPostEvent(Const.APP_URL,Const.REPAIR_APP_FORM_CONTEXT,this.props.entityId ? Const.ENTITY_GET : Const.ENTITY_NEW,params);
+        this.setState({isLoading:false});
+        if (responseData.errors.length > 0) {
+            this.setState({errors: responseData.errors});
+        } else {
+            this.setState({fields: responseData.entity});
         }
     }
 
@@ -123,16 +109,14 @@ class RepairAppEditForm extends Component {
 
     async saveEntityData() {
         let errors = [];
-        if (!this.state.fields.basePackage.entityId) {errors.push({code:'',message:'Необходимо заполнить базовый пакет'})}
+        if (!this.state.fields.basePackage.id) {errors.push({code:'',message:'Необходимо заполнить базовый пакет'})}
         if (errors.length > 0) {
             this.setState({
                 errors: errors
             });
         } else {
             this.setState({isLoading:true});
-            let params = this.state.fields;
-            params['entityId'] = this.state.fields.common.entityId;
-            let responseData = await CommonUtils.makeAsyncPostEvent(Const.APP_URL,Const.REPAIR_APP_FORM_CONTEXT,Const.ENTITY_SAVE,params);
+            let responseData = await CommonUtils.makeAsyncPostEvent(Const.APP_URL,Const.REPAIR_APP_FORM_CONTEXT,Const.ENTITY_SAVE,{entityId:this.state.fields.id},JSON.stringify(this.state.fields));
             this.setState({isLoading:false});
             if (responseData.errors.length > 0) {
                 this.setState({errors: responseData.errors});
@@ -148,26 +132,15 @@ class RepairAppEditForm extends Component {
                 fields: {
                     ...this.state.fields,
                     basePackage : selectedPackage,
-                    common : {
-                        ...this.state.fields.common,
-                        finalPriceForMeter : selectedPackage.priceForMeter
-                    }
+                    finalPriceForMeter : selectedPackage.priceForMeter
                 }
             });
         } else {
             this.setState({
                 fields: {
                     ...this.state.fields,
-                    basePackage : {
-                        ...this.state.fields.basePackage,
-                        entityId: '',
-                        name: '',
-                        priceForMeter: ''
-                    },
-                    common : {
-                        ...this.state.fields.common,
-                        finalPriceForMeter : '0.00'
-                    }
+                    basePackage:{},
+                    finalPriceForMeter:0
                 }
             });
         }
@@ -179,22 +152,14 @@ class RepairAppEditForm extends Component {
             this.setState({
                 fields: {
                     ...this.state.fields,
-                    common : {
-                        ...this.state.fields.common,
-                        clientUserId : selectedUser.entityId,
-                        clientUserLogin : selectedUser.login
-                    }
+                    clientUser:selectedUser
                 }
             });
         } else {
             this.setState({
                 fields: {
                     ...this.state.fields,
-                    common : {
-                        ...this.state.fields.common,
-                        clientUserId : '',
-                        clientUserLogin : ''
-                    }
+                    clientUser:{}
                 }
             });
         }
@@ -202,39 +167,29 @@ class RepairAppEditForm extends Component {
 
     cnangeTotalArea() {
         let totalArea = 0.00;
-        let rooms = this.state.fields.rooms;
-        if (rooms && Object.keys(rooms).length > 1) {
-            for (let key in rooms) {
-                if (key === 'headers') continue;
-                let room = rooms[key];
-                totalArea = totalArea + parseFloat(room.area)
-            }
+        let rooms = this.state.fields.roomList.list;
+        for (let index in rooms) {
+            totalArea = totalArea + parseFloat(rooms[index].area)
         }
         this.setState({
             fields:{
                 ...this.state.fields,
-                common:{
-                    ...this.state.fields.common,
-                    totalArea:totalArea.toFixed(2)
-                }
+                totalArea:totalArea.toFixed(2)
             }
         });
     }
 
     changeTotalCost() {
         let totalCost = 0.00;
-        let totalArea = this.state.fields.common.totalArea
-        let finalPriceForMeter = this.state.fields.common.finalPriceForMeter
+        let totalArea = this.state.fields.totalArea;
+        let finalPriceForMeter = this.state.fields.finalPriceForMeter;
         if (totalArea && finalPriceForMeter) {
             totalCost = totalArea*finalPriceForMeter;
         }
         this.setState({
             fields:{
                 ...this.state.fields,
-                common:{
-                    ...this.state.fields.common,
-                    totalCost:totalCost.toFixed(2)
-                }
+                totalCost:totalCost.toFixed(2)
             }
         });
     }
@@ -245,9 +200,9 @@ class RepairAppEditForm extends Component {
                 <VerticalPanel>
                     <HorizontalPanel>
                         <Label value={'Номер'} width={'70px'}/>
-                        <TextField disabled={true} width={'120px'} value={this.state.fields.common.appNum} onChange={(event) => this.handleChange(event.target.value,'appNum','common')}/>
+                        <TextField disabled={true} width={'120px'} value={this.state.fields.appNum} onChange={(event) => this.handleChange(event.target.value,'appNum','')}/>
                         <Label value={'Дата'} width={'70px'}/>
-                        <DateField disabled={true} width={'120px'} value={this.state.fields.common.appDate} onChange={(date) => this.handleChange(date,'appDate','common')}/>
+                        <DateField disabled={true} width={'120px'} value={this.state.fields.appDate} onChange={(date) => this.handleChange(date,'appDate','')}/>
                         <Label value={'Базовый пакет'} width={'120px'}/>
                         <DictField width='290px'
                                    value={this.state.fields.basePackage.name}
@@ -259,7 +214,7 @@ class RepairAppEditForm extends Component {
                     <HorizontalPanel>
                         <Label value={'Клиент'} width={'70px'}/>
                         <DictField width='310px'
-                                   value={this.state.fields.common.clientUserLogin}
+                                   value={this.state.fields.clientUser.login}
                                    maxLength={100}
                                    context={Const.USER_CONTEXT}
                                    chooseDictAction={this.chooseClientUser.bind(this)}
@@ -333,19 +288,19 @@ class RepairAppEditForm extends Component {
                     <HorizontalPanel style={{width:'100%'}}>
                         <VerticalPanel>
                             <Label value={'Цена за м²'} width={'130px'}/>
-                            <DecimalField disabled={true} width={'140px'} value={this.state.fields.common.finalPriceForMeter} onChange={(event) => this.handleChange(event.target.value,'finalPriceForMeter','common')}/>
+                            <DecimalField disabled={true} width={'140px'} value={this.state.fields.finalPriceForMeter} onChange={(event) => this.handleChange(event.target.value,'finalPriceForMeter','')}/>
                         </VerticalPanel>
                         <VerticalPanel>
                             <Label value={'Общая площадь'} width={'130px'} />
-                            <DecimalField disabled={true} width={'140px'} value={this.state.fields.common.totalArea} onChange={(event) => this.handleChange(event.target.value,'totalArea','common')}/>
+                            <DecimalField disabled={true} width={'140px'} value={this.state.fields.totalArea} onChange={(event) => this.handleChange(event.target.value,'totalArea','')}/>
                         </VerticalPanel>
                         <VerticalPanel>
                             <Label value={'Cтоимость'} width={'130px'}/>
-                            <DecimalField disabled={true} width={'140px'} value={this.state.fields.common.totalCost} onChange={(event) => this.handleChange(event,'totalCost','common')}/>
+                            <DecimalField disabled={true} width={'140px'} value={this.state.fields.totalCost} onChange={(event) => this.handleChange(event,'totalCost','')}/>
                         </VerticalPanel>
                         <VerticalPanel>
                             <Label value={'Доп. опции'} width={'130px'}/>
-                            <DecimalField disabled={true} width={'140px'} value={this.state.fields.common.addOptionCost} onChange={(event) => this.handleChange(event,'addOptionCost','common')}/>
+                            <DecimalField disabled={true} width={'140px'} value={this.state.fields.addOptionCost} onChange={(event) => this.handleChange(event,'addOptionCost','')}/>
                         </VerticalPanel>
                     </HorizontalPanel>
                     <div className="btn-toolbar align-bottom" role="toolbar" style={{justifyContent:'center',display:'flex'}}>

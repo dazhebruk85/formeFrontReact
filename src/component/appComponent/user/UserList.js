@@ -120,7 +120,7 @@ class UserList extends Component {
 
     changeGridSelection(selectedEntity) {
         this.setState({
-            selectedEntityId:selectedEntity.entityId,
+            selectedEntityId:selectedEntity.id,
             selectedUserLogin:selectedEntity.login,
         });
     }

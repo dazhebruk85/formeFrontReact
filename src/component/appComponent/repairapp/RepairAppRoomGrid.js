@@ -1,7 +1,7 @@
 import {Component} from "react";
 import CommonGrid from "../../baseComponent/grid/CommonGrid";
 import React from "react";
-import RepairAppRoomEditForm from "./RepairAppRoomEditForm";
+import RepairAppRoomEditForm, {fieldsObject as roomFieldsObject}  from "./RepairAppRoomEditForm";
 import * as CommonUtils from "../../../utils/CommonUtils";
 import ErrorModal from "../../baseComponent/modal/ErrorModal";
 import addActionPng from '../../../media/grid/gridAdd.png';
@@ -34,14 +34,7 @@ class RepairAppRoomGrid extends Component {
 
     addRoomAction() {
         this.refs.roomEditForm.setState({
-            fields:{
-                ...this.state.fields,
-                common:{
-                    entityId:'',
-                    name:'',
-                    area:''
-                }
-            }
+            fields:roomFieldsObject
         });
         setTimeout(() => this.setState({
             roomEditFormVisible:true,
@@ -55,10 +48,7 @@ class RepairAppRoomGrid extends Component {
             this.setState({errors:[{code:'',message:'Необходимо выбрать запись'}]});
         } else {
             this.refs.roomEditForm.setState({
-                fields:{
-                    ...this.state.fields,
-                    common:roomObject
-                }
+                fields:roomObject
             });
             setTimeout(() => this.setState({
                 roomEditFormVisible:true,
@@ -68,29 +58,56 @@ class RepairAppRoomGrid extends Component {
     }
 
     deleteRoomAction() {
-        let roomObject = this.refs.roomsGrid.state.selectedItem;
-        if (CommonUtils.objectIsEmpty(roomObject)) {
+        let room = this.refs.roomsGrid.state.selectedItem;
+        if (CommonUtils.objectIsEmpty(room)) {
             this.setState({errors:[{code:'',message:'Необходимо выбрать запись'}]});
         } else {
-            let rooms = this.props.parent.state.fields.rooms;
-            delete rooms[roomObject.entityId];
+            let rooms = this.props.parent.state.fields.roomList.list;
+            for (let index in rooms) {
+                if (rooms[index].id === room.id) {
+                    delete rooms[index];
+                    break;
+                }
+            }
             this.props.parent.setState({
                 fields:{
                     ...this.props.parent.state.fields,
-                    rooms:rooms
+                    roomList:{
+                        ...this.props.parent.state.fields.roomList,
+                        list:rooms
+                    },
+
                 }
             });
         }
+        this.refs.roomsGrid.setState({
+            selectedItem:{}
+        });
         this.onChangeAction()
     }
 
     changeRooms(room) {
-        let rooms = this.props.parent.state.fields.rooms;
-        rooms[room.entityId] = room;
+        let rooms = this.props.parent.state.fields.roomList.list;
+        let roomExistIndex;
+        for (let index in rooms) {
+            if (rooms[index].id === room.id) {
+                roomExistIndex = index;
+                break;
+            }
+        }
+        if (roomExistIndex) {
+            rooms[roomExistIndex] = room
+        } else {
+            rooms.push(room);
+        }
         this.props.parent.setState({
             fields:{
                 ...this.props.parent.state.fields,
-                rooms:rooms
+                roomList:{
+                    ...this.props.parent.state.fields.roomList,
+                    list:rooms
+                },
+
             }
         });
         this.refs.roomsGrid.setState({
@@ -128,7 +145,7 @@ class RepairAppRoomGrid extends Component {
                     </div>
                 </HorizontalPanel>
                 <CommonGrid ref={'roomsGrid'}
-                            gridData={this.props.parent && this.props.parent.state && this.props.parent.state.fields.rooms ? this.props.parent.state.fields.rooms : {}}
+                            gridData={this.props.parent && this.props.parent.state && this.props.parent.state.fields.roomList ? this.props.parent.state.fields.roomList : {}}
                             height={'120px'}/>
                 <RepairAppRoomEditForm mainPageComp={this.props.mainPageComp} disabled={this.state.roomEditFormDisabled} ref={'roomEditForm'} visible={this.state.roomEditFormVisible} okAction={(event) => this.changeRooms(event)} closeAction={() => {this.setState({roomEditFormVisible:false}); this.refs.roomsGrid.setState({selectedItem:{}});}}/>
                 <ErrorModal mainPageComp={this.props.mainPageComp} errors={this.state.errors} closeAction={() => this.setState({errors:[]})}/>

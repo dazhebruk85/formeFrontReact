@@ -100,7 +100,7 @@ class CommonDbGrid extends Component {
     render() {
 
         function getSelectedBgColor(entityId, state) {
-            if (entityId === state.selectedItem.entityId) {
+            if (entityId === state.selectedItem.id) {
                 return '#d9d9d9';
             }
         }
@@ -117,9 +117,9 @@ class CommonDbGrid extends Component {
                         <table style={{marginBottom:'0px'}} className='table table-hover table-condensed' ref="CommonDbGrid">
                             <thead className='.thead-light'>
                                 {this.state.listData.dataHeaderList.map(entity =>
-                                    <tr key={entity.entityId+'headerTr'}>
+                                    <tr key={entity.id+'headerTr'}>
                                         {CommonUtils.objectToPropArr(entity).map(entityData =>
-                                            <th style={{display: entityData.key === "entityId" ? 'none' : ''}} key={entityData.key+'headerTd'}>
+                                            <th style={{display: entityData.key === "id" ? 'none' : ''}} key={entityData.key+'headerTd'}>
                                                 {entityData.value}
                                             </th>
                                         )}
@@ -128,9 +128,9 @@ class CommonDbGrid extends Component {
                               </thead>
                             <tbody>
                                 {this.state.listData.dataList.map(entity =>
-                                    <tr onClick={this.handleSelectEntity} style={{cursor:'pointer',height:'30px',background:getSelectedBgColor(entity.entityId, this.state)}} key={entity.entityId+'valueTr'}>
+                                    <tr onClick={this.handleSelectEntity} style={{cursor:'pointer',height:'30px',background:getSelectedBgColor(entity.id, this.state)}} key={entity.id+'valueTr'}>
                                         {CommonUtils.objectToPropArr(entity).map(entityData =>
-                                            <td entitydatakey={entityData.key} style={{padding:'5px',height:'30px',display: entityData.key === "entityId" ? 'none' : ''}} key={entityData.key+'valueTd'}>
+                                            <td entitydatakey={entityData.key} style={{padding:'5px',height:'30px',display: entityData.key === "id" ? 'none' : ''}} key={entityData.key+'valueTd'}>
                                                 {entityData.value}
                                             </td>
                                         )}

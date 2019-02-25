@@ -11,6 +11,12 @@ import HorizontalPanel from "../../baseComponent/panel/HorizontalPanel";
 import VerticalPanel from "../../baseComponent/panel/VerticalPanel";
 import DecimalField from "../../baseComponent/field/DecimalField";
 
+export let fieldsObject = {
+    id:'',
+    name:'',
+    area:''
+};
+
 class RepairAppRoomEditForm extends Component {
 
     constructor(props) {
@@ -19,13 +25,7 @@ class RepairAppRoomEditForm extends Component {
         this.state = {
             errors:[],
             disabled:false,
-            fields:{
-                common:{
-                    entityId:'',
-                    name:'',
-                    area:''
-                }
-            }
+            fields:fieldsObject
         };
 
         this.closeActionParent = props.closeAction;
@@ -38,7 +38,7 @@ class RepairAppRoomEditForm extends Component {
             this.setState({
                 disabled:this.props.disabled
             });
-            if (CommonUtils.objectIsEmpty(this.state.fields.common.entityId)) {
+            if (CommonUtils.objectIsEmpty(this.state.fields.id)) {
                 setTimeout(() => this.getNewUuid(), 0);
             }
         }
@@ -49,12 +49,7 @@ class RepairAppRoomEditForm extends Component {
         this.setState({
             fields:{
                 ...this.state.fields,
-                common : {
-                    ...this.state.fields.common,
-                    entityId:responseData.params.newUuid,
-                    name:'',
-                    area:''
-                }
+                id:responseData.params.newUuid
             }
         });
     }
@@ -66,20 +61,13 @@ class RepairAppRoomEditForm extends Component {
     closeModal() {
         this.setState({
             errors: [],
-            fields:{
-                ...this.state.fields,
-                common:{
-                    entityId:'',
-                    name:'',
-                    area:''
-                }
-            }
+            fields:fieldsObject
         });
         this.closeActionParent()
     }
 
     okAction() {
-        let roomData = this.state.fields.common;
+        let roomData = this.state.fields;
         let errors = [];
         if (!roomData.name){errors.push({code:'',message:'Необходимо заполнить тип помещения'})}
         if (!roomData.area){errors.push({code:'',message:'Необходимо заполнить площадь помещения'})}
@@ -108,20 +96,14 @@ class RepairAppRoomEditForm extends Component {
             this.setState({
                 fields: {
                     ...this.state.fields,
-                    common : {
-                        ...this.state.fields.common,
-                        name : selectedRoomType.name
-                    }
+                    name : selectedRoomType.name
                 }
             });
         } else {
             this.setState({
                 fields: {
                     ...this.state.fields,
-                    common : {
-                        ...this.state.fields.common,
-                        name : ''
-                    }
+                    name : ''
                 }
             });
         }
@@ -137,7 +119,7 @@ class RepairAppRoomEditForm extends Component {
                     <HorizontalPanel>
                         <Label value={'Тип помещения'} width={'120px'}/>
                         <DictField width='300px'
-                                   value={this.state.fields.common.name}
+                                   value={this.state.fields.name}
                                    maxLength={100}
                                    context={Const.ROOM_TYPE_CONTEXT}
                                    chooseDictAction={this.chooseRoomType.bind(this)}
@@ -145,7 +127,7 @@ class RepairAppRoomEditForm extends Component {
                     </HorizontalPanel>
                     <HorizontalPanel>
                         <Label value={'Площадь'} width={'120px'}/>
-                        <DecimalField disabled={formDisabled} width={'300px'} value={this.state.fields.common.area} onChange={(event) => this.handleChange(event.target.value,'area','common')}/>
+                        <DecimalField disabled={formDisabled} width={'300px'} value={this.state.fields.area} onChange={(event) => this.handleChange(event.target.value,'area','')}/>
                     </HorizontalPanel>
                 </VerticalPanel>
                 <div className="btn-toolbar align-bottom" role="toolbar" style={{justifyContent:'center',display:'flex'}}>
