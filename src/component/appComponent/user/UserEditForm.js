@@ -110,7 +110,7 @@ class UserEditForm extends Component {
                 ...this.state.fields,
                 userRole:{
                     ...this.state.fields.userRole,
-                    id: selectedRole ? selectedRole.entityId  : '',
+                    id: selectedRole ? selectedRole.id  : '',
                     name: selectedRole ? selectedRole.name  : '',
                     systemName: selectedRole ? selectedRole.systemName  : '',
                 }
