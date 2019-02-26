@@ -97,8 +97,7 @@ class UserList extends Component {
     }
 
     async deleteEntityConfirm() {
-        let params = {entityId: this.state.selectedEntityId};
-        let responseData = await CommonUtils.makeAsyncPostEvent(Const.APP_URL,Const.USER_CONTEXT,Const.ENTITY_DELETE,params);
+        let responseData = await CommonUtils.makeAsyncPostEvent(Const.APP_URL,Const.USER_CONTEXT,Const.ENTITY_DELETE,{id: this.state.selectedEntityId});
         if (responseData.errors.length > 0) {
             this.setState({errors: responseData.errors});
         } else {

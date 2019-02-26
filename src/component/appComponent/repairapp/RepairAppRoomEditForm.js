@@ -73,7 +73,7 @@ class RepairAppRoomEditForm extends Component {
         if (!roomData.area){errors.push({code:'',message:'Необходимо заполнить площадь помещения'})}
 
         if (roomData.area) {
-            let areaInNum = CommonUtils.strToBigDecimal(roomData.area)
+            let areaInNum = CommonUtils.strToBigDecimal(roomData.area);
             if (isNaN(areaInNum)) {
                 errors.push({code:'',message:'Площадь должна быть в формате числа(12.34 или 12,34)'})
             } else {
@@ -127,7 +127,7 @@ class RepairAppRoomEditForm extends Component {
                     </HorizontalPanel>
                     <HorizontalPanel>
                         <Label value={'Площадь'} width={'120px'}/>
-                        <DecimalField disabled={formDisabled} width={'300px'} value={this.state.fields.area} onChange={(event) => this.handleChange(event.target.value,'area','')}/>
+                        <DecimalField disabled={formDisabled} width={'300px'} value={this.state.fields.area} onChange={(value) => this.handleChange(value,'area','')}/>
                     </HorizontalPanel>
                 </VerticalPanel>
                 <div className="btn-toolbar align-bottom" role="toolbar" style={{justifyContent:'center',display:'flex'}}>

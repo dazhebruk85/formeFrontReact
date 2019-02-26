@@ -57,16 +57,13 @@ class UserEditForm extends Component {
     }
 
     async getEntityData() {
-        if (this.props.entityId) {
-            this.setState({isLoading:true});
-            let params = {entityId: this.props.entityId};
-            let responseData = await CommonUtils.makeAsyncPostEvent(Const.APP_URL,Const.USER_CONTEXT,Const.ENTITY_GET,params);
-            this.setState({isLoading:false});
-            if (responseData.errors.length > 0) {
-                this.setState({errors: responseData.errors});
-            } else {
-                this.setState({fields: responseData.entity});
-            }
+        this.setState({isLoading:true});
+        let responseData = await CommonUtils.makeAsyncPostEvent(Const.APP_URL,Const.USER_CONTEXT,this.props.entityId ? Const.ENTITY_GET : Const.ENTITY_NEW,{id:this.props.entityId});
+        this.setState({isLoading:false});
+        if (responseData.errors.length > 0) {
+            this.setState({errors: responseData.errors});
+        } else {
+            this.setState({fields: responseData.entity});
         }
     }
 
@@ -97,7 +94,7 @@ class UserEditForm extends Component {
             });
         } else {
             this.setState({isLoading:true});
-            let responseData = await CommonUtils.makeAsyncPostEvent(Const.APP_URL,Const.USER_CONTEXT,Const.ENTITY_SAVE,{entityId:this.state.fields.id},JSON.stringify(this.state.fields));
+            let responseData = await CommonUtils.makeAsyncPostEvent(Const.APP_URL,Const.USER_CONTEXT,Const.ENTITY_SAVE,{id:this.state.fields.id},JSON.stringify(this.state.fields));
             this.setState({isLoading:false});
             if (responseData.errors.length > 0) {
                 this.setState({errors: responseData.errors});

@@ -1,5 +1,7 @@
 import axios from 'axios';
 
+export const BigDecimalRegExp = RegExp(/^[0-9]*\.?[0-9]{0,2}$/i);
+
 export function genGuid() {
     function s4() {
         return Math.floor((1 + Math.random()) * 0x10000)

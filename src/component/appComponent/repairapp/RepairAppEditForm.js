@@ -83,8 +83,7 @@ class RepairAppEditForm extends Component {
 
     async getEntityData() {
         this.setState({isLoading:true});
-        let params = {entityId:this.props.entityId};
-        let responseData = await CommonUtils.makeAsyncPostEvent(Const.APP_URL,Const.REPAIR_APP_FORM_CONTEXT,this.props.entityId ? Const.ENTITY_GET : Const.ENTITY_NEW,params);
+        let responseData = await CommonUtils.makeAsyncPostEvent(Const.APP_URL,Const.REPAIR_APP_FORM_CONTEXT,this.props.entityId ? Const.ENTITY_GET : Const.ENTITY_NEW,{id:this.props.entityId});
         this.setState({isLoading:false});
         if (responseData.errors.length > 0) {
             this.setState({errors: responseData.errors});
@@ -116,7 +115,7 @@ class RepairAppEditForm extends Component {
             });
         } else {
             this.setState({isLoading:true});
-            let responseData = await CommonUtils.makeAsyncPostEvent(Const.APP_URL,Const.REPAIR_APP_FORM_CONTEXT,Const.ENTITY_SAVE,{entityId:this.state.fields.id},JSON.stringify(this.state.fields));
+            let responseData = await CommonUtils.makeAsyncPostEvent(Const.APP_URL,Const.REPAIR_APP_FORM_CONTEXT,Const.ENTITY_SAVE,{id:this.state.fields.id},JSON.stringify(this.state.fields));
             this.setState({isLoading:false});
             if (responseData.errors.length > 0) {
                 this.setState({errors: responseData.errors});
@@ -288,19 +287,19 @@ class RepairAppEditForm extends Component {
                     <HorizontalPanel style={{width:'100%'}}>
                         <VerticalPanel>
                             <Label value={'Цена за м²'} width={'130px'}/>
-                            <DecimalField disabled={true} width={'140px'} value={this.state.fields.finalPriceForMeter} onChange={(event) => this.handleChange(event.target.value,'finalPriceForMeter','')}/>
+                            <DecimalField disabled={true} width={'140px'} value={this.state.fields.finalPriceForMeter} onChange={(value) => this.handleChange(value,'finalPriceForMeter','')}/>
                         </VerticalPanel>
                         <VerticalPanel>
                             <Label value={'Общая площадь'} width={'130px'} />
-                            <DecimalField disabled={true} width={'140px'} value={this.state.fields.totalArea} onChange={(event) => this.handleChange(event.target.value,'totalArea','')}/>
+                            <DecimalField disabled={true} width={'140px'} value={this.state.fields.totalArea} onChange={(value) => this.handleChange(value,'totalArea','')}/>
                         </VerticalPanel>
                         <VerticalPanel>
                             <Label value={'Cтоимость'} width={'130px'}/>
-                            <DecimalField disabled={true} width={'140px'} value={this.state.fields.totalCost} onChange={(event) => this.handleChange(event,'totalCost','')}/>
+                            <DecimalField disabled={true} width={'140px'} value={this.state.fields.totalCost} onChange={(value) => this.handleChange(value,'totalCost','')}/>
                         </VerticalPanel>
                         <VerticalPanel>
                             <Label value={'Доп. опции'} width={'130px'}/>
-                            <DecimalField disabled={true} width={'140px'} value={this.state.fields.addOptionCost} onChange={(event) => this.handleChange(event,'addOptionCost','')}/>
+                            <DecimalField disabled={true} width={'140px'} value={this.state.fields.addOptionCost} onChange={(value) => this.handleChange(value,'addOptionCost','')}/>
                         </VerticalPanel>
                     </HorizontalPanel>
                     <div className="btn-toolbar align-bottom" role="toolbar" style={{justifyContent:'center',display:'flex'}}>
