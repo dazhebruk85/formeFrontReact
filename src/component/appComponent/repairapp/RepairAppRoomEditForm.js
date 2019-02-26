@@ -39,17 +39,18 @@ class RepairAppRoomEditForm extends Component {
                 disabled:this.props.disabled
             });
             if (CommonUtils.objectIsEmpty(this.state.fields.id)) {
-                setTimeout(() => this.getNewUuid(), 0);
+                setTimeout(() => this.getNewEntity(), 0);
             }
         }
     }
 
-    async getNewUuid() {
+    async getNewEntity() {
         let responseData = await CommonUtils.makeAsyncPostEvent(Const.APP_URL,Const.GEN_UUID_CONTEXT,'',null);
         this.setState({
             fields:{
                 ...this.state.fields,
-                id:responseData.params.newUuid
+                id:responseData.params.newUuid,
+                area:0.00
             }
         });
     }
