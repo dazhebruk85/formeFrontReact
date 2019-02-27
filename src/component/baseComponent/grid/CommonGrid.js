@@ -27,17 +27,23 @@ class CommonGrid extends Component {
     }
 
     handleSelectEntity = (event) => {
-        let selectedItem = {};
         if (event !== null && event !== undefined) {
+            let selectedId;
             for (let i = 0; i < event.currentTarget.children.length; i++) {
-                selectedItem[event.currentTarget.children[i].getAttribute('entitydatakey')] = event.currentTarget.children[i].textContent
+                if (event.currentTarget.children[i].getAttribute('entitydatakey') === 'id') {
+                    selectedId = event.currentTarget.children[i].textContent;
+                    break;
+                }
             }
-        }
-        this.setState({
-            selectedItem: selectedItem
-        });
-        if (this.parentSelectAction) {
-            setTimeout(() => this.parentSelectAction(selectedItem), 0);
+            if (selectedId) {
+                let selectedItem = this.state.list.find(listObject => listObject.id === selectedId);
+                this.setState({
+                    selectedItem: selectedItem
+                });
+                if (this.parentSelectAction) {
+                    setTimeout(() => this.parentSelectAction(selectedItem), 0);
+                }
+            }
         }
     };
 
