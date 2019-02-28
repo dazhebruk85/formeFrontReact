@@ -1,6 +1,7 @@
 import  React, { Component } from 'react';
 import * as Const from "../../../Const";
 import * as CommonUtils from '../../../utils/CommonUtils'
+import * as DateUtils from '../../../utils/DateUtils'
 import nextPagePng from "../../../media/grid/nextPage.png";
 import prevPagePng from "../../../media/grid/prevPage.png";
 import Spinner from "../spinner/Spinner";
@@ -15,11 +16,10 @@ class CommonDbGrid extends Component {
         this.state = {
             isLoading:false,
             errors:[],
-            dataEntityContext:props.dataEntityContext,
-            pageSize:props.pageSize,
-            pageNumber:1,
+            headers:[],
+            list:[],
             lastPage:false,
-            listData:null,
+            pageNumber:0,
             selectedItem:{},
             filter:props.filter
         };
@@ -38,24 +38,19 @@ class CommonDbGrid extends Component {
 
     async getGridListData() {
         this.setState({isLoading:true});
-        let params = {pageNumber:this.state.pageNumber,pageSize:this.state.pageSize,filter:this.props.filter};
-        let responseData = await CommonUtils.makeAsyncPostEvent(Const.APP_URL,this.state.dataEntityContext,Const.ENTITY_LIST,params);
+        let params = {pageNumber:this.state.pageNumber,filter:this.props.filter};
+        let responseData = await CommonUtils.makeAsyncPostEvent(Const.APP_URL,this.props.context,Const.ENTITY_LIST,params);
         this.setState({isLoading:false});
         if (responseData.errors.length > 0) {
             this.setState({errors: responseData.errors});
         } else {
-            this.setGridData({
-                listData: responseData.frontListData,
+            this.setState({
+                headers:responseData.entityList.headers,
+                list:responseData.entityList.list,
+                lastPage:responseData.entityList.lastPage,
+                selectedItem:{}
             });
         }
-    }
-
-    setGridData(props) {
-        this.setState({
-            listData:props.listData,
-            lastPage:props.listData.lastPage,
-            selectedItem:{}
-        });
     }
 
     setErrors(errors) {
@@ -75,7 +70,7 @@ class CommonDbGrid extends Component {
     }
 
     prevPage() {
-        if (this.state.pageNumber === 1) {
+        if (this.state.pageNumber === 0) {
             return;
         }
         this.setState({
@@ -85,15 +80,23 @@ class CommonDbGrid extends Component {
     }
 
     handleSelectEntity = (event) => {
-        let selectedItem = {};
-        for (let i = 0; i < event.currentTarget.children.length; i++) {
-            selectedItem[event.currentTarget.children[i].getAttribute('entitydatakey')] = event.currentTarget.children[i].textContent
-        }
-        this.setState({
-            selectedItem: selectedItem
-        });
-        if (this.parentSelectAction) {
-            setTimeout(() => this.parentSelectAction(selectedItem), 0);
+        if (event !== null && event !== undefined) {
+            let selectedId;
+            for (let i = 0; i < event.currentTarget.children.length; i++) {
+                if (event.currentTarget.children[i].getAttribute('entitydatakey') === 'id') {
+                    selectedId = event.currentTarget.children[i].textContent;
+                    break;
+                }
+            }
+            if (selectedId) {
+                let selectedItem = this.state.list.find(listObject => listObject.id === selectedId);
+                this.setState({
+                    selectedItem: selectedItem
+                });
+                if (this.parentSelectAction) {
+                    setTimeout(() => this.parentSelectAction(selectedItem), 0);
+                }
+            }
         }
     };
 
@@ -105,37 +108,57 @@ class CommonDbGrid extends Component {
             }
         }
 
-        if (this.state.listData === undefined || this.state.listData === null) {
-            return (
-                <ErrorModal mainPageComp={this.props.mainPageComp} errors={this.state.errors} closeAction={() => this.setState({errors:[]})}/>
-            )
-        } else {
+        let sortedHeaders = this.state.headers ? this.state.headers.sort(
+            function(a, b){
+                if (a.order < b.order)
+                    return -1;
+                if (a.order > b.order)
+                    return 1;
+                return 0;
+            }) : [];
+
+        function getColumnValue(value, fieldType) {
+            if (value) {
+                switch(fieldType) {
+                    case "date":
+                        return DateUtils.dateToString(new Date(value));
+                    case "dateTime":
+                        return DateUtils.dateToStringWithTime(new Date(value));
+                    case "decimal":
+                        return value.toFixed(2);
+                    default:
+                        return value;
+                }
+            } else {
+                return value
+            }
+        }
+
+        if (!CommonUtils.objectIsEmpty(this.state.headers)) {
             return (
                 <div className="container" style={{paddingLeft:'0px', paddingRight:'0px', width:'100%',height:'100%'}}>
-                    <div ref='parentForSpinner' className="panel panel-default" style={{overflowY:'auto',position:'inherit', height:'345px',marginTop:"10px",marginLeft:"10px",marginBottom:"5px"}}>
+                    <div ref='parentForSpinner' className="panel panel-default" style={{overflowY:'auto',position:'inherit', height:'330px',marginTop:"10px",marginLeft:"10px",marginBottom:"5px"}}>
                         <Spinner isLoading={this.state.isLoading}/>
                         <table style={{marginBottom:'0px'}} className='table table-hover table-condensed' ref="CommonDbGrid">
                             <thead className='.thead-light'>
-                                {this.state.listData.dataHeaderList.map(entity =>
-                                    <tr key={entity.id+'headerTr'}>
-                                        {CommonUtils.objectToPropArr(entity).map(entityData =>
-                                            <th style={{display: entityData.key === "id" ? 'none' : ''}} key={entityData.key+'headerTd'}>
-                                                {entityData.value}
-                                            </th>
-                                        )}
-                                    </tr>
-                                )}
-                              </thead>
+                            <tr>
+                                {sortedHeaders.map((headerItem, index) => (
+                                    <th style={{display: headerItem.field === "id" ? 'none' : ''}} key={headerItem.field+'headerTh'}>
+                                        {headerItem.name}
+                                    </th>
+                                ))}
+                            </tr>
+                            </thead>
                             <tbody>
-                                {this.state.listData.dataList.map(entity =>
-                                    <tr onClick={this.handleSelectEntity} style={{cursor:'pointer',height:'30px',background:getSelectedBgColor(entity.id, this.state)}} key={entity.id+'valueTr'}>
-                                        {CommonUtils.objectToPropArr(entity).map(entityData =>
-                                            <td entitydatakey={entityData.key} style={{padding:'5px',height:'30px',display: entityData.key === "id" ? 'none' : ''}} key={entityData.key+'valueTd'}>
-                                                {entityData.value}
-                                            </td>
-                                        )}
-                                     </tr>
-                                )}
+                            {this.state.list.map((listItem, index) => (
+                                <tr onClick={this.handleSelectEntity} style={{cursor:'pointer',height:'30px',background:getSelectedBgColor(listItem.id, this.state)}} key={listItem.id+'valueTr'}>
+                                    {sortedHeaders.map((headerItem, index) => (
+                                        <td entitydatakey={headerItem.field} style={{padding:'5px',height:'30px',display: headerItem.field === "id" ? 'none' : ''}} key={listItem.id+headerItem.field+'valueTd'}>
+                                            {getColumnValue(listItem[headerItem.field], headerItem.type)}
+                                        </td>
+                                    ))}
+                                </tr>
+                            ))}
                             </tbody>
                         </table>
                     </div>
@@ -155,7 +178,7 @@ class CommonDbGrid extends Component {
                                 </td>
                                 <td>
                                     <div className={'pageText'} style={{width:'100%',height:'100%',padding:'0px',textAlign:'-webkit-center'}}>
-                                        {this.state.pageNumber}
+                                        {this.state.pageNumber+1}
                                     </div>
                                 </td>
                                 <td>
@@ -174,6 +197,8 @@ class CommonDbGrid extends Component {
                     <ErrorModal mainPageComp={this.props.mainPageComp} errors={this.state.errors} closeAction={() => this.setState({errors:[]})}/>
                 </div>
             );
+        } else {
+            return (<div/>)
         }
     }
 }

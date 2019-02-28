@@ -18,6 +18,15 @@ export function dateToStringWithTime(date) {
     }
 }
 
+export function dateToString(date) {
+    if (date) {
+        let formattedDate = moment(date).format('DD.MM.YYYY');
+        return formattedDate
+    } else {
+        return '';
+    }
+}
+
 export const months = ['Январь','Февраль','Март','Апрель','Май','Июнь','Июль','Август','Сентябрь','Октябрь','Ноябрь','Декабрь'];
 
 export const weekDays = [

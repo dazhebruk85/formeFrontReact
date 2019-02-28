@@ -201,7 +201,7 @@ class UserList extends Component {
                         </VerticalPanel>
                     </CollapsePanel>
                 </div>
-                <CommonDbGrid mainPageComp={this.props.mainPageComp} filter={this.state.fields.filter} selectAction={this.changeGridSelection.bind(this)} ref={'ULUserGrid'} dataEntityContext={Const.USER_CONTEXT} pageSize={10}/>
+                <CommonDbGrid mainPageComp={this.props.mainPageComp} filter={this.state.fields.filter} selectAction={this.changeGridSelection.bind(this)} ref={'ULUserGrid'} context={Const.USER_CONTEXT}/>
                 <UserEditForm mainPageComp={this.props.mainPageComp} entityId={this.state.selectedEntityId} visible={this.state.editFormVisible} closeAction={() => {this.setState({editFormVisible:false,selectedEntityId:''});this.refreshList()}}/>
                 <ErrorModal mainPageComp={this.props.mainPageComp} errors={this.state.errors} closeAction={() => this.setState({errors:[]})}/>
                 <OkCancelDialog okCancelVisible={this.state.deleteEntityDialogVisible}

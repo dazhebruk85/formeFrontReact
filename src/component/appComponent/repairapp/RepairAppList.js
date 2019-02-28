@@ -134,7 +134,7 @@ class RepairAppList extends Component {
         return(
             <div>
                 {addActions(this)}
-                <CommonDbGrid mainPageComp={this.props.mainPageComp} selectAction={this.changeGridSelection.bind(this)} ref={'ULRepairAppGrid'} dataEntityContext={Const.REPAIR_APP_FORM_CONTEXT} pageSize={10}/>
+                <CommonDbGrid mainPageComp={this.props.mainPageComp} selectAction={this.changeGridSelection.bind(this)} ref={'ULRepairAppGrid'} context={Const.REPAIR_APP_FORM_CONTEXT}/>
                 <RepairAppEditForm mainPageComp={this.props.mainPageComp} disabled={this.state.editFormDisabled} entityId={this.state.selectedEntityId} visible={this.state.editFormVisible} closeAction={() => {this.setState({editFormVisible:false,selectedEntityId:''});this.refreshList()}}/>
                 <ErrorModal mainPageComp={this.props.mainPageComp} errors={this.state.errors} closeAction={() => this.setState({errors:[]})}/>
                 <OkCancelDialog okCancelVisible={this.state.deleteEntityDialogVisible}

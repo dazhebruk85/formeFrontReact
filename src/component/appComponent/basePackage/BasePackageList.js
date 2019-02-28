@@ -15,7 +15,7 @@ class BasePackageList extends Component {
     render() {
         return(
             <div>
-                <CommonDbGrid mainPageComp={this.props.mainPageComp} selectAction={null} dataEntityContext={Const.BASE_PACKAGE_CONTEXT} pageSize={10}/>
+                <CommonDbGrid mainPageComp={this.props.mainPageComp} selectAction={null} context={Const.BASE_PACKAGE_CONTEXT}/>
             </div>
         )
     }

@@ -15,7 +15,7 @@ class RoomTypeList extends Component {
     render() {
         return(
             <div>
-                <CommonDbGrid mainPageComp={this.props.mainPageComp} selectAction={null} dataEntityContext={Const.ROOM_TYPE_CONTEXT} pageSize={10}/>
+                <CommonDbGrid mainPageComp={this.props.mainPageComp} selectAction={null} context={Const.ROOM_TYPE_CONTEXT}/>
             </div>
         )
     }
