@@ -7,6 +7,7 @@ import prevPagePng from "../../../media/grid/prevPage.png";
 import Spinner from "../spinner/Spinner";
 import ErrorModal from '../../../component/baseComponent/modal/ErrorModal';
 import './../../../media/grid/commonDbGrid.css';
+import HorizontalPanel from "../panel/HorizontalPanel";
 
 class CommonDbGrid extends Component {
 
@@ -162,38 +163,27 @@ class CommonDbGrid extends Component {
                             </tbody>
                         </table>
                     </div>
-
-                    <table style={{width:'100px'}}>
-                        <tbody>
-                            <tr>
-                                <td>
-                                    <div style={{width:'100%',height:'100%',padding:'0px',textAlign:'-webkit-center'}}>
-                                        <img title={'Предыдущая страница'}
-                                             alt='Предыдущая страница'
-                                             src={prevPagePng}
-                                             className={'pageButton'}
-                                             onClick={this.prevPage}
-                                        />
-                                    </div>
-                                </td>
-                                <td>
-                                    <div className={'pageText'} style={{width:'100%',height:'100%',padding:'0px',textAlign:'-webkit-center'}}>
-                                        {this.state.pageNumber+1}
-                                    </div>
-                                </td>
-                                <td>
-                                    <div style={{width:'100%',height:'100%',padding:'0px',textAlign:'-webkit-center'}}>
-                                        <img title={'Следующая страница'}
-                                             alt='Следующая страница'
-                                             src={nextPagePng}
-                                             className={'pageButton'}
-                                             onClick={this.nextPage}
-                                        />
-                                    </div>
-                                </td>
-                            </tr>
-                        </tbody>
-                    </table>
+                    <HorizontalPanel style={{marginLeft:"10px"}}>
+                        <div style={{width:'100%',height:'100%',padding:'0px',textAlign:'-webkit-center'}}>
+                            <img title={'Предыдущая страница'}
+                                 alt='Предыдущая страница'
+                                 src={prevPagePng}
+                                 className={'pageButton'}
+                                 onClick={this.prevPage}
+                            />
+                        </div>
+                        <div className={'pageText'} style={{marginRight:"5px",width:'100%',height:'100%',padding:'0px',textAlign:'-webkit-center'}}>
+                            {this.state.pageNumber+1}
+                        </div>
+                        <div style={{width:'100%',height:'100%',padding:'0px',textAlign:'-webkit-center'}}>
+                            <img title={'Следующая страница'}
+                                 alt='Следующая страница'
+                                 src={nextPagePng}
+                                 className={'pageButton'}
+                                 onClick={this.nextPage}
+                            />
+                        </div>
+                    </HorizontalPanel>
                     <ErrorModal mainPageComp={this.props.mainPageComp} errors={this.state.errors} closeAction={() => this.setState({errors:[]})}/>
                 </div>
             );
