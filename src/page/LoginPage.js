@@ -22,10 +22,8 @@ class LoginPage extends Component {
             errors: [],
             isLoading: false,
             fields:{
-                common:{
-                    login:'',
-                    password:''
-                }
+                login:'',
+                password:''
             }
         };
 
@@ -41,29 +39,21 @@ class LoginPage extends Component {
     }
 
     async doLogin(evt) {
-        let errors = [];
-        if (!this.state.fields.common.login){errors.push({code:'AUTH_ERROR',message:'Необходимо ввести логин'})}
-        if (!this.state.fields.common.password){errors.push({code:'AUTH_ERROR',message:'Необходимо ввести пароль'})}
-        if (errors.length > 0) {
-            this.setState({errors: errors});
+        this.setState({isLoading:true});
+        let responseData = await CommonUtils.makeAsyncPostEvent(Const.APP_URL,Const.AUTH_CONTEXT,'',this.state.fields,'');
+        this.setState({isLoading:false});
+        if (responseData.errors.length > 0) {
+            this.setState({errors:responseData.errors});
         } else {
-            this.setState({isLoading:true});
-            let params = this.state.fields;
-            let responseData = await CommonUtils.makeAsyncPostEvent(Const.APP_URL,Const.AUTH_CONTEXT,'',params,'');
-            this.setState({isLoading:false});
-            if (responseData.errors.length > 0) {
-                this.setState({errors:responseData.errors});
-            } else {
-                CommonUtils.putToLocalStorage("sessionId",responseData.params.sessionId);
-                CommonUtils.putToLocalStorage("userId",responseData.params.userId);
-                CommonUtils.putToLocalStorage("userFio",responseData.params.userFio);
-                CommonUtils.putToLocalStorage("userRole",responseData.params.userRole);
-                CommonUtils.putToLocalStorage("userLogin",responseData.params.userLogin);
-                this.props.mainPageComp.setState({
-                    sessionId:responseData.params.sessionId,
-                    userRole:responseData.params.userRole
-                })
-            }
+            CommonUtils.putToLocalStorage("sessionId",responseData.params.sessionId);
+            CommonUtils.putToLocalStorage("userId",responseData.params.userId);
+            CommonUtils.putToLocalStorage("userFio",responseData.params.userFio);
+            CommonUtils.putToLocalStorage("userRole",responseData.params.userRole);
+            CommonUtils.putToLocalStorage("userLogin",responseData.params.userLogin);
+            this.props.mainPageComp.setState({
+                sessionId:responseData.params.sessionId,
+                userRole:responseData.params.userRole
+            })
         }
     }
 
@@ -76,25 +66,23 @@ class LoginPage extends Component {
             <div className="container" style={{width:'100%',height:'100%'}}>
                 <div className="panel-group">
                     <img alt='' src={logo} style={{marginTop:"20px", marginLeft:"30px"}}/>
-                    <div className="panel panel-default" style={{width:'400px', marginTop:"20px", marginLeft:"30px"}}>
+                    <div className="panel panel-default" style={{width:'330px', marginTop:"20px", marginLeft:"30px"}}>
                         <Spinner isLoading={this.state.isLoading}/>
                         <div className="panel-heading" style={{fontWeight:'bold'}}>Войти в личный кабинет</div>
-                        <div className="panel-body">
-                            <VerticalPanel>
-                                <HorizontalPanel>
-                                    <Label value={'Логин'} width={'70px'}/>
-                                    <TextField ref={'loginField'} id={CommonUtils.genGuid()} width={'300px'} value={this.state.fields.common.login} onChange={(event) => this.handleChange(event.target.value,'login','common')}/>
-                                </HorizontalPanel>
-                                <HorizontalPanel>
-                                    <Label value={'Пароль'} width={'70px'}/>
-                                    <PasswordField width={'300px'} value={this.state.fields.common.password} onChange={(event) => this.handleChange(event.target.value,'password','common')}/>
-                                </HorizontalPanel>
-                                <HorizontalPanel>
-                                    <Label value={''} width={'70px'}/>
-                                    <Button style={{marginLeft:'5px'}} value="Войти" onClick={this.doLogin}/>
-                                </HorizontalPanel>
-                            </VerticalPanel>
-                        </div>
+                        <VerticalPanel style={{marginTop:"5px"}}>
+                            <HorizontalPanel>
+                                <Label value={'Логин'} width={'70px'}/>
+                                <TextField ref={'loginField'} id={CommonUtils.genGuid()} width={'230px'} value={this.state.fields.login} onChange={(event) => this.handleChange(event.target.value,'login','')}/>
+                            </HorizontalPanel>
+                            <HorizontalPanel>
+                                <Label value={'Пароль'} width={'70px'}/>
+                                <PasswordField width={'230px'} value={this.state.fields.password} onChange={(event) => this.handleChange(event.target.value,'password','')}/>
+                            </HorizontalPanel>
+                            <HorizontalPanel>
+                                <Label value={''} width={'70px'}/>
+                                <Button style={{marginLeft:'5px'}} value="Войти" onClick={this.doLogin}/>
+                            </HorizontalPanel>
+                        </VerticalPanel>
                     </div>
                 </div>
                 <ErrorModal mainPageComp={this.props.mainPageComp} errors={this.state.errors} closeAction={() => this.setState({errors:[]})}/>

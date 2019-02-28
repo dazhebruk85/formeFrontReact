@@ -10,6 +10,12 @@ import Label from "../../baseComponent/field/Label";
 import VerticalPanel from "../../baseComponent/panel/VerticalPanel";
 import PasswordField from "../../baseComponent/field/PasswordField";
 
+let fieldsObject = {
+    oldPassword:'',
+    newPassword:'',
+    newPasswordRepeat:'',
+};
+
 class ChangePasswordModal extends Component {
 
     constructor(props) {
@@ -18,13 +24,7 @@ class ChangePasswordModal extends Component {
         this.state = {
             successInfoMessages:[],
             closeAction:props.closeAction,
-            fields:{
-                common:{
-                    oldPassword:'',
-                    newPassword:'',
-                    newPasswordRepeat:'',
-                }
-            }
+            fields:fieldsObject
         };
 
         this.handleChange = this.handleChange.bind(this);
@@ -36,36 +36,18 @@ class ChangePasswordModal extends Component {
     closeModal() {
         this.setState({
             successInfoMessages: [],
-            fields:{
-                ...this.state.fields,
-                common:{
-                    oldPassword:'',
-                    newPassword:'',
-                    newPasswordRepeat:'',
-                }
-            }
+            fields:fieldsObject
         });
         this.closeAction()
     }
 
     async changePassword(evt) {
-        let errors = [];
-        if (!this.state.fields.common.oldPassword) {errors.push({code:'CHANGE_PASS_ERROR',message:'Необходимо ввести старый пароль'})}
-        if (!this.state.fields.common.newPassword) {errors.push({code:'CHANGE_PASS_ERROR',message:'Необходимо ввести новый пароль'})}
-        if (!this.state.fields.common.newPasswordRepeat) {errors.push({code:'CHANGE_PASS_ERROR',message:'Необходимо повторить новый пароль'})}
-        if (this.state.fields.common.newPassword  && this.state.fields.common.newPasswordRepeat && this.state.fields.common.newPassword !== this.state.fields.common.newPasswordRepeat) {
-            errors.push({code:'CHANGE_PASS_ERROR',message:'Введённые новые пароли не совпадают'});
-        }
-        if (errors.length > 0) {
-            this.setState({errors: errors});
+        let params = this.state.fields;
+        let responseData = await CommonUtils.makeAsyncPostEvent(Const.APP_URL,Const.CHANGE_PASSWORD_CONTEXT,'',params);
+        if (responseData.errors.length > 0) {
+            this.setState({errors: responseData.errors});
         } else {
-            let params = this.state.fields;
-            let responseData = await CommonUtils.makeAsyncPostEvent(Const.APP_URL,Const.CHANGE_PASSWORD_CONTEXT,'',params);
-            if (responseData.errors.length > 0) {
-                this.setState({errors: responseData.errors});
-            } else {
-                this.setState({successInfoMessages: [{code:'INFO',message:'Вы сменили пароль, необходимо заново войти в систему под новым паролем'}]});
-            }
+            this.setState({successInfoMessages: [{code:'INFO',message:'Вы сменили пароль, необходимо заново войти в систему под новым паролем'}]});
         }
     }
 
@@ -79,15 +61,15 @@ class ChangePasswordModal extends Component {
                 <VerticalPanel>
                     <HorizontalPanel>
                         <Label value={'Введите старый пароль'} width={'200px'}/>
-                        <PasswordField width={'250px'} value={this.state.fields.common.oldPassword} onChange={(event) => this.handleChange(event.target.value,'oldPassword','common')}/>
+                        <PasswordField width={'250px'} value={this.state.fields.oldPassword} onChange={(event) => this.handleChange(event.target.value,'oldPassword','')}/>
                     </HorizontalPanel>
                     <HorizontalPanel>
                         <Label value={'Введите новый пароль'} width={'200px'}/>
-                        <PasswordField width={'250px'} value={this.state.fields.common.newPassword} onChange={(event) => this.handleChange(event.target.value,'newPassword','common')}/>
+                        <PasswordField width={'250px'} value={this.state.fields.newPassword} onChange={(event) => this.handleChange(event.target.value,'newPassword','')}/>
                     </HorizontalPanel>
                     <HorizontalPanel>
                         <Label value={'Повторите новый пароль'} width={'200px'}/>
-                        <PasswordField width={'250px'} value={this.state.fields.common.newPasswordRepeat} onChange={(event) => this.handleChange(event.target.value,'newPasswordRepeat','common')}/>
+                        <PasswordField width={'250px'} value={this.state.fields.newPasswordRepeat} onChange={(event) => this.handleChange(event.target.value,'newPasswordRepeat','')}/>
                     </HorizontalPanel>
                     <div className="btn-toolbar align-bottom" role="toolbar" style={{justifyContent:'center',display:'flex'}}>
                         <Button value="Ок" onClick={() => this.changePassword()}/>

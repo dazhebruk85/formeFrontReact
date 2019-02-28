@@ -107,21 +107,13 @@ class RepairAppEditForm extends Component {
     }
 
     async saveEntityData() {
-        let errors = [];
-        if (!this.state.fields.basePackage.id) {errors.push({code:'',message:'Необходимо заполнить базовый пакет'})}
-        if (errors.length > 0) {
-            this.setState({
-                errors: errors
-            });
+        this.setState({isLoading:true});
+        let responseData = await CommonUtils.makeAsyncPostEvent(Const.APP_URL,Const.REPAIR_APP_FORM_CONTEXT,Const.ENTITY_SAVE,{id:this.state.fields.id},JSON.stringify(this.state.fields));
+        this.setState({isLoading:false});
+        if (responseData.errors.length > 0) {
+            this.setState({errors: responseData.errors});
         } else {
-            this.setState({isLoading:true});
-            let responseData = await CommonUtils.makeAsyncPostEvent(Const.APP_URL,Const.REPAIR_APP_FORM_CONTEXT,Const.ENTITY_SAVE,{id:this.state.fields.id},JSON.stringify(this.state.fields));
-            this.setState({isLoading:false});
-            if (responseData.errors.length > 0) {
-                this.setState({errors: responseData.errors});
-            } else {
-                this.setState({successInfoMessages: [{code:'INFO',message:'Данные анкеты сохранены'}]});
-            }
+            this.setState({successInfoMessages: [{code:'INFO',message:'Данные анкеты сохранены'}]});
         }
     }
 

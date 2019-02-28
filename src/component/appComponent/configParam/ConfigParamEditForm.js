@@ -86,21 +86,13 @@ class ConfigParamEditForm extends Component {
     }
 
     async saveEntityData() {
-        let errors = [];
-        if (!this.state.fields.value) {errors.push({code:'',message:'Необходимо заполнить значение параметра'})}
-        if (errors.length > 0) {
-            this.setState({
-                errors: errors
-            });
+        this.setState({isLoading:true});
+        let responseData = await CommonUtils.makeAsyncPostEvent(Const.APP_URL,Const.CONFIG_PARAM_CONTEXT,Const.ENTITY_SAVE,{id:this.state.fields.id},JSON.stringify(this.state.fields));
+        this.setState({isLoading:false});
+        if (responseData.errors.length > 0) {
+            this.setState({errors: responseData.errors});
         } else {
-            this.setState({isLoading:true});
-            let responseData = await CommonUtils.makeAsyncPostEvent(Const.APP_URL,Const.CONFIG_PARAM_CONTEXT,Const.ENTITY_SAVE,{id:this.state.fields.id},JSON.stringify(this.state.fields));
-            this.setState({isLoading:false});
-            if (responseData.errors.length > 0) {
-                this.setState({errors: responseData.errors});
-            } else {
-                this.setState({successInfoMessages: [{code:'INFO',message:'Данные параметра сохранены'}]});
-            }
+            this.setState({successInfoMessages: [{code:'INFO',message:'Данные параметра сохранены'}]});
         }
     }
 

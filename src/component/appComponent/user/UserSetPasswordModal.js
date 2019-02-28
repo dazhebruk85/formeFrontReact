@@ -11,6 +11,12 @@ import Label from "../../baseComponent/field/Label";
 import VerticalPanel from "../../baseComponent/panel/VerticalPanel";
 import TextField from "../../baseComponent/field/TextField";
 
+let fieldsObject = {
+    userId:'',
+    userLogin:'',
+    newPassword:''
+};
+
 class UserSetPasswordModal extends Component {
 
     constructor(props) {
@@ -20,13 +26,7 @@ class UserSetPasswordModal extends Component {
             errors: [],
             successInfoMessages: [],
             closeAction:props.closeAction,
-            fields:{
-                common:{
-                    userId:'',
-                    userLogin:'',
-                    newPassword:''
-                }
-            }
+            fields:fieldsObject
         };
 
         this.handleChange = this.handleChange.bind(this);
@@ -40,11 +40,8 @@ class UserSetPasswordModal extends Component {
             this.setState({
                 fields:{
                     ...this.state.fields,
-                    common:{
-                        ...this.state.fields.common,
-                        userId:this.props.userId,
-                        userLogin:this.props.userLogin
-                    }
+                    userId:this.props.userId,
+                    userLogin:this.props.userLogin
                 }
             });
         }
@@ -54,15 +51,7 @@ class UserSetPasswordModal extends Component {
         this.setState({
             errors: [],
             successInfoMessages: [],
-            fields:{
-                ...this.state.fields,
-                common:{
-                    ...this.state.fields.common,
-                    userId:'',
-                    userLogin:'',
-                    newPassword:'',
-                }
-            }
+            fields:fieldsObject
         });
         this.closeAction()
     }
@@ -72,18 +61,12 @@ class UserSetPasswordModal extends Component {
     }
 
     async setNewPassword(evt) {
-        let errors = [];
-        if (!this.state.fields.common.newPassword) {errors.push({code:'SET_NEW_PASS_ERROR',message:'Необходимо ввести новый пароль'})}
-        if (errors.length > 0) {
-            this.setState({errors: errors});
+        let params = this.state.fields;
+        let responseData = await CommonUtils.makeAsyncPostEvent(Const.APP_URL,Const.SET_NEW_PASSWORD_CONTEXT,'',params);
+        if (responseData.errors.length > 0) {
+            this.setState({errors: responseData.errors});
         } else {
-            let params = this.state.fields;
-            let responseData = await CommonUtils.makeAsyncPostEvent(Const.APP_URL,Const.SET_NEW_PASSWORD_CONTEXT,'',params);
-            if (responseData.errors.length > 0) {
-                this.setState({errors: responseData.errors});
-            } else {
-                this.setState({successInfoMessages: [{code:'INFO',message:'Для пользователя '+ params.common.userLogin + ' задан новый пароль: ' + params.common.newPassword}]});
-            }
+            this.setState({successInfoMessages: [{code:'INFO',message:'Для пользователя '+ params.userLogin + ' задан новый пароль: ' + params.newPassword}]});
         }
     }
 
@@ -93,7 +76,7 @@ class UserSetPasswordModal extends Component {
                 <VerticalPanel>
                     <HorizontalPanel>
                         <Label value={'Введите новый пароль'} width={'180px'}/>
-                        <TextField width={'250px'} value={this.state.fields.common.newPassword} onChange={(event) => this.handleChange(event.target.value,'newPassword','common')}/>
+                        <TextField width={'250px'} value={this.state.fields.newPassword} onChange={(event) => this.handleChange(event.target.value,'newPassword','')}/>
                     </HorizontalPanel>
                     <div className="btn-toolbar align-bottom" role="toolbar" style={{justifyContent:'center',display:'flex'}}>
                         <Button value="Ок" onClick={() => this.setNewPassword()}/>
