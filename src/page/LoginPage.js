@@ -69,8 +69,8 @@ class LoginPage extends Component {
         return (
             <div className="container" style={{width:'100%',height:'100%'}}>
                 <div className="panel-group">
-                    <img alt='' src={logo} style={{marginTop:"20px", marginLeft:"30px"}}/>
-                    <div className="panel panel-default" style={{width:'330px', marginTop:"20px", marginLeft:"30px"}}>
+                    <img alt='' src={logo} style={{marginTop:"20px"}}/>
+                    <div className="panel panel-default" style={{width:'330px', marginTop:"20px"}}>
                         <Spinner isLoading={this.state.isLoading}/>
                         <div className="panel-heading" style={{fontWeight:'bold'}}>Войти в личный кабинет</div>
                         <VerticalPanel style={{marginTop:"5px"}}>
