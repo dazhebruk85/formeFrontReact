@@ -16,7 +16,8 @@
     "jquery": "3.3.1",
     "react-app-polyfill": "0.2.0",
     "core-js": "2.6.4",
-    "file-saver": "2.0.0"
+    "file-saver": "2.0.0",
+    "clientjs": "0.1.11"
   },
   "scripts": {
     "start": "react-scripts start",

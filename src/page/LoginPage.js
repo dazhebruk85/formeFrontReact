@@ -5,6 +5,7 @@ import ErrorModal from '../component/baseComponent/modal/ErrorModal';
 import * as CommonUtils from "../utils/CommonUtils";
 import Spinner from '../component/baseComponent/spinner/Spinner';
 import $ from "jquery";
+import ClientJs from 'clientjs'
 
 import VerticalPanel from "../component/baseComponent/panel/VerticalPanel";
 import HorizontalPanel from "../component/baseComponent/panel/HorizontalPanel";
@@ -19,6 +20,7 @@ class LoginPage extends Component {
     constructor() {
         super();
         this.state = {
+            client: new ClientJs(),
             errors: [],
             isLoading: false,
             fields:{
@@ -40,7 +42,9 @@ class LoginPage extends Component {
 
     async doLogin(evt) {
         this.setState({isLoading:true});
-        let responseData = await CommonUtils.makeAsyncPostEvent(Const.APP_URL,Const.AUTH_CONTEXT,'',this.state.fields,'');
+        let params = this.state.fields;
+        params.clientDeviceInfo = this.state.client.getResult();
+        let responseData = await CommonUtils.makeAsyncPostEvent(Const.APP_URL,Const.AUTH_CONTEXT,'',params,'');
         this.setState({isLoading:false});
         if (responseData.errors.length > 0) {
             this.setState({errors:responseData.errors});

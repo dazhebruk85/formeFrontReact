@@ -92,7 +92,7 @@ export function getBrowserInfo() {
         return {name:'IE',version:(tem[1]||'')};
     }
     if(M[1]==='Chrome'){
-        tem=ua.match(/\bOPR|Edge\/(\d+)/)
+        tem=ua.match(/\bOPR|Edge\/(\d+)/);
         if(tem!=null)   {return {name:'Opera', version:tem[1]};}
     }
     M=M[2]? [M[1], M[2]]: [navigator.appName, navigator.appVersion, '-?'];
