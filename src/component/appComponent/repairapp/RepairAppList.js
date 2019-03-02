@@ -106,7 +106,7 @@ class RepairAppList extends Component {
             const userRole = CommonUtils.getFormLocalStorage('userRole');
             if (userRole !== Const.CLIENT_ROLE) {
                 return (
-                    <div className="form-group" style={{marginLeft:'10px', marginBottom:'0px'}}>
+                    <div style={{margin:'5px 5px 0px 5px'}}>
                         <ActionBar>
                             <ActionWithDropdown onClick={comp.addEntity} title={'Создать'}  alt={'Создать'} src={entityCreatePng}>
                                 <SubAction onClick={comp.addEntity} text={'Открыть в новом окне'}/>

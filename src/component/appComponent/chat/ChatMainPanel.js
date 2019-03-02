@@ -388,7 +388,7 @@ class ChatMainPanel extends Component {
         }
 
         return (
-            <div style={{height:'99%',width:'100%'}}>
+            <div style={{height:'100%',width:'100%',padding:'5px 0px 5px 0px'}}>
                 <div className={'chatUserListDiv'}>
                     <Spinner isLoading={this.state.isLoading}/>
                     <table style={{width:'100%'}}>

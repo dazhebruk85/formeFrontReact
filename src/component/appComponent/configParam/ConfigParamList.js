@@ -51,7 +51,7 @@ class ConfigParamList extends Component {
     render() {
         return(
             <div>
-                <div className="form-group" style={{marginLeft:'10px', marginBottom:'0px'}}>
+                <div style={{margin:'5px 5px 0px 5px'}}>
                     <ActionBar>
                         <Action onClick={this.editEntity} title={'Редактировать'}  alt={'Редактировать'} src={entityEditPng}/>
                         <Action onClick={this.refreshList} title={'Обновить'}  alt={'Обновить'} src={entityRefreshPng}/>

@@ -138,7 +138,7 @@ class CommonDbGrid extends Component {
         if (!CommonUtils.objectIsEmpty(this.state.headers)) {
             return (
                 <div className="container" style={{paddingLeft:'0px', paddingRight:'0px', width:'100%',height:'100%'}}>
-                    <div ref='parentForSpinner' className="panel panel-default" style={{overflowY:'auto',position:'inherit', height:'330px',marginTop:"10px",marginLeft:"10px",marginBottom:"5px"}}>
+                    <div ref='parentForSpinner' className="panel panel-default" style={{overflowY:'auto',position:'inherit', height:'330px',margin:"5px"}}>
                         <Spinner isLoading={this.state.isLoading}/>
                         <table style={{marginBottom:'0px'}} className='table table-hover table-condensed' ref="CommonDbGrid">
                             <thead className='.thead-light'>

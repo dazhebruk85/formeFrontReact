@@ -160,7 +160,7 @@ class UserList extends Component {
     render() {
         return(
             <div>
-                <div className="form-group" style={{marginLeft:'10px', marginBottom:'10px'}}>
+                <div style={{margin:'5px'}}>
                     <ActionBar>
                         <Action onClick={this.addEntity} title={'Создать'}  alt={'Создать'} src={entityCreatePng}/>
                         <Action onClick={this.editEntity} title={'Редактировать'}  alt={'Редактировать'} src={entityEditPng}/>
@@ -170,7 +170,7 @@ class UserList extends Component {
                     </ActionBar>
                 </div>
 
-                <div style={{marginLeft:'10px'}}>
+                <div style={{marginLeft:'5px',marginRight:'5px'}}>
                     <CollapsePanel title={'Фильтр'}>
                         <VerticalPanel>
                             <HorizontalPanel>

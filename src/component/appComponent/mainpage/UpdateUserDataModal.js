@@ -70,28 +70,13 @@ class UpdateUserDataModal extends Component {
     }
 
     async saveUserData() {
-        let errors = [];
-        if (!this.state.fields.fio) {errors.push({code:'',message:'Необходимо заполнить ФИО'})}
-        if (!this.state.fields.birthDate) {errors.push({code:'',message:'Необходимо заполнить дату рождения'})}
-        if (!this.state.fields.phone) {errors.push({code:'',message:'Необходимо заполнить телефон'})}
-        if (!this.state.fields.email) {errors.push({code:'',message:'Необходимо заполнить email'})}
-        if (!this.state.fields.passportSeries) {errors.push({code:'',message:'Необходимо заполнить серию паспорта'})}
-        if (!this.state.fields.passportNumber) {errors.push({code:'',message:'Необходимо заполнить номер паспорта'})}
-        if (!this.state.fields.passportIssuedBy) {errors.push({code:'',message:'Необходимо заполнить орган, выдавший паспорт'})}
-        if (!this.state.fields.regAddress) {errors.push({code:'',message:'Необходимо заполнить адрес регистрации'})}
-        if (errors.length > 0) {
-            this.setState({
-                errors: errors
-            });
+        this.setState({isLoading:true});
+        let responseData = await CommonUtils.makeAsyncPostEvent(Const.APP_URL,Const.USER_CONTEXT,Const.ENTITY_SAVE,{id:CommonUtils.getFormLocalStorage('userId')},JSON.stringify(this.state.fields));
+        this.setState({isLoading:false});
+        if (responseData.errors.length > 0) {
+            this.setState({errors: responseData.errors});
         } else {
-            this.setState({isLoading:true});
-            let responseData = await CommonUtils.makeAsyncPostEvent(Const.APP_URL,Const.USER_CONTEXT,Const.ENTITY_SAVE,{id:CommonUtils.getFormLocalStorage('userId')},JSON.stringify(this.state.fields));
-            this.setState({isLoading:false});
-            if (responseData.errors.length > 0) {
-                this.setState({errors: responseData.errors});
-            } else {
-                this.setState({successInfoMessages: [{code:'INFO',message:'Данные пользователя сохранены'}]});
-            }
+            this.setState({successInfoMessages: [{code:'INFO',message:'Данные пользователя сохранены'}]});
         }
     }
 

@@ -98,7 +98,7 @@ class QuickActionPanel extends Component {
         }
 
         return (
-            <div style={{width:'100%',height:'100%'}}>
+            <div style={{width:'100%',height:'100%',marginTop:'5px',paddingRight:'5px'}}>
                 <table style={{width:'100%'}}>
                     <tbody>
                     <tr>
