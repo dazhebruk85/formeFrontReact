@@ -21,6 +21,7 @@ import newMessageMp3 from "../../../media/chat/chatNewMessage.mp3";
 import unreadPng from "../../../media/chat/unread.png";
 import HorizontalPanel from "../../baseComponent/panel/HorizontalPanel";
 import TextAreaField from "../../baseComponent/field/TextAreaField";
+import Spinner from "../../baseComponent/spinner/Spinner";
 
 class ChatMainPanel extends Component {
 
@@ -29,6 +30,7 @@ class ChatMainPanel extends Component {
 
         this.state = {
             errors: [],
+            isLoading:false,
             fileUploadVisible:false,
             selectedUser:{},
             users:{},
@@ -86,6 +88,7 @@ class ChatMainPanel extends Component {
     }
 
     async getChatUsers() {
+        this.setState({isLoading:true});
         let responseData = await CommonUtils.makeAsyncPostEvent(Const.APP_URL,Const.CHAT_CONTEXT,Const.GET_USERS_ACTION,{});
         if (responseData.errors.length > 0) {
             this.setState({errors: responseData.errors});
@@ -107,6 +110,7 @@ class ChatMainPanel extends Component {
             }
             , 0);
         }
+        this.setState({isLoading:false});
     }
 
     handleSelectChatUser = async (event) => {
@@ -386,6 +390,7 @@ class ChatMainPanel extends Component {
         return (
             <div style={{height:'99%',width:'100%'}}>
                 <div className={'chatUserListDiv'}>
+                    <Spinner isLoading={this.state.isLoading}/>
                     <table style={{width:'100%'}}>
                         <tbody>
                         {CommonUtils.objectToPropArr(this.state.users).map((item) => (
