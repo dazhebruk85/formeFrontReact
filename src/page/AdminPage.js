@@ -84,7 +84,7 @@ class AdminPage extends Component {
 
         return (
             <div className="panel panel-default" style={{width:'100%',height:'100%',marginBottom:'0px'}}>
-                <div className="panel-heading" style={{height:'6%',padding:'0px'}}>
+                <div className="panel-heading" style={{height:'6%',minHeight:'40px',padding:'0px'}}>
                     <table style={{width:'100%'}}>
                         <tbody>
                             <tr>
