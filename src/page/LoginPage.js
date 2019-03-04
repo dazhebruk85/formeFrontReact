@@ -20,9 +20,9 @@ class LoginPage extends Component {
     constructor() {
         super();
         this.state = {
-            client: new ClientJs(),
-            errors: [],
-            isLoading: false,
+            client:{},
+            errors:[],
+            isLoading:false,
             fields:{
                 login:'',
                 password:''
@@ -34,6 +34,10 @@ class LoginPage extends Component {
     }
 
     componentDidMount() {
+        let clientInfo = new ClientJs().getResult();
+        clientInfo.screenWidth = window.screen.width;
+        clientInfo.screenHeight = window.screen.height;
+        this.setState({client:clientInfo});
         window.localStorage.clear();
         if (this.refs.loginField) {
             setTimeout(() => {$('#'+this.refs.loginField.props.id).focus()});
@@ -43,7 +47,7 @@ class LoginPage extends Component {
     async doLogin(evt) {
         this.setState({isLoading:true});
         let params = this.state.fields;
-        params.clientDeviceInfo = this.state.client.getResult();
+        params.clientDeviceInfo = this.state.client;
         let responseData = await CommonUtils.makeAsyncPostEvent(Const.APP_URL,Const.AUTH_CONTEXT,'',params,'');
         this.setState({isLoading:false});
         if (responseData.errors.length > 0) {

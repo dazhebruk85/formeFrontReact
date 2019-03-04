@@ -152,7 +152,7 @@
 .userStateImg {
     height: 11px;
     width: 11px;
-    position: absolute;
+    position: fixed;
     margin-left: 19px;
     margin-top: -5px;
 }
