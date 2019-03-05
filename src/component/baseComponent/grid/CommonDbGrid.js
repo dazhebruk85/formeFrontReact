@@ -40,7 +40,7 @@ class CommonDbGrid extends Component {
     async getGridListData() {
         this.setState({isLoading:true});
         let params = {pageNumber:this.state.pageNumber,filter:this.props.filter};
-        let responseData = await CommonUtils.makeAsyncPostEvent(Const.APP_URL,this.props.context,Const.ENTITY_LIST,params);
+        let responseData = await CommonUtils.makeAsyncPostEvent(Const.APP_URL,this.props.context,Const.LIST_ACTION,params);
         this.setState({isLoading:false});
         if (responseData.errors.length > 0) {
             this.setState({errors: responseData.errors});

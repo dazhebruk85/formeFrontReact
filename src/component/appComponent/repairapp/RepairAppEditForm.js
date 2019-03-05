@@ -83,7 +83,7 @@ class RepairAppEditForm extends Component {
 
     async getEntityData() {
         this.setState({isLoading:true});
-        let responseData = await CommonUtils.makeAsyncPostEvent(Const.APP_URL,Const.REPAIR_APP_FORM_CONTEXT,this.props.entityId ? Const.ENTITY_GET : Const.ENTITY_NEW,{id:this.props.entityId});
+        let responseData = await CommonUtils.makeAsyncPostEvent(Const.APP_URL,Const.REPAIR_APP,this.props.entityId ? Const.GET_ACTION : Const.NEW_ACTION,{id:this.props.entityId});
         this.setState({isLoading:false});
         if (responseData.errors.length > 0) {
             this.setState({errors: responseData.errors});
@@ -108,7 +108,7 @@ class RepairAppEditForm extends Component {
 
     async saveEntityData() {
         this.setState({isLoading:true});
-        let responseData = await CommonUtils.makeAsyncPostEvent(Const.APP_URL,Const.REPAIR_APP_FORM_CONTEXT,Const.ENTITY_SAVE,{id:this.state.fields.id},JSON.stringify(this.state.fields));
+        let responseData = await CommonUtils.makeAsyncPostEvent(Const.APP_URL,Const.REPAIR_APP,Const.SAVE_ACTION,{id:this.state.fields.id},JSON.stringify(this.state.fields));
         this.setState({isLoading:false});
         if (responseData.errors.length > 0) {
             this.setState({errors: responseData.errors});
@@ -198,7 +198,7 @@ class RepairAppEditForm extends Component {
                         <DictField width='290px'
                                    value={this.state.fields.basePackage.name}
                                    maxLength={100}
-                                   context={Const.BASE_PACKAGE_CONTEXT}
+                                   context={Const.BASE_PACKAGE}
                                    chooseDictAction={this.chooseBasePackage.bind(this)}
                                    disabled={this.state.editFormDisabled}/>
                     </HorizontalPanel>
@@ -207,7 +207,7 @@ class RepairAppEditForm extends Component {
                         <DictField width='310px'
                                    value={this.state.fields.clientUser.login}
                                    maxLength={100}
-                                   context={Const.USER_CONTEXT}
+                                   context={Const.USER}
                                    chooseDictAction={this.chooseClientUser.bind(this)}
                                    dictFilter={{'RAEDictFilter_userRole_systemName_eq':'client'}}
                                    disabled={this.state.editFormDisabled}/>

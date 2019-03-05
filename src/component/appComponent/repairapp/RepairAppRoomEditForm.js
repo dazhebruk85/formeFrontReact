@@ -122,7 +122,7 @@ class RepairAppRoomEditForm extends Component {
                         <DictField width='300px'
                                    value={this.state.fields.name}
                                    maxLength={100}
-                                   context={Const.ROOM_TYPE_CONTEXT}
+                                   context={Const.ROOM_TYPE}
                                    chooseDictAction={this.chooseRoomType.bind(this)}
                                    disabled={formDisabled}/>
                     </HorizontalPanel>

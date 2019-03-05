@@ -58,7 +58,7 @@ class UserEditForm extends Component {
 
     async getEntityData() {
         this.setState({isLoading:true});
-        let responseData = await CommonUtils.makeAsyncPostEvent(Const.APP_URL,Const.USER_CONTEXT,this.props.entityId ? Const.ENTITY_GET : Const.ENTITY_NEW,{id:this.props.entityId});
+        let responseData = await CommonUtils.makeAsyncPostEvent(Const.APP_URL,Const.USER,this.props.entityId ? Const.GET_ACTION : Const.NEW_ACTION,{id:this.props.entityId});
         this.setState({isLoading:false});
         if (responseData.errors.length > 0) {
             this.setState({errors: responseData.errors});
@@ -78,7 +78,7 @@ class UserEditForm extends Component {
 
     async saveEntityData() {
         this.setState({isLoading:true});
-        let responseData = await CommonUtils.makeAsyncPostEvent(Const.APP_URL,Const.USER_CONTEXT,Const.ENTITY_SAVE,{id:this.state.fields.id},JSON.stringify(this.state.fields));
+        let responseData = await CommonUtils.makeAsyncPostEvent(Const.APP_URL,Const.USER,Const.SAVE_ACTION,{id:this.state.fields.id},JSON.stringify(this.state.fields));
         this.setState({isLoading:false});
         if (responseData.errors.length > 0) {
             this.setState({errors: responseData.errors});
@@ -151,7 +151,7 @@ class UserEditForm extends Component {
                         <DictField width='300px'
                                    value={this.state.fields.userRole.name}
                                    maxLength={100}
-                                   context={Const.USER_ROLE_CONTEXT}
+                                   context={Const.USER_ROLE}
                                    chooseDictAction={this.chooseUserRole.bind(this)}/>
                     </HorizontalPanel>
                     <div className="btn-toolbar align-bottom" role="toolbar" style={{justifyContent:'center',display:'flex'}}>

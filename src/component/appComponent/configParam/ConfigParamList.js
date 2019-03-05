@@ -57,7 +57,7 @@ class ConfigParamList extends Component {
                         <Action onClick={this.refreshList} title={'Обновить'}  alt={'Обновить'} src={entityRefreshPng}/>
                     </ActionBar>
                 </div>
-                <CommonDbGrid mainPageComp={this.props.mainPageComp} entityId={this.state.selectedEntityId} ref={'CPLConfigParamGrid'} selectAction={this.changeGridSelection.bind(this)} context={Const.CONFIG_PARAM_CONTEXT}/>
+                <CommonDbGrid mainPageComp={this.props.mainPageComp} entityId={this.state.selectedEntityId} ref={'CPLConfigParamGrid'} selectAction={this.changeGridSelection.bind(this)} context={Const.CONFIG_PARAM}/>
                 <ErrorModal mainPageComp={this.props.mainPageComp} errors={this.state.errors} closeAction={() => this.setState({errors:[]})}/>
                 <ConfigParamEditForm mainPageComp={this.props.mainPageComp} entityId={this.state.selectedEntityId} visible={this.state.editFormVisible} closeAction={() => {this.setState({editFormVisible:false,selectedEntityId:''});this.refreshList()}}/>
             </div>

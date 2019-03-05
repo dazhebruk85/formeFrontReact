@@ -26,30 +26,20 @@ export const ATTACH = "attach";
 export const ATTACH_SAVE_FILE = "attach_save_file";
 export const ATTACH_GET_FILE = "attach_get_file";
 
-//User context
-export const USER_CONTEXT = "user";
-
-//UserRole context
-export const USER_ROLE_CONTEXT = "userRole";
-
-//User role context
-export const BASE_PACKAGE_CONTEXT = "basePackage";
-
-//Repair app form context
-export const REPAIR_APP_FORM_CONTEXT = "repairAppForm";
-
-//Room type context
-export const ROOM_TYPE_CONTEXT = "roomType";
-
-//Config param context
-export const CONFIG_PARAM_CONTEXT = "configParam";
+//Entity contexts
+export const USER = "user";
+export const USER_ROLE = "userRole";
+export const BASE_PACKAGE = "basePackage";
+export const REPAIR_APP = "repairApp";
+export const ROOM_TYPE = "roomType";
+export const CONFIG_PARAM = "configParam";
 
 //Common entity actions
-export const ENTITY_LIST = "entityList";
-export const ENTITY_GET = "entityGet";
-export const ENTITY_NEW = "entityNew";
-export const ENTITY_SAVE = "entitySave";
-export const ENTITY_DELETE = "entityDelete";
+export const LIST_ACTION = "entity_list";
+export const GET_ACTION = "entity_get";
+export const NEW_ACTION = "entity_new";
+export const SAVE_ACTION = "entity_save";
+export const DELETE_ACTION = "entity_delete";
 
 //User role Consts
 export const SUPERUSER_ROLE = "superuser"; // Суперпользователь

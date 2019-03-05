@@ -89,7 +89,7 @@ class RepairAppList extends Component {
     }
 
     async deleteEntityConfirm() {
-        let responseData = await CommonUtils.makeAsyncPostEvent(Const.APP_URL,Const.REPAIR_APP_FORM_CONTEXT,Const.ENTITY_DELETE,{id: this.state.selectedEntityId});
+        let responseData = await CommonUtils.makeAsyncPostEvent(Const.APP_URL,Const.REPAIR_APP,Const.DELETE_ACTION,{id: this.state.selectedEntityId});
         if (responseData.errors.length > 0) {
             this.setState({errors: responseData.errors});
         } else {
@@ -134,7 +134,7 @@ class RepairAppList extends Component {
         return(
             <div>
                 {addActions(this)}
-                <CommonDbGrid mainPageComp={this.props.mainPageComp} selectAction={this.changeGridSelection.bind(this)} ref={'ULRepairAppGrid'} context={Const.REPAIR_APP_FORM_CONTEXT}/>
+                <CommonDbGrid mainPageComp={this.props.mainPageComp} selectAction={this.changeGridSelection.bind(this)} ref={'ULRepairAppGrid'} context={Const.REPAIR_APP}/>
                 <RepairAppEditForm mainPageComp={this.props.mainPageComp} disabled={this.state.editFormDisabled} entityId={this.state.selectedEntityId} visible={this.state.editFormVisible} closeAction={() => {this.setState({editFormVisible:false,selectedEntityId:''});this.refreshList()}}/>
                 <ErrorModal mainPageComp={this.props.mainPageComp} errors={this.state.errors} closeAction={() => this.setState({errors:[]})}/>
                 <OkCancelDialog okCancelVisible={this.state.deleteEntityDialogVisible}

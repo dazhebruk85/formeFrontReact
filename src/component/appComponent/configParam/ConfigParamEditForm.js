@@ -61,7 +61,7 @@ class ConfigParamEditForm extends Component {
     async getEntityData() {
         if (this.state.fields.id) {
             this.setState({isLoading:true});
-            let responseData = await CommonUtils.makeAsyncPostEvent(Const.APP_URL,Const.CONFIG_PARAM_CONTEXT,Const.ENTITY_GET,{id:this.props.entityId});
+            let responseData = await CommonUtils.makeAsyncPostEvent(Const.APP_URL,Const.CONFIG_PARAM,Const.GET_ACTION,{id:this.props.entityId});
             this.setState({isLoading:false});
             if (responseData.errors.length > 0) {
                 this.setState({errors: responseData.errors});
@@ -87,7 +87,7 @@ class ConfigParamEditForm extends Component {
 
     async saveEntityData() {
         this.setState({isLoading:true});
-        let responseData = await CommonUtils.makeAsyncPostEvent(Const.APP_URL,Const.CONFIG_PARAM_CONTEXT,Const.ENTITY_SAVE,{id:this.state.fields.id},JSON.stringify(this.state.fields));
+        let responseData = await CommonUtils.makeAsyncPostEvent(Const.APP_URL,Const.CONFIG_PARAM,Const.SAVE_ACTION,{id:this.state.fields.id},JSON.stringify(this.state.fields));
         this.setState({isLoading:false});
         if (responseData.errors.length > 0) {
             this.setState({errors: responseData.errors});

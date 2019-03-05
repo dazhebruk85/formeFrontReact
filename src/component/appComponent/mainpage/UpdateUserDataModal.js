@@ -51,7 +51,7 @@ class UpdateUserDataModal extends Component {
 
     async getUserData() {
         this.setState({isLoading:true});
-        let responseData = await CommonUtils.makeAsyncPostEvent(Const.APP_URL,Const.USER_CONTEXT,Const.ENTITY_GET,{id:CommonUtils.getFormLocalStorage('userId')});
+        let responseData = await CommonUtils.makeAsyncPostEvent(Const.APP_URL,Const.USER,Const.GET_ACTION,{id:CommonUtils.getFormLocalStorage('userId')});
         this.setState({isLoading:false});
         if (responseData.errors.length > 0) {
             this.setState({errors: responseData.errors});
@@ -71,7 +71,7 @@ class UpdateUserDataModal extends Component {
 
     async saveUserData() {
         this.setState({isLoading:true});
-        let responseData = await CommonUtils.makeAsyncPostEvent(Const.APP_URL,Const.USER_CONTEXT,Const.ENTITY_SAVE,{id:CommonUtils.getFormLocalStorage('userId')},JSON.stringify(this.state.fields));
+        let responseData = await CommonUtils.makeAsyncPostEvent(Const.APP_URL,Const.USER,Const.SAVE_ACTION,{id:CommonUtils.getFormLocalStorage('userId')},JSON.stringify(this.state.fields));
         this.setState({isLoading:false});
         if (responseData.errors.length > 0) {
             this.setState({errors: responseData.errors});

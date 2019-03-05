@@ -97,7 +97,7 @@ class UserList extends Component {
     }
 
     async deleteEntityConfirm() {
-        let responseData = await CommonUtils.makeAsyncPostEvent(Const.APP_URL,Const.USER_CONTEXT,Const.ENTITY_DELETE,{id: this.state.selectedEntityId});
+        let responseData = await CommonUtils.makeAsyncPostEvent(Const.APP_URL,Const.USER,Const.DELETE_ACTION,{id: this.state.selectedEntityId});
         if (responseData.errors.length > 0) {
             this.setState({errors: responseData.errors});
         } else {
@@ -190,7 +190,7 @@ class UserList extends Component {
                                 <DictField width='250px'
                                            value={this.state.fields.filter.ULFilter_userRole_name_eq}
                                            maxLength={100}
-                                           context={Const.USER_ROLE_CONTEXT}
+                                           context={Const.USER_ROLE}
                                            chooseDictAction={this.chooseUserRoleForFilter.bind(this)}/>
                             </HorizontalPanel>
                             <HorizontalPanel>
@@ -201,7 +201,7 @@ class UserList extends Component {
                         </VerticalPanel>
                     </CollapsePanel>
                 </div>
-                <CommonDbGrid mainPageComp={this.props.mainPageComp} filter={this.state.fields.filter} selectAction={this.changeGridSelection.bind(this)} ref={'ULUserGrid'} context={Const.USER_CONTEXT}/>
+                <CommonDbGrid mainPageComp={this.props.mainPageComp} filter={this.state.fields.filter} selectAction={this.changeGridSelection.bind(this)} ref={'ULUserGrid'} context={Const.USER}/>
                 <UserEditForm mainPageComp={this.props.mainPageComp} entityId={this.state.selectedEntityId} visible={this.state.editFormVisible} closeAction={() => {this.setState({editFormVisible:false,selectedEntityId:''});this.refreshList()}}/>
                 <ErrorModal mainPageComp={this.props.mainPageComp} errors={this.state.errors} closeAction={() => this.setState({errors:[]})}/>
                 <OkCancelDialog okCancelVisible={this.state.deleteEntityDialogVisible}
