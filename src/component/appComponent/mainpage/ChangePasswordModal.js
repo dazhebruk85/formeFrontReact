@@ -43,7 +43,7 @@ class ChangePasswordModal extends Component {
 
     async changePassword(evt) {
         let params = this.state.fields;
-        let responseData = await CommonUtils.makeAsyncPostEvent(Const.APP_URL,Const.CHANGE_PASSWORD_CONTEXT,'',params);
+        let responseData = await CommonUtils.makeAsyncPostEvent(Const.APP_URL,Const.AUTH,Const.AUTH_CHANGE_PASSWORD,params);
         if (responseData.errors.length > 0) {
             this.setState({errors: responseData.errors});
         } else {

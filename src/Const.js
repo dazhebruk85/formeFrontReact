@@ -10,22 +10,26 @@ export const BROWSER_CHROME = "CHROME";
 export const BROWSER_FIREFOX = "FIREFOX";
 export const BROWSER_IE = "IE";
 
-//Auth context
-export const AUTH_CONTEXT = "auth";
+export const AUTH = "auth";
+export const AUTH_LOGIN = "auth_login";
+export const AUTH_CHANGE_PASSWORD = "auth_change_password";
+export const AUTH_SET_NEW_PASSWORD = "auth_set_new_password";
 
-//GenUuid context
-export const GEN_UUID_CONTEXT = "genUuid";
+export const COMMON = "common";
+export const COMMON_GEN_UUID = "common_gen_uuid";
+
+export const CHAT = "chat";
+export const CHAT_USER_LIST = "chat_user_list";
+export const CHAT_USER_HISTORY = "chat_user_history";
+
+export const ATTACH = "attach";
+export const ATTACH_SAVE_FILE = "attach_save_file";
+export const ATTACH_GET_FILE = "attach_get_file";
 
 //User context
 export const USER_CONTEXT = "user";
 
-//Change password context
-export const CHANGE_PASSWORD_CONTEXT = "changePassword";
-
-//Set new password context
-export const SET_NEW_PASSWORD_CONTEXT = "setNewPassword";
-
-//User context
+//UserRole context
 export const USER_ROLE_CONTEXT = "userRole";
 
 //User role context
@@ -39,18 +43,6 @@ export const ROOM_TYPE_CONTEXT = "roomType";
 
 //Config param context
 export const CONFIG_PARAM_CONTEXT = "configParam";
-
-//Chat context
-export const CHAT_CONTEXT = "chat";
-//Chat actions
-export const GET_USERS_ACTION = "getUserList";
-export const GET_USER_HISTORY_ACTION = "getUserHistory";
-
-//File context
-export const ATTACH_FILE_CONTEXT = "attachFile";
-//File actions
-export const ATTACH_SAVE_FILE = "saveFile";
-export const ATTACH_GET_FILE = "getFile";
 
 //Common entity actions
 export const ENTITY_LIST = "entityList";

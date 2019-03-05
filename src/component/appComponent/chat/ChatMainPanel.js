@@ -89,7 +89,7 @@ class ChatMainPanel extends Component {
 
     async getChatUsers() {
         this.setState({isLoading:true});
-        let responseData = await CommonUtils.makeAsyncPostEvent(Const.APP_URL,Const.CHAT_CONTEXT,Const.GET_USERS_ACTION,{});
+        let responseData = await CommonUtils.makeAsyncPostEvent(Const.APP_URL,Const.CHAT,Const.CHAT_USER_LIST,{});
         if (responseData.errors.length > 0) {
             this.setState({errors: responseData.errors});
         } else {
@@ -133,7 +133,7 @@ class ChatMainPanel extends Component {
             let fromUser = CommonUtils.getFormLocalStorage('userId');
             let toUser = this.state.selectedUser.entityId;
             let params = {fromUserId:fromUser,toUserId:toUser,pageNumber:selectedItem.dialogPage};
-            let responseData = await CommonUtils.makeAsyncPostEvent(Const.APP_URL,Const.CHAT_CONTEXT,Const.GET_USER_HISTORY_ACTION,params);
+            let responseData = await CommonUtils.makeAsyncPostEvent(Const.APP_URL,Const.CHAT,Const.CHAT_USER_HISTORY,params);
             if (responseData.errors.length > 0) {
                 this.setState({errors: responseData.errors});
             } else {
@@ -217,7 +217,7 @@ class ChatMainPanel extends Component {
     }
 
     async sendFileMessageToChat(fileAndMessageObject) {
-        let responseData = await CommonUtils.makeAsyncPostEvent(Const.APP_URL,Const.ATTACH_FILE_CONTEXT,Const.ATTACH_SAVE_FILE,fileAndMessageObject.file);
+        let responseData = await CommonUtils.makeAsyncPostEvent(Const.APP_URL,Const.ATTACH,Const.ATTACH_SAVE_FILE,fileAndMessageObject.file);
         if (responseData.errors.length > 0) {
             this.setState({errors: responseData.errors});
         } else {
@@ -268,7 +268,7 @@ class ChatMainPanel extends Component {
 
     async downloadFile(event) {
         let fileId = event.currentTarget.getAttribute('fileid');
-        let responseData = await CommonUtils.makeAsyncPostEvent(Const.APP_URL,Const.ATTACH_FILE_CONTEXT,Const.ATTACH_GET_FILE,{fileId:fileId});
+        let responseData = await CommonUtils.makeAsyncPostEvent(Const.APP_URL,Const.ATTACH,Const.ATTACH_GET_FILE,{fileId:fileId});
         if (responseData.errors.length > 0) {
             this.setState({errors: responseData.errors});
         } else {
@@ -284,7 +284,7 @@ class ChatMainPanel extends Component {
 
     async openFileInNewWindow(event) {
         let fileId = event.currentTarget.getAttribute('fileid');
-        let responseData = await CommonUtils.makeAsyncPostEvent(Const.APP_URL,Const.ATTACH_FILE_CONTEXT,Const.ATTACH_GET_FILE,{fileId:fileId});
+        let responseData = await CommonUtils.makeAsyncPostEvent(Const.APP_URL,Const.ATTACH,Const.ATTACH_GET_FILE,{fileId:fileId});
         if (responseData.errors.length > 0) {
             this.setState({errors: responseData.errors});
         } else {

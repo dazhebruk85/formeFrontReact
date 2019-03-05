@@ -62,7 +62,7 @@ class UserSetPasswordModal extends Component {
 
     async setNewPassword(evt) {
         let params = this.state.fields;
-        let responseData = await CommonUtils.makeAsyncPostEvent(Const.APP_URL,Const.SET_NEW_PASSWORD_CONTEXT,'',params);
+        let responseData = await CommonUtils.makeAsyncPostEvent(Const.APP_URL,Const.AUTH,Const.AUTH_SET_NEW_PASSWORD,params);
         if (responseData.errors.length > 0) {
             this.setState({errors: responseData.errors});
         } else {

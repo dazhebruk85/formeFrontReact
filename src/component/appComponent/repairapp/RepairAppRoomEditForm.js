@@ -45,7 +45,7 @@ class RepairAppRoomEditForm extends Component {
     }
 
     async getNewEntity() {
-        let responseData = await CommonUtils.makeAsyncPostEvent(Const.APP_URL,Const.GEN_UUID_CONTEXT,'',null);
+        let responseData = await CommonUtils.makeAsyncPostEvent(Const.APP_URL,Const.COMMON,Const.COMMON_GEN_UUID,null);
         this.setState({
             fields:{
                 ...this.state.fields,

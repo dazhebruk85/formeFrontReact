@@ -48,7 +48,7 @@ class LoginPage extends Component {
         this.setState({isLoading:true});
         let params = this.state.fields;
         params.clientDeviceInfo = this.state.client;
-        let responseData = await CommonUtils.makeAsyncPostEvent(Const.APP_URL,Const.AUTH_CONTEXT,'',params,'');
+        let responseData = await CommonUtils.makeAsyncPostEvent(Const.APP_URL,Const.AUTH,Const.AUTH_LOGIN,params,'');
         this.setState({isLoading:false});
         if (responseData.errors.length > 0) {
             this.setState({errors:responseData.errors});
