@@ -1,15 +1,15 @@
 import {Component} from "react";
-import * as CommonUtils from "../../../utils/CommonUtils";
-import * as Const from "../../../Const";
-import Button from "../../baseComponent/field/Button";
-import ErrorModal from "../../baseComponent/modal/ErrorModal";
-import CommonModal from "../../baseComponent/modal/CommonModal";
+import * as CommonUtils from "../../../../utils/CommonUtils";
+import * as Const from "../../../../Const";
+import Button from "../../../baseComponent/field/Button";
+import ErrorModal from "../../../baseComponent/modal/ErrorModal";
+import CommonModal from "../../../baseComponent/modal/CommonModal";
 import React from "react";
-import DictField from "../../baseComponent/field/DictField";
-import Label from "../../baseComponent/field/Label";
-import HorizontalPanel from "../../baseComponent/panel/HorizontalPanel";
-import VerticalPanel from "../../baseComponent/panel/VerticalPanel";
-import DecimalField from "../../baseComponent/field/DecimalField";
+import DictField from "../../../baseComponent/field/DictField";
+import Label from "../../../baseComponent/field/Label";
+import HorizontalPanel from "../../../baseComponent/panel/HorizontalPanel";
+import VerticalPanel from "../../../baseComponent/panel/VerticalPanel";
+import DecimalField from "../../../baseComponent/field/DecimalField";
 
 export let fieldsObject = {
     id:'',

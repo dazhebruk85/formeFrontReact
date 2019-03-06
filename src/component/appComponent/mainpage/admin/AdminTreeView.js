@@ -7,7 +7,12 @@ import dictsIcon from '../../../../media/tree/dicts.png'
 import usersIcon from '../../../../media/tree/users.png'
 import userRolesIcon from '../../../../media/tree/userRoles.png'
 import basePackageIcon from '../../../../media/tree/basePackage.png'
+
+import roomsIcon from '../../../../media/tree/rooms.png'
 import roomTypeIcon from '../../../../media/tree/roomType.png'
+import roomAddObjectIcon from '../../../../media/tree/roomAddObject.png'
+import roomExcludeObjectIcon from '../../../../media/tree/roomExcludeObject.png'
+
 import systemIcon from '../../../../media/tree/system.png'
 import configParamIcon from '../../../../media/tree/configParam.png'
 import chatIcon from '../../../../media/tree/chat.png'
@@ -20,24 +25,29 @@ import hideIcon from '../../../../media/common/hide.png'
 import showIcon from '../../../../media/common/show.png'
 
 const treeData = [
-    { key:'Main',icon:<img alt='' src={mainTreeIcon} style={{width:'20px',height:'20px',marginTop:"0px", marginLeft:"0px"}}/>,title:'Главная',children:
+    { key:'Main',canSelect:false,icon:<img alt='' src={mainTreeIcon} style={{width:'20px',height:'20px',marginTop:"0px", marginLeft:"0px"}}/>,title:'Главная',children:
         [
-           {key:'repairApp',icon:<img alt='' src={anketaIcon} style={{width:'20px',height:'20px',marginTop:"0px", marginLeft:"0px"}}/>,title:'Анкеты'}
-           ,{key:'chat',icon:<img alt='' src={chatIcon} style={{width:'20px',height:'20px',marginTop:"0px", marginLeft:"0px"}}/>,title:'Чат'}
-           ,{key:'dicts',icon:<img alt='' src={dictsIcon} style={{width:'20px',height:'20px',marginTop:"0px", marginLeft:"0px"}}/>,title:'Справочники',children:
+           {key:'repairApp',canSelect:true,icon:<img alt='' src={anketaIcon} style={{width:'20px',height:'20px',marginTop:"0px", marginLeft:"0px"}}/>,title:'Анкеты'}
+           ,{key:'chat',canSelect:true,icon:<img alt='' src={chatIcon} style={{width:'20px',height:'20px',marginTop:"0px", marginLeft:"0px"}}/>,title:'Чат'}
+           ,{key:'dicts',canSelect:false,icon:<img alt='' src={dictsIcon} style={{width:'20px',height:'20px',marginTop:"0px", marginLeft:"0px"}}/>,title:'Справочники',children:
             [
-                {key:'user',icon:<img alt='' src={usersIcon} style={{width:'20px',height:'20px',marginTop:"0px", marginLeft:"0px"}}/>,title:'Пользователи'}
-               ,{key:'userRole',icon:<img alt='' src={userRolesIcon} style={{width:'20px',height:'20px',marginTop:"0px", marginLeft:"0px"}}/>,title:'Роли пользователя'}
-               ,{key:'basePackage',icon:<img alt='' src={basePackageIcon} style={{width:'20px',height:'20px',marginTop:"0px", marginLeft:"0px"}}/>,title:'Базовые пакеты'}
-               ,{key:'roomType',icon:<img alt='' src={roomTypeIcon} style={{width:'20px',height:'20px',marginTop:"0px", marginLeft:"0px"}}/>,title:'Типы помещений'}
-            ]}
-            ,{key:'system',icon:<img alt='' src={systemIcon} style={{width:'20px',height:'20px',marginTop:"0px", marginLeft:"0px"}}/>,title:'Система',children:
+                {key:'user',canSelect:true,icon:<img alt='' src={usersIcon} style={{width:'20px',height:'20px',marginTop:"0px", marginLeft:"0px"}}/>,title:'Пользователи'}
+               ,{key:'userRole',canSelect:true,icon:<img alt='' src={userRolesIcon} style={{width:'20px',height:'20px',marginTop:"0px", marginLeft:"0px"}}/>,title:'Роли пользователя'}
+               ,{key:'basePackage',canSelect:true,icon:<img alt='' src={basePackageIcon} style={{width:'20px',height:'20px',marginTop:"0px", marginLeft:"0px"}}/>,title:'Базовые пакеты'}
+               ,{key:'rooms',canSelect:false,icon:<img alt='' src={roomsIcon} style={{width:'20px',height:'20px',marginTop:"0px", marginLeft:"0px"}}/>,title:'Помещения',children:
                 [
-                    {key:'configParam',icon:<img alt='' src={configParamIcon} style={{width:'20px',height:'20px',marginTop:"0px", marginLeft:"0px"}}/>,title:'Настойки системы'}
-                    ,{key:'notifications',icon:<img alt='' src={notificationsIcon} style={{width:'20px',height:'20px',marginTop:"0px", marginLeft:"0px"}}/>,title:'Оповещения',children:
+                    {key:'roomType',canSelect:true,icon:<img alt='' src={roomTypeIcon} style={{width:'20px',height:'20px',marginTop:"0px", marginLeft:"0px"}}/>,title:'Типы помещений'},
+                    {key:'roomAddObject',canSelect:true,icon:<img alt='' src={roomAddObjectIcon} style={{width:'20px',height:'20px',marginTop:"0px", marginLeft:"0px"}}/>,title:'Объекты помещений'},
+                    {key:'roomExcludeObject',canSelect:true,icon:<img alt='' src={roomExcludeObjectIcon} style={{width:'20px',height:'20px',marginTop:"0px", marginLeft:"0px"}}/>,title:'Объекты-исключения'}
+                ]}
+            ]}
+            ,{key:'system',canSelect:false,icon:<img alt='' src={systemIcon} style={{width:'20px',height:'20px',marginTop:"0px", marginLeft:"0px"}}/>,title:'Система',children:
+                [
+                    {key:'configParam',canSelect:true,icon:<img alt='' src={configParamIcon} style={{width:'20px',height:'20px',marginTop:"0px", marginLeft:"0px"}}/>,title:'Настойки системы'}
+                    ,{key:'notifications',canSelect:false,icon:<img alt='' src={notificationsIcon} style={{width:'20px',height:'20px',marginTop:"0px", marginLeft:"0px"}}/>,title:'Оповещения',children:
                         [
-                            {key:'notifyTemplates',icon:<img alt='' src={notifyTemplatesIcon} style={{width:'20px',height:'20px',marginTop:"0px", marginLeft:"0px"}}/>,title:'Шаблоны'}
-                            ,{key:'notifyMessages',icon:<img alt='' src={notifyMessagesIcon} style={{width:'20px',height:'20px',marginTop:"0px", marginLeft:"0px"}}/>,title:'Сообщения'}
+                            {key:'notifyTemplates',canSelect:true,icon:<img alt='' src={notifyTemplatesIcon} style={{width:'20px',height:'20px',marginTop:"0px", marginLeft:"0px"}}/>,title:'Шаблоны'}
+                            ,{key:'notifyMessages',canSelect:true,icon:<img alt='' src={notifyMessagesIcon} style={{width:'20px',height:'20px',marginTop:"0px", marginLeft:"0px"}}/>,title:'Сообщения'}
                         ]}
                 ]}
         ]
@@ -62,7 +72,7 @@ class AdminTreeView extends Component {
     }
 
     onTreeSelect = (selectedKeys, info) => {
-        if (!['Main','dicts','system','notifications'].includes(info.node.props.eventKey)) {
+        if (info.node.props.canSelect) {
             this.setState({
                 selectedKeys:[info.node.props.eventKey]
             });
@@ -71,7 +81,7 @@ class AdminTreeView extends Component {
     };
 
     showHideTree() {
-        let show = !this.state.showTree
+        let show = !this.state.showTree;
         this.setState({
             showTree: show
         });

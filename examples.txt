@@ -1,0 +1,12 @@
+//Tab example
+import { Tabs, Tab} from 'react-bootstrap';
+<Tabs defaultActiveKey={1} id="uncontrolled-tab-example" style={{height:'470px',width:'100%'}}>
+    <Tab eventKey={1} title="Объект" style={{width:'100%',height:'420px',overflowY:'auto',borderRight:'1px solid #ddd',borderBottom:'1px solid #ddd',borderLeft:'1px solid #ddd'}}>
+    </Tab>
+    <Tab eventKey={2} title="Демонтаж" style={{width:'100%',height:'420px',overflowY:'auto',borderRight:'1px solid #ddd',borderBottom:'1px solid #ddd',borderLeft:'1px solid #ddd',paddingLeft:'10px'}}>
+        Демонтаж
+    </Tab>
+    <Tab eventKey={3} title="Монтаж" style={{width:'100%',height:'420px',overflowY:'auto',borderRight:'1px solid #ddd',borderBottom:'1px solid #ddd',borderLeft:'1px solid #ddd',paddingLeft:'10px'}}>
+        Монтаж
+    </Tab>
+</Tabs>

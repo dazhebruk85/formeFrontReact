@@ -8,10 +8,10 @@ import showIcon from '../../../../media/common/show.png'
 import chatIcon from "../../../../media/tree/chat.png";
 
 const treeData = [
-    { key:'Main',icon:<img alt='' src={mainTreeIcon} style={{width:'20px',height:'20px',marginTop:"0px", marginLeft:"0px"}}/>,title:'Главная',children:
+    { key:'Main',canSelect:false,icon:<img alt='' src={mainTreeIcon} style={{width:'20px',height:'20px',marginTop:"0px", marginLeft:"0px"}}/>,title:'Главная',children:
         [
-            {key:'repairApp',icon:<img alt='' src={anketaIcon} style={{width:'20px',height:'20px',marginTop:"0px", marginLeft:"0px"}}/>,title:'Анкеты'}
-            ,{key:'chat',icon:<img alt='' src={chatIcon} style={{width:'20px',height:'20px',marginTop:"0px", marginLeft:"0px"}}/>,title:'Чат'}
+            {key:'repairApp',canSelect:true,icon:<img alt='' src={anketaIcon} style={{width:'20px',height:'20px',marginTop:"0px", marginLeft:"0px"}}/>,title:'Анкеты'}
+            ,{key:'chat',canSelect:true,icon:<img alt='' src={chatIcon} style={{width:'20px',height:'20px',marginTop:"0px", marginLeft:"0px"}}/>,title:'Чат'}
         ]
     }
 ];
@@ -34,7 +34,7 @@ class ClientTreeView extends Component {
     }
 
     onTreeSelect = (selectedKeys, info) => {
-        if ('Main' !== info.node.props.eventKey) {
+        if (info.node.props.canSelect) {
             this.setState({
                 selectedKeys:[info.node.props.eventKey]
             });
