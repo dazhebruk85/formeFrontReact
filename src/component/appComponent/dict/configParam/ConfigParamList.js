@@ -1,15 +1,15 @@
 import {Component} from "react";
-import CommonDbGrid from "../../baseComponent/grid/CommonDbGrid";
-import * as Const from "../../../Const";
+import CommonDbGrid from "../../../baseComponent/grid/CommonDbGrid";
+import * as Const from "../../../../Const";
 import React from "react";
-import * as CommonUtils from "../../../utils/CommonUtils";
-import ErrorModal from "../../baseComponent/modal/ErrorModal";
+import * as CommonUtils from "../../../../utils/CommonUtils";
+import ErrorModal from "../../../baseComponent/modal/ErrorModal";
 import ConfigParamEditForm from "./ConfigParamEditForm";
 
-import entityEditPng from "../../../media/common/action/entityEdit.png";
-import entityRefreshPng from "../../../media/common/action/entityRefresh.png";
-import Action from "../../baseComponent/action/Action";
-import ActionBar from "../../baseComponent/action/ActionBar";
+import entityEditPng from "../../../../media/common/action/entityEdit.png";
+import entityRefreshPng from "../../../../media/common/action/entityRefresh.png";
+import Action from "../../../baseComponent/action/Action";
+import ActionBar from "../../../baseComponent/action/ActionBar";
 
 class ConfigParamList extends Component {
 

@@ -3,14 +3,16 @@ import logo from '../media/logo.png';
 import QuickActionPanel from '../component/appComponent/mainpage/QuickActionPanel'
 import AdminTreeView from "../component/appComponent/mainpage/admin/AdminTreeView";
 import UserList from '../component/appComponent/user/UserList';
-import UserRoleList from '../component/appComponent/userrole/UserRoleList';
-import BasePackageList from '../component/appComponent/basePackage/BasePackageList';
-import RoomTypeList from '../component/appComponent/roomtype/RoomTypeList';
+import UserRoleList from '../component/appComponent/dict/userrole/UserRoleList';
+import BasePackageList from '../component/appComponent/dict/basePackage/BasePackageList';
+import RoomTypeList from '../component/appComponent/dict/room/RoomTypeList';
 import RepairAppList from "../component/appComponent/repairapp/RepairAppList";
-import ConfigParamList from "../component/appComponent/configParam/ConfigParamList";
+import ConfigParamList from "../component/appComponent/dict/configParam/ConfigParamList";
 import ChatMainPanel from '../component/appComponent/chat/ChatMainPanel';
 import * as Const from "../Const";
 import * as CommonUtils from "../utils/CommonUtils";
+import RoomAddObjectList from "../component/appComponent/dict/room/RoomAddObjectList";
+import RoomExcludeObjectList from "../component/appComponent/dict/room/RoomExcludeObjectList";
 
 class AdminPage extends Component {
 
@@ -62,6 +64,14 @@ class AdminPage extends Component {
                 case 'chat':
                     return (
                         <ChatMainPanel mainPageComp={props.mainPageComp} chatWebSocket={props.chatWebSocket}/>
+                    );
+                case 'roomAddObject':
+                    return (
+                        <RoomAddObjectList mainPageComp={props.mainPageComp}/>
+                    );
+                case 'roomExcludeObject':
+                    return (
+                        <RoomExcludeObjectList mainPageComp={props.mainPageComp}/>
                     );
                 case 'notifyTemplates':
                     return (

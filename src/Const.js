@@ -31,8 +31,10 @@ export const USER = "user";
 export const USER_ROLE = "userRole";
 export const BASE_PACKAGE = "basePackage";
 export const REPAIR_APP = "repairApp";
-export const ROOM_TYPE = "roomType";
 export const CONFIG_PARAM = "configParam";
+export const ROOM_TYPE = "roomType";
+export const ROOM_ADD_OBJECT = "roomAddObject";
+export const ROOM_EXCLUDE_OBJECT = "roomExcludeObject";
 
 //Common entity actions
 export const LIST_ACTION = "entity_list";
