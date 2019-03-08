@@ -14,7 +14,9 @@ import DecimalField from "../../../baseComponent/field/DecimalField";
 export let fieldsObject = {
     id:'',
     name:'',
-    area:''
+    area:'',
+    addObjectList:{},
+    excludeObjectList:{}
 };
 
 class RepairAppRoomEditForm extends Component {
@@ -50,7 +52,9 @@ class RepairAppRoomEditForm extends Component {
             fields:{
                 ...this.state.fields,
                 id:responseData.params.newUuid,
-                area:0.00
+                area:0.00,
+                addObjectList:{},
+                excludeObjectList:{}
             }
         });
     }
