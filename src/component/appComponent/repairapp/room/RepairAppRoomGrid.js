@@ -16,8 +16,8 @@ class RepairAppRoomGrid extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            roomEditFormVisible:false,
-            roomEditFormDisabled:false,
+            editFormVisible:false,
+            editFormDisabled:false,
             errors:[],
             disabled:false
         };
@@ -37,8 +37,8 @@ class RepairAppRoomGrid extends Component {
             fields:roomFieldsObject
         });
         setTimeout(() => this.setState({
-            roomEditFormVisible:true,
-            roomEditFormDisabled:false
+            editFormVisible:true,
+            editFormDisabled:false
         }), 0)
     }
 
@@ -51,8 +51,8 @@ class RepairAppRoomGrid extends Component {
                 fields:roomObject
             });
             setTimeout(() => this.setState({
-                roomEditFormVisible:true,
-                roomEditFormDisabled:disabled
+                editFormVisible:true,
+                editFormDisabled:disabled
             }), 0);
         }
     }
@@ -147,7 +147,7 @@ class RepairAppRoomGrid extends Component {
                 <CommonGrid ref={'roomsGrid'}
                             gridData={this.props.parent && this.props.parent.state && this.props.parent.state.fields.roomList ? this.props.parent.state.fields.roomList : {}}
                             height={'120px'}/>
-                <RepairAppRoomEditForm mainPageComp={this.props.mainPageComp} disabled={this.state.roomEditFormDisabled} ref={'roomEditForm'} visible={this.state.roomEditFormVisible} okAction={(event) => this.changeRooms(event)} closeAction={() => {this.setState({roomEditFormVisible:false}); this.refs.roomsGrid.setState({selectedItem:{}});}}/>
+                <RepairAppRoomEditForm mainPageComp={this.props.mainPageComp} disabled={this.state.editFormDisabled} ref={'roomEditForm'} visible={this.state.editFormVisible} okAction={(event) => this.changeRooms(event)} closeAction={() => {this.setState({editFormVisible:false}); this.refs.roomsGrid.setState({selectedItem:{}});}}/>
                 <ErrorModal mainPageComp={this.props.mainPageComp} errors={this.state.errors} closeAction={() => this.setState({errors:[]})}/>
             </VerticalPanel>
         )

@@ -54,7 +54,11 @@ export function commonHandleChange(component,context,fieldName,value) {
 }
 
 export function strToBigDecimal(value) {
-    return parseFloat(value.replace(/[,]+/g, '.')).toFixed(2);
+    if (typeof value === 'number') {
+        return value.toFixed(2);
+    } else if (typeof decimalValue === 'string') {
+        return parseFloat(value.replace(/[,]+/g, '.')).toFixed(2);
+    }
 }
 
 export async function makeAsyncPostEvent(url, context, action, params, entity) {

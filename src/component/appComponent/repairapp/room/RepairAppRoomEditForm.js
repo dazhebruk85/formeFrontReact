@@ -11,6 +11,8 @@ import HorizontalPanel from "../../../baseComponent/panel/HorizontalPanel";
 import VerticalPanel from "../../../baseComponent/panel/VerticalPanel";
 import DecimalField from "../../../baseComponent/field/DecimalField";
 import Separator from "../../../baseComponent/field/Separator";
+import RoomAddObjectGrid from "./object/RoomAddObjectGrid";
+import RoomExcludeObjectGrid from "./object/RoomExcludeObjectGrid";
 
 export let fieldsObject = {
     id:'',
@@ -20,7 +22,7 @@ export let fieldsObject = {
     excludeObjectList:{}
 };
 
-class RepairAppRoomEditForm extends Component {
+export default class RepairAppRoomEditForm extends Component {
 
     constructor(props) {
         super(props);
@@ -136,7 +138,13 @@ class RepairAppRoomEditForm extends Component {
                         <DecimalField disabled={formDisabled} width={'300px'} value={this.state.fields.area} onChange={(value) => this.handleChange(value,'area','')}/>
                     </HorizontalPanel>
                     <Separator text={'Объекты'}/>
+                    <HorizontalPanel style={{width:'100%'}}>
+                        <RoomAddObjectGrid mainPageComp={this.props.mainPageComp} disabled={this.state.disabled} parent={this} onChangeAction={() => null}/>
+                    </HorizontalPanel>
                     <Separator text={'Объекты-исключения'}/>
+                    <HorizontalPanel style={{width:'100%'}}>
+                        <RoomExcludeObjectGrid mainPageComp={this.props.mainPageComp} disabled={this.state.disabled} parent={this} onChangeAction={() => null}/>
+                    </HorizontalPanel>
                 </VerticalPanel>
                 <div className="btn-toolbar align-bottom" role="toolbar" style={{justifyContent:'center',display:'flex'}}>
                     <Button disabled={formDisabled} value="Ок" onClick={() => this.okAction()}/>
@@ -147,5 +155,3 @@ class RepairAppRoomEditForm extends Component {
         )
     }
 }
-
-export default RepairAppRoomEditForm;

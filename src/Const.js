@@ -27,14 +27,14 @@ export const ATTACH_SAVE_FILE = "attach_save_file";
 export const ATTACH_GET_FILE = "attach_get_file";
 
 //Entity contexts
-export const USER = "user";
-export const USER_ROLE = "userRole";
-export const BASE_PACKAGE = "basePackage";
-export const REPAIR_APP = "repairApp";
-export const CONFIG_PARAM = "configParam";
-export const ROOM_TYPE = "roomType";
-export const ROOM_ADD_OBJECT = "roomAddObject";
-export const ROOM_EXCLUDE_OBJECT = "roomExcludeObject";
+export const USER = "User";
+export const USER_ROLE = "UserRole";
+export const BASE_PACKAGE = "BasePackage";
+export const REPAIR_APP = "RepairApp";
+export const CONFIG_PARAM = "ConfigParam";
+export const ROOM_TYPE = "RoomType";
+export const ROOM_ADD_OBJECT = "RoomAddObject";
+export const ROOM_EXCLUDE_OBJECT = "RoomExcludeObject";
 
 //Common entity actions
 export const LIST_ACTION = "entity_list";
