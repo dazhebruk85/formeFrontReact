@@ -10,6 +10,7 @@ import Label from "../../../baseComponent/field/Label";
 import HorizontalPanel from "../../../baseComponent/panel/HorizontalPanel";
 import VerticalPanel from "../../../baseComponent/panel/VerticalPanel";
 import DecimalField from "../../../baseComponent/field/DecimalField";
+import Separator from "../../../baseComponent/field/Separator";
 
 export let fieldsObject = {
     id:'',
@@ -134,6 +135,8 @@ class RepairAppRoomEditForm extends Component {
                         <Label value={'Площадь'} width={'120px'}/>
                         <DecimalField disabled={formDisabled} width={'300px'} value={this.state.fields.area} onChange={(value) => this.handleChange(value,'area','')}/>
                     </HorizontalPanel>
+                    <Separator text={'Объекты'}/>
+                    <Separator text={'Объекты-исключения'}/>
                 </VerticalPanel>
                 <div className="btn-toolbar align-bottom" role="toolbar" style={{justifyContent:'center',display:'flex'}}>
                     <Button disabled={formDisabled} value="Ок" onClick={() => this.okAction()}/>
