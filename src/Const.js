@@ -31,6 +31,7 @@ export const USER = "User";
 export const USER_ROLE = "UserRole";
 export const BASE_PACKAGE = "BasePackage";
 export const REPAIR_APP = "RepairApp";
+export const REPAIR_APP_ROOM = "RepairAppRoom";
 export const CONFIG_PARAM = "ConfigParam";
 export const ROOM_TYPE = "RoomType";
 export const ROOM_ADD_OBJECT = "RoomAddObject";

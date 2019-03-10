@@ -30,6 +30,7 @@ export default class RepairAppRoomEditForm extends Component {
         this.state = {
             errors:[],
             disabled:false,
+            addObjectSelected:{},
             fields:fieldsObject
         };
 
@@ -50,16 +51,12 @@ export default class RepairAppRoomEditForm extends Component {
     }
 
     async getNewEntity() {
-        let responseData = await CommonUtils.makeAsyncPostEvent(Const.APP_URL,Const.COMMON,Const.COMMON_GEN_UUID,null);
-        this.setState({
-            fields:{
-                ...this.state.fields,
-                id:responseData.params.newUuid,
-                area:0.00,
-                addObjectList:{},
-                excludeObjectList:{}
-            }
-        });
+        let responseData = await CommonUtils.makeAsyncPostEvent(Const.APP_URL,Const.REPAIR_APP_ROOM,Const.NEW_ACTION,null);
+        if (responseData.errors.length > 0) {
+            this.setState({errors: responseData.errors});
+        } else {
+            this.setState({fields: responseData.entity});
+        }
     }
 
     handleChange(value, fieldName, context) {

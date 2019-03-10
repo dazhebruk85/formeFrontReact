@@ -33,6 +33,21 @@ export default class RoomExcludeObjectGrid extends Component {
 
         let gridDisabled = this.state.disabled;
 
+        let gridData = {headers:[],list:[]};
+        if (this.props.parent && this.props.parent.state && this.props.parent.state.fields.excludeObjectList) {
+            gridData.headers = this.props.parent.state.fields.excludeObjectList.headers;
+            if (this.props.parent.state.addObjectSelected && this.props.parent.state.addObjectSelected.id) {
+                let selectedAddObjectId = this.props.parent.state.addObjectSelected.id;
+                let listFound = [];
+                for (let index in this.props.parent.state.fields.excludeObjectList.list) {
+                    if (this.props.parent.state.fields.excludeObjectList.list[index].addObjectId === selectedAddObjectId) {
+                        listFound.push(this.props.parent.state.fields.excludeObjectList.list[index]);
+                    }
+                }
+                gridData.list = listFound;
+            }
+        }
+
         return(
             <VerticalPanel style={{width:'100%'}}>
                 <HorizontalPanel style={{marginBottom:'1px'}}>
@@ -58,7 +73,7 @@ export default class RoomExcludeObjectGrid extends Component {
                     </div>
                 </HorizontalPanel>
                 <CommonGrid ref={'excludeObjectGrid'}
-                            gridData={this.props.parent && this.props.parent.state && this.props.parent.state.fields.excludeObjectList ? this.props.parent.state.fields.excludeObjectList : {}}
+                            gridData={gridData}
                             height={'120px'}/>
                 <ErrorModal mainPageComp={this.props.mainPageComp} errors={this.state.errors} closeAction={() => this.setState({errors:[]})}/>
             </VerticalPanel>

@@ -29,6 +29,10 @@ export default class RoomAddObjectGrid extends Component {
         }
     }
 
+    selectAddObject(selected) {
+        this.props.parent.setState({addObjectSelected:selected})
+    }
+
     render() {
 
         let gridDisabled = this.state.disabled;
@@ -59,7 +63,8 @@ export default class RoomAddObjectGrid extends Component {
                 </HorizontalPanel>
                 <CommonGrid ref={'addObjectGrid'}
                             gridData={this.props.parent && this.props.parent.state && this.props.parent.state.fields.addObjectList ? this.props.parent.state.fields.addObjectList : {}}
-                            height={'120px'}/>
+                            height={'120px'}
+                            selectAction={(selected) => this.selectAddObject(selected)}/>
                 <ErrorModal mainPageComp={this.props.mainPageComp} errors={this.state.errors} closeAction={() => this.setState({errors:[]})}/>
             </VerticalPanel>
         )

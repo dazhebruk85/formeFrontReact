@@ -56,7 +56,7 @@ export function commonHandleChange(component,context,fieldName,value) {
 export function strToBigDecimal(value) {
     if (typeof value === 'number') {
         return value.toFixed(2);
-    } else if (typeof decimalValue === 'string') {
+    } else if (typeof value === 'string') {
         return parseFloat(value.replace(/[,]+/g, '.')).toFixed(2);
     }
 }
