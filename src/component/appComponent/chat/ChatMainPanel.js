@@ -30,7 +30,8 @@ class ChatMainPanel extends Component {
 
         this.state = {
             errors: [],
-            isLoading:false,
+            isLoadingUsers:false,
+            isLoadingDialog:false,
             fileUploadVisible:false,
             selectedUser:{},
             users:{},
@@ -88,7 +89,7 @@ class ChatMainPanel extends Component {
     }
 
     async getChatUsers() {
-        this.setState({isLoading:true});
+        this.setState({isLoadingUsers:true});
         let responseData = await CommonUtils.makeAsyncPostEvent(Const.APP_URL,Const.CHAT,Const.CHAT_USER_LIST,{});
         if (responseData.errors.length > 0) {
             this.setState({errors: responseData.errors});
@@ -110,10 +111,10 @@ class ChatMainPanel extends Component {
             }
             , 0);
         }
-        this.setState({isLoading:false});
+        this.setState({isLoadingUsers:false});
     }
 
-    handleSelectChatUser = async (event) => {
+    async handleSelectChatUser(event) {
         let selectedChatUserID =  event.currentTarget.getAttribute('chatuserid');
         let selectedItem = this.state.users[selectedChatUserID];
         if (!CommonUtils.objectIsEmpty(selectedItem)) {
@@ -130,6 +131,7 @@ class ChatMainPanel extends Component {
         }
 
         setTimeout( async () => {
+            this.setState({isLoadingDialog:true});
             let fromUser = CommonUtils.getFormLocalStorage('userId');
             let toUser = this.state.selectedUser.entityId;
             let params = {fromUserId:fromUser,toUserId:toUser,pageNumber:selectedItem.dialogPage};
@@ -156,8 +158,8 @@ class ChatMainPanel extends Component {
                 });
                 setTimeout(() => this.scrollChatDialogDivToBottom(false),0);
             }
+            this.setState({isLoadingDialog:false});
         },0);
-
     };
 
     handleChange(value,fieldName,context) {
@@ -390,13 +392,13 @@ class ChatMainPanel extends Component {
         return (
             <div style={{height:'100%',width:'100%',padding:'5px 0px 5px 0px'}}>
                 <div className={'chatUserListDiv'}>
-                    <Spinner isLoading={this.state.isLoading}/>
+                    <Spinner isLoading={this.state.isLoadingUsers}/>
                     <table style={{width:'100%'}}>
                         <tbody>
                         {CommonUtils.objectToPropArr(this.state.users).map((item) => (
                             <tr key={'userChatTd'+item.key}>
                                 <td key={'userChatTd'+item.key}>
-                                    <div className={item.key === selectedUserId ? 'chatDivUserSelected' : 'chatDivUser'} chatuserid={item.key} onClick={this.handleSelectChatUser}>
+                                    <div className={item.key === selectedUserId ? 'chatDivUserSelected' : 'chatDivUser'} chatuserid={item.key} onClick={(event) => this.handleSelectChatUser(event)}>
                                         <table>
                                             <tbody>
                                             <tr>
@@ -426,6 +428,7 @@ class ChatMainPanel extends Component {
                 </div>
                 <div className={'chatMessagesDiv'}>
                     <div ref={'chatDialogDiv'} className={'chatDialogDiv'} id={CommonUtils.genGuid()}>
+                        <Spinner isLoading={this.state.isLoadingDialog}/>
                         <table style={{width:'100%'}}>
                             <tbody>
                                 {getCurrentUserMessage(this)}
