@@ -1,6 +1,7 @@
 import axios from 'axios';
 
 export const BigDecimalRegExp = RegExp(/^[0-9]*\.?[0-9]{0,2}$/i);
+export const IntegerRegExp = RegExp(/^[0-9]*$/i);
 
 export function genGuid() {
     function s4() {
@@ -58,6 +59,14 @@ export function strToBigDecimal(value) {
         return value.toFixed(2);
     } else if (typeof value === 'string') {
         return parseFloat(value.replace(/[,]+/g, '.')).toFixed(2);
+    }
+}
+
+export function strToInteger(value) {
+    if (typeof value === 'number') {
+        return value;
+    } else if (typeof value === 'string') {
+        return parseFloat(value);
     }
 }
 

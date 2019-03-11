@@ -1,0 +1,89 @@
+import React, {Component} from "react";
+import CommonGrid from "../../../../../baseComponent/grid/CommonGrid";
+import ErrorModal from "../../../../../baseComponent/modal/ErrorModal";
+import HorizontalPanel from "../../../../../baseComponent/panel/HorizontalPanel";
+import VerticalPanel from "../../../../../baseComponent/panel/VerticalPanel";
+import addActionPng from "../../../../../../media/grid/gridAdd.png";
+import editActionPng from "../../../../../../media/grid/gridEdit.png";
+import deleteActionPng from "../../../../../../media/grid/gridDelete.png";
+import viewActionPng from "../../../../../../media/grid/gridView.png";
+import RoomAddObjectEditForm, {fieldsObject as addObjectFieldsObject} from "./RoomAddObjectEditForm";
+
+export default class RoomAddObjectGrid extends Component {
+
+    constructor(props) {
+        super(props);
+        this.state = {
+            editFormVisible:false,
+            editFormDisabled:false,
+            errors:[],
+            disabled:false
+        };
+        this.onChangeAction = props.onChangeAction;
+    }
+
+    componentDidUpdate(prevProps) {
+        if (this.props.disabled !== prevProps.disabled ) {
+            this.setState({
+                disabled:this.props.disabled,
+            });
+        }
+    }
+
+    addAddObjectAction() {
+        this.refs.addObjectEditForm.setState({
+            fields:addObjectFieldsObject
+        });
+        setTimeout(() => this.setState({
+            editFormVisible:true,
+            editFormDisabled:false
+        }), 0)
+    }
+
+    changeAddObjects(addObject) {
+
+    }
+
+    selectAddObject(selected) {
+        this.props.parent.setState({addObjectSelected:selected})
+    }
+
+    render() {
+
+        let gridDisabled = this.state.disabled;
+
+        return(
+            <VerticalPanel style={{width:'100%'}}>
+                <HorizontalPanel style={{marginBottom:'1px'}}>
+                    <div className={'gridActionTd'}>
+                        <div className={'gridActionDiv'}>
+                            <img onClick={gridDisabled ? null : () => this.addAddObjectAction()} title={'Добавить запись'}  alt={'Добавить запись'} src={addActionPng} className={gridDisabled ? 'gridActionImgDis' : 'gridActionImg'}/>
+                        </div>
+                    </div>
+                    <div className={'gridActionTd'}>
+                        <div className={'gridActionDiv'}>
+                            <img onClick={gridDisabled ? null : () => alert(1)} title={'Редактировать запись'}  alt={'Редактировать запись'} src={editActionPng} className={gridDisabled ? 'gridActionImgDis' : 'gridActionImg'}/>
+                        </div>
+                    </div>
+                    <div className={'gridActionTd'}>
+                        <div className={'gridActionDiv'}>
+                            <img onClick={gridDisabled ? null : () => alert(1)} title={'Удалить запись'}  alt={'Удалить запись'} src={deleteActionPng} className={gridDisabled ? 'gridActionImgDis' : 'gridActionImg'}/>
+                        </div>
+                    </div>
+                    <div className={'gridActionTd'}>
+                        <div className={'gridActionDiv'}>
+                            <img onClick={() => alert(1)} title={'Просмотреть запись'}  alt={'Просмотреть запись'} src={viewActionPng} className={'gridActionImg'}/>
+                        </div>
+                    </div>
+                </HorizontalPanel>
+                <CommonGrid ref={'addObjectGrid'}
+                            gridData={this.props.parent && this.props.parent.state && this.props.parent.state.fields.addObjectList ? this.props.parent.state.fields.addObjectList : {}}
+                            height={'120px'}
+                            selectAction={(selected) => this.selectAddObject(selected)}/>
+                <RoomAddObjectEditForm mainPageComp={this.props.mainPageComp} disabled={this.state.editFormDisabled} ref={'addObjectEditForm'} visible={this.state.editFormVisible} okAction={(event) => this.changeAddObjects(event)} closeAction={() => {this.setState({editFormVisible:false}); this.refs.addObjectGrid.setState({selectedItem:{}});}}/>
+                <ErrorModal mainPageComp={this.props.mainPageComp} errors={this.state.errors} closeAction={() => this.setState({errors:[]})}/>
+            </VerticalPanel>
+        )
+    }
+
+}

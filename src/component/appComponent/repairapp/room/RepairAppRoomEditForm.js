@@ -11,8 +11,8 @@ import HorizontalPanel from "../../../baseComponent/panel/HorizontalPanel";
 import VerticalPanel from "../../../baseComponent/panel/VerticalPanel";
 import DecimalField from "../../../baseComponent/field/DecimalField";
 import Separator from "../../../baseComponent/field/Separator";
-import RoomAddObjectGrid from "./object/RoomAddObjectGrid";
-import RoomExcludeObjectGrid from "./object/RoomExcludeObjectGrid";
+import RoomAddObjectGrid from "./object/addobject/RoomAddObjectGrid";
+import RoomExcludeObjectGrid from "./object/excludeobject/RoomExcludeObjectGrid";
 
 export let fieldsObject = {
     id:'',
@@ -31,6 +31,7 @@ export default class RepairAppRoomEditForm extends Component {
             errors:[],
             disabled:false,
             addObjectSelected:{},
+            excludeObjectSelected:{},
             fields:fieldsObject
         };
 
@@ -65,7 +66,10 @@ export default class RepairAppRoomEditForm extends Component {
 
     closeModal() {
         this.setState({
-            errors: [],
+            errors:[],
+            disabled:false,
+            addObjectSelected:{},
+            excludeObjectSelected:{},
             fields:fieldsObject
         });
         this.closeActionParent()
