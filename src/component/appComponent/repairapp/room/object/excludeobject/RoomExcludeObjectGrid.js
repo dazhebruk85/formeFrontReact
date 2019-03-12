@@ -9,7 +9,6 @@ import deleteActionPng from "../../../../../../media/grid/gridDelete.png";
 import viewActionPng from "../../../../../../media/grid/gridView.png";
 import RoomExcludeObjectEditForm, {fieldsObject as excludeObjectFieldsObject} from "./RoomExcludeObjectEditForm";
 import * as CommonUtils from "../../../../../../utils/CommonUtils";
-import {fieldsObject as addObjectFieldsObject} from "../addobject/RoomAddObjectEditForm";
 
 export default class RoomExcludeObjectGrid extends Component {
 
