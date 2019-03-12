@@ -53,6 +53,44 @@ export function commonHandleChange(component,context,fieldName,value) {
         })
     }
 }
+export const EDIT_GRID_ENTITY = "editGridEntity";
+export const DELETE_GRID_ENTITY = "deleteGridEntity";
+export function commonChangeEntityInGrid(component,listName,entity,action) {
+    if (!objectIsEmpty(entity)) {
+        let list = component.state.fields[listName].list;
+        if (action === EDIT_GRID_ENTITY) {
+            let existIndex;
+            for (let index in list) {
+                if (list[index].id === entity.id) {
+                    existIndex = index;
+                    break;
+                }
+            }
+            if (existIndex) {
+                list[existIndex] = entity
+            } else {
+                list.push(entity);
+            }
+        } else if (action === DELETE_GRID_ENTITY) {
+            for (let index in list) {
+                if (list[index].id === entity.id) {
+                    delete list[index];
+                    break;
+                }
+            }
+        }
+
+        component.setState({
+            fields:{
+                ...component.state.fields,
+                [listName]:{
+                    ...component.state.fields[listName],
+                    list:list
+                }
+            }
+        });
+    }
+}
 
 export function strToBigDecimal(value) {
     if (typeof value === 'number') {

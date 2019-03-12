@@ -21,7 +21,8 @@ class CommonGrid extends Component {
         if (this.props.gridData && this.props.gridData !== prevProps.gridData ) {
             this.setState({
                 headers:this.props.gridData.headers,
-                list:this.props.gridData.list
+                list:this.props.gridData.list,
+                selectedItem:{}
             })
         }
     }

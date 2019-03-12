@@ -8,6 +8,8 @@ import editActionPng from "../../../../../../media/grid/gridEdit.png";
 import deleteActionPng from "../../../../../../media/grid/gridDelete.png";
 import viewActionPng from "../../../../../../media/grid/gridView.png";
 import RoomExcludeObjectEditForm, {fieldsObject as excludeObjectFieldsObject} from "./RoomExcludeObjectEditForm";
+import * as CommonUtils from "../../../../../../utils/CommonUtils";
+import {fieldsObject as addObjectFieldsObject} from "../addobject/RoomAddObjectEditForm";
 
 export default class RoomExcludeObjectGrid extends Component {
 
@@ -20,6 +22,7 @@ export default class RoomExcludeObjectGrid extends Component {
             disabled:false
         };
         this.onChangeAction = props.onChangeAction;
+        this.parentComp = this.props.parent;
     }
 
     componentDidUpdate(prevProps) {
@@ -30,22 +33,24 @@ export default class RoomExcludeObjectGrid extends Component {
         }
     }
 
-    addExcludeObjectAction() {
-        this.refs.excludeObjectEditForm.setState({
-            fields:excludeObjectFieldsObject
-        });
-        setTimeout(() => this.setState({
-            editFormVisible:true,
-            editFormDisabled:false
-        }), 0)
+    openEditForm(entity, disabled) {
+        if (!CommonUtils.objectIsEmpty(entity) && !CommonUtils.objectIsEmpty(this.parentComp.state.addObjectSelected)) {
+            if (!entity.addObjectId) {
+                entity.addObjectId = this.parentComp.state.addObjectSelected.id;
+            }
+            this.refs.excludeObjectEditForm.setState({
+                fields:entity
+            });
+            setTimeout(() => this.setState({
+                editFormVisible:true,
+                editFormDisabled:disabled
+            }), 0);
+        }
     }
 
-    changeExcludeObjects(addObject) {
-
-    }
-
-    selectAddObject(selected) {
-        this.props.parent.setState({excludeObjectSelected:selected})
+    changeList(entity,action) {
+        CommonUtils.commonChangeEntityInGrid(this.parentComp,'excludeObjectList',entity,action);
+        this.refs.excludeObjectGrid.setState({selectedItem:{}});
     }
 
     render() {
@@ -53,14 +58,14 @@ export default class RoomExcludeObjectGrid extends Component {
         let gridDisabled = this.state.disabled;
 
         let gridData = {headers:[],list:[]};
-        if (this.props.parent && this.props.parent.state && this.props.parent.state.fields.excludeObjectList) {
-            gridData.headers = this.props.parent.state.fields.excludeObjectList.headers;
-            if (this.props.parent.state.addObjectSelected && this.props.parent.state.addObjectSelected.id) {
-                let selectedAddObjectId = this.props.parent.state.addObjectSelected.id;
+        if (this.parentComp && this.parentComp.state && this.parentComp.state.fields.excludeObjectList) {
+            gridData.headers = this.parentComp.state.fields.excludeObjectList.headers;
+            if (this.parentComp.state.addObjectSelected && this.parentComp.state.addObjectSelected.id) {
+                let selectedAddObjectId = this.parentComp.state.addObjectSelected.id;
                 let listFound = [];
-                for (let index in this.props.parent.state.fields.excludeObjectList.list) {
-                    if (this.props.parent.state.fields.excludeObjectList.list[index].addObjectId === selectedAddObjectId) {
-                        listFound.push(this.props.parent.state.fields.excludeObjectList.list[index]);
+                for (let index in this.parentComp.state.fields.excludeObjectList.list) {
+                    if (this.parentComp.state.fields.excludeObjectList.list[index].addObjectId === selectedAddObjectId) {
+                        listFound.push(this.parentComp.state.fields.excludeObjectList.list[index]);
                     }
                 }
                 gridData.list = listFound;
@@ -72,30 +77,29 @@ export default class RoomExcludeObjectGrid extends Component {
                 <HorizontalPanel style={{marginBottom:'1px'}}>
                     <div className={'gridActionTd'}>
                         <div className={'gridActionDiv'}>
-                            <img onClick={gridDisabled ? null : () => this.addExcludeObjectAction()} title={'Добавить запись'}  alt={'Добавить запись'} src={addActionPng} className={gridDisabled ? 'gridActionImgDis' : 'gridActionImg'}/>
+                            <img onClick={gridDisabled ? null : () => this.openEditForm(excludeObjectFieldsObject,false)} title={'Добавить запись'}  alt={'Добавить запись'} src={addActionPng} className={gridDisabled ? 'gridActionImgDis' : 'gridActionImg'}/>
                         </div>
                     </div>
                     <div className={'gridActionTd'}>
                         <div className={'gridActionDiv'}>
-                            <img onClick={gridDisabled ? null : () => alert(1)} title={'Редактировать запись'}  alt={'Редактировать запись'} src={editActionPng} className={gridDisabled ? 'gridActionImgDis' : 'gridActionImg'}/>
+                            <img onClick={gridDisabled ? null : () => this.openEditForm(this.refs.excludeObjectGrid.state.selectedItem,false)} title={'Редактировать запись'}  alt={'Редактировать запись'} src={editActionPng} className={gridDisabled ? 'gridActionImgDis' : 'gridActionImg'}/>
                         </div>
                     </div>
                     <div className={'gridActionTd'}>
                         <div className={'gridActionDiv'}>
-                            <img onClick={gridDisabled ? null : () => alert(1)} title={'Удалить запись'}  alt={'Удалить запись'} src={deleteActionPng} className={gridDisabled ? 'gridActionImgDis' : 'gridActionImg'}/>
+                            <img onClick={gridDisabled ? null : () => this.changeList(this.refs.excludeObjectGrid.state.selectedItem,CommonUtils.DELETE_GRID_ENTITY)} title={'Удалить запись'}  alt={'Удалить запись'} src={deleteActionPng} className={gridDisabled ? 'gridActionImgDis' : 'gridActionImg'}/>
                         </div>
                     </div>
                     <div className={'gridActionTd'}>
                         <div className={'gridActionDiv'}>
-                            <img onClick={() => alert(1)} title={'Просмотреть запись'}  alt={'Просмотреть запись'} src={viewActionPng} className={'gridActionImg'}/>
+                            <img onClick={() => this.openEditForm(this.refs.excludeObjectGrid.state.selectedItem,true)} title={'Просмотреть запись'}  alt={'Просмотреть запись'} src={viewActionPng} className={'gridActionImg'}/>
                         </div>
                     </div>
                 </HorizontalPanel>
                 <CommonGrid ref={'excludeObjectGrid'}
                             gridData={gridData}
-                            height={'120px'}
-                            selectAction={(selected) => this.selectAddObject(selected)}/>
-                <RoomExcludeObjectEditForm mainPageComp={this.props.mainPageComp} disabled={this.state.editFormDisabled} ref={'excludeObjectEditForm'} visible={this.state.editFormVisible} okAction={(event) => this.changeExcludeObjects(event)} closeAction={() => {this.setState({editFormVisible:false}); this.refs.excludeObjectGrid.setState({selectedItem:{}});}}/>
+                            height={'120px'}/>
+                <RoomExcludeObjectEditForm mainPageComp={this.props.mainPageComp} disabled={this.state.editFormDisabled} ref={'excludeObjectEditForm'} visible={this.state.editFormVisible} okAction={(event) => this.changeList(event,CommonUtils.EDIT_GRID_ENTITY)} closeAction={() => {this.setState({editFormVisible:false}); this.refs.excludeObjectGrid.setState({selectedItem:{}});}}/>
                 <ErrorModal mainPageComp={this.props.mainPageComp} errors={this.state.errors} closeAction={() => this.setState({errors:[]})}/>
             </VerticalPanel>
         )

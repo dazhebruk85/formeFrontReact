@@ -66,8 +66,6 @@ class RepairAppEditForm extends Component {
         this.closeModal = this.closeModal.bind(this);
         this.getEntityData = this.getEntityData.bind(this);
         this.saveEntityData = this.saveEntityData.bind(this);
-        this.cnangeTotalArea = this.cnangeTotalArea.bind(this);
-        this.changeTotalCost = this.changeTotalCost.bind(this);
         this.closeAction = props.closeAction
     }
 
@@ -223,7 +221,7 @@ class RepairAppEditForm extends Component {
                     </HorizontalPanel>
                     <Separator text={'Помещения для ремонта'}/>
                     <HorizontalPanel style={{width:'100%'}}>
-                        <RepairAppRoomGrid mainPageComp={this.props.mainPageComp} disabled={this.state.editFormDisabled} parent={this} onChangeAction={() => {setTimeout(() => this.cnangeTotalArea(), 0); setTimeout(() => this.changeTotalCost(), 0);}}/>
+                        <RepairAppRoomGrid mainPageComp={this.props.mainPageComp} disabled={this.state.editFormDisabled} parent={this}/>
                     </HorizontalPanel>
                     <Separator text={'Ограничения'}/>
                     <CheckBoxField disabled={this.state.editFormDisabled} text='Отсутствие контейнера для строительного мусора' checked={this.state.fields.realEstate.trashCanNotExist} onChange={(event) => this.handleChange(event.target.checked,'trashCanNotExist','realEstate')}/>

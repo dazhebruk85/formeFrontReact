@@ -8,7 +8,6 @@ import Label from "../../../../../baseComponent/field/Label";
 import TextField from "../../../../../baseComponent/field/TextField";
 import HorizontalPanel from "../../../../../baseComponent/panel/HorizontalPanel";
 import DictField from "../../../../../baseComponent/field/DictField";
-import DecimalField from "../../../../../baseComponent/field/DecimalField";
 import IntegerField from "../../../../../baseComponent/field/IntegerField";
 import Button from "../../../../../baseComponent/field/Button";
 import ErrorModal from "../../../../../baseComponent/modal/ErrorModal";
@@ -89,6 +88,10 @@ export default class RoomAddObjectEditForm extends Component {
     okAction() {
         let addObjectData = this.state.fields;
         let errors = [];
+        if (!addObjectData.name){errors.push({code:'',message:'Необходимо заполнить наименование'})}
+        if (!addObjectData.type){errors.push({code:'',message:'Необходимо заполнить тип'})}
+        if (!addObjectData.firstSideMmSize){errors.push({code:'',message:'Необходимо заполнить размер первой стороны'})}
+        if (!addObjectData.secondSideMmSize){errors.push({code:'',message:'Необходимо заполнить размер второй стороны'})}
 
         if (errors.length > 0) {
             this.setState({

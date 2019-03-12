@@ -31,7 +31,6 @@ export default class RepairAppRoomEditForm extends Component {
             errors:[],
             disabled:false,
             addObjectSelected:{},
-            excludeObjectSelected:{},
             fields:fieldsObject
         };
 
@@ -69,7 +68,6 @@ export default class RepairAppRoomEditForm extends Component {
             errors:[],
             disabled:false,
             addObjectSelected:{},
-            excludeObjectSelected:{},
             fields:fieldsObject
         });
         this.closeActionParent()
@@ -123,8 +121,8 @@ export default class RepairAppRoomEditForm extends Component {
         let formDisabled = this.state.disabled;
 
         return (
-            <CommonModal paddingCloseCross={true} title={'Добавить/Редактировать/Просмотреть запись'} visible={this.props.visible} closeAction={() => this.closeModal()}>
-                <VerticalPanel>
+            <CommonModal paddingCloseCross={true} title={'Добавить/Редактировать/Просмотреть запись'} style={{width:'700px'}} visible={this.props.visible} closeAction={() => this.closeModal()}>
+                <VerticalPanel style={{width:'100%'}}>
                     <HorizontalPanel>
                         <Label value={'Тип помещения'} width={'120px'}/>
                         <DictField width='300px'
@@ -135,16 +133,16 @@ export default class RepairAppRoomEditForm extends Component {
                                    disabled={formDisabled}/>
                     </HorizontalPanel>
                     <HorizontalPanel>
-                        <Label value={'Площадь'} width={'120px'}/>
+                        <Label value={'Площадь(м²)'} width={'120px'}/>
                         <DecimalField disabled={formDisabled} width={'300px'} value={this.state.fields.area} onChange={(value) => this.handleChange(value,'area','')}/>
                     </HorizontalPanel>
                     <Separator text={'Объекты'}/>
                     <HorizontalPanel style={{width:'100%'}}>
-                        <RoomAddObjectGrid mainPageComp={this.props.mainPageComp} disabled={this.state.disabled} parent={this} onChangeAction={() => null}/>
+                        <RoomAddObjectGrid mainPageComp={this.props.mainPageComp} disabled={this.state.disabled} parent={this}/>
                     </HorizontalPanel>
                     <Separator text={'Объекты-исключения'}/>
                     <HorizontalPanel style={{width:'100%'}}>
-                        <RoomExcludeObjectGrid mainPageComp={this.props.mainPageComp} disabled={this.state.disabled} parent={this} onChangeAction={() => null}/>
+                        <RoomExcludeObjectGrid mainPageComp={this.props.mainPageComp} disabled={this.state.disabled} parent={this}/>
                     </HorizontalPanel>
                 </VerticalPanel>
                 <div className="btn-toolbar align-bottom" role="toolbar" style={{justifyContent:'center',display:'flex'}}>

@@ -8,6 +8,7 @@ import editActionPng from "../../../../../../media/grid/gridEdit.png";
 import deleteActionPng from "../../../../../../media/grid/gridDelete.png";
 import viewActionPng from "../../../../../../media/grid/gridView.png";
 import RoomAddObjectEditForm, {fieldsObject as addObjectFieldsObject} from "./RoomAddObjectEditForm";
+import * as CommonUtils from "../../../../../../utils/CommonUtils";
 
 export default class RoomAddObjectGrid extends Component {
 
@@ -20,6 +21,7 @@ export default class RoomAddObjectGrid extends Component {
             disabled:false
         };
         this.onChangeAction = props.onChangeAction;
+        this.parentComp = this.props.parent;
     }
 
     componentDidUpdate(prevProps) {
@@ -30,22 +32,25 @@ export default class RoomAddObjectGrid extends Component {
         }
     }
 
-    addAddObjectAction() {
-        this.refs.addObjectEditForm.setState({
-            fields:addObjectFieldsObject
-        });
-        setTimeout(() => this.setState({
-            editFormVisible:true,
-            editFormDisabled:false
-        }), 0)
+    openEditForm(entity, disabled) {
+        if (!CommonUtils.objectIsEmpty(entity)) {
+            this.refs.addObjectEditForm.setState({
+                fields:entity
+            });
+            setTimeout(() => this.setState({
+                editFormVisible:true,
+                editFormDisabled:disabled
+            }), 0);
+        }
     }
 
-    changeAddObjects(addObject) {
-
+    changeList(entity,action) {
+        CommonUtils.commonChangeEntityInGrid(this.parentComp,'addObjectList',entity,action);
+        this.refs.addObjectGrid.setState({selectedItem:{}});
     }
 
     selectAddObject(selected) {
-        this.props.parent.setState({addObjectSelected:selected})
+        this.parentComp.setState({addObjectSelected:selected})
     }
 
     render() {
@@ -57,30 +62,30 @@ export default class RoomAddObjectGrid extends Component {
                 <HorizontalPanel style={{marginBottom:'1px'}}>
                     <div className={'gridActionTd'}>
                         <div className={'gridActionDiv'}>
-                            <img onClick={gridDisabled ? null : () => this.addAddObjectAction()} title={'Добавить запись'}  alt={'Добавить запись'} src={addActionPng} className={gridDisabled ? 'gridActionImgDis' : 'gridActionImg'}/>
+                            <img onClick={gridDisabled ? null : () => this.openEditForm(addObjectFieldsObject,false)} title={'Добавить запись'}  alt={'Добавить запись'} src={addActionPng} className={gridDisabled ? 'gridActionImgDis' : 'gridActionImg'}/>
                         </div>
                     </div>
                     <div className={'gridActionTd'}>
                         <div className={'gridActionDiv'}>
-                            <img onClick={gridDisabled ? null : () => alert(1)} title={'Редактировать запись'}  alt={'Редактировать запись'} src={editActionPng} className={gridDisabled ? 'gridActionImgDis' : 'gridActionImg'}/>
+                            <img onClick={gridDisabled ? null : () => this.openEditForm(this.refs.addObjectGrid.state.selectedItem,false)} title={'Редактировать запись'}  alt={'Редактировать запись'} src={editActionPng} className={gridDisabled ? 'gridActionImgDis' : 'gridActionImg'}/>
                         </div>
                     </div>
                     <div className={'gridActionTd'}>
                         <div className={'gridActionDiv'}>
-                            <img onClick={gridDisabled ? null : () => alert(1)} title={'Удалить запись'}  alt={'Удалить запись'} src={deleteActionPng} className={gridDisabled ? 'gridActionImgDis' : 'gridActionImg'}/>
+                            <img onClick={gridDisabled ? null : () => this.changeList(this.refs.addObjectGrid.state.selectedItem,CommonUtils.DELETE_GRID_ENTITY)} title={'Удалить запись'}  alt={'Удалить запись'} src={deleteActionPng} className={gridDisabled ? 'gridActionImgDis' : 'gridActionImg'}/>
                         </div>
                     </div>
                     <div className={'gridActionTd'}>
                         <div className={'gridActionDiv'}>
-                            <img onClick={() => alert(1)} title={'Просмотреть запись'}  alt={'Просмотреть запись'} src={viewActionPng} className={'gridActionImg'}/>
+                            <img onClick={() => this.openEditForm(this.refs.addObjectGrid.state.selectedItem,true)} title={'Просмотреть запись'}  alt={'Просмотреть запись'} src={viewActionPng} className={'gridActionImg'}/>
                         </div>
                     </div>
                 </HorizontalPanel>
                 <CommonGrid ref={'addObjectGrid'}
-                            gridData={this.props.parent && this.props.parent.state && this.props.parent.state.fields.addObjectList ? this.props.parent.state.fields.addObjectList : {}}
+                            gridData={this.parentComp && this.parentComp.state && this.parentComp.state.fields.addObjectList ? this.parentComp.state.fields.addObjectList : {}}
                             height={'120px'}
                             selectAction={(selected) => this.selectAddObject(selected)}/>
-                <RoomAddObjectEditForm mainPageComp={this.props.mainPageComp} disabled={this.state.editFormDisabled} ref={'addObjectEditForm'} visible={this.state.editFormVisible} okAction={(event) => this.changeAddObjects(event)} closeAction={() => {this.setState({editFormVisible:false}); this.refs.addObjectGrid.setState({selectedItem:{}});}}/>
+                <RoomAddObjectEditForm mainPageComp={this.props.mainPageComp} disabled={this.state.editFormDisabled} ref={'addObjectEditForm'} visible={this.state.editFormVisible} okAction={(event) => this.changeList(event,CommonUtils.EDIT_GRID_ENTITY)} closeAction={() => {this.setState({editFormVisible:false}); this.refs.addObjectGrid.setState({selectedItem:{}});}}/>
                 <ErrorModal mainPageComp={this.props.mainPageComp} errors={this.state.errors} closeAction={() => this.setState({errors:[]})}/>
             </VerticalPanel>
         )
