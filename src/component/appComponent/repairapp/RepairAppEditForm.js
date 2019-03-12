@@ -127,7 +127,11 @@ class RepairAppEditForm extends Component {
             this.setState({
                 fields: {
                     ...this.state.fields,
-                    basePackage:{},
+                    basePackage:{
+                        id:'',
+                        name:'',
+                        priceForMeter:0
+                    },
                     finalPriceForMeter:0
                 }
             });
@@ -147,7 +151,10 @@ class RepairAppEditForm extends Component {
             this.setState({
                 fields: {
                     ...this.state.fields,
-                    clientUser:{}
+                    clientUser:{
+                        id:'',
+                        login:''
+                    }
                 }
             });
         }

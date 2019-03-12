@@ -76,8 +76,8 @@ class DictField extends Component {
                                    type="text"
                                    disabled={true}/>
                         </div>
-                        <img title={'Открыть справочник'} alt={''} src={dictPng} style={{opacity:dictDisabled?'0.5':'1',marginBottom:'1px',marginLeft:'-42px',width:'16px',height:'16px',cursor:'pointer',position:'relative'}} onClick={dictDisabled ? null : this.openDict}/>
-                        <img title={'Очистить'} alt={''} src={dictClearPng} style={{opacity:dictDisabled?'0.5':'1',marginBottom:'1px',marginLeft:'-22px',width:'16px',height:'16px',cursor:'pointer',position:'relative'}} onClick={dictDisabled ? null : () => this.clearDict()}/>
+                        <img title={'Открыть справочник'} alt={''} src={dictPng} style={{opacity:dictDisabled?'0.5':'1',marginBottom:'0px',marginLeft:'-42px',width:'16px',height:'16px',cursor:'pointer',position:'relative'}} onClick={dictDisabled ? null : this.openDict}/>
+                        <img title={'Очистить'} alt={''} src={dictClearPng} style={{opacity:dictDisabled?'0.5':'1',marginBottom:'0px',marginLeft:'-22px',width:'16px',height:'16px',cursor:'pointer',position:'relative'}} onClick={dictDisabled ? null : () => this.clearDict()}/>
                     </HorizontalPanel>
                 </VerticalPanel>
                 <CommonModal paddingCloseCross={true} title={'Справочник'} visible={this.state.visible} style={{width:'650px'}} closeAction={this.closeDict}>
